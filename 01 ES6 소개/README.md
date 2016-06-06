@@ -206,54 +206,102 @@ This section describes what happened on the road to ECMAScript 6.
 
 이 섹션은 ECMAScript 6으로 가는길에서 무슨일이 있었는지 설명한다.
 
+### 1.7.1 The early years: ECMAScript 1–3
 ### 1.7.1 초기: ECMAScript 1-3
-* ECMAScript 1 (1997.06) 자바스크립트 언어 표준의 첫 버전이다.
-* ECMAScript 2 (1998.06) 자바스크립트에 대한 별도의 ISO 표준과 동기화 사양을 유지하기 위해, 작은 변화를 포함되었다.
-* ECMAScript 3 (1999.12) 은 언어의 인기있는 부분이 되기 위한 많은 기능 시도 되었다.
- 
-### 1.7.2 ECMAScript 4 (2008.07 버려짐)
-ES4의 작업은 ES3이 배포된 1999 이후에 시작되었다. 2003년 중간보고서가 배포된 후에 ES4 작업은 중단되었다. 중간 보고서에 기술된 언어의 하위 집합은 어도비(액션스크립트)와 마이크로소프트(JScript.NET)에 의해 구현되었다.
+* ECMAScript 1 (June 1997) was the first version of the JavaScript language standard.
+* ECMAScript 2 (June 1998) contained minor changes, to keep the spec in sync with a separate ISO standard for JavaScript.
+* ECMAScript 3 (December 1999) introduced many features that have become popular parts of the language2:
+* ECMAScript 1 (1997.06) 자바스크립트 언어 표준의 첫번째 버전이다.
+* ECMAScript 2 (1998.06) 자바스크립트에 대한 별도의 ISO 표준과 동기화 사양을 유지하기 위해, 작은 변화를 포함하였다.
+* ECMAScript 3 (1999.12) 은 언어의 인기있는 부분이 될 많은 기능이 도입 되었다.
 
-2005년 2월에 제시 제임스 개럿은 자바스크립트를 통한 동적 프론트 앱 개발의 인기를 얻게 된 새로운 기술을 목격하게 된다. 그는 이 기술을 Ajax로 불렀다. Ajax는 완전하게 새로운 웹 앱의 세계를 가능하게 하였고 자바스크립트안에서의 흥미의 파도로 이끌었다.
+### 1.7.2 ECMAScript 4 (abandoned in July 2008) 
+### 1.7.2 ECMAScript 4 (2008.07 폐기됨)
+Work on ES4 started after the release of ES3 in 1999. In 2003, an interim report was released after which work on ES4 paused. Subsets of the language described in the interim report were implemented by Adobe (in ActionScript) and by Microsoft (in JScript.NET).
 
-그것은 아마도 TC38가 2005년 가을에 ES4를 다시 시작하게 기여하혔다. 그들은 ES4를 ES3, ES4 중간 보고서,  액션 스크립트와 JScript.NET을 통한 경험 기반으로 만들었다.
+ES4의 작업은 ES3이 배포된 1999 이후에 시작되었다. 2003년 중간보고서가 배포된 후에 ES4 작업은 중단되었다. 중간 보고서에 기술된 언어의 일부분은 어도비(액션스크립트)와 마이크로소프트(JScript.NET)에 의해 구현되었다.
 
+In February 2005, Jesse James Garrett observed that new techniques had become popular for implementing dynamic frontend apps in JavaScript. He called those techniques Ajax. Ajax enabled a completely new class of web apps and led to a surge of interest in JavaScript.
+
+2005년 2월에 제시 제임스 개럿은 자바스크립트를 통한 동적 프론트 앱 개발의 인기를 얻게 된 새로운 기술을 목격하게 된다. 그는 이 기술을 Ajax로 불렀다. Ajax는 완전하게 새로운 차원의 웹 앱의 세계를 가능하게 하였고 자바스크립트안에서의 흥미의 파도를 이끌었다.
+
+That may have contributed to TC39 resuming work on ES4 in fall 2005. They based ES4 on ES3, the interim ES4 report and experiences with ActionScript and JScript.NET.
+
+그것은 아마도 TC38가 2005년 가을에 ES4를 다시 시작하게 기여했다. 그들은 ES4를 ES3, ES4 중간 보고서,  액션 스크립트와 JScript.NET을 통한 경험 기반으로 만들었다.
+
+There were now two groups working on future ECMAScript versions:
 미래 ECMAScript 버전 만드는 두 그룹이 있다.:
-* ECMAScript 4는 어도비, 모질라, 오페라, 구글에 의해서 설계 되었고, 대규모 업그레이드 되었다. 그것의 계획의 기능 집합은 아래를 포함한다.:
+
+* ECMAScript 4 was designed by Adobe, Mozilla, Opera, and Google and was a massive upgrade. Its planned feature sets included:
+   * Programming in the large (classes, interfaces, namespaces, packages, program units, optional type annotations, and optional static type checking and verification)
+   * Evolutionary programming and scripting (structural types, duck typing, type definitions, and multimethods)
+   * Data structure construction (parameterized types, getters and setters, and meta-level methods)
+   * Control abstractions (proper tail calls, iterators, and generators)
+   * Introspection (type meta-objects and stack marks)
+* ECMAScript 3.1 was designed by Microsoft and Yahoo. It was planned as a subset of ES4 and an incremental upgrade of ECMAScript 3, with bug fixes and minor new features. ECMAScript 3.1 eventually became ECMAScript 5.
+
+* ECMAScript 4는 어도비, 모질라, 오페라, 구글에 의해서 설계 되었고, 대규모 업그레이드 되었다. 그것의 계획의 기능 집합은 다음을 포함한다.:
    * 큰 (클래스, 인터페이스, 네임스페이스, 패키지, 프로그램 유닛, 옵션형 어노테이션, 옵션형 스태틱 타입, 체크, 확인) 프로그래밍
    * 진화적 프로그래밍과 스크립팅 (구조상의 타입, 덕 타입, 다입 정의, 멀티메소드)
    * 자료구조 생성자 (매개변수 타입, 겟터와 셋터, 메타레벨 메소드)
    * 제어 추상 (꼬리 재귀 선호, 반복자, 제너레이터)
    * Introspection(리플랙션)(메타 객체 타입, 스택 마크)
-* ECMAScript 3.1은 마이크로소프트와 야훟에 의해 설계되었다. 그것은 ES4의 부분집합으로, ECMAScript 3 점진적인 업그레이드, 버그 수정과 작은 새 기능을 위한 계획이다. ECMAScript3.1은 마침내 ECMAScript 5가 되었다.
+* ECMAScript 3.1은 마이크로소프트와 야후에 의해 설계되었다. 그것은 ES4의 부분집합으로, ECMAScript 3 점진적인 업그레이드, 버그 수정과 작은 새 기능을 위한 계획이다. ECMAScript3.1은 마침내 ECMAScript 5가 되었다.
 
-두 그룹은 자바스크립트의 미래에 동의 하지 않았고, 계속 둘 사이의 긴장은 증가되고 있다.
+The two groups disagreed on the future of JavaScript and tensions between them continued to increase.
 
-이 섹션의 원인:
-“Proposed ECMAScript 4th Edition – Language Overview”. 2007-10-23
+두 그룹은 자바스크립트의 미래에 동의 하지 않았으며, 계속 둘 사이의 긴장은 증가되고 있다.
 
-“ECMAScript Harmony” by John Resig. 2008-08-13
+Sources of this section:
+
+이 섹션의 소스:
+* “Proposed ECMAScript 4th Edition – Language Overview”. 2007-10-23
+* “ECMAScript Harmony” by John Resig. 2008-08-13
 
 ### 1.7.3 ECMAScript Harmony
+### 1.7.3 ECMAScript Harmony
+At the end of July 2008, there was a TC39 meeting in Oslo, whose outcome was described as follows by Brendan Eich:
+
 2008년 7월말에 오슬로에서 TC39 모임이 있었고, 그 결론은 브랜트 아이크에 의하여 아래와 같이 서술 된다.:
 
-자바스크립트 표준의 핵심인 에크마 기술 의원회 39는 분할된 채로 수년간 지낸건 비밀이 아니다. 어떤 사람은 ES4를 좋아하고 다른 사람은 ES3.1을 옹호한다. 나는 즐겁게 말한다. 분리를 끝났다고.
+It’s no secret that the JavaScript standards body, Ecma’s Technical Committee 39, has been split for over a year, with some members favoring ES4 […] and others advocating ES3.1 […]. Now, I’m happy to report, the split is over.
 
-회의에서 산정된 동의은 4가지 포인트로 구성된다.
+자바스크립트 표준의 핵심인 에크마 기술 의원회 39는 분할된 채로 수년간 지낸건 비밀이 아니다. 어떤 사람은 ES4를 좋아하고 다른 사람은 ES3.1을 옹호한다. 나는 즐겁게 말한다. 대립은 끝났다고.
 
-1. ECMAScript의 점차적 업그래이드를 개발(이것은 ECMAScript 5가 된다.)
-2. 주요 새로운 기능 개발. 이 기능은 더 ECMAScript4 보다 적당하지만 ECMAScript 3 이후 버전보다 더 큰 범위를 가진다. 이 버전은 코드 네임 하모니이다. 왜냐하면 그것이 태어날때의 회의의 성격에 기인 된다.
+The agreement that was worked out at the meeting consisted of four points
+
+회의에서 산정된 동의은 4가지 이다.
+
+1. Develop an incremental update of ECMAScript (which became ECMAScript 5).
+2. Develop a major new release, which was to be more modest than ECMAScript 4, but much larger in scope than the version after ECMAScript 3. This version was code-named Harmony, due to the nature of the meeting in which it was conceived.
+3. Features from ECMAScript 4 that would be dropped: packages, namespaces, early binding.
+4. Other ideas were to be developed in consensus with all of TC39.
+
+1. ECMAScript의 점차적 업데이트로 개발(이것은 ECMAScript 5가 된다.)
+2. 이 기능은 더 ECMAScript4 보다 적당하지만 ECMAScript 3 이후 버전보다 더 큰 범위를 가지는 주요 배포 개발. 그것이 태어날때의 회의의 성격에 때문에 버전은 코드 네임 하모니이다.
 3. ECMAScript4 로부터의 기능은 없어질 것 이다. :packages, namespace, early binding.
 4. 다른 아이디어는 TC39의 모두의 동의 속에서 개발되어진다. 
 
+Thus: The ES4 group agreed to make Harmony less radical than ES4, the rest of TC39 agreed to keep moving things forward.
+
 따라서: ES4 그룹은 ES4보다 덜 급진적으로 만들길 동의하였고, EC39의 나머진 앞으로 나아가길 동의하였다.
+
+The next versions of ECMAScript are:
+* ECMAScript 5 (December 2009). This is the version of ECMAScript that most browsers support today. It brings several enhancements to the standard library and updated language semantics via a strict mode.
+* ECMAScript 5.1 (June 2011). ES5 was submitted as an ISO standard. In the process, minor corrections were made. ES5.1 contains those corrections, it is the same text as ISO/IEC 16262:2011.
+* ECMAScript 6 (June 2015). This version went through several name changes:
+   * ECMAScript Harmony: was the initial code name for JavaScript improvements after ECMAScript 5.
+   * ECMAScript.next: It became apparent that the plans for Harmony were too ambitious for a single version, so its features were split into two groups: The first group of features had highest priority and was to become the next version after ES5. The code name of that version was ECMAScript.next, to avoid prematurely comitting to a version number, which proved problematic with ES4. The second group of features had time until after ECMAScript.next.
+    * ECMAScript 6: As ECMAScript.next matured, its code name was dropped and everybody started to call it ECMAScript 6.
+    * ECMAScript 2015: In late 2014, TC39 decided to change the official name of ECMAScript 6 to ECMAScript 2015, in light of upcoming yearly spec releases. However, given how established the name “ECMAScript 6” already is and how late TC39 changed their minds, I expect that that’s how everybody will continue to refer to that version.
+* ECMAScript 2016 was previously called ECMAScript 7. Starting with ES2016, the language standard will see smaller yearly releases.
 
 ECMAScript의 다음버전은:
 * ECMAScript 5 (2009.11). ECMAScript의 버전은 요즘 대부분의 브라우져가 지원하고 있다. 이것은 표준 라이브러리의 개선과 스트릭모드를 통한 언어 문법의 업데이트를 제공한다.
 * ECMAScript 5.1 (2011.06). ES5는 IOS 표준으로 제출되었다. 그 과정에서 약간의 수정이 이루어졌다. ES5.1은 그 수정을 포함하고, 그것은 ISO/IEC 16262:2011과 같은 글이다.
 * ECMAScript 6 (2015.06). 이 버전은 여러 이름 변화를 겪었다.:
    * ECMAScript Harmony: 는 ECMAScript 5 이후에 자바스크립트 개선의 첫 코드 이름이었다.
-   * ECMAScript.next: 하모니를 위한 계획은 단일 버전으로 너무 거창한게 드러났고, 그래서 그 기능은 두 그룹으로 분리 되었다. 기능의 첫번째 그룹은 높은 우선순위를 갖으며, ES5다음 버전이 될 것이다. 이 버전의 코드 이름은 ECMAScript.next이다. 이 이유는 미연에 버전넘버를 기록하는것을 방지하며 ES4의 문제를 시험하기 위해서 이다. 기능의 두번째 그룹은 ECMAScript.next이후까지 시간이 있다.
-   * ECMAScript 6: ECMAScript.next가 성숙함으로써, 코드 이름은 버려지고 모두 ECMAScript 6으로 불르길 시작했다.
-   * ECMAScript 2015: 2014 말에 TC39는 ECMAScript 6를 ECMAScript2015로 공식이름을 변경하는 것을 결정하였다. 다가오는 새해마다 작은 스팩이 배포된다. 그러나 만약 "ECMAScript 6"처럼 이미 확립된 이름이 있지만, TC39가 그들의 마음을 바꾼 이유가 있다면, 나는 모든 사람이 계속적으로 버전을 참조하기를 기대한다.
+   * ECMAScript.next: 하모니를 위한 계획은 단일 버전으로 너무 거창한게 드러났고, 그래서 그 기능은 두 그룹으로 분리 되었다. 기능의 첫번째 그룹은 높은 우선순위를 갖으며, ES5다음 버전이 될 것이다. 이 버전의 코드 이름은 ECMAScript.next이다. ES4의 문제를 시험하기 위해서 먼저 버전 넘버를 기록하는것을 피하기 위해서다. 기능의 두번째 그룹은 ECMAScript.next이후부터의 시간을 가진다.
+   * ECMAScript 6: ECMAScript.next가 성숙함으로써, 코드 이름은 버려지고 모두 ECMAScript 6으로 불르기 시작했다.
+   * ECMAScript 2015: 2014 말에 TC39는 ECMAScript 6를 매년 작은 스펙의 배포를 위해 ECMAScript2015로 공식이름을 변경하는 것을 결정하였다. 그러나 만약 "ECMAScript 6"처럼 이미 확립된 이름이 있지만, TC39가 그들의 마음을 바꾼 이유가 있다면, 나는 모든 사람이 계속적으로 버전을 참조하기를 기대한다.
 * ECMAScript 2016은 이전에 ECMAScript7로 불렸다. ES2016 시작 이후로 이 언어표준은 소규모 연간 배포를 볼 수 있다.
