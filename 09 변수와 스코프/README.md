@@ -591,19 +591,24 @@ bar();
 
 ## 9.7 전역 객체 `The global object`
 
-JavaScript의 전역 객체 (웹브라우저에 window, Node.js의 global)는 특히, 성능면에서 특징보다 버그라고 할 수 있다. 그건 ES6 소개에도 구별되는 특징으로 대변된다.
-
 자바스크립트의 전역 객체( 웹 브라우저의 `window`, Node.js의 `global` )는 특히 성능적인 면에서 기능이라기 보다 버그로 볼 수 있습니다.
 
 `JavaScript’s global object (window in web browsers, global in Node.js) is more a bug than a feature, especially with regard to performance. That’s why it makes sense that ES6 introduces a distinction:`
 
-+ 전역 개체의 모든 속성은 전역 변수이다. 글로벌 범위에서 다음의 선언은 각각 이런 특성을 생성한다.
- + var 선언
- + function 선언
-+ 그러나 전역 개체에 속성으로는 없지만 전역 변수는 지금도 있다. 글로벌 범위에서 다음의 선언은 그러한 변수를 만든다.
- + let 선언
- + const 선언
- + class 선언
++ 전역 개체의 모든 속성은 전역 변수이다. 글로벌 범위에서 다음의 선언은 각각 이런 특성을 생성한다.  
+  `All properties of the global object are global variables. In global scope, the following declarations create such properties:`
+ + var 선언  
+   `var declarations`
+ + function 선언  
+   `Function declarations`
++ 그러나 전역 개체에 속성으로는 없지만 전역 변수는 지금도 있다. 글로벌 범위에서 다음의 선언은 그러한 변수를 만든다.  
+  `But there are now also global variables that are not properties of the global object. In global scope, the following declarations create such variables:`
+ + let 선언  
+   `let declarations`
+ + const 선언  
+   `const declarations`
+ + class 선언  
+   `Class declarations`
 
 ## 9.8 함수 선언과 클래스 선언
 
