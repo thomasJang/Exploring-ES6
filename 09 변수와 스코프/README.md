@@ -709,14 +709,25 @@ bar();
 3. `var`는 사용하지 않습니다.  
   `Avoid var.`
 
-만일 이 규칙을 따르면 var 는 리팩토링이 필요하다는 신호로서 레가시 코드로 나타날 뿐이다.
+이 규칙을 따르면 `var`는 리팩토링이 필요한 래거시 코드에서만 볼 수 있게됩니다.
 
-var 는 let 과 const 가 하지못하는 한가지 일을 한다 : 변수들은 전역 객체의 속성으로 선언된다. 하지만 그것은 일반적으로 좋은 일이 아니다. window 혹은 global 에 할당하는 것으로 동일한 효과를 낼 수 있다.
+`If you follow these rules, var will only appear in legacy code, as a signal that careful refactoring is required.`
 
-### 9.9.1 대안.
-전에 언급한 스타일 규칙에 대한 대안은 완전한 불변값에 대해 const 를 사용하는 것이다. (원시값과 frozen 오브젝트). 그 다음, 두가지 대안이 있다.
+`var`는 `let`과 `const`가 하지 않는 전역 객체의 속성이 되는 일을 합니다만 이것은 좋은 것이 아닙니다. `window` 또는 `global`을 사용하는 것이 낫습니다.
 
-1. const를 선호한다 (추천) : const 는 불변 바인딩을 표시한다.
-2. let 을 선호한다 (대안) : const 는 불변값을 표시한다.
+`var does one thing that let and const don’t: variables declared via it become properties of the global object. However, that’s generally not a good thing. You can achieve the same effect by assigning to window (in browsers) or global (in Node.js).`
 
-2번은 완벽하게 수용된다. 난 단지 1번 선호로 기운 편이다.
+### 9.9.1 대안. `An alternative approach`
+
+앞에 언급한 코딩 스타일 규칙 외에 대안은 완전히 불변인 것들( 원시값과 동결된 객체들 )에는 `const`를 사용하는 것입니다. 그렇게 되면 두가지 방법이 있습니다.
+
+`An alternative to the just mentioned style rules is to use const only for things that are completely immutable (primitive values and frozen objects). Then we have two approaches:`
+
+1. `const` 우선 (최선) : `const`를 불변 바인딩에 사용합니다.  
+  `Prefer const (recommended): const marks immutable bindings`
+2. `let` 우선 (차선) : `const`을 불변값에 사용합니다.  
+  `Prefer let(alternative): const marks immutable values`
+
+차선으로도 충분하지만 최선을 사용하는 것을 추천합니다.
+
+`#2 is perfectly acceptable; I only lean slightly in favor of #1.`
