@@ -191,9 +191,9 @@ obj.foo.qux
 // 'abc'
 ```
 
-### 9.3.2 루프 바디 안에서의 `const` `const in loop bodies`
+### 9.3.2 반복문 안에서의 `const` `const in loop bodies`
 
-한번 `const` 변수가 생성되면 변경될 수 없습니다. 하지만 루프의 스코프에 재진입 했을때 새로운 값으로 갱신되지 않는 것은 아닙니다. 예를 들어 루프에서.
+한번 `const` 변수가 생성되면 값이 변경될 수 없습니다. 하지만 반복문의 스코프에 재진입 했을때 새로운 값으로 갱신되지 않는 것은 아닙니다. 예제의 반복문을 보겠습니다.
 
 `Once a const variable has been created, it can’t be changed. But that doesn’t mean that you can’t re-enter its scope and start fresh, with a new value. For example, via a loop:`
 
@@ -213,19 +213,19 @@ logArgs('Hello', 'everyone');
 
 ## 9.4 `TDZ` (The temporal dead zone) `The temporal dead zone`
 
-`let` 또는 `const`로 선언된 변수는 `TDZ` (temporal dead zone)로 불리는 스코프를 갖습니다. 스코프에 진입하면 선언되기 전에 접근( `got` or `set` )할 수 없게 됩니다. `TDZ`를 갖지않는 `var` 선언과 `TDZ`를 갖는 `let`선언의 라이프사이클을 비교해보겠습니다.
+`let` 또는 `const`로 선언된 변수는 `TDZ` (temporal dead zone)로 불리는 것을 갖게 되며, 스코프에 진입하면 선언부에 도달하기 전까지 할당( `got` or `set` )을 할 수 없게 됩니다. `TDZ`를 갖지않는 `var` 선언과 `TDZ`를 갖는 `let`선언의 라이프사이클을 비교해보겠습니다.
 
 `A variable declared by let or const has a so-called temporal dead zone (TDZ): When entering its scope, it can’t be accessed (got or set) until execution reaches the declaration. Let’s compare the life cycles of var-declared variables (which don’t have TDZs) and let-declared variables (which have TDZs).`
 
 ### 9.4.1 `var`로 선언된 변수의 라이프사이클 `The life cycle of var-declared variables`
 
-`var` 변수는 `TDZ`를 갖지 않습니다. 라이프 사이클은 다음과 같은 단계로 이루어집니다.
+`var`로 선언된 변수는 `TDZ`를 갖지 않습니다. 라이프 사이클은 다음과 같은 단계로 이루어집니다.
 
 `var variables don’t have temporal dead zones. Their life cycle comprises the following steps:`
 
 1. `var` 변수의 `function`으로 감싸진 스코프 영역에 진입하면 저장 공간( 스코프 )이 생성되고 변수는 즉시 `undefined`로 초기화됩니다.
   `When the scope (its surrounding function) of a var variable is entered, storage space (a binding) is created for it. The variable is immediately initialized, by setting it to undefined.`
-2. 스코프 내에서 변수의 선언부에 도달하면 지정된 값으로 설정됩니다. 지정된 값이 없으면 값은 여전히 `undefined`입니다.
+2. 스코프 내에서 변수의 선언부에 도달하면 지정( 할당 )된 값으로 설정됩니다. 또는 지정된 값이 없는 경우에는 값은 여전히 `undefined`입니다.
    `When the execution within the scope reaches the declaration, the variable is set to the value specified by the initializer (an assignment) – if there is one. If there isn’t, the value of the variable remains undefined.`
 
 ### 9.4.2 `let`으로 선언된 변수의 라이프사이클 `The life cycle of let-declared variables`
