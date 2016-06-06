@@ -958,7 +958,11 @@ export function f() {}	'f'	'f'
 export default function f() {}	'f'	'default'
 export default function () {}	'*default*'	'default'
 export default 123;	'*default*'	'default'
-16.7.3.1 Export clause
+
+### 16.7.3.1 익스포트 절
+> 16.7.3.1 Export clause
+
+```js
 function foo() {}
 export { foo };
 Local name: foo
@@ -967,77 +971,121 @@ function foo() {}
 export { foo as bar };
 Local name: foo
 Export name: bar
-16.7.3.2 Inline exports
-This is an inline export:
+```
 
+### 16.7.3.2 인라인 익스포트
+> 16.7.3.2 Inline exports
+
+아래는 인라인 익스포트이다: 
+> This is an inline export:
+
+```js
 export function foo() {}
-It is equivalent to the following code:
+```
 
+이는 다음 코드와 동등하다
+> It is equivalent to the following code:
+
+```js
 function foo() {}
 export { foo };
+```
+
 Therefore, we have the following names:
 
 Local name: foo
 Export name: foo
-16.7.3.3 Default exports
+
+### 16.7.3.3 기본 익스포트
+
+> 16.7.3.3 Default exports
+
 There are two kinds of default exports:
 
 Default exports of hoistable declarations (function declarations, generator function declarations) and class declarations are similar to normal inline exports in that named local entities are created and tagged.
 All other default exports are about exporting the results of expressions.
-16.7.3.3.1 Default-exporting expressions
-The following code default-exports the result of the expression 123:
 
-export default 123;
-It is equivalent to:
+### 16.7.3.3.1 기본 익스포트 표현식
+> 16.7.3.3.1 Default-exporting expressions
 
+> The following code default-exports the result of the expression 123:
+
+> export default 123;
+
+> It is equivalent to:
+
+```js
 const *default* = 123; // *not* legal JavaScript
 export { *default* as default };
-If you default-export an expression, you get:
+```
+
+> If you default-export an expression, you get:
 
 Local name: *default*
 Export name: default
-The local name was chosen so that it wouldn’t clash with any other local name.
+
+> The local name was chosen so that it wouldn’t clash with any other local name.
 
 Note that a default export still leads to a binding being created. But, due to *default* not being a legal identifier, you can’t access that binding from inside the module.
 
-16.7.3.3.2 Default-exporting hoistable declarations and class declarations
-The following code default-exports a function declaration:
+### 16.7.3.3.2 
 
+> 16.7.3.3.2 Default-exporting hoistable declarations and class declarations
+
+> The following code default-exports a function declaration:
+
+```js
 export default function foo() {}
-It is equivalent to:
+```
 
+> It is equivalent to:
+
+```js
 function foo() {}
 export { foo as default };
+```
+
 The names are:
 
 Local name: foo
 Export name: default
-That means that you can change the value of the default export from within the module, by assigning a different value to foo.
 
-(Only) for default exports, you can also omit the name of a function declaration:
+> That means that you can change the value of the default export from within the module, by assigning a different value to foo.
 
+> (Only) for default exports, you can also omit the name of a function declaration:
+
+```js
 export default function () {}
+```
+
 That is equivalent to:
 
+```js
 function *default*() {} // *not* legal JavaScript
 export { *default* as default };
+```
+
 The names are:
 
 Local name: *default*
 Export name: default
-Default-exporting generator declarations and class declarations works similarly to default-exporting function declarations.
 
-16.7.4 Imports as views in the spec
-This section gives pointers into the ECMAScript 2015 (ES6) language specification.
+> Default-exporting generator declarations and class declarations works similarly to default-exporting function declarations.
 
-Managing imports:
+### 16.7.4 
+> 16.7.4 Imports as views in the spec
+
+> This section gives pointers into the ECMAScript 2015 (ES6) language specification.
+
+> Managing imports:
 
 CreateImportBinding() creates local bindings for imports.
 GetBindingValue() is used to access them.
 ModuleDeclarationInstantiation() sets up the environment of a module (compare: FunctionDeclarationInstantiation(), BlockDeclarationInstantiation()).
 The export names and local names created by the various kinds of exports are shown in table 42 in the section “Source Text Module Records”. The section “Static Semantics: ExportEntries” has more details. You can see that export entries are set up statically (before evaluating the module), evaluating export statements is described in the section “Runtime Semantics: Evaluation”.
 
-16.8 Design goals for ES6 modules
+### 16.8 ES6 모듈을 위한 설계 목표 
+> 16.8 Design goals for ES6 modules
 If you want to make sense of ECMAScript 6 modules, it helps to understand what goals influenced their design. The major ones are:
 
 Default exports are favored
@@ -1046,52 +1094,71 @@ Support for both synchronous and asynchronous loading
 Support for cyclic dependencies between modules
 The following subsections explain these goals.
 
-16.8.1 Default exports are favored
-The module syntax suggesting that the default export “is” the module may seem a bit strange, but it makes sense if you consider that one major design goal was to make default exports as convenient as possible. Quoting David Herman:
+### 16.8.1 기본 익스포트가 선호된다.
+> 16.8.1 Default exports are favored
 
-ECMAScript 6 favors the single/default export style, and gives the sweetest syntax to importing the default. Importing named exports can and even should be slightly less concise.
+> The module syntax suggesting that the default export “is” the module may seem a bit strange, but it makes sense if you consider that one major design goal was to make default exports as convenient as possible. Quoting David Herman:
 
-16.8.2 Static module structure
-Current JavaScript module formats have a dynamic structure: What is imported and exported can change at runtime. One reason why ES6 introduced its own module format is to enable a static structure, which has several benefits. But before we go into those, let’s examine what the structure being static means.
+> ECMAScript 6 favors the single/default export style, and gives the sweetest syntax to importing the default. Importing named exports can and even should be slightly less concise.
 
-It means that you can determine imports and exports at compile time (statically) – you only need to look at the source code, you don’t have to execute it. ES6 enforces this syntactically: You can only import and export at the top level (never nested inside a conditional statement). And import and export statements have no dynamic parts (no variables etc. are allowed).
+### 16.8.2 정적 모듈 구조
+> 16.8.2 Static module structure
 
-The following are two examples of CommonJS modules that don’t have a static structure. In the first example, you have to run the code to find out what it imports:
+현재 자바스크립트 모듈 포맷은 동적 구조를 가진다. : 임포트되거나 익스포트된 것은 런타임에 변경될 수 있다. 
+> Current JavaScript module formats have a dynamic structure: What is imported and exported can change at runtime. One reason why ES6 introduced its own module format is to enable a static structure, which has several benefits. But before we go into those, let’s examine what the structure being static means.
 
+> It means that you can determine imports and exports at compile time (statically) – you only need to look at the source code, you don’t have to execute it. ES6 enforces this syntactically: You can only import and export at the top level (never nested inside a conditional statement). And import and export statements have no dynamic parts (no variables etc. are allowed).
+
+> The following are two examples of CommonJS modules that don’t have a static structure. In the first example, you have to run the code to find out what it imports:
+
+```js
 var my_lib;
 if (Math.random()) {
     my_lib = require('foo');
 } else {
     my_lib = require('bar');
 }
-In the second example, you have to run the code to find out what it exports:
+```
 
+> In the second example, you have to run the code to find out what it exports:
+
+```js
 if (Math.random()) {
     exports.baz = ···;
 }
-ECMAScript 6 modules are less flexible and force you to be static. As a result, you get several benefits, which are described next.
+```
 
-16.8.2.1 Benefit: dead code elimination during bundling
-In frontend development, modules are usually handled as follows:
+> ECMAScript 6 modules are less flexible and force you to be static. As a result, you get several benefits, which are described next.
 
-During development, code exists as many, often small, modules.
+### 16.8.2.1
+> 16.8.2.1 Benefit: dead code elimination during bundling
+
+프론트엔드 개발에서 모듈은 다음과 같이 다뤄진다.
+> In frontend development, modules are usually handled as follows:
+
+
+> During development, code exists as many, often small, modules.
 For deployment, these modules are bundled into a few, relatively large, files.
 The reasons for bundling are:
 
-Fewer files need to be retrieved in order to load all modules.
+> Fewer files need to be retrieved in order to load all modules.
 Compressing the bundled file is slightly more efficient than compressing separate files.
 During bundling, unused exports can be removed, potentially resulting in significant space savings.
 Reason #1 is important for HTTP/1, where the cost for requesting a file is relatively high. That will change with HTTP/2, which is why this reason doesn’t matter there.
 
-Reason #3 will remain compelling. It can only be achieved with a module format that has a static structure.
+> Reason #3 will remain compelling. It can only be achieved with a module format that has a static structure.
 
-16.8.2.2 Benefit: compact bundling, no custom bundle format
-The module bundler Rollup proved that ES6 modules can be combined efficiently, because they all fit into a single scope (after renaming variables to eliminate name clashes). This is possible due to two characteristics of ES6 modules:
+### 16.8.2.2
+> 16.8.2.2 Benefit: compact bundling, no custom bundle format
 
-Their static structure means that the bundle format does not have to account for conditionally loaded modules (a common technique for doing so is putting module code in functions).
-Imports being read-only views on exports means that you don’t have to copy exports, you can refer to them directly.
+> The module bundler Rollup proved that ES6 modules can be combined efficiently, because they all fit into a single scope (after renaming variables to eliminate name clashes). This is possible due to two characteristics of ES6 modules:
+
+> Their static structure means that the bundle format does not have to account for conditionally loaded modules (a common technique for doing so is putting module code in functions).
+
+> Imports being read-only views on exports means that you don’t have to copy exports, you can refer to them directly.
 As an example, consider the following two ES6 modules.
 
+```js
 // lib.js
 export function foo() {}
 export function bar() {}
@@ -1099,33 +1166,47 @@ export function bar() {}
 // main.js
 import {foo} from './lib.js';
 console.log(foo());
-Rollup can bundle these two ES6 modules into the following single ES6 module (note the eliminated unused export bar):
+```
 
+> Rollup can bundle these two ES6 modules into the following single ES6 module (note the eliminated unused export bar):
+
+```js
 function foo() {}
 
 console.log(foo());
-Another benefit of Rollup’s approach is that the bundle does not have a custom format, it is just an ES6 module.
+```
 
-16.8.2.3 Benefit: faster lookup of imports
-If you require a library in CommonJS, you get back an object:
+> Another benefit of Rollup’s approach is that the bundle does not have a custom format, it is just an ES6 module.
 
+### 16.8.2.3
+> 16.8.2.3 Benefit: faster lookup of imports
+
+> If you require a library in CommonJS, you get back an object:
+
+```js
 var lib = require('lib');
 lib.someFunc(); // property lookup
-Thus, accessing a named export via lib.someFunc means you have to do a property lookup, which is slow, because it is dynamic.
+```
 
-In contrast, if you import a library in ES6, you statically know its contents and can optimize accesses:
+> Thus, accessing a named export via lib.someFunc means you have to do a property lookup, which is slow, because it is dynamic.
 
+> In contrast, if you import a library in ES6, you statically know its contents and can optimize accesses:
+
+```js
 import * as lib from 'lib';
 lib.someFunc(); // statically resolved
-16.8.2.4 Benefit: variable checking
-With a static module structure, you always statically know which variables are visible at any location inside the module:
+```
+### 16.8.2.4
+> 16.8.2.4 Benefit: variable checking
 
-Global variables: increasingly, the only completely global variables will come from the language proper. Everything else will come from modules (including functionality from the standard library and the browser). That is, you statically know all global variables.
+> With a static module structure, you always statically know which variables are visible at any location inside the module:
+
+> Global variables: increasingly, the only completely global variables will come from the language proper. Everything else will come from modules (including functionality from the standard library and the browser). That is, you statically know all global variables.
 Module imports: You statically know those, too.
 Module-local variables: can be determined by statically examining the module.
 This helps tremendously with checking whether a given identifier has been spelled properly. This kind of check is a popular feature of linters such as JSLint and JSHint; in ECMAScript 6, most of it can be performed by JavaScript engines.
 
-Additionally, any access of named imports (such as lib.foo) can also be checked statically.
+> Additionally, any access of named imports (such as lib.foo) can also be checked statically.
 
 ## 16.8.2.5
 > 16.8.2.5 Benefit: ready for macros
@@ -1277,9 +1358,12 @@ ES6 modules will also – hopefully – end the fragmentation between the curren
 New browser APIs become modules instead of global variables or properties of navigator.
 No more objects-as-namespaces: Objects such as Math and JSON serve as namespaces for functions in ECMAScript 5. In the future, such functionality can be provided via modules.
 
-
+### 16.11 더 읽을거리
 > 16.11 Further reading
-CommonJS versus ES6: “JavaScript Modules” (by Yehuda Katz) is a quick intro to ECMAScript 6 modules. Especially interesting is a second page where CommonJS modules are shown side by side with their ECMAScript 6 versions.
-[Spec] Sect. “Imports” starts with grammar rules and continues with semantics.↩
-[Spec] The specification method GetExportedNames() collects the exports of a module. In step (7.d.i), a check prevents other modules’ default exports from being re-exported.↩
-[Spec] Sect. “Exports” starts with grammar rules and continues with semantics.↩
+
+커먼JS vs ES6: “JavaScript Modules” (by Yehuda Katz)는 
+> CommonJS versus ES6: “JavaScript Modules” (by Yehuda Katz) is a quick intro to ECMAScript 6 modules. Especially interesting is a second page where CommonJS modules are shown side by side with their ECMAScript 6 versions.
+
++ [Spec] Sect. “Imports” starts with grammar rules and continues with semantics.↩
++ [Spec] The specification method GetExportedNames() collects the exports of a module. In step (7.d.i), a check prevents other modules’ default exports from being re-exported.↩
++ [Spec] Sect. “Exports” starts with grammar rules and continues with semantics.↩
