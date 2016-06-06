@@ -595,29 +595,37 @@ bar();
 
 `JavaScript’s global object (window in web browsers, global in Node.js) is more a bug than a feature, especially with regard to performance. That’s why it makes sense that ES6 introduces a distinction:`
 
-+ 전역 개체의 모든 속성은 전역 변수이다. 글로벌 범위에서 다음의 선언은 각각 이런 특성을 생성한다.  
++ 모든 전역 객체의 속성은 전역 변수입니다. 전역 스코프에서 아래 선언들이 그렇습니다.  
   `All properties of the global object are global variables. In global scope, the following declarations create such properties:`
- + var 선언  
+ + `var` 선언  
    `var declarations`
- + function 선언  
+ + `Function` 선언  
    `Function declarations`
-+ 그러나 전역 개체에 속성으로는 없지만 전역 변수는 지금도 있다. 글로벌 범위에서 다음의 선언은 그러한 변수를 만든다.  
++ 하지만 이제 전역 객체의 속성이 아닌 전역 변수도 있습니다. 전역 스코프에서 아래 선언들이 그렇습니다.  
   `But there are now also global variables that are not properties of the global object. In global scope, the following declarations create such variables:`
- + let 선언  
+ + `let` 선언  
    `let declarations`
- + const 선언  
+ + `const` 선언  
    `const declarations`
- + class 선언  
+ + `Class` 선언  
    `Class declarations`
 
-## 9.8 함수 선언과 클래스 선언
+## 9.8 함수 선언과 클래스 선언 `Function declarations and class declarations`
 
-함수 선언은....
-+ 블럭 스코프이다. let 처럼.
-+ 마찬가지로 전역 객체에 (전역에있는 동안) 속성으로 만들어진다. var 처럼.
-+ 호이스팅된다.
+함수 선언은...
 
-다음 코드는 함수 선언의 호이스팅을 보여준다
+`Function declarations…`
+
++ `let`처럼 블록 스코프를 가집니다.  
+  `are block-scoped, like let.`
++ `var`처럼 ( 전역 스코프에서 )전역 객체에 속성을 생성합니다.  
+  `create properties on the global object (while in global scope), like var.`
++ 호이스팅 됩니다. 함수 스코프 내의 어느 위치에서 선언이 되었던 스코프의 시작점에서 생성됩니다.    
+  `are hoisted: independently of where a function declaration is mentioned in its scope, it is always created at the beginning of the scope.`
+
+함수 선언의 호이스팅 예제입니다.
+
+`The following code demonstrates the hoisting of function declarations:`
 
 ```javascript
 { // Enter a new scope
@@ -630,12 +638,18 @@ bar();
 ```
 클래스 선언은...
 
-+ 블럭 스코프이다.
-+ 전역 객체의 속성을 만들지 않는다
-+ 호이스팅되지 않는다
+`Class declarations…`
 
-Classes not being hoisted may be surprising, because, under the hood, they create functions. The rationale for this behavior is that the values of their extends clauses are defined via expressions and those expressions have to be executed at the appropriate times.
-(번역불가...)
++ 블록 스코프를 가집니다.  
+  `are block-scoped.`
++ 전역 객체의 속성을 생성하지 않습니다.  
+  `don’t create properties on the global object.`
++ 호이스팅되지 않습니다.  
+  `are not hoisted.`
+
+클래스가 호이스팅되지 않는다는 것이 의아해 보일 수도 있습니다. 클래스가 생성하는 것이 함수이기 때문입니다. 호이스팅되지 않는 이유는 `extends` 절의 값들이 이미 선언되어 실행되어 있어야 하기 때문입니다.
+
+`Classes not being hoisted may be surprising, because, under the hood, they create functions. The rationale for this behavior is that the values of their extends clauses are defined via expressions and those expressions have to be executed at the appropriate times.`
 
 ```javascript
 { // Enter a new scope
@@ -651,39 +665,49 @@ Classes not being hoisted may be surprising, because, under the hood, they creat
 }
 ```
 
-## 9.9 코딩 스타일 : const 대 let 대 var
-난 항상 let 혹은 const 어느 한쪽을 사용하는 걸 추천한다.
+## 9.9 코딩 스타일 : `const` 대 `let` 대 `var` `Coding style: const versus let versus var`
 
-1) const 를 선호한다. 변수 값을 변경할 수 없지만 언제든지 사용할 수 있다. 즉, 변수가 대입의 왼쪽 또는 피연산자이거나 ++ 나 -- 가 되서는 안된다. const 변수 객체의 변경은 허용된다.
+항상 `let` 또는 `const`를 사용할 것을 추천합니다.
 
-```javascript
-const foo = {};
-```
+`I recommend to always use either let or const:`
 
-당신은 또한 for-of 루프에 사용할 수 있는데, 하나의 불변 바인딩이 루프 때마다 생성되기 때문이다.
+1. `const`가 우선입니다. 값이 변경되지 않는 모든 곳에 사용할 수 있습니다. 다시 말해 변수가 절대 할당문의 좌변이 되지 않거나 `++` 또는 `--` 의 피연산자가 아닐 경우입니다. `const`의 값인 객체는 변경될 수 있습니다.  
+  `Prefer const. You can use it whenever a variable never changes its value. In other words: the variable should never be the left-hand side of an assignment or the operand of ++ or --. Changing an object that a const variable refers to is allowed:` 
 
-```javascript
-for (const x of ['a', 'b']) {
-    console.log(x);
-}
-// Output:
-// a
-// b
-```
+  ```javascript
+  const foo = {};
+  ```
 
-for-of 루프의 바디 안에서 x를 수정할 수 없다.
+  루프 반복마다 하나의 바인딩이 생성되기 때문에 `for-of` 반복문에서도 사용할 수 있습니다.
 
-2) 아니면 ler을 사용한다 - 초기값 이후에 변수의 값을 수정할 경우에.
+  `You can even use const in a for-of loop, because one (immutable) binding is created per loop iteration:`
 
-```javascript
-let counter = 0; // initial value
-counter++; // change
+  ```javascript
+  for (const x of ['a', 'b']) {
+      console.log(x);
+  }
+  // Output:
+  // a
+  // b
+  ```
 
-let obj = {}; // initial value
-obj = { foo: 123 }; // change
-```
+  `for-of` 반복문의 몸체 안에서는 변수 `x`를 변경할 수 없습니다.
 
-3) var 는 피한다.
+  `Inside the body of the for-of loop, x can’t changed.`
+
+2. 그 외에 초기화된 변수의 값이 나중에 변경된다면 `let`을 사용합니다.  
+  `Otherwise, use let – when the initial value of a variable changes later on.`
+
+  ```javascript
+  let counter = 0; // initial value
+  counter++; // change
+  
+  let obj = {}; // initial value
+  obj = { foo: 123 }; // change
+  ```
+
+3. `var`는 사용하지 않습니다.  
+  `Avoid var.`
 
 만일 이 규칙을 따르면 var 는 리팩토링이 필요하다는 신호로서 레가시 코드로 나타날 뿐이다.
 
