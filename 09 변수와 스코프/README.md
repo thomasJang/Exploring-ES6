@@ -234,11 +234,11 @@ logArgs('Hello', 'everyone');
 
 `Variables declared via let have temporal dead zones and their life cycles look like this:`
 
-1. `let` 변수의 블록으로 감싸진 스코프 영역에 진입하면 저장 공간( 스코프 )가 생성되고 값은 초기화되지 않습니다.
+1. `let` 변수의 블록으로 감싸진 스코프 영역에 진입하면 저장 공간( 스코프 )이 생성되고 값은 초기화되지 않습니다.
    `When the scope (its surrounding block) of a let variable is entered, storage space (a binding) is created for it. The variable remains uninitialized.`
 2.  초기화되지 않은 변수에 접근하면 `ReferenceError`가 발생합니다.
    `Getting or setting an uninitialized variable causes a ReferenceError.`
-3. 스코프 내에서 변수의 선언부에 도달하면 지정된 값으로 설정됩니다. 지정된 값이 없으면 값은 `undefined`로 설정됩니다.
+3. 스코프 내에서 변수의 선언부에 도달하면 지정( 할당 )된 값으로 설정됩니다. 지정된 값이 없으면 값은 `undefined`로 설정됩니다.
    `When the execution within the scope reaches the declaration, the variable is set to the value specified by the initializer (an assignment) – if there is one. If there isn’t then the value of the variable is set to undefined.`
 
 const 변수도 let 변수와 비슷한 동작을 한다. 그러나 반드시 이니셜라이저를 가져야 하고 (예를 들면 즉시 값 설정이 되어야 한다는 뜻이다) 변경할 수 없다.
