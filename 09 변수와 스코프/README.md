@@ -71,7 +71,7 @@ for (const x of ['a', 'b']) {
 
 ##  9.2 let 과 const 를 통한 블럭 스코핑 `Block scoping via let and const`
 
-`let`과 `const`는 둘 다 둘러싼 가장 가까운 블록 내에서만 존재하는 블럭 스코프 변수를 생성합니다. 아래 코드는 `const`로 선언된 변수 `tmp`가 `if`문의 블럭 안에서만 존재하는 것을 보여줍니다.
+`let`과 `const`는 둘 다 둘러싼 가장 가까운 블록 내에서만 존재하는 블럭 스코프 변수를 생성합니다. 아래 예제에서 `const`로 선언된 변수 `tmp`가 `if`문의 블럭 안에서만 존재하는 것을 볼 수 있습니다.
 
 `Both let and const create variables that are block-scoped – they only exist within the innermost block that surrounds them. The following code demonstrates that the const-declared variable tmp only exists inside the then-block of the if statement:`
 
@@ -97,7 +97,7 @@ function func() {
 }
 ```
 
-블럭 스코프는 함수 내에서 변수를 가릴 수 있다는 것을 뜻합니다.
+블럭 스코프는 함수 내에서 변수를 가릴 수 있습니다.
 
 `Block scoping means that you can shadow variables within a function:`
 
@@ -105,7 +105,7 @@ function func() {
 function func() {
   const foo = 5;
   if (···) {
-     const foo = 10; // shadows outer `foo`
+     const foo = 10; // 블록 밖의 변수 foo를 가림
      console.log(foo); // 10
   }
   console.log(foo); // 5
@@ -124,7 +124,7 @@ foo = 'def';
 console.log(foo); // def
 ```
 
-`const`로 생성된 상수는 변경 불가능하기 때문에 다른 값을 할당할 수 없습니다.
+`const`로 생성된 변수는 상수로서 다른 값을 할당할 수 없으며 불변입니다.
 
 `Constants, variables created by const, are immutable – you can’t assign them a different value:`
 
@@ -133,14 +133,14 @@ const foo = 'abc';
 foo = 'def'; // TypeError
 ```
 
-> :notebook: 스펙에 따르면 const 변수를 변경하는 것은 항상 TypeError 를 던집니다  
+> :notebook: 스펙에 따르면 `const` 변수의 값을 변경하는 것은 항상 `TypeError`가 발생합니다.  
 > `Spec detail: changing a const variable always throws a TypeError`  
-> 일반적으로, 불변 바인딩을 변경하는 것은 `strict mode`에서만 `SetMutableBinding()`에서 예외가 발생합니다. 하지만 `const`로 변수를 선언하면 언제나 엄격한( strict )바인딩을 생성합니다. - 35.b.i.1 장의 [FunctionDeclarationInstantiation(func, argumentsList)](http://www.ecma-international.org/ecma-262/6.0/#sec-functiondeclarationinstantiation)를 확인하세요.  
+> 일반적으로, 불변 바인딩을 변경하는 것은 `strict mode`에서만 [`SetMutableBinding()`](http://www.ecma-international.org/ecma-262/6.0/#sec-declarative-environment-records-setmutablebinding-n-v-s)에서 예외가 발생합니다. 하지만 `const`로 변수를 선언하면 언제나 엄격한( strict )바인딩을 생성합니다. - 35.b.i.1 장의 [FunctionDeclarationInstantiation(func, argumentsList)](http://www.ecma-international.org/ecma-262/6.0/#sec-functiondeclarationinstantiation)를 확인하세요.  
 > `Normally, changing an immutable binding only causes an exception in strict mode, as per SetMutableBinding(). But const-declared variables always produce strict bindings – see FunctionDeclarationInstantiation(func, argumentsList), step 35.b.i.1.`
 
 ### 9.3.1 함정 : `const`는 값을 불변으로 만들지 않는다. `Pitfall: const does not make the value immutable`
 
-`const`는 변수가 항상 동일한 값을 가지고 있음을 의미하지만, 변수가 값 자체이거나 불변하게한다는 것을 의미하지 않습니다. 예를 들어 obj는 상수이지만 상수가 가리키는 값은 변경 가능합니다. - 속성을 추가할 수 있습니다.
+`const`는 변수가 항상 같은 값을 가지고 있다는 의미일 뿐, 값 자체가 불변이 되는 것은 아닙니다. 예제에서 `obj` 변수는 상수이지만 가리키는 값 객체는 불변이 아니며 속성을 추가할 수 있습니다.
 
 `const only means that a variable always has the same value, but it does not mean that the value itself is or becomes immutable. For example, obj is a constant, but the value it points to is mutable – we can add a property to it:`
 
@@ -150,7 +150,7 @@ obj.prop = 123;
 console.log(obj.prop); // 123
 ```
 
-하지만 obj에 다른 값을 할당할 수는 없습니다.
+하지만 `obj`변수에 다른 값을 할당할 수는 없습니다.
 
 `We cannot, however assign a different value to obj:`
 
@@ -158,7 +158,7 @@ console.log(obj.prop); // 123
 obj = {}; // TypeError
 ```
 
-obj가 불변하게 하려면, freeze라던지 다른 처리가 필요합니다.
+`obj`의 값이 불변하게 하려면, 동결이라던지 필요한 처리를 해주어야 합니다.
 
 `If you want the value of obj to be immutable, you have to take care of it, yourself, e.g. by freezing it:`
 
@@ -169,11 +169,7 @@ obj.prop = 123; // TypeError
 
 #### 9.3.1.1 함정 : `Object.freeze()` 는 얕다. `Pitfall: Object.freeze() is shallow`
 
-Object.freeze() 는 얕다는걸 알아둬라. 그건 단지 그 인수의 프로퍼티들을 프리징할 뿐, 속성에 저장된 객체에는 아니다.
-
-예를 들면, 오브젝트 obj 는 얼었다 (frozen)
-
-`Object.freeze()`는 얕다는 것을 알아야 합니다. `Object.freeze()`는 인자의 속성만을 동결하고, 속성이 가리키는 객체는 동결하지 않습니다. 예를 들어 `obj` 객체는 동결됩니다.
+`Object.freeze()`는 얕다는 것을 기억해야 합니다. `Object.freeze()`는 속성만을 동결하고, 속성에 할당된 객체는 동결하지 않습니다. 예제에서 `obj` 객체는 동결됩니다.
 
 `Keep in mind that Object.freeze() is shallow, it only freezes the properties of its argument, not the objects stored in its properties. For example, the object obj is frozen:`
 
