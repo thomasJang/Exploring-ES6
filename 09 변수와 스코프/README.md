@@ -30,7 +30,7 @@ function order(x, y) {
 
 ### 9.1.2 const
 
-`const`는 `let`처럼 동작하지만, `const`로 선언한 변수는 즉시 초기화되어야 합니다. 선언된 이후에 값을 변경할 수 없습니다.
+`const`는 `let`처럼 동작하지만, `const`로 선언한 변수는 즉시 초기화되어야 합니다. 초기화된 이후에 값을 변경할 수 없습니다.
 
 `const works like let, but the variable you declare must be immediately initialized, with a value that can’t be changed afterwards.`
 
@@ -41,7 +41,7 @@ const bar = 123;
 bar = 456; // TypeError: `bar` is read-only
 ```
 
-`for-of` 반복문이 루프 반복마다 하나의 바인딩 ( 변수의 저장 공간 )을 생성하기 때문에 루프 내의 변수를 const로 선언하는 것이 좋습니다.
+`for-of` 반복문이 루프 반복마다 하나의 바인딩 ( 변수의 저장 공간 )을 생성하기 때문에 루프 변수를 const로 선언하는 것도 가능합니다.
 
 `Since for-of creates one binding (storage space for a variable) per loop iteration, it is OK to const-declare the loop variable:`
 
@@ -56,7 +56,7 @@ for (const x of ['a', 'b']) {
 
 ###  9.1.3 변수 선언 방법들 `Ways of declaring variables`
 
-아래 표는 ES6에서 변수를 선언하는 6가지 방법의 개요를 보여줍니다.
+아래 표는 ES6에서 변수가 선언되는 6가지 방법을 보여줍니다.
 
 `The following table gives an overview of six ways in which variables can be declared in ES6:`
 
