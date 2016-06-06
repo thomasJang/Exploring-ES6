@@ -303,5 +303,5 @@ ECMAScript의 다음버전은:
    * ECMAScript Harmony: 는 ECMAScript 5 이후에 자바스크립트 개선의 첫 코드 이름이었다.
    * ECMAScript.next: 하모니를 위한 계획은 단일 버전으로 너무 거창한게 드러났고, 그래서 그 기능은 두 그룹으로 분리 되었다. 기능의 첫번째 그룹은 높은 우선순위를 갖으며, ES5다음 버전이 될 것이다. 이 버전의 코드 이름은 ECMAScript.next이다. ES4의 문제를 시험하기 위해서 먼저 버전 넘버를 기록하는것을 피하기 위해서다. 기능의 두번째 그룹은 ECMAScript.next이후부터의 시간을 가진다.
    * ECMAScript 6: ECMAScript.next가 성숙함으로써, 코드 이름은 버려지고 모두 ECMAScript 6으로 불르기 시작했다.
-   * ECMAScript 2015: 2014 말에 TC39는 ECMAScript 6를 매년 작은 스펙의 배포를 위해 ECMAScript2015로 공식이름을 변경하는 것을 결정하였다. 그러나 만약 "ECMAScript 6"처럼 이미 확립된 이름이 있지만, TC39가 그들의 마음을 바꾼 이유가 있다면, 나는 모든 사람이 계속적으로 버전을 참조하기를 기대한다.
+   * ECMAScript 2015: 2014 말에 TC39는 ECMAScript 6를 매년 작은 스펙의 배포를 위해 ECMAScript2015로 공식이름을 변경하는 것을 결정하였다. 그러나 어떻게 "ECMAScript 6" 이름이 정착된는지, 어떻게 TC39가 그들의 마음을 바꾼것을 고려한다면, 나는 어떻게 지속적으로 모든 사람이 버전을 참조하기를 예측한다.
 * ECMAScript 2016은 이전에 ECMAScript7로 불렸다. ES2016 시작 이후로 이 언어표준은 소규모 연간 배포를 볼 수 있다.
