@@ -276,7 +276,7 @@ console.log(tmp); // true
 let foo = console.log(foo); // ReferenceError
 ```
 
-다음 코드는 `TMZ`가 일시적( 시간 기준 )이며, 공간( 위치 ) 기준이 아님을 보여줍니다.
+다음 코드는 `TDZ`가 일시적( 시간 기준 )이며, 공간( 위치 ) 기준이 아님을 보여줍니다.
 
 `The following code demonstrates that the dead zone is really temporal (based on time) and not spatial (based on location):`
 
@@ -550,9 +550,9 @@ function func(arg) {
 }
 ```
 
-### 9.6.2 파라미터 기본값과 TMZ `Parameter default values and the temporal dead zone`
+### 9.6.2 파라미터 기본값과 TDZ `Parameter default values and the temporal dead zone`
 
-파라미터가 기본값을 가지는 경우, `let` 선언문처럼 취급되고 TMZ를 갖게 됩니다.
+파라미터가 기본값을 가지는 경우, `let` 선언문처럼 취급되고 TDZ를 갖게 됩니다.
 
 `If parameters have default values, they are treated like a sequence of let statements and are subject to temporal dead zones:`
 
