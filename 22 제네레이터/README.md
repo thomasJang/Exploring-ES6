@@ -1,17 +1,32 @@
-22. Generators
+# 22. Generators
+# 22. 제너레이터
 
 The following GitHub repository contains the example code: generator-examples
 
-22.1 Overview
+다음 깃헙 저장소에 예제 코드가 있습니다. : 제너레이터 예제들
+
+## 22.1 Overview
+## 22.1 개요
+
 Generators, a new feature of ES6, are functions that can be paused and resumed (think cooperative multitasking or coroutines). That helps with many applications. Two important ones are:
 
-Implementing iterables
-Blocking on asynchronous function calls
+ES6의 새 기능 중 하나인 제너레이터 멈춤과 재실행을 할 수 있는 함수들(협력 멀티태스킹, 코루틴) 입니다. 이것은 많은 어플리케이션에 도움을 줍니다. 다음은 두 가지 중요한 것들 입니다. 
+
+* Implementing iterables
+* Blocking on asynchronous function calls
+* 이터러블 구현
+* 비동기 함수 호출에서 블로킹
+
 The following subsections give brief overviews of these applications.
 
-22.1.1 Implementing iterables via generators
+다음 소섹션에서 이 애플리케이션들을 간략하게 보여드리겠습니다.
+
+### 22.1.1 Implementing iterables via generators
+### 22.1.1 제너레이터를 통한 이터러블 구현
 The following function returns an iterable over the properties of an object, one [key, value] pair per property:
 
+다음 함수는 객체의 프로퍼티를 순환하고 반환값이 하나의 프로퍼티당 [key, value]인 이터러블을 반환합니다.
+```javascript
 // The asterisk after `function` means that
 // `objectEntries` is a generator
 function* objectEntries(obj) {
@@ -24,8 +39,12 @@ function* objectEntries(obj) {
         yield [propKey, obj[propKey]];
     }
 }
+```
 objectEntries() is used like this:
 
+objectEntries()는 아래 처럼 사용됩니다. :
+
+```
 const jane = { first: 'Jane', last: 'Doe' };
 for (const [key,value] of objectEntries(jane)) {
     console.log(`${key}: ${value}`);
@@ -33,11 +52,19 @@ for (const [key,value] of objectEntries(jane)) {
 // Output:
 // first: Jane
 // last: Doe
+```
 How exactly objectEntries() works is explained in a dedicated section. Implementing the same functionality without generators is much more work.
 
-22.1.2 Blocking on asynchronous function calls
+objectEntries()의 정확히 어떻게 동작하는지 22.3.4에서 설명합니다. 제너레이터 없이 같은 기능을 구현하려면 더 많은 작업을 해야 합니다. 
+
+### 22.1.2 Blocking on asynchronous function calls
+### 22.1.2 비동이 함수 호출에서 블록킹
+
 In the following code, I use the control flow library co to asynchronously retrieve two JSON files. Note how, in line A, execution blocks (waits) via yield until the result of Promise.all() is ready. That means that the code looks synchronous while performing asynchronous operations.
 
+다음 코드에서 비동기적으로 두개의 JSON 파일을 검색하기 위하여 흐름 제어 라이브러리인 co를 사용 하였습니다. 줄A에서 Promise.all()이 Promise.all()의 결과가 나올때 까지 yield를 통해 어떻게 실행 블록의 대기하는지를 주목하셔야 합니다. 이것은 비동기 연산 수행이 동기 코드 처럼 보일 수 있다는것을 의미 합니다. 
+
+```javascript
 co(function* () {
     try {
         const [croftStr, bondStr] = yield Promise.all([  // (A)
@@ -53,57 +80,106 @@ co(function* () {
         console.log('Failure to read: ' + e);
     }
 });
+```
+
 The Promise-based function getFile(url) retrieves the file pointed to by url. Its implementation is shown later. I’ll also explain how co works. For more info on Promises, consult Chap. “Promises for asynchronous programming”.
 
-22.2 What are generators?
+프로미스 기반의 함수 getFile(url)은 url을 통해 파일을 가져옵니다. 이 규현은 나중에 보여드리겠습니다. 또한 co가 어떻게 작동되는지 설명하겠습니다. 프로미스에 대한 더 많은 정보는 비동기 프로그래밍에 대한 프로미스를 참고 하시면 됩니다.
+
+## 22.2 What are generators?
+## 22.2 제너레이터는 무엇인가?
+
 Generators are functions that can be paused and resumed (think cooperative multitasking or coroutines), which enables a variety of applications.
+
+제너레이터는 멈추고 재실행 되는 함수이고, 애플리케이션의 변화를 가능하게 한다.
 
 As a first example, consider the following generator function whose name is genFunc:
 
+첫번째 예제를 통해 이름이 getFunc인 제너레이터 함수를 생각해 봅시다.
+
+```javascript
 function* genFunc() {
     // (A)
     console.log('First');
     yield; // (B)
     console.log('Second'); // (C)
 }
+```
+
 Two things distinguish genFunc from a normal function declaration:
 
-It starts with the “keyword” function*.
-It can pause itself, via yield (line B).
+일반적인 함수에서 선언을 통해 getFunc를 두가지로 나누어 보면
+
+* It starts with the “keyword” function*.
+* It can pause itself, via yield (line B).
+ 
+* function*인 키워드로 시작된다.
+* yield를 통해 자신을 멈출 수 있다. (줄 B). 
+
 Calling genFunc does not execute its body. Instead, you get a so-called generator object, with which you can control the execution of the body:
 
+genFunc을 호출할 때 그 바디를 실행하지 않습니다. 그 대신에 제너레이터 객체라 불리는 것을 반환 받고 이것을 통해 바디의 실행을 제어 할 수 있습니다.
+```javascript
 > const genObj = genFunc();
+```
 genFunc() is initially suspended before the body (line A). The method call genObj.next() continues execution until the next yield:
 
+getFunc()는 바디 전 (줄 A)에서 일시 정지 됩니다. genObj.next() 메소드 호출을 통해 다음 yield까지 계속적으로 실행 할 수 있습니다.
+
+```javascript
 > genObj.next()
 First
 { value: undefined, done: false }
+```
 As you can see in the last line, genObj.next() also returns an object. Let’s ignore that for now. It will matter later.
+
+마지막 라인에서 볼수 있듯이, genObj.next는 또한 객체로 반환됩니다. 이것은 나중 문제이니 지금은 무시하셔도 됩니다.
 
 genFunc is now paused in line B. If we call next() again, execution resumes and line C is executed:
 
+getFunc는 현재 B출에서 멈춰 있습니다. 만약 next()한번더 호출 한다면, 실행을 재개되고 줄 C는 실행 되어 집니다.:
+
+```javascript
 > genObj.next()
 Second
 { value: undefined, done: true }
+```
 Afterwards, the function is finished, execution has left the body and further calls of genObj.next() have no effect.
 
-22.2.1 Kinds of generators
+이 후, 이 함수는 완료 되고 실행은 바디에 남아 있고 더 이상의 genObj.next()를 호출 해도 아무런 효과가 생기지 않습니다.
+
+### 22.2.1 Kinds of generators
+### 22.2.1 제너레이터의 종류
+
 There are four kinds of generators:
 
-Generator function declarations:
+네 가지의 제너레이터 선언 방식이 있습니다. :
+
+1. Generator function declarations:
+1. 제너레이서 함수 선언식
+```javascript
  function* genFunc() { ··· }
  const genObj = genFunc();
-Generator function expressions:
+```
+2. Generator function expressions:
+2. 제너레이터 함수 표현식
+```javascript
  const genFunc = function* () { ··· };
  const genObj = genFunc();
-Generator method definitions in object literals:
+```
+3. Generator method definitions in object literals:
+3. 객체 리터럴에서 제너레이터 메소드 선언식
+```javascript
  const obj = {
      * generatorMethod() {
          ···
      }
  };
  const genObj = obj.generatorMethod();
-Generator method definitions in class definitions (class declarations or class expressions):
+```
+4. Generator method definitions in class definitions (class declarations or class expressions):
+4. 클래스 선언에서 제너레이터 메소드 선언식 (클래스 선언식 또는 클래스 표현식)
+```javascript
  class MyClass {
      * generatorMethod() {
          ···
@@ -111,13 +187,20 @@ Generator method definitions in class definitions (class declarations or class e
  }
  const myInst = new MyClass();
  const genObj = myInst.generatorMethod();
-22.2.2 Roles played by generators
+```
+### 22.2.2 Roles played by generators
+### 22.2.2 제너레이터의 역할
 Generators can play three roles:
 
-Iterators (data producers): Each yield can return a value via next(), which means that generators can produce sequences of values via loops and recursion. Due to generator objects implementing the interface Iterable (which is explained in the chapter on iteration), these sequences can be processed by any ECMAScript 6 construct that supports iterables. Two examples are: for-of loops and the spread operator (...).
-Observers (data consumers): yield can also receive a value from next() (via a parameter). That means that generators become data consumers that pause until a new value is pushed into them via next().
-Coroutines (data producers and consumers): Given that generators are pausable and can be both data producers and data consumers, not much work is needed to turn them into coroutines (cooperatively multitasked tasks).
+제너레이터는 3가지 역할을 할 수 있습니다.
+
+* Iterators (data producers): Each yield can return a value via next(), which means that generators can produce sequences of values via loops and recursion. Due to generator objects implementing the interface Iterable (which is explained in the chapter on iteration), these sequences can be processed by any ECMAScript 6 construct that supports iterables. Two examples are: for-of loops and the spread operator (...).
+* Observers (data consumers): yield can also receive a value from next() (via a parameter). That means that generators become data consumers that pause until a new value is pushed into them via next().
+* Coroutines (data producers and consumers): Given that generators are pausable and can be both data producers and data consumers, not much work is needed to turn them into coroutines (cooperatively multitasked tasks).
 The next sections provide deeper explanations of these roles.
+
+* 이터레이터 (데이터 생산자): 각 yield는 next()를 통해 값을 반환하고 이것은 루프문이나 재귀를 통해 값들의 순서열을 만들수 있다는 것을 의미 합니다. 제너레이터는 이터러블(이터러블장에서 설명한다.) 인터페이스를 구현했기 때문에, 이 순서열은 이터러블이 필요한 어떠한 ECMA6 생성자에서 사용될 수 있습니다. 두가지 예를 들면 for-of 루프와 펼침 연산자 (...)입니다.
+* 관찰자 (데이터 소비자): yield는 또한 next()를 
 
 22.3 Generators as iterators (data production)
 For this section, you should be familiar with ES6 iteration. The previous chapter has more information.
