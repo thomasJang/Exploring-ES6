@@ -2,13 +2,13 @@
 
 ##  9.1 개요
 
-ES6에서는 변수를 선언하는 두가지 새로운 방법을 제공합니다. ES5에서 변수를 선언하는 방법인 `var`를 대체할 수 있는 `let`과 `const`입니다.
+`ES6`에서는 변수를 선언하는 두가지 새로운 방법을 제공합니다. `ES5`에서 변수를 선언하는 방법인 `var`를 거의 완벽하게 대체할 수 있는 `let`과 `const`입니다.
 
 `ES6 provides two new ways of declaring variables: let and const, which mostly replace the ES5 way of declaring variables, var.`
 
-###  9.1.1 let
+###  9.1.1 `let`
 
-`let`은 `var`와 비슷하게 동작하지만, `let`으로 선언한 변수는 선언된 블럭 내에서만 존재하는 블럭 스코프입니다. `var`는 함수 스코프입니다.
+`let`은 `var`와 유사하게 동작하지만, `let`으로 선언한 변수는 선언된 블록 내에서만 존재하는 블록 스코프입니다. `var`는 함수 스코프입니다.
 
 `let works similarly to var, but the variable it declares is block-scoped, it only exists within the current block. var is function-scoped.`
 
@@ -41,7 +41,7 @@ const bar = 123;
 bar = 456; // TypeError: `bar` is read-only
 ```
 
-`for-of` 반복문이 루프 반복마다 하나의 바인딩 ( 변수의 저장 공간 )을 생성하기 때문에 루프 변수를 const로 선언하는 것도 가능합니다.
+`for-of` 반복문은 루프 반복마다 하나의 바인딩 ( 변수의 저장 공간 )을 생성하기 때문에 `const`로 루프 변수를 선언하는 것도 가능합니다.
 
 `Since for-of creates one binding (storage space for a variable) per loop iteration, it is OK to const-declare the loop variable:`
 
@@ -54,9 +54,9 @@ for (const x of ['a', 'b']) {
 // b
 ```
 
-###  9.1.3 변수 선언 방법들 `Ways of declaring variables`
+###  9.1.3 변수를 선언하는 방법들 `Ways of declaring variables`
 
-아래 표는 ES6에서 변수가 선언되는 6가지 방법을 보여줍니다.
+아래 표는 `ES6`에서 변수가 선언되는 6가지 방법을 보여줍니다.
 
 `The following table gives an overview of six ways in which variables can be declared in ES6:`
 
@@ -69,9 +69,9 @@ for (const x of ['a', 'b']) {
 | class | No | Block | No |
 | import | Complete | Module-global | No |
 
-##  9.2 let 과 const 를 통한 블럭 스코핑 `Block scoping via let and const`
+##  9.2 `let`과 `const`를 통한 블록 스코핑 `Block scoping via let and const`
 
-`let`과 `const`는 둘 다 둘러싼 가장 가까운 블록 내에서만 존재하는 블럭 스코프 변수를 생성합니다. 아래 예제에서 `const`로 선언된 변수 `tmp`가 `if`문의 블럭 안에서만 존재하는 것을 볼 수 있습니다.
+`let`과 `const`는 둘 다 변수를 둘러싼 가장 가까운 블록 내에서만 존재하는 블록 스코프 변수를 생성합니다. 아래 예제에서 `const`로 선언된 변수 `tmp`가 `if`문의 블록 안에서만 존재하는 것을 볼 수 있습니다.
 
 `Both let and const create variables that are block-scoped – they only exist within the innermost block that surrounds them. The following code demonstrates that the const-declared variable tmp only exists inside the then-block of the if statement:`
 
@@ -97,7 +97,7 @@ function func() {
 }
 ```
 
-블럭 스코프는 함수 내에서 변수를 가릴 수 있습니다.
+블록 스코프는 함수 내에서 변수를 가릴 수 있습니다.
 
 `Block scoping means that you can shadow variables within a function:`
 
@@ -169,7 +169,7 @@ obj.prop = 123; // TypeError
 
 #### 9.3.1.1 함정 : `Object.freeze()` 는 얕다. `Pitfall: Object.freeze() is shallow`
 
-`Object.freeze()`는 얕다는 것을 기억해야 합니다. `Object.freeze()`는 속성만을 동결하고, 속성에 할당된 객체는 동결하지 않습니다. 예제에서 `obj` 객체는 동결됩니다.
+`Object.freeze()`는 얕다는 것을 기억해야 합니다. 즉 `Object.freeze()`는 대상의 속성만을 동결할 뿐, 속성에 할당된 객체는 동결하지 않습니다. 아래 예제에서 `obj` 객체는 동결됩니다.
 
 `Keep in mind that Object.freeze() is shallow, it only freezes the properties of its argument, not the objects stored in its properties. For example, the object obj is frozen:`
 
@@ -191,9 +191,9 @@ obj.foo.qux
 // 'abc'
 ```
 
-### 9.3.2 반복문 안에서의 `const` `const in loop bodies`
+### 9.3.2 루프 바디 안에서의 `const` `const in loop bodies`
 
-한번 `const` 변수가 생성되면 값이 변경될 수 없습니다. 하지만 반복문의 스코프에 재진입 했을때 새로운 값으로 갱신되지 않는 것은 아닙니다. 예제의 반복문을 보겠습니다.
+한번 `const` 변수가 생성되고나면 값이 변경될 수 없습니다. 하지만 루프의 스코프에 재진입 했을때 새로운 값으로 갱신되지 않는 것은 아닙니다. 예제의 루프를 보겠습니다.
 
 `Once a const variable has been created, it can’t be changed. But that doesn’t mean that you can’t re-enter its scope and start fresh, with a new value. For example, via a loop:`
 
@@ -213,7 +213,7 @@ logArgs('Hello', 'everyone');
 
 ## 9.4 `TDZ` (The temporal dead zone) `The temporal dead zone`
 
-`let` 또는 `const`로 선언된 변수는 `TDZ` (temporal dead zone)로 불리는 것을 갖게 되며, 스코프에 진입하면 선언부에 도달하기 전까지 할당( `got` or `set` )을 할 수 없게 됩니다. `TDZ`를 갖지않는 `var` 선언과 `TDZ`를 갖는 `let`선언의 라이프사이클을 비교해보겠습니다.
+`let` 또는 `const`로 선언된 변수는 `TDZ` (temporal dead zone)로 불리는 것을 갖게 되며, 스코프에 진입하면 선언부에 도달하기 전까지 할당( `got` or `set` )을 할 수 없게 됩니다. `TDZ`를 갖지않는 `var` 선언과 `TDZ`를 갖는 `let`선언의 라이프 사이클을 비교해보겠습니다.
 
 `A variable declared by let or const has a so-called temporal dead zone (TDZ): When entering its scope, it can’t be accessed (got or set) until execution reaches the declaration. Let’s compare the life cycles of var-declared variables (which don’t have TDZs) and let-declared variables (which have TDZs).`
 
@@ -223,9 +223,9 @@ logArgs('Hello', 'everyone');
 
 `var variables don’t have temporal dead zones. Their life cycle comprises the following steps:`
 
-1. `var` 변수의 `function`으로 감싸진 스코프 영역에 진입하면 저장 공간( 스코프 )이 생성되고 변수는 즉시 `undefined`로 초기화됩니다.
+1. `var` 변수의 ( `function`으로 감싸진 ) 스코프 영역에 진입하면 변수를 위한 저장 공간( 바인딩 )이 생성되고 변수는 즉시 `undefined`로 초기화됩니다.
   `When the scope (its surrounding function) of a var variable is entered, storage space (a binding) is created for it. The variable is immediately initialized, by setting it to undefined.`
-2. 스코프 내에서 변수의 선언부에 도달하면 지정( 할당 )된 값으로 설정됩니다. 또는 지정된 값이 없는 경우에는 값은 여전히 `undefined`입니다.
+2. 변수는 선언부에 도달하면 지정( 할당 )된 값으로 설정됩니다. 또는 지정된 값이 없는 경우에 값은 여전히 `undefined`입니다.
    `When the execution within the scope reaches the declaration, the variable is set to the value specified by the initializer (an assignment) – if there is one. If there isn’t, the value of the variable remains undefined.`
 
 ### 9.4.2 `let`으로 선언된 변수의 라이프사이클 `The life cycle of let-declared variables`
@@ -234,11 +234,11 @@ logArgs('Hello', 'everyone');
 
 `Variables declared via let have temporal dead zones and their life cycles look like this:`
 
-1. `let` 변수의 블록으로 감싸진 스코프 영역에 진입하면 저장 공간( 스코프 )이 생성되고 값은 초기화되지 않습니다.
+1. `let` 변수의 블록으로 감싸진 스코프 영역에 진입하면 변수를 위한 저장 공간( 바인딩 )이 생성되고 값은 초기화되지 않습니다.
    `When the scope (its surrounding block) of a let variable is entered, storage space (a binding) is created for it. The variable remains uninitialized.`
 2.  초기화되지 않은 변수에 접근하면 `ReferenceError`가 발생합니다.
    `Getting or setting an uninitialized variable causes a ReferenceError.`
-3. 스코프 내에서 변수의 선언부에 도달하면 지정( 할당 )된 값으로 설정됩니다. 지정된 값이 없으면 값은 `undefined`로 설정됩니다.
+3. 변수의 선언부에 도달하면 지정( 할당 )된 값으로 설정됩니다. 지정된 값이 없으면 값은 `undefined`로 설정됩니다.
    `When the execution within the scope reaches the declaration, the variable is set to the value specified by the initializer (an assignment) – if there is one. If there isn’t then the value of the variable is set to undefined.`
 
 `const`변수도 `let`과 유사하게 동작하지만, 반드시 즉시 초기화( 값을 할당 )가 되어야 하고 할당된 값을 변경할 수 없습니다.
