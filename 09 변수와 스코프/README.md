@@ -583,11 +583,11 @@ bar();
 
 ## 9.7 전역 객체 `The global object`
 
-자바스크립트에서의 전역 객체( 웹 브라우저의 `window`, Node.js의 `global` )는 특히 성능적인 면에서는 기능이라기 보다 버그로 볼 수 있습니다. 따라서 `ES6`는 다른 방법을 소개합니다.
+자바스크립트에서의 전역 객체( 웹 브라우저의 `window`, Node.js의 `global` )는 특히 성능적인 면에서는 기능이라기 보다 버그에 가깝습니다. 따라서 `ES6`에서는 다음과 같은 구분을 도입하였습니다.
 
 `JavaScript’s global object (window in web browsers, global in Node.js) is more a bug than a feature, especially with regard to performance. That’s why it makes sense that ES6 introduces a distinction:`
 
-+ 모든 전역 객체의 속성은 전역 변수입니다. 전역 스코프에서 아래 선언들이 그렇습니다.  
++ 모든 전역 객체의 속성은 전역 변수입니다. 전역 스코프에서 아래 선언들은 전역 객체의 속성을 생성합니다.  
   `All properties of the global object are global variables. In global scope, the following declarations create such properties:`
  + `var` 선언  
    `var declarations`
@@ -659,18 +659,18 @@ bar();
 
 ## 9.9 코딩 스타일 : `const` 대 `let` 대 `var` `Coding style: const versus let versus var`
 
-항상 `let` 또는 `const`를 사용할 것을 추천합니다.
+항상 `let`과 `const`중 하나를 사용할 것을 추천합니다.
 
 `I recommend to always use either let or const:`
 
-1. `const`가 우선입니다. 값이 변경되지 않는 모든 곳에 사용할 수 있습니다. 다시 말해 변수가 절대 할당문의 좌변이 되지 않거나 `++` 또는 `--` 의 피연산자가 아닐 경우입니다. `const`의 값인 객체는 변경될 수 있습니다.  
+1. 먼저 `const`가 우선입니다. 값이 변경되지 않는 모든 곳에 사용할 수 있습니다. 다시 말해 변수가 절대 할당문의 좌변이 되지 않거나 `++` 또는 `--` 의 피연산자가 아닐 경우입니다. `const` 변수가 가리키는 객체는 변경될 수 있습니다.  
   `Prefer const. You can use it whenever a variable never changes its value. In other words: the variable should never be the left-hand side of an assignment or the operand of ++ or --. Changing an object that a const variable refers to is allowed:` 
 
   ```javascript
   const foo = {};
   ```
 
-  루프 반복마다 하나의 바인딩이 생성되기 때문에 `for-of` 반복문에서도 사용할 수 있습니다.
+  루프 반복마다 하나의 ( 불변 )바인딩이 생성되기 때문에 `for-of` 루프에서도 사용할 수 있습니다.
 
   `You can even use const in a for-of loop, because one (immutable) binding is created per loop iteration:`
 
@@ -705,13 +705,13 @@ bar();
 
 `If you follow these rules, var will only appear in legacy code, as a signal that careful refactoring is required.`
 
-`var`는 `let`과 `const`가 하지 않는 전역 객체의 속성이 되는 일을 합니다만 이것은 좋은 것이 아닙니다. 명시적으로 `window` 또는 `global`에 할당을 해도 효과는 같습니다.
+`var`는 `let`과 `const`가 하지 않는 전역 객체의 속성이 되는 일을 해주지만 이것은 일반적으로 좋지 않습니다. 필요하다면 `window` 또는 `global`에 속성을 할당을 해도 효과는 같습니다.
 
 `var does one thing that let and const don’t: variables declared via it become properties of the global object. However, that’s generally not a good thing. You can achieve the same effect by assigning to window (in browsers) or global (in Node.js).`
 
-### 9.9.1 대안. `An alternative approach`
+### 9.9.1 또 다른 스타일. `An alternative approach`
 
-앞에 언급한 코딩 스타일 규칙의 대안은 완전히 불변인 것들( 원시값과 동결된 객체들 )에는 `const`를 사용하는 것입니다. 그 후에 두가지 방법이 있습니다.
+앞에 언급한 코딩 스타일 규칙 뿐 아니라 완전히 불변인 값들( 원시값과 동결된 객체들 )에만 `const`를 사용하는 방법도 있습니다. 두 가지 방법은.
 
 `An alternative to the just mentioned style rules is to use const only for things that are completely immutable (primitive values and frozen objects). Then we have two approaches:`
 
