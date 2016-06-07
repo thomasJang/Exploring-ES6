@@ -583,7 +583,7 @@ bar();
 
 ## 9.7 전역 객체 `The global object`
 
-자바스크립트의 전역 객체( 웹 브라우저의 `window`, Node.js의 `global` )는 특히 성능적인 면에서 기능이라기 보다 버그로 볼 수 있습니다.
+자바스크립트에서의 전역 객체( 웹 브라우저의 `window`, Node.js의 `global` )는 특히 성능적인 면에서는 기능이라기 보다 버그로 볼 수 있습니다. 따라서 `ES6`는 다른 방법을 소개합니다.
 
 `JavaScript’s global object (window in web browsers, global in Node.js) is more a bug than a feature, especially with regard to performance. That’s why it makes sense that ES6 introduces a distinction:`
 
@@ -620,9 +620,9 @@ bar();
 `The following code demonstrates the hoisting of function declarations:`
 
 ```javascript
-{ // Enter a new scope
+{ // 새로운 스코프 진입
 
-    console.log(foo()); // OK, due to hoisting
+    console.log(foo()); // 호이스팅이 되기 때문에 정상.
     function foo() {
         return 'hello';
     }
@@ -639,19 +639,19 @@ bar();
 + 호이스팅되지 않습니다.  
   `are not hoisted.`
 
-클래스가 호이스팅되지 않는다는 것이 의아해 보일 수도 있습니다. 클래스가 생성하는 것이 함수이기 때문입니다. 호이스팅되지 않는 이유는 `extends` 절의 값들이 이미 선언되어 실행되어 있어야 하기 때문입니다.
+클래스가 호이스팅되지 않는다는 것이 의아해 보일 수도 있습니다. 클래스가 생성하는 것이 함수이기 때문입니다. 호이스팅되지 않는 이유는 `extends` 절의 값들이 이미 선언되고 실행되어 있어야 하기 때문입니다.
 
 `Classes not being hoisted may be surprising, because, under the hood, they create functions. The rationale for this behavior is that the values of their extends clauses are defined via expressions and those expressions have to be executed at the appropriate times.`
 
 ```javascript
-{ // Enter a new scope
+{ // 새로운 스코프 진입
 
     const identity = x => x;
 
-    // Here we are in the temporal dead zone of `MyClass`
+    // MyClass는 TDZ에 있다.
     const inst = new MyClass(); // ReferenceError
 
-    // Note the expression in the `extends` clause
+    // extend 절이 있다.
     class MyClass extends identity(Object) {
     }
 }
@@ -683,19 +683,19 @@ bar();
   // b
   ```
 
-  `for-of` 반복문의 바디 안에서는 변수 `x`를 변경할 수 없습니다.
+  `for-of` 루프의 바디 안에서는 변수 `x`를 변경할 수 없습니다.
 
   `Inside the body of the for-of loop, x can’t changed.`
 
-2. 그 외에 초기화된 변수의 값이 나중에 변경된다면 `let`을 사용합니다.  
+2. 그 외에, 변수의 초기값이 나중에 변경된다면 `let`을 사용합니다.  
   `Otherwise, use let – when the initial value of a variable changes later on.`
 
   ```javascript
-  let counter = 0; // initial value
-  counter++; // change
+  let counter = 0; // 초기값
+  counter++; // 값을 변경
   
-  let obj = {}; // initial value
-  obj = { foo: 123 }; // change
+  let obj = {}; // 초기값
+  obj = { foo: 123 }; // 값을 변경
   ```
 
 3. `var`는 사용하지 않습니다.  
@@ -705,13 +705,13 @@ bar();
 
 `If you follow these rules, var will only appear in legacy code, as a signal that careful refactoring is required.`
 
-`var`는 `let`과 `const`가 하지 않는 전역 객체의 속성이 되는 일을 합니다만 이것은 좋은 것이 아닙니다. `window` 또는 `global`을 사용하는 것이 낫습니다.
+`var`는 `let`과 `const`가 하지 않는 전역 객체의 속성이 되는 일을 합니다만 이것은 좋은 것이 아닙니다. 명시적으로 `window` 또는 `global`에 할당을 해도 효과는 같습니다.
 
 `var does one thing that let and const don’t: variables declared via it become properties of the global object. However, that’s generally not a good thing. You can achieve the same effect by assigning to window (in browsers) or global (in Node.js).`
 
 ### 9.9.1 대안. `An alternative approach`
 
-앞에 언급한 코딩 스타일 규칙 외에 대안은 완전히 불변인 것들( 원시값과 동결된 객체들 )에는 `const`를 사용하는 것입니다. 그렇게 되면 두가지 방법이 있습니다.
+앞에 언급한 코딩 스타일 규칙의 대안은 완전히 불변인 것들( 원시값과 동결된 객체들 )에는 `const`를 사용하는 것입니다. 그 후에 두가지 방법이 있습니다.
 
 `An alternative to the just mentioned style rules is to use const only for things that are completely immutable (primitive values and frozen objects). Then we have two approaches:`
 
