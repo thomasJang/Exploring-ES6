@@ -266,7 +266,7 @@ if (true) { // 스코프 진입. TDZ 시작
 console.log(tmp); // true
 ```
 
-초기화가 있는 경우 변수에 값이 할당되고나서 `TDZ`는 종료됩니다.
+초기화가 된 경우 변수에 값이 할당되고나서 `TDZ`는 종료됩니다.
 
 `If there is an initializer then the TDZ ends after the assignment was made:`
 
@@ -307,15 +307,15 @@ if (true) {
 }
 ```
 
-왜냐하면, 개발자가 `foo` 변수의 존재를 인지할 수는 있겠지만 이론적으로 `foo` 변수는 선언되지 않았고 초기화되지 않았기 때문입니다. 따라서 경고가 나타나는 것이 맞습니다.
+왜냐하면, 개발자가 `foo` 변수의 존재를 인지할 수는 있겠지만 이론적으로 `foo` 변수는 선언되지 않았고 초기화되지 않았기 때문입니다. 따라서 경고가 나타나는 것은 바람직합니다.
 
 `Why? The rationale is as follows: foo is not undeclared, it is uninitialized. You should be aware of its existence, but aren’t. Therefore, being warned seems desirable.`
 
-또한 이런 류의 체크는 전역 변수의 생성 여부를 체크하는 경우에만 유용합니다. 주로 자바스크립트 숙련자들이 사용하는데 `var`를 사용할 때만 유효합니다.
+또한 이런 류의 검사는 전역 변수의 생성 여부를 체크하는 경우에만 유용합니다. 주로 자바스크립트 숙련자들이 사용하는데 `var`를 사용할 때에만 유효합니다.
 
 `Furthermore, this kind of check is only useful for conditionally creating global variables. That’s something that only advanced JavaScript programmers should do and it can only be achieved via var.`
 
-전역 변수의 존재 여부는 `typeof`를 사용하지 않고 체크할 수도 있습니다.
+전역 변수의 존재 여부는 `typeof`를 사용하지 않고 검사할 수도 있습니다.
 
 `There is a way to check whether a global variable exists that does not involve typeof:`
 
@@ -331,17 +331,17 @@ if (!('someGlobal' in window)) {
 }
 ```
 
-전역 변수를 생성하는 전자의 방법은 글로벌 스코프에서만 작동합니다. 따라서, `ES6`모듈 안에서는 가능하지 않습니다.
+전역 변수를 생성하는 전자의 방법은 글로벌 스코프에서만 작동합니다. `ES6`모듈 안에서는 가능하지 않습니다.
 
 `The former way of creating a global variable only works in global scope (and therefore not inside ES6 modules).`
 
 ### 9.4.5 `TDZ`가 필요한 이유 `Why is there a temporal dead zone?`
 
-1. 프로그래밍 오류를 잡기위해 : 선언 전에 변수에 접근이 가능하다는 것은 이상합니다. 문제를 일으킬기 쉬운 부분이기 때문에 경고를 해주어야 합니다.
+1. 프로그래밍 에러를 잡기위해 : 선언 전에 변수에 접근이 가능하다는 것은 이상합니다. 문제를 일으키기 쉬운 부분이기 때문에 경고를 해주는 것이 좋습니다.
   `To catch programming errors: Being able to access a variable before its declaration is strange. If you do so, it is normally by accident and you should be warned about it.`
-2. `const` : `const`를 제대로 사용하는 것은 어렵습니다. Allen Wirfs-Brock의 말에 따르자면, "`TDZ`는 `const`를 위해 합리적인 의미론을 제공한다. 중요한 기술적인 토론이 있었고 `TDZ`가 최고의 솔루션으로 채택되었다." `let` 또한 `TDZ`를 가지고 있기 때문에 `let`과 `const`를 서로 교체하는 것은 일반적으로 문제가 되지 않습니다.
+2. `const`를 위해 : `const`를 제대로 사용하는 것은 어렵습니다. Allen Wirfs-Brock의 말에 따르자면, "`TDZ`는 `const`를 위해 합리적인 의미론을 제공한다. 이 주제에 대한 중요한 기술적인 토론이 있었고 `TDZ`가 최고의 솔루션으로 채택되었다." `let` 또한 `TDZ`를 가지고 있기 때문에 `let`과 `const`를 서로 바꾸어 써도 예상치 못하게 동작하는 일은 없습니다.
   `For const: Making const work properly is difficult. Quoting Allen Wirfs-Brock: “TDZs … provide a rational semantics for const. There was significant technical discussion of that topic and TDZs emerged as the best solution.” let also has a temporal dead zone so that switching between let and const doesn’t change behavior in unexpected ways.`
-3. 판단를 위한 유연성 : 자바스크립트는 최종적으로 런타임에 변수가 올바른 값을 가지고있는지 판단할 수도 있습니다. ( 런타임 타입 체크 ) 변수의 값이 선언되기 전에 `undefined`라면 값은 판단을 통해 얻은 결과와 충돌할 수 있습니다.
+3. 추후 `guards`를 지원하기 위해 : 자바스크립트는 언젠가 런타임에 변수가 올바른 값을 가지고 있는지 검사( 타입 체크처럼 )하는 매커니즘인 `guards`를 가질 수도 있습니다. 변수가 선언되기 전에 이미 `undefined`값을 가지고 있다면 `guards`가 보장해 주는 결과와 충돌이 일어날 수 있습니다.  
   `Future-proofing for guards: JavaScript may eventually have guards, a mechanism for enforcing at runtime that a variable has the correct value (think runtime type check). If the value of a variable is undefined before its declaration then that value may be in conflict with the guarantee given by its guard.`
 
 ### 9.4.6 더 읽을거리 `Further reading`
@@ -351,7 +351,7 @@ if (!('someGlobal' in window)) {
 - [“Performance concern with let/const”](https://esdiscuss.org/topic/performance-concern-with-let-const)
 - [“Bug 3009 – typeof on TDZ variable”](https://bugs.ecmascript.org/show_bug.cgi?id=3009)
 
-## 9.5 루프 헤드 안에서의 `let` 과 `const` `let and const in loop heads`
+## 9.5 루프 헤드에서의 `let` 과 `const` `let and const in loop heads`
 
 다음 루프들에서는 변수를 루프의 헤드에 선언할 수 있습니다.
 
@@ -361,7 +361,7 @@ if (!('someGlobal' in window)) {
 + for-in
 + for-of
 
-변수를 선언할 때, `var`, `let` 또는 `const`를 사용할 수 있습니다. 각각은 다른 효과를 가지는데 뒷 부분에서 자세히 다루겠습니다.
+변수를 선언할 때, `var`, `let` 또는 `const`를 사용할 수 있습니다. 각각의 다른 점을 설명하겠습니다.
 
 `To make a declaration, you can use either var, let or const. Each of them has a different effect, as I’ll explain next.`
 
@@ -379,7 +379,7 @@ for (var i = 0; i < 3; i++) {
 arr.map(x => x()); // [3,3,3]
 ```
 
-바디안에서 세번 실행되는 화살표 함수의 모든 `i` 변수는 같은 바인딩을 참조하고 있습니다. 그렇기 때문에 모든 반환값이 같게 됩니다.
+바디안에서 세번 실행되는 화살표 함수의 모든 `i` 변수는 같은 바인딩을 가리키고 있습니다. 따라서 모든 반환값이 같게 됩니다.
 
 `Every i in the bodies of the three arrow functions refers to the same binding, which is why they all return the same value.`
 
@@ -395,7 +395,7 @@ for (let i = 0; i < 3; i++) {
 arr.map(x => x()); // [0,1,2]
 ```
 
-이제, `i`는 매 반복마다 바인딩되고, 바인딩 된 시점을 기준으로 값을 가집니다. 따라서 각 화살표 함수는 다른 값을 반환합니다.
+이번에는 `i`가 매 반복마다 바인딩되고, 바인딩 된 시점을 기준으로 값을 가집니다. 따라서 각 화살표 함수는 다른 값을 반환합니다.
 
 `This time, each i refers to the binding of one specific iteration and preserves the value that was current at that time. Therefore, each arrow function returns a different value.`
 
@@ -403,7 +403,7 @@ arr.map(x => x()); // [0,1,2]
 
 `const works like var, but you can’t change the initial value of a const-declared variable:`
 
-반복마다 새로운 바인딩을 얻는 것이 처음엔 이상해 보일 수 있지만, 다음 예처럼 루프 내에서 루프 변수를 참조하는 함수를 생성하는 경우에 매우 유용합니다.
+반복마다 새로운 바인딩을 얻는 것이 처음엔 이상해 보일 수 있지만, 다음 예제처럼 루프 내에서 루프 변수를 참조하는 함수를 생성하는 경우에 매우 유용합니다.
 
 `Getting a fresh binding for each iteration may seem strange at first, but it is very useful whenever you use loops to create functions that refer to loop variables, as explained in a later section.`
 
@@ -495,7 +495,7 @@ arr.map(x => x()); // [0,1,2]
 </html>
 ```
 
-무엇이 보여질지는 B라인에 있는 `target`변수에 따라 다릅니다. A라인에서 `let` 대신 `var`를 사용했다면, 모든 루프 반복에서 단일 바인딩을 사용했을 것이고 `target`의 값은 `vielleicht`가 되었을 것입니다. 그래서 어떤 링크를 클릭하더라도 항상 독일어로 번역이 되었을 것입니다.
+무엇이 보여질지는 B라인에 있는 `target`변수에 따라 다릅니다. 만약 A라인에서 `let` 대신 `var`를 사용했다면, 모든 루프 반복에서 단일 바인딩을 사용했을 것이고 `target`의 값은 결국 `vielleicht`가 되었을 것입니다. 따라서 어떤 링크를 클릭하더라도 항상 독일어로 번역이 되었을 것입니다.
 
 `What is displayed depends on the variable target (line B). If we were to use var instead of let in line (A), there would be a single binding for the whole loop and target would have the value 'vielleicht', afterwards. Therefore, no matter what link you click on, you would always get the translation 'vielleicht'.`
 
@@ -507,7 +507,7 @@ arr.map(x => x()); // [0,1,2]
 
 ### 9.6.1 파라미터 와 로컬 변수 `Parameters versus local variables`
 
-만약 `let`으로 선언한 변수가 파라미터와 같은 이름으로 선언된다면 정적 오류(load-time)가 발생합니다.
+만약 `let`으로 선언한 변수가 파라미터와 같은 이름으로 선언된다면 정적 에러(load-time)가 발생합니다.
 
 `If you let-declare a variable that has the same name as a parameter, you get a static (load-time) error:`
 
@@ -548,7 +548,7 @@ function func(arg) {
 
 ### 9.6.2 파라미터 기본값과 TDZ `Parameter default values and the temporal dead zone`
 
-파라미터가 기본값을 가지는 경우, `let` 선언문처럼 취급되고 `TDZ`를 가지게 됩니다.
+파라미터가 기본값을 가지는 경우, `let` 선언의 연속처럼 처리되고 `TDZ`를 가지게 됩니다.
 
 `If parameters have default values, they are treated like a sequence of let statements and are subject to temporal dead zones:`
 
@@ -568,7 +568,7 @@ bar(); // ReferenceError
 
 ### 9.6.3 파라미터의 기본값은 바디의 스코프를 알지 못한다.  `Parameter default values don’t see the scope of the body`
 
-파라미터의 기본값 스코프는 바디의 스코프와는 다릅니다. 파라미터 기본값으로 선언된 메소드나 함수는 바디 내의 지역 변수를 참조할 수 없습니다.
+파라미터의 기본값 스코프는 바디의 스코프와는 다릅니다. ( 전자가 후자를 감쌉니다. ) 파라미터의 기본값으로 정의된 메소드나 함수는 바디 내의 지역 변수를 참조할 수 없습니다.
 
 `The scope of parameter default values is separate from the scope of the body (the former surrounds the latter). That means that methods or functions defined “inside” parameter default values don’t see the local variables of the body:`
 
