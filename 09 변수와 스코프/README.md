@@ -266,7 +266,7 @@ if (true) { // 스코프 진입. TDZ 시작
 console.log(tmp); // true
 ```
 
-초기화가 있는 경우 변수에 값이 할당되고나서 TDZ는 종료됩니다.
+초기화가 있는 경우 변수에 값이 할당되고나서 `TDZ`는 종료됩니다.
 
 `If there is an initializer then the TDZ ends after the assignment was made:`
 
@@ -361,13 +361,13 @@ if (!('someGlobal' in window)) {
 + for-in
 + for-of
 
-변수를 선언할 때, `var`, `let` 또는 `const`를 사용할 수 있습니다. 각각은 다른 효과를 가지는데 뒷 부분에서 다루겠습니다.
+변수를 선언할 때, `var`, `let` 또는 `const`를 사용할 수 있습니다. 각각은 다른 효과를 가지는데 뒷 부분에서 자세히 다루겠습니다.
 
 `To make a declaration, you can use either var, let or const. Each of them has a different effect, as I’ll explain next.`
 
-### 9.5.1 for loop `for loop`
+### 9.5.1 for 루프 `for loop`
 
-`for` 루프의 헤드에서 선언한 변수는 변수를 위한 하나의 바인딩( 저장 공간 )을 생성합니다.
+`for` 루프의 헤드에서 선언한 `var`변수는 변수를 위한 단일 바인딩( 저장 공간 )을 생성합니다.
 
 `var-declaring a variable in the head of a for loop creates a single binding (storage space) for that variable:`
 
@@ -379,13 +379,11 @@ for (var i = 0; i < 3; i++) {
 arr.map(x => x()); // [3,3,3]
 ```
 
-바디안에서 세개의 화살표 함수가 참조하고있는 모든 `i` 변수는 하나의 바인딩을 참조하고 있습니다. 그렇기 때문에 모든 반환값이 같게 됩니다.
+바디안에서 세번 실행되는 화살표 함수의 모든 `i` 변수는 같은 바인딩을 참조하고 있습니다. 그렇기 때문에 모든 반환값이 같게 됩니다.
 
 `Every i in the bodies of the three arrow functions refers to the same binding, which is why they all return the same value.`
 
-만일 let으로 변수를 선언하면, 새로운 바인딩이 루프 이터레이션마다 생성된다.
-
-`let`으로 변수를 선언하면 `for` 루프의 반목마다 새로운 바인딩이 생성됩니다.
+`let`으로 변수를 선언하면 `for` 루프의 반복마다 새로운 바인딩이 생성됩니다.
 
 `If you let-declare a variable, a new binding is created for each loop iteration:`
 
@@ -397,11 +395,11 @@ for (let i = 0; i < 3; i++) {
 arr.map(x => x()); // [0,1,2]
 ```
 
-이제, `i`는 반복마다 한번씩 바인딩되고, 바인딩 된 시점을 기준으로 값을 가집니다. 따라서 각 화살표 함수는 다른 값을 반환합니다.
+이제, `i`는 매 반복마다 바인딩되고, 바인딩 된 시점을 기준으로 값을 가집니다. 따라서 각 화살표 함수는 다른 값을 반환합니다.
 
 `This time, each i refers to the binding of one specific iteration and preserves the value that was current at that time. Therefore, each arrow function returns a different value.`
 
-`const`는 `var`처럼 동작하지만, 선언 시점에 초기화된 값을 변경할 수 없습니다.
+`const`는 `var`처럼 동작하지만, 선언 시점의 초기값을 변경할 수는 없습니다.
 
 `const works like var, but you can’t change the initial value of a const-declared variable:`
 
@@ -409,13 +407,13 @@ arr.map(x => x()); // [0,1,2]
 
 `Getting a fresh binding for each iteration may seem strange at first, but it is very useful whenever you use loops to create functions that refer to loop variables, as explained in a later section.`
 
-> *:notebook: for loop: 반복마다 바인딩에 관한 스펙 `for loop: per-iteration bindings in the spec`  
+> *:notebook: `for` 루프 반복마다 바인딩에 관한 스펙 `for loop: per-iteration bindings in the spec`  
 > `for` 루프의 평가는 `var`를 두번째로 처리하고 `let`, `const`를 세번째로 처리합니다. `let`으로 선언된 변수만이 `ForBodyEvaluation()`에 두번째 이후의 파라미터 `perIterationBindings`로 전달되는 `perIterationLets`( 9장 참고 ) 리스트에 추가됩니다.  
 > `The evaluation of the for loop handles var as the second case and let/const as the third case. Only let-declared variables are added to the list perIterationLets (step 9), which is passed to ForBodyEvaluation() as the second-to-last parameter, perIterationBindings.`
 
-### 9.5.2 for-of loop 와 for-in loop `for-of loop and for-in loop`
+### 9.5.2 `for-of` 루프와 `for-in` 루프 `for-of loop and for-in loop`
 
-`for-of` 루프에서 `var`는 하나의 바인딩을 생성합니다.
+`for-of` 루프에서 `var`는 단일 바인딩을 생성합니다.
 
 `In a for-of loop, var creates a single binding:`
 
@@ -427,7 +425,7 @@ for (var i of [0, 1, 2]) {
 arr.map(x => x()); // [2,2,2]
 ```
 
-`let`은 반복마다 바인딩을 하나씩 생성합니다.
+`let`은 매 반복마다 바인딩을 생성합니다.
 
 `let creates one binding per iteration:`
 
@@ -447,7 +445,7 @@ arr.map(x => x()); // [0,1,2]
 
 `The for-in loop works similarly to the for-of loop.`
 
-> :notebook: for-of loop: 반복마다 바인딩되는 스펙 `for-of loop: per-iteration bindings in the spec`  
+> :notebook: `for-of` 루프 반복마다 바인딩되는 스펙 `for-of loop: per-iteration bindings in the spec`  
 > `for-of`에서 반복마다 바인딩은 `ForIn/OfBodyEvaluation`에서 제어합니다. 5.b장을 보면, `BindingInstantiation`( 가변 `let`, 불변 `const` )을 통해서 새로운 환경이 생성되고 바인딩이 추가됩니다. 현재 반복 변수가 `nextValue` 변수에 저장되고 둘 중 하나의 방법으로 바인딩 초기화에 사용됩니다.  
 > `Per-iteration bindings in for-of are handled by ForIn/OfBodyEvaluation. In step 5.b, a new environment is created and bindings are added to it via BindingInstantiation (mutable for let, immutable for const). The current iteration value is stored in the variable nextValue and used to initialize the bindings in either one of two ways:`
 > + 하나의 변수 선언(5.h.i장)은 `InitializeReferencedBinding`을 통해 제어됩니다.  
@@ -497,7 +495,7 @@ arr.map(x => x()); // [0,1,2]
 </html>
 ```
 
-무엇이 보여질지는 B라인에 있는 `target`변수에 따라 다릅니다. A라인에서 `let` 대신 `var`를 사용했다면, 모든 루프 반복에서 하나의 바인딩을 사용했을 것이고 `target`의 값은 `vielleicht`가 되었을 것입니다. 그래서 어떤 링크를 클릭하더라도 항상 독일어로 번역이 되었을 것입니다.
+무엇이 보여질지는 B라인에 있는 `target`변수에 따라 다릅니다. A라인에서 `let` 대신 `var`를 사용했다면, 모든 루프 반복에서 단일 바인딩을 사용했을 것이고 `target`의 값은 `vielleicht`가 되었을 것입니다. 그래서 어떤 링크를 클릭하더라도 항상 독일어로 번역이 되었을 것입니다.
 
 `What is displayed depends on the variable target (line B). If we were to use var instead of let in line (A), there would be a single binding for the whole loop and target would have the value 'vielleicht', afterwards. Therefore, no matter what link you click on, you would always get the translation 'vielleicht'.`
 
@@ -509,7 +507,7 @@ arr.map(x => x()); // [0,1,2]
 
 ### 9.6.1 파라미터 와 로컬 변수 `Parameters versus local variables`
 
-만약 `let`으로 선언한 변수가 파라미터와 같은 이름으로 선언되면 정적 오류(load-time)가 발생합니다.
+만약 `let`으로 선언한 변수가 파라미터와 같은 이름으로 선언된다면 정적 오류(load-time)가 발생합니다.
 
 `If you let-declare a variable that has the same name as a parameter, you get a static (load-time) error:`
 
@@ -526,7 +524,7 @@ function func(arg) {
 ```javascript
 function func(arg) {
     {
-        let arg; // shadows parameter `arg`
+        let arg; // arg 파라미터는 가려진다.
     }
 }
 ```
@@ -537,31 +535,31 @@ function func(arg) {
 
 ```javascript
 function func(arg) {
-    var arg; // does nothing
+    var arg; // 아무일도 일어나지 않는다.
 }
 
 function func(arg) {
     {
-        // We are still in same `var` scope as `arg`
-        var arg; // does nothing
+        // arg는 여전히 같은 var 스코프에 존재.
+        var arg; // 아무일도 일어나지 않는다.
     }
 }
 ```
 
 ### 9.6.2 파라미터 기본값과 TDZ `Parameter default values and the temporal dead zone`
 
-파라미터가 기본값을 가지는 경우, `let` 선언문처럼 취급되고 TDZ를 갖게 됩니다.
+파라미터가 기본값을 가지는 경우, `let` 선언문처럼 취급되고 `TDZ`를 가지게 됩니다.
 
 `If parameters have default values, they are treated like a sequence of let statements and are subject to temporal dead zones:`
 
 ```javascript
-// OK: `y` accesses `x` after it has been declared
+// 정상: y는 x가 선언된 이후에 x에 접근하고 있다.
 function foo(x=1, y=x) {
     return [x, y];
 }
 foo(); // [1,1]
 
-// Exception: `x` tries to access `y` within TDZ
+// 에러: x가 TDZ안에서 y에 접근하고 있다.
 function bar(x=y, y=2) {
     return [x, y];
 }
@@ -570,7 +568,7 @@ bar(); // ReferenceError
 
 ### 9.6.3 파라미터의 기본값은 바디의 스코프를 알지 못한다.  `Parameter default values don’t see the scope of the body`
 
-파라미터의 기본값 스코프는 바디의 스코프와 는 다릅니다. 파라미터 기본값으로 선언된 메소드나 함수는 바디 내의 지역 변수를 참조할 수 없습니다.
+파라미터의 기본값 스코프는 바디의 스코프와는 다릅니다. 파라미터 기본값으로 선언된 메소드나 함수는 바디 내의 지역 변수를 참조할 수 없습니다.
 
 `The scope of parameter default values is separate from the scope of the body (the former surrounds the latter). That means that methods or functions defined “inside” parameter default values don’t see the local variables of the body:`
 
@@ -685,7 +683,7 @@ bar();
   // b
   ```
 
-  `for-of` 반복문의 몸체 안에서는 변수 `x`를 변경할 수 없습니다.
+  `for-of` 반복문의 바디 안에서는 변수 `x`를 변경할 수 없습니다.
 
   `Inside the body of the for-of loop, x can’t changed.`
 
