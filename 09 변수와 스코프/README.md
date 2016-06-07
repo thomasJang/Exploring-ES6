@@ -241,9 +241,7 @@ logArgs('Hello', 'everyone');
 3. 스코프 내에서 변수의 선언부에 도달하면 지정( 할당 )된 값으로 설정됩니다. 지정된 값이 없으면 값은 `undefined`로 설정됩니다.
    `When the execution within the scope reaches the declaration, the variable is set to the value specified by the initializer (an assignment) – if there is one. If there isn’t then the value of the variable is set to undefined.`
 
-const 변수도 let 변수와 비슷한 동작을 한다. 그러나 반드시 이니셜라이저를 가져야 하고 (예를 들면 즉시 값 설정이 되어야 한다는 뜻이다) 변경할 수 없다.
-
-`const`변수도 `let`과 유사하게 동작하지만, 반드시 즉시 초기화가 되어야 하고 값을 변경할 수 없습니다.
+`const`변수도 `let`과 유사하게 동작하지만, 반드시 즉시 초기화( 값을 할당 )가 되어야 하고 할당된 값을 변경할 수 없습니다.
 
 `const variables work similarly to let variables, but they must have an initializer (i.e., be set to a value immediately) and can’t be changed.`
 
@@ -276,7 +274,7 @@ console.log(tmp); // true
 let foo = console.log(foo); // ReferenceError
 ```
 
-다음 코드는 `TDZ`가 일시적( 시간 기준 )이며, 공간( 위치 ) 기준이 아님을 보여줍니다.
+다음 예제는 `TDZ`가 실제로 일시적( 시간 기준 )이며, 공간( 위치 ) 기준이 아님을 보여줍니다.
 
 `The following code demonstrates that the dead zone is really temporal (based on time) and not spatial (based on location):`
 
@@ -293,7 +291,7 @@ if (true) { // 새로운 스코프 진입. TDZ 시작
 }
 ```
 
-### 9.4.4 `TDZ` 안에서 typeof를 사용시 ReferenceError가 발생하는 경우
+### 9.4.4 `TDZ` 안에서 `typeof`를 사용시 `ReferenceError`가 발생하는 경우
 
 `typeof throws a ReferenceError for a variable in the TDZ`
 
@@ -309,15 +307,15 @@ if (true) {
 }
 ```
 
-왜냐하면, 개발자가 `foo`의 존재를 인지할 수는 있지만 이론적으로 `foo` 변수는 선언되지 않았고 초기화되지 않았기 때문입니다. 따라서 경고가 나타나는 것이 맞습니다.
+왜냐하면, 개발자가 `foo` 변수의 존재를 인지할 수는 있겠지만 이론적으로 `foo` 변수는 선언되지 않았고 초기화되지 않았기 때문입니다. 따라서 경고가 나타나는 것이 맞습니다.
 
 `Why? The rationale is as follows: foo is not undeclared, it is uninitialized. You should be aware of its existence, but aren’t. Therefore, being warned seems desirable.`
 
-또한 이런 류의 체크는 전역 변수의 생성 여부를 체크하는 경우에만 유용합니다. 자바스크립트 숙련자만들은 이렇게 사용하고 있고 `var`를 사용할 때만 사용할 수 있습니다.
+또한 이런 류의 체크는 전역 변수의 생성 여부를 체크하는 경우에만 유용합니다. 주로 자바스크립트 숙련자들이 사용하는데 `var`를 사용할 때만 유효합니다.
 
 `Furthermore, this kind of check is only useful for conditionally creating global variables. That’s something that only advanced JavaScript programmers should do and it can only be achieved via var.`
 
-전역 변수의 존재 여부를 `typeof`를 사용하지 않고 체크하는 방법도 있습니다.
+전역 변수의 존재 여부는 `typeof`를 사용하지 않고 체크할 수도 있습니다.
 
 `There is a way to check whether a global variable exists that does not involve typeof:`
 
@@ -333,7 +331,7 @@ if (!('someGlobal' in window)) {
 }
 ```
 
-전역 변수를 생성하는 전자의 방법은 글로벌 스코프에서만 작동합니다. 따라서, `ES6`에서는 가능하지 않습니다.
+전역 변수를 생성하는 전자의 방법은 글로벌 스코프에서만 작동합니다. 따라서, `ES6`모듈 안에서는 가능하지 않습니다.
 
 `The former way of creating a global variable only works in global scope (and therefore not inside ES6 modules).`
 
@@ -341,9 +339,9 @@ if (!('someGlobal' in window)) {
 
 1. 프로그래밍 오류를 잡기위해 : 선언 전에 변수에 접근이 가능하다는 것은 이상합니다. 문제를 일으킬기 쉬운 부분이기 때문에 경고를 해주어야 합니다.
   `To catch programming errors: Being able to access a variable before its declaration is strange. If you do so, it is normally by accident and you should be warned about it.`
-2. `const` : `const`를 제대로 사용하는 것은 어렵습니다. Allen Wirfs-Brock의 말에 따르자면, "TDZ는 `const`를 위해 합리적인 의미를 제공한다. 중요한 기술적인 토론이 있었고 TDZ가 최고의 솔루션으로 채택되었다." `let` 또한 `TDZ`를 가지고 있기 때문에 `let`과 `const`를 서로 교체하는 것은 예상치 못한 문제가 발생하는 것을 예방한다.
+2. `const` : `const`를 제대로 사용하는 것은 어렵습니다. Allen Wirfs-Brock의 말에 따르자면, "`TDZ`는 `const`를 위해 합리적인 의미론을 제공한다. 중요한 기술적인 토론이 있었고 `TDZ`가 최고의 솔루션으로 채택되었다." `let` 또한 `TDZ`를 가지고 있기 때문에 `let`과 `const`를 서로 교체하는 것은 일반적으로 문제가 되지 않습니다.
   `For const: Making const work properly is difficult. Quoting Allen Wirfs-Brock: “TDZs … provide a rational semantics for const. There was significant technical discussion of that topic and TDZs emerged as the best solution.” let also has a temporal dead zone so that switching between let and const doesn’t change behavior in unexpected ways.`
-3. 방어를 위한 교정 : 자바스크립트는 결국 런타임에 변수가 올바른 값( 타입 체크를 통해서 )을 가지고있는지 방어할 수도 있습니다. 변수의 값이 선언되기 전에 `undefined`라면 값은 방어를 통해 얻은 인증과 충돌할 수 있습니다.
+3. 판단를 위한 유연성 : 자바스크립트는 최종적으로 런타임에 변수가 올바른 값을 가지고있는지 판단할 수도 있습니다. ( 런타임 타입 체크 ) 변수의 값이 선언되기 전에 `undefined`라면 값은 판단을 통해 얻은 결과와 충돌할 수 있습니다.
   `Future-proofing for guards: JavaScript may eventually have guards, a mechanism for enforcing at runtime that a variable has the correct value (think runtime type check). If the value of a variable is undefined before its declaration then that value may be in conflict with the guarantee given by its guard.`
 
 ### 9.4.6 더 읽을거리 `Further reading`
