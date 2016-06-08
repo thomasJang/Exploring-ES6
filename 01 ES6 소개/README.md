@@ -38,9 +38,10 @@ A proposal goes through the following steps before it becomes a standard:
 https://en.wikipedia.org/wiki/Straw_man
 * 제안 Proposal: TC39가 기능이 중요하다고 동의하면, 공식 제안 상태가 된다. 공식 제안은 표준이 된다는것을 보장하지 않지만 이 제안은 큰 가능성이 있다. ES6 제안의 마지막 기한은 2011년 5월 이였다. 그 이후에 더 중요한 제안은 고려되지 않았다.
 * 구현 Implementations: 제안된 기능은 이상적으로 두 자바스크립트 엔진에서 반드시 구현되어야 한다. 구현과 커뮤니티로부터의 피드백은 제안을 진화시키면서 다듬는다.
-* 표준 Standard: 만약 제안이 계속적으로 스스로를 증명하고 TC39에 의해서 받아드려진다면, 그것은 마침내 ECMAScript 표준 판으로 추가된다. 이 시점에서 제안은 표준기능이다.
+* 표준 Standard: 제안이 증명되고 TC39가 받아들이면, 마침내 ECMAScript 표준 판으로 추가된다. 이 시점에서 제안은 표준기능이다.
 
 [Source of this section: “The Harmony Process” by David Herman.]
+[이 절의 원문: "The Harmony Process" 다비드허만]
 
 ### 1.2.1 The design process after ES6
 ### 1.2.1 ES6이후 설계 과정
