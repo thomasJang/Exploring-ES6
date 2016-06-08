@@ -211,8 +211,9 @@ For this section, you should be familiar with ES6 iteration. The previous chapte
 
 As explained before, generator objects can be data producers, data consumers or both. This section looks at them as data producers, where they implement both the interfaces Iterable and Iterator (shown below). That means that the result of a generator function is both an iterable and an iterator. The full interface of generator objects will be shown later.
 
-이전에 설명으로 제너레이터 객체는 데이터 생성자, 데이터 소비자 또는 둘다 될 수 있습니다. 이 섹션에서 데이터 소비자로써 볼 것이고, 이터러블이나 이터레이터 둘다 구현을 
+이전에 설명으로 제너레이터 객체는 데이터 생성자, 데이터 소비자 또는 둘다 될 수 있습니다. 이 섹션에서 데이터 소비자로써 볼 것이고, 이터러블이나 이터레이터 인터페이스(아래 보이는) 둘 다 구현을 볼 것입니다. 이것은 제너레이터 함수의 결과가 이터러블과 이터레이터라는것을 의미 합니다. 제너레이터의 전체 인터페이스는 아래를 보면 됩니다.
 
+```
 interface Iterable {
     [Symbol.iterator]() : Iterator;
 }
@@ -223,36 +224,61 @@ interface IteratorResult {
     value : any;
     done : boolean;
 }
+```
 I have omitted method return() of interface Iterable, because it is not relevant in this section.
+
+이터러블의 인터페이스인 return()이 빠진 이유는 이것은 이번 센셕과 연관이 없기 때문입니다.
 
 A generator function produces a sequence of values via yield, a data consumer consumes thoses values via the iterator method next(). For example, the following generator function produces the values 'a' and 'b':
 
+이 제너레이터 함수는 yield를 통한 값의 순서열을 생산하고, 데이터 소비자는 이터러블 메소드인 next()를 통해서 이 값들을 소비 합니다. 예를 들면 아래 제너레이터 함수는 'a'와 'b'값을 생산합니다. :
+
+```javascript
 function* genFunc() {
     yield 'a';
     yield 'b';
 }
+```
+
 This interaction shows how to retrieve the yielded values via the generator object genObj:
 
+이 상호작용은 제너레이터 객체인 genObj를 통해 일드된 값을 어떻게 순환하는지 보여줍니다.:
+
+```javascript
 > const genObj = genFunc();
 > genObj.next()
 { value: 'a', done: false }
 > genObj.next()
 { value: 'b', done: false }
-> genObj.next() // done: true => end of sequence
+> genObj.next() // done: true => 순서열 종료
 { value: undefined, done: true }
-22.3.1 Ways of iterating over a generator
+```
+
+### 22.3.1 Ways of iterating over a generator
+### 22.3.1 제너레이터 전체 반복하는 방법
+
 As generator objects are iterable, ES6 language constructs that support iterables can be applied to them. The following three ones are especially important.
+
+제너레이터 객체는 이터러블로써, ES6언어에서이터러블을 지원하는 구조에서 적용할 수 있게 합니다. 아래 세개는 특히 중요 합니다.  
 
 First, the for-of loop:
 
+첫째, for-of 루프문:
+
+```javascript
 for (const x of genFunc()) {
     console.log(x);
 }
-// Output:
+// 출력:
 // a
 // b
+```
+
 Second, the spread operator (...), which turns iterated sequences into elements of an array (consult the chapter on parameter handling for more information on this operator):
 
+둘째, 펼침 연산자 (...), 이것은 반복된 순서열을 배열의 원소들고 변환합니다. (파라미터를 다루는 이 연산자에 대한 더 많은 정보는 이 쳅터에서 확인 하세요.)
+
+```javascript
 const arr = [...genFunc()]; // ['a', 'b']
 Third, destructuring:
 
@@ -261,16 +287,27 @@ Third, destructuring:
 'a'
 > y
 'b'
-22.3.2 Returning from a generator
+```
+
+### 22.3.2 Returning from a generator
+### 22.3.2 제너레이터로부터 return
+
 The previous generator function did not contain an explicit return. An implicit return is equivalent to returning undefined. Let’s examine a generator with an explicit return:
 
+이전 제너레이터 함수는 명시적인 return을 포함하지 않습니다. 명시적인 return은 undefined를 반환하는것과 동일 합니다. 명시적인 return이 있을때 제너레이터를 살펴 봅시다.
+
+```javascript
 function* genFuncWithReturn() {
     yield 'a';
     yield 'b';
     return 'result';
 }
+```
 The returned value shows up in the last object returned by next(), whose property done is true:
 
+next()를 통한 마지막으로 반환된 객체에서 반환된 값은 나타나고, 이때 done 프로퍼티의 값은 true입니다.
+
+```javascript
 > const genObjWithReturn = genFuncWithReturn();
 > genObjWithReturn.next()
 { value: 'a', done: false }
@@ -278,8 +315,12 @@ The returned value shows up in the last object returned by next(), whose propert
 { value: 'b', done: false }
 > genObjWithReturn.next()
 { value: 'result', done: true }
+```
 However, most constructs that work with iterables ignore the value inside the done object:
 
+그러나 대부분의 이터러블이 작동하는 구조에서는 done객체의 value를 무시합니다.
+
+```javascript
 for (const x of genFuncWithReturn()) {
     console.log(x);
 }
@@ -288,7 +329,11 @@ for (const x of genFuncWithReturn()) {
 // b
 
 const arr = [...genFuncWithReturn()]; // ['a', 'b']
+```
+
 yield*, an operator for making recursive generator calls, does consider values inside done objects. It is explained later.
+
+재귀적인 제너레이터 호출을 위한 연산자 yield*는 done 객체의 value값이 고려 되어 집니다. 이것은 나중에 설명 드리겠습니다. 
 
 22.3.3 Throwing an exception from a generator
 If an exception leaves the body of a generator then next() throws it:
