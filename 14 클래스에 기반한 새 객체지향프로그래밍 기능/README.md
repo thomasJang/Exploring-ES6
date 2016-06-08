@@ -1102,17 +1102,25 @@ In other words: Object.assign() was created with an upgrade path from $.extend()
 ### 14.7.3.3 프로퍼티를 비공개로 두기
 
 If you make a property non-enumerable, it can’t by seen by Object.keys() and the for-in loop, anymore. With regard to those mechanisms, the property is private.
+열거가능하지 않은 프로퍼티를 만든다면, Object.keys()나 for-in 루프에서 더이상 보여서는 안된다. 이런 메카니즘으로 프로퍼티는 비공개이다.
 
 However, there are several problems with this approach:
+이러한 접근에는 몇가지 문제가 있다:
 
     When copying an object, you normally want to copy private properties. That clashes making properties non-enumerable that shouldn’t be copied (see previous section).
     The property isn’t really private. Getting, setting and several other mechanisms make no distinction between enumerable and non-enumerable properties.
     When working with code either as source or interactively, you can’t immediately see whether a property is enumerable or not. A naming convention (such as prefixing property names with an underscore) is easier to discover.
     You can’t use enumerability to distinguish between public and private methods, because methods in prototypes are non-enumerable by default.
+    보통 객체를 복사할 때 비공개 프로퍼티도 함께 복사하길 원한다. 이 충돌은 열거가능하지 않은 속성을 만들어내, 복사할 수 없게 만든다(앞의 섹션을 봐라).
+    그 프로퍼티는 정말 비공개는 아니다. getting, setting 그리고 몇가지 다른 메커니즘은 열거, 비열거 프로퍼티 사이에 구분을 두지 않는다.
+    코드가 소스 혹은 상호작용으로 동작할 때, 프로퍼티가 열거가능한지 여부를 바로 알 수 없다. ??
 
 ### 14.7.3.4 Hiding own properties from JSON.stringify()
+### 14.7.3.4 고유의 프로퍼티를 JSON.stringify()로부터 숨기기
 
 JSON.stringify() does not include properties in its output that are non-enumerable. You can therefore use enumerability to determine which own properties should be exported to JSON. This use case is similar to marking properties as private, the previous use case. But it is also different, because this is more about exporting and slightly different considerations apply. For example: Can an object be completely reconstructed from JSON?
+JSON.stringify() 는 출력시에 프로퍼티를 포함하지 않고 열거불가능하다. 이는 또 다른데, 내보내기에 좀더 관련이 있고 적용하는 것과는 조금 거리가 있기 때문이다. ??
+예를 들어: 어떤 객체가 JSON에서 완벽히 재건될 수 있을까?
 
 An alternative for specifying how an object should be converted to JSON is to use toJSON():
 ```js
@@ -1125,34 +1133,52 @@ const obj = {
 JSON.stringify(obj); // '{"bar":456}'
 ```
 I find toJSON() cleaner than enumerability for the current use case. It also gives you more control, because you can export properties that don’t exist on the object.
+현재의 사용 예에는 열거가능성보다 toJSON()이 좀더 확실함을 발견했다. toJSON()은 쉽게 컨트롤 할 수 있는데, 객체에 존재하지 않는 프로퍼티를 내보낼 수 있기 때문이다.
 
 ### 14.7.4 Naming inconsistencies
+### 14.7.4 불일치 네이밍
 
 In general, a shorter name means that only enumerable properties are considered:
+일반적으로 짧은 네임은 열거가능 프로퍼티만 고려한다.
 
     Object.keys() ignores non-enumerable properties
     Object.getOwnPropertyNames() lists all property names
+    Object.keys() 는 열거불가능한 프로퍼티는 무시한다.
+    Object.getOwnPropertyNames()는 모든 프로퍼티명을 나열한다.
 
 However, Reflect.ownKeys() deviates from that rule, it ignores enumerability and returns the keys of all properties. Additionally, starting with ES6, the following distinction is made:
+하지만 Reflect.ownKeys()는 규칙으로부터 벗어나있다. Reflect.ownKeys()는 열거가능성을 무시하고 모든 프로퍼티 키를 반환한다. 게다가 ES6가 시작하면서 아래의 구분이 생겼다:
 
     Property keys are either strings or symbols.
     Property names are only strings.
+    프로퍼티 키는 문자 혹은 심볼이다.
+    프로퍼티 네임은 오로지 문자열이다.
 
 Therefore, a better name for Object.keys() would now be Object.names().
+따라서, Object.keys()의 더 좋은 명칭은 Object.names() 이다.
 
 ### 14.7.5 Looking ahead
+### 14.7.5 돌아보다
 
 It seems to me that enumerability is only suited for hiding properties from the for-in loop and $.extend() (and similar operations). Both are legacy features, you should avoid them in new code. As for the other use cases:
+열거가능성은 for-in 루프와 $.extend()(혹은 비슷한 연산)의 숨김 프로퍼티에 적합하다고 생각한다. 둘다 레거시 특징이지만, 새로운 코드에서는 사용하지 않는것이 좋다. 다른 사용 예에서 보듯:
 
     I don’t think there is a need for a general flag specifying whether or not to copy a property.
     Non-enumerability does not work well as a way to keep properties private.
     The toJSON() method is more powerful and explicit than enumerability when it comes to controlling how to convert an object to JSON.
+    프로퍼티를 복사할지를 지정하는 일반적인 플래그기 팔요하다고 생각하지 않는다.
+    열거불가능성은 프로퍼티를 비공개로 두기 위한 방법으로 그렇게 잘 동작하는건 아니다.
+    객체를 제이슨으로 변환할 때에는 열거가능성에 비해 toJSON()이 보다 강력하고 명확하다.
 
 I’m not sure what the best strategy is for enumerability going forward. If, with ES6, we had started to pretend that it didn’t exist (except for making prototype properties non-enumerable so that old code doesn’t break), we might eventually have been able to deprecate enumerability. However, Object.assign() considering enumerability runs counter that strategy (but it does so for a valid reason, backward compatibility).
+열거가능성이 어떤 방향으로 나아가는 것이 좋을지는 모르겠다. 만약 ES6에서 존재하지 않는다고 생각하고 시작해왔다면, 최종적으로 열거가능성을 사용하지 않을 수 있을 것이다. 하지만 Object.assign()가 열거가능성을 이 생각과 반대되게 사용하는 것을 고려하고 있다.
 
 In my own ES6 code, I’m not using enumerability, except (implicitly) for classes whose prototype methods are non-enumerable.
+저자의 ES6 코드에서, 프로토타입 메서드가 열거가능하지 않는 클래스를 제외하고는 열거가능성을 사용하지 않는다.
 
 Lastly, when using an interactive command line, I occasionally miss an operation that returns all property keys of an object, not just the own ones (Reflect.ownKeys). Such an operation would provide a nice overview of the contents of an object.
+마지막으로 상호작용하는 커맨드 라인을 이용하는 경우, 때로 객체의 고유키 뿐 아니라, 모든 키를 반환하는 연산을 깜빡한다.
+
 ## 14.8 Customizing basic language operations via well-known symbols
 
 This section explains how you can customize basic language operations by using the following well-known symbols as property keys:
