@@ -44,14 +44,14 @@ https://en.wikipedia.org/wiki/Straw_man
 [이 절의 원문: "The Harmony Process" 다비드허만]
 
 ### 1.2.1 The design process after ES6
-### 1.2.1 ES6이후 설계 과정
+### 1.2.1 ES6이후 설계 절차
 Starting with ECMAScript 7 (whose official name is ECMAScript 2016), TC39 will time-box releases. The plan is to release a new version of ECMAScript every year, with whatever features are ready at that time. That means that from now on, ECMAScript versions will be relatively small upgrades.
 
-ESMAScript 7은 시작되었고(공식적인 이름은 ECMAScript 2016), TC39는 타입박스로 공개할 것이다. 이 계획은 새로운 ECMAScript 버전을 매년 그때 준비된 기능과 함께 공개하는 것이다. 이것은 이제부터는 ECMAScript 버전들은 비교적 작은 업데이트라는것을 의미 한다.
+ESMAScript 7(공식명칭은 ECMAScript 2016) 부터 TC39는 일정 주기로 공개할 것이다. 계획은 새로운 ECMAScript 버전을 매년 그때 준비된 기능과 함께 공개하는 것이다. 이 말은 이제부터는 ECMAScript 버전들은 비교적 작은 개선될 것을 의미 한다.
 
 Work on ECMAScript 2016 (and later) has already begun, current proposals are listed on GitHub. The process has changed, too, and is described in a TC39 process document.
 
-ECMAScript 2016(그 이후) 작업은 이미 시작되었고, 현재 제안은 깃헙에 정리 되어 있다. 그 과정도 변경 되고 있으며, TC39 프로세서 문서에 기술되고 있다.
+ECMAScript 2016(및 그 이후 버전)에 대한 작업은 이미 시작되었고, 현재 제안은 깃헙에 정리 되어 있다. 그 절차는 변경 되고 있으며, TC39 절차 문서에 기술되고 있다.
 
 ## 1.3 JavaScript versus ECMAScript
 ## 1.3 자바스크립트 대 ECMAScript
