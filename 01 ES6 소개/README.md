@@ -25,19 +25,21 @@ TC39 (Ecma Technical Committee 39)은 자바스크립트를 발전시키는 위�
 ## 1.2 ECMAScript 6은 어떻게 설계 되었나
 The ECMAScript 6 design process centers on proposals for features. Proposals are often triggered by suggestions from the developer community. To avoid design by committee, proposals are maintained by champions (1–2 committee delegates).
 
-ECMAScript 6 설계 과정은 기능을 위한 제안으로 집중된다. 제안들은 종종 개발자 커뮤니티 추천에서 시작된다. 의원회에 의한 설계를 피하기 위해서 제안은 챔피언(1~2명 의원회 대표)들을 통해 유지되어진다.
+ECMAScript 6 설계의 과정은 기능대한 제안이 중심이다. 제안들은 대개 개발자 커뮤니티 추천으로터 부터 시작된다. 의원회에 의한 설계를 피하기 위해서 제안은 챔피언(1~2명 의원회 대표)들을 통해 관리 된다.
 
 A proposal goes through the following steps before it becomes a standard:
 
-제안은 표준안이 되기 위에 다음과 같은 과정을 겪는다.
+제안은 표준이 되기 전에 다음 과정을 겪는다.
 * Sketch (informally: “strawman proposal”): A first description of the proposed feature.
 * Proposal: If TC39 agrees that a feature is important, it gets promoted to official proposal status. That does not guarantee it will * become a standard, but it considerably increases its chances. The deadline for ES6 proposals was May 2011, no major new proposals were considered after that.
 * Implementations: Proposed features must be implemented, ideally in two JavaScript engines. Implementations and feedback from the community shape the proposal as it evolves.
 * Standard: If the proposal continues to prove itself and is accepted by TC39, it will eventually be included in an edition of the ECMAScript standard. At this point, it is a standard feature.
-* 초고 (비공식적: "strawman 제안"): 제안된 기능의 처음 기술
-* 제안: 만약 TC39가 기능이 중요하다고 동의하면, 그것은 공식 제안 상태가 된다. 이것이 표준이 된다는것을 보장하지 않지만 이 제안한 상당히 큰 가능성이 있다. ES6 제안의 마지막 기한은 2011년 5월 이였다. 그 이후에 더 중요한 제안은 고려되어 지지 않았다.
-* 구현: 제안된 기능은 두 자바스크립트 엔진에서 이상적으로 반드시 구현되어야 한다. 구현과 커뮤티니로부터의 피드백은 그 제안을 마치 진화하는것 처럼 형성한다.
-* 표준: 만약 제안이 계속적으로 스스로를 증명하고 TC39에 의해서 받아드려진다면, 그것은 마침내 ECMAScript 표준 판으로 추가된다. 이 시점에서 제안은 표준기능이다.
+* 초고 Sketch (비공식적: "스트로우맨strawman 제안"): 제안된 기능의 처음 기술
+https://en.wikipedia.org/wiki/Straw_man
+
+* 제안 Proposal: 만약 TC39가 기능이 중요하다고 동의하면, 그것은 공식 제안 상태가 된다. 이것이 표준이 된다는것을 보장하지 않지만 이 제안한 상당히 큰 가능성이 있다. ES6 제안의 마지막 기한은 2011년 5월 이였다. 그 이후에 더 중요한 제안은 고려되어 지지 않았다.
+* 구현 Implementations: 제안된 기능은 두 자바스크립트 엔진에서 이상적으로 반드시 구현되어야 한다. 구현과 커뮤티니로부터의 피드백은 그 제안을 마치 진화하는것 처럼 형성한다.
+* 표준 Standard: 만약 제안이 계속적으로 스스로를 증명하고 TC39에 의해서 받아드려진다면, 그것은 마침내 ECMAScript 표준 판으로 추가된다. 이 시점에서 제안은 표준기능이다.
 
 [Source of this section: “The Harmony Process” by David Herman.]
 
