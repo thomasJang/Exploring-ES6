@@ -16,10 +16,10 @@ The next sections explain concepts that are important in the world of ES6.
 다음 절은 ES6 세계에서 중요한 개념을 설명한다.
 
 ## 1.1 TC39 (Ecma Technical Committee 39)
-
+## 1.1 TC39 (Ecma 기술 위원회 39)
 TC39 (Ecma Technical Committee 39) is the committee that evolves JavaScript. Its members are companies (among others, all major browser vendors). TC39 meets regularly, its meetings are attended by delegates that members send and by invited experts. Minutes of the meetings are available online and give you a good idea of how TC39 works.
 
-TC39 (Ecma Technical Committee 39)은 자바스크립트를 발전시키는 위원회이다. 주요 브라우져 벤더들이 위원회 회원들 이다. TC39는 정기적으로 모이고, 회원들이 보낸 대리인들과 초대된 전문가들이 참석한다. 회의의 의사록은 온라인에서 볼 수 있고, TC39 일하는 방법 대한 좋은 아이디어를 당신에게 제공한다.
+TC39 (Ecma Technical Committee 39)은 자바스크립트를 발전시키는 위원회이다. 주요 브라우져 벤더들이 위원회 회원이다. TC39는 정기적으로 모이고, 회원들이 보낸 대리인들과 초대된 전문가들이 참석한다. 회의록은 온라인에서 볼 수 있고, TC39 일하는 방식에 대해여 알려준다.
 
 ## 1.2 How ECMAScript 6 was designed
 ## 1.2 ECMAScript 6은 어떻게 설계 되었나
