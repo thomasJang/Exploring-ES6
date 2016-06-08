@@ -200,12 +200,18 @@ Generators can play three roles:
 The next sections provide deeper explanations of these roles.
 
 * 이터레이터 (데이터 생산자): 각 yield는 next()를 통해 값을 반환하고 이것은 루프문이나 재귀를 통해 값들의 순서열을 만들수 있다는 것을 의미 합니다. 제너레이터는 이터러블(이터러블장에서 설명한다.) 인터페이스를 구현했기 때문에, 이 순서열은 이터러블이 필요한 어떠한 ECMA6 생성자에서 사용될 수 있습니다. 두가지 예를 들면 for-of 루프와 펼침 연산자 (...)입니다.
-* 관찰자 (데이터 소비자): yield는 또한 next()를 
+* 관찰자 (데이터 소비자): yield는 또한 next()를 통해 값을 받을 수 있습니다. 이것은 제너레이터는 next()를 통해 새로운 값이 들어오기 전까지 멈춰있는 데이터 소비자가 될수 있다는것을 의미 합니다.
+* 코루틴 (데이터 생상자와 소비자): 제너레이터 멈출수 있고, 데이터 생성자와 데이터 소비자가 될수 있음을 고려하여, 많은 작업을 하지 않고 코루틴으로 바꿀 수 있습니다. (협력형 멀티 태스크)
 
-22.3 Generators as iterators (data production)
+## 22.3 Generators as iterators (data production)
+## 22.3 이터레이터로써의 제너레이터 (데이터 생성자)
 For this section, you should be familiar with ES6 iteration. The previous chapter has more information.
 
+이 섹션의 경우, ES 이터레이션에 대해 잘 알고 있어야 합니다. 이전 쳅터에 더 많은 정보를 확인할 수 있습니다. 
+
 As explained before, generator objects can be data producers, data consumers or both. This section looks at them as data producers, where they implement both the interfaces Iterable and Iterator (shown below). That means that the result of a generator function is both an iterable and an iterator. The full interface of generator objects will be shown later.
+
+이전에 설명으로 제너레이터 객체는 데이터 생성자, 데이터 소비자 또는 둘다 될 수 있습니다. 이 섹션에서 데이터 소비자로써 볼 것이고, 이터러블이나 이터레이터 둘다 구현을 
 
 interface Iterable {
     [Symbol.iterator]() : Iterator;
