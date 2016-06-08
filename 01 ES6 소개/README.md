@@ -25,7 +25,7 @@ TC39 (Ecma Technical Committee 39)은 자바스크립트를 발전시키는 위�
 ## 1.2 ECMAScript 6은 어떻게 설계 되었나
 The ECMAScript 6 design process centers on proposals for features. Proposals are often triggered by suggestions from the developer community. To avoid design by committee, proposals are maintained by champions (1–2 committee delegates).
 
-ECMAScript 6 설계 과정은  기능을 위한 제안으로 집중된다. 제안들은 종종 개발자 커뮤니티 요청 의해 나온다. 의원회에 의한 설계를 피하기 위해서 제안은 챔피언(1~2명 의원회 대표)들을 통해 유지되어진다.
+ECMAScript 6 설계 과정은 기능을 위한 제안으로 집중된다. 제안들은 종종 개발자 커뮤니티 추천에서 시작된다. 의원회에 의한 설계를 피하기 위해서 제안은 챔피언(1~2명 의원회 대표)들을 통해 유지되어진다.
 
 A proposal goes through the following steps before it becomes a standard:
 
