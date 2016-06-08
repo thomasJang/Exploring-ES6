@@ -1,6 +1,6 @@
 ## 2. FAQ: ECMAScript 6
 
-2장에서는 ECMAScript 6에 대해 자주 묻는 질문에 답한다. 
+2장은 ECMAScript 6에 관한 빈번한 질문에 대답한다. 
 > This chapter answers a few frequently asked questions about ECMAScript 6
 
 ### 2.1 ES6는 어떻게 사용 할 수 있는가? 
