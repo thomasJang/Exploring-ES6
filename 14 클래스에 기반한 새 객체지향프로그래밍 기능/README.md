@@ -6,15 +6,15 @@
 
 Classes (which are explained in the next chapter) are the major new OOP feature in ECMAScript 6. However, it also includes new features for object literals and new utility methods in Object. This chapter describes them.
 
-ECMAScript 6에서 클래스는 새로운 OOP의 주요한 부분이다. 그 외에 객체 리터럴의 새로운 특성, 그리고 객체의 새로운 utility method 역시 포함하고 있다.
+ECMAScript 6에서 클래스는 새로운 OOP의 주요한 부분이다. 그러나 객체 리터럴의 새로운 특성, 그리고 객체의 새로운 utility method 역시 포함하고 있다.
 
 ## 14.1 Overview
 ## 14.1 개요
 ### 14.1.1 New object literal features
 ### 14.1.1 새로운 객체 리터럴 특성
 
-Method definitions:
-메쏘드 정의 :
+Method definitions:  
+메소드 정의 :  
 ```js
 const obj = {
     myMethod(x, y) {
@@ -22,8 +22,8 @@ const obj = {
     }
 };
 ```
-Property value shorthands:
-프로퍼티값 속기:
+Property value shorthands:  
+프로퍼티값 축약:  
 ```js
 const first = 'Jane';
 const last = 'Doe';
@@ -42,7 +42,7 @@ const obj = {
 };
 ```
 This new syntax can also be used for method definitions:
-새로운 문법은 method의 정의도 가능하다.
+이 새로운 문법은 매소드 정의에도 사용될 수 있다:
 ```js
 const obj = {
     ['h'+'ello']() {
@@ -52,14 +52,13 @@ const obj = {
 console.log(obj.hello()); // hi
 ```
 The main use case for computed property keys is to make it easy to use symbols as property keys.
-프로퍼티 키값 계산은 Symbol을 프로퍼티 키로 이용하기 쉽게 해준다.
+계산된 프로퍼티 키의 주요 사용처는 프로퍼티 키로써 Symbol을 사용하기 쉽게 해준다.
 
 ### 14.1.2 New methods in Object
-### 14.1.2 객체의 새로운 매서드
+### 14.1.2 객체의 새로운 매소드
 
 The most important new method of Object is assign(). Traditionally, this functionality was called extend() in the JavaScript world. In contrast to how this classic operation works, Object.assign() only considers own (non-inherited) properties.
-
-assing()은 객체의 새로운 매서드 중 가장 중요하다. 기존의 자바스크립트 세계에서 이 함수는 extend() 로 불렸다. 기존에 어떻게 동작했었는지와는 별개로 Object.assign()은 고유의 속성(상속받지 않은)으로만 고려된다.
+객체의 가장 중요한 메소드는 assign()이다. 기존의 자바스크립트 세계에서 이 함수는 extend() 로 불렸다. 기존에 어떻게 동작했었는지와는 별개로 Object.assign()은 고유의 속성(상속받지 않은)으로만 고려된다.
 
 ```js
 const obj = { foo: 123 };
