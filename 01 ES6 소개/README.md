@@ -3,17 +3,17 @@
 
 It took a long time to finish it, but ECMAScript 6, the next version of JavaScript, is finally a reality:
 
-끝내기 위해서 오랜 시간이 걸렸지만, 자바스크립트 다음 버전인 ECMAScript 6은 마침내 현실이 되었다.:
+끝내기 위해 긴 시간 걸렸지만, 자바스크립트 다음 버전인 ECMAScript 6은 마침내 현실이 되었다:
 * It became a standard on 17 June 2015.
 * Its features are slowly appearing in JavaScript engines (as documented in kangax’ ES6 compatibility table).
 * Transpilers (such as Babel and Traceur) let you compile ES6 to ES5.
 * 이것은 2015년 6월 17일 표준이 되었다.
-* 그 기능은 천천히 자바스크립트 엔진에서 나타나고 있다. (kangax의 ES6 호환 테이블 문서 에서)
+* 그 기능은 천천히 자바스크립트 엔진에서 나타나고 있다(kangax의 ES6 호환 테이블 문서 에서). 
 * 트렌스파일러(바벨, Traceur)은 ES5코드를 ES6으로 컴파일 해준다.
 
 The next sections explain concepts that are important in the world of ES6.
 
-다음 섹션은 ES6 세계에서 중요한 개념을 설명한다.
+다음 절은 ES6 세계에서 중요한 개념을 설명한다.
 
 ## 1.1 TC39 (Ecma Technical Committee 39)
 
