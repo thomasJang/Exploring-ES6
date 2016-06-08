@@ -145,12 +145,12 @@ strict 모드는 버저닝이 왜 까다로운 일인지 잘 보여주고 있다
 ### 3.2.1 sloppy(non-strict) 모드 지원
 One JavaScript means that we can’t give up on sloppy mode: it will continue to be around (e.g. in HTML attributes). Therefore, we can’t build ECMAScript 6 on top of strict mode, we must add its features to both strict mode and non-strict mode (a.k.a. sloppy mode). Otherwise, strict mode would be a different version of the language and we’d be back to versioning. Unfortunately, two ECMAScript 6 features are difficult to add to sloppy mode: let declarations and block-level function declarations. Let’s examine why that is and how to add them, anyway.
 
-단일 자바스크립트는 슬로피(sloppy) 모드를 포기 할 수 없다는 것을 의미한다. 아마도 계속 사용될 것이다(예: HTML속성에서). 그러므로 strict 모드 위에서는 ECMAScript 6를 빌드할 수 없고, 그 기능들을 strict 모드와 (sloppy 모드로 알려진) non-strict 모드 양쪽에 추가해야만한다. 그렇지 않으면 strict 모드는 언어의 다른 버전이 되어 버려 우리는 다시 버전닝의 어려움을 겪게 될 것이다. 불행하게도, ECMAScript6 기능 중 2가지는 슬로피 모드에 추가하기 어렵다. 이는 let 선언과 블록 수준에서의 함수 선언이다. 자, 이제 왜 이것이 어렵고, 어떻게 추가 할 수 있는 알아보자.
+단일 자바스크립트는 sloppy 모드를 포기 할 수 없다는 것을 의미한다. 아마도 계속 사용될 것이다(예: HTML속성에서). 그러므로 strict 모드 위에서는 ECMAScript 6를 빌드할 수 없고, 그 기능들을 strict 모드와 (sloppy 모드로 알려진) non-strict 모드 양쪽에 추가해야만한다. 그렇지 않으면 strict 모드는 언어의 다른 버전이 되어 버려 우리는 다시 버전닝의 어려움을 겪게 될 것이다. 불행하게도, ECMAScript6 기능 중 2가지는 sloppy 모드에 추가하기 어렵다. 이는 let 선언과 블록 수준에서의 함수 선언이다. 자, 이제 왜 이것이 어렵고, 어떻게 추가 할 수 있는 알아보자.
 
-### 3.2.2 슬로피 모드에서의 let 선언
+### 3.2.2 sloppy 모드에서의 let 선언
 `let` enables you to declare block-scoped variables. It is difficult to add to sloppy mode, because let is only a reserved word in strict mode. That is, the following two statements are legal ES5 sloppy code:
 
-`let`은 블록 스코프 변수 선언 가능하게 해준다. 하지만 슬로피 모드에 적용하기는 어려운데, `let`이 strict 모드에서만 예약어이기 때문이다. 다음 2개의 문은 ES5 슬로피 모드에서 유효하다. 
+`let`은 블록 스코프 변수 선언 가능하게 해준다. 하지만 sloppy 모드에 적용하기는 어려운데, `let`이 strict 모드에서만 예약어이기 때문이다. 다음 2개의 문은 ES5 sloppy 모드에서 유효하다. 
 
 ```javascript
 var let = [];
@@ -163,40 +163,40 @@ ECMAScript 6 strict 모드에서는 첫 번째 줄에서 예외가 발생한다.
 
 In sloppy ECMAScript 6, the first line does not cause an exception, but the second line is still interpreted as a `let` declaration. This way of using the identifier `let` is so rare on the web that ES6 can afford to make this interpretation. Other ways of writing `let` declarations can’t be mistaken for sloppy ES5 syntax:
 
-ECMAScript 6 슬로피 모드에서는 첫 번째 줄에서 예외가 발생하지 않는다. 그러나 두 번째 줄은 여전히 `let` 선언으로 해석된다. 이러한 방식으로 `let` 식별자를 사용하는 것은 웹에서는 굉장히 보기 드물었기 때문에 ES6에서는 `let`으로 해석할 수 있었다. 다른 방식으로 서술된 `let` 선언은 ES5 슬로피 모드 문법에서 잘못 해석되지 않는다.
+ECMAScript 6 sloppy 모드에서는 첫 번째 줄에서 예외가 발생하지 않는다. 그러나 두 번째 줄은 여전히 `let` 선언으로 해석된다. 이러한 방식으로 `let` 식별자를 사용하는 것은 웹에서는 굉장히 보기 드물었기 때문에 ES6에서는 `let`으로 해석할 수 있었다. 다른 방식으로 서술된 `let` 선언은 ES5 sloppy 모드 문법에서 잘못 해석되지 않는다.
 
 ```javascript
 let foo = 123;
 let {x,y} = computeCoordinates();
 ```
 
-### 3.2.3 슬로피 모드에서 블록 수준 함수 선언(Block-level function declarations in sloppy mode)
+### 3.2.3 sloppy 모드에서 블록 수준 함수 선언(Block-level function declarations in sloppy mode)
 
 ECMAScript 5 strict mode forbids function declarations in blocks. The specification allowed them in sloppy mode, but didn’t specify how they should behave. Hence, various implementations of JavaScript support them, but handle them differently.
 
-ECMAScript 5 strict 모드에서는 블록 내에서의 함수 선언을 금지한다. 슬로피 모드에서는 허용되지만, 그 함수들이 어떻게 동작해야 하는지는 명시하지 않고있다. 그런 연유로 다양한 자바스크립트 구현체들이 블록 수준 함수 선언을 지원하지만, 구현 방법은 각기 다르다.
+ECMAScript 5 strict 모드에서는 블록 내에서의 함수 선언을 금지한다. sloppy 모드에서는 허용되지만, 그 함수들이 어떻게 동작해야 하는지는 명시하지 않고있다. 그런 연유로 다양한 자바스크립트 구현체들이 블록 수준 함수 선언을 지원하지만, 구현 방법은 각기 다르다.
 
 ECMAScript 6 wants a function declaration in a block to be local to that block. That is OK as an extension of ES5 strict mode, but breaks some sloppy code. Therefore, ES6 provides “web legacy compatibility semantics” for browsers that lets function declarations in blocks exist at function scope.
 
-ECMAScript 6에서는 블록 내 함수 선언을 해당 블록의 로컬 스코프로 만들고자 했다. 그것은 ES5의 strict 모드 확장으로서는 괜찮았지만, 몇몇 슬로피 모드의 코드들은 제대로 동작하지 않았다. 그래서 ES6는 "웹 레거시 호환성 의미체계(web legacy compatibility semantics)"을 브라우저에 제공하여 블록 내 함수 선언을 함수 스코프 상에 존재하도록 해주었다.
+ECMAScript 6에서는 블록 내 함수 선언을 해당 블록의 로컬 스코프로 만들고자 했다. 그것은 ES5의 strict 모드 확장으로서는 괜찮았지만, 몇몇 sloppy 모드의 코드들은 제대로 동작하지 않았다. 그래서 ES6는 "웹 레거시 호환성 의미체계(web legacy compatibility semantics)"을 브라우저에 제공하여 블록 내 함수 선언을 함수 스코프 상에 존재하도록 해주었다.
 
 ### 3.2.4 다른 키워드들
 The identifiers yield and static are only reserved in ES5 strict mode. ECMAScript 6 uses context-specific syntax rules to make them work in sloppy mode:
     * In sloppy mode, `yield` is only a reserved word inside a generator function.
     * `static` is currently only used inside class literals, which are implicitly strict (see below).
 
-`yield`와 `static` 식별자는 ES5 strict 모드에서만 예약어이다. ECMAScript 6에서는 슬로피 모드에서 이들을 동작하게 하기 위해 컨텍스트 한정 문법을 사용한다.
-    * 슬로피 모드에서 `yield`는 제네레이터 함수 내부에서만 예약어이다.
-    * `static`은 현재 클래스의 리터럴 내부에서만 예약어인데, 이는 암묵적 strict 모드 이다.(다음 절을 보라.)
+`yield`와 `static` 식별자는 ES5 strict 모드에서만 예약어이다. ECMAScript 6에서는 sloppy 모드에서 이들을 동작하게 하기 위해 컨텍스트 한정 문법을 사용한다.
+    * sloppy 모드에서 `yield`는 제네레이터 함수 내부에서만 예약어이다.
+    * `static`은 현재 클래스의 리터럴 내부에서만 예약어인데, 이는 암시적 strict 모드 이다.(다음 절을 보라.)
     
-### 3.2.5 암묵적 strict 모드(Implicit strict mode)
+### 3.2.5 암시적 strict 모드(Implicit strict mode)
 The bodies of modules and classes are implicitly in strict mode in ECMAScript 6 – there is no need for the '`use strict`' marker. Given that virtually all of our code will live in modules in the future, ECMAScript 6 effectively upgrades the whole language to strict mode.
 
-ECMAScript 6에서는 모듈과 클래스의 바디에서 암묵적 strict 모드이므로 '`use stict`'를 기술 할 필요가 없다. 사실상 앞으로 모든 코드는 모듈 안에서 움직일 것이고, 이에 따라 ECMAScript 6는 효과적으로 언어 전반을 strict 모드로 업그레이드 할 수 있게 될 것이다.
+ECMAScript 6에서는 모듈과 클래스의 바디에서 암시적 strict 모드이므로 '`use stict`'를 기술 할 필요가 없다. 사실상 앞으로 모든 코드는 모듈 안에서 움직일 것이고, 이에 따라 ECMAScript 6는 효과적으로 언어 전반을 strict 모드로 업그레이드 할 수 있게 될 것이다.
 
 The bodies of other constructs (such as arrow functions and generator functions) could have been made implicitly strict, too. But given how small these constructs usually are, using them in sloppy mode would have resulted in code that is fragmented between the two modes. Classes and especially modules are large enough to make fragmentation less of an issue.
 
-다른 생성자(화살표 함수나, 제네레이터 함수 등)의 바디에서도 역시 암묵적 strict 모드이다. 그러나 보통 이런 생성자들은 얼마나 작은지에 따라 슬로피 모드에서 이들을 사용하는 것은 두 모드 사이에서 파편화된 코드가 될 수도 있다. 클래스와 모듈은 충분히 크기 때문에 파편화를 줄일 수 있다.
+다른 생성자(화살표 함수나, 제네레이터 함수 등)의 바디에서도 역시 암시적 strict 모드이다. 그러나 보통 이런 생성자들은 얼마나 작은지에 따라 sloppy 모드에서 이들을 사용하는 것은 두 모드 사이에서 파편화된 코드가 될 수도 있다. 클래스와 모듈은 충분히 크기 때문에 파편화를 줄일 수 있다.
 
 ### 3.2.6 수정할 수 없는 것들(Things that can’t be fixed)
 The downside of One JavaScript is that you can’t fix existing quirks, especially the following two.
@@ -231,11 +231,11 @@ ECMAScript 6에는 (좀처럼 만나기 힘든) 몇 가지 마이너 변경 사�
 ### 3.4 결론(Conclusion)
 One JavaScript means making ECMAScript 6 completely backwards compatible. It is great that that succeeded. Especially appreciated is that modules (and thus most of our code) are implicitly in strict mode.
 
-단일 자바스크립트는 ECMAScript 6을 완전한 하위 호환성을 유지하도록 하는 것이다. 성공적이라면 굉장한 것이다. 특히나 모듈(뿐만 아니라 대부분의 코드)에서 암묵적 strict 모드인 것을 높이 평가한다.
+단일 자바스크립트는 ECMAScript 6를 완전히 하위 호환되도록 만드는 것을 뜻한다. 이것이 성공했다는 것은 굉장한 것이다. 특히나 모듈(뿐만 아니라 대부분의 코드)이 암시적 strict 모드인 것은 높이 평가한다.
 
 In the short term, adding ES6 constructs to both strict mode and sloppy mode is more work when it comes to writing the language specification and to implementing it in engines. In the long term, both the spec and engines profit from the language not being forked (less bloat etc.). Programmers profit immediately from One JavaScript, because it makes it easier to get started with ECMAScript 6.
 
-단기적으로 언어 사양을 작성하거나, 엔진에 도입하기에 앞서 ES6 생성자를 strict 모드와 슬로피 모드에 추가할 일이 남았다. 장기적으로는 언어가 제공하는 사양과 엔진의 장점(적은 확장 등)이 확실할 것이다. 단일 자바스크립트가 ECMAScript6로 시작하기 훨씬 수월하게 해주기 때문에 즉시 이득을 볼 수 있다.
+단기적으로 언어 사양을 작성하거고 그것을 엔진에 도입하기에 앞서, ES6 생성자를 strict 모드와 sloppy 모드에 양쪽 모두에 추가하는 것이 우선이다. 장기적으로는 언어의 사양과 엔진의 장점(적은 확장 등)이 확실할 것이다. 프로그래머들은 단일 자바스크립트가 ECMAScript 6로 시작하기 훨씬 수월하게 해주기 때문에 즉시 이득을 볼 수 있다.
 
 ### 3.5 더 읽을거리(Further reading)
 [1] The original 1JS proposal (warning: out of date): “ES6 doesn’t need opt-in” by David Herman.
