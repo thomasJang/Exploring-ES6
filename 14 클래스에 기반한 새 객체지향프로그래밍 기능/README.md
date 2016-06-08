@@ -32,8 +32,8 @@ const obj = { first, last };
 // Same as:
 const obj = { first: first, last: last };
 ```
-Computed property keys:
-계산된 프로퍼티 키:
+Computed property keys:  
+계산된 프로퍼티 키:  
 ```js
 const propKey = 'foo';
 const obj = {
@@ -41,8 +41,8 @@ const obj = {
     ['b'+'ar']: 123
 };
 ```
-This new syntax can also be used for method definitions:
-이 새로운 문법은 매소드 정의에도 사용될 수 있다:
+This new syntax can also be used for method definitions:  
+이 새로운 문법은 매소드 정의에도 사용될 수 있다:  
 ```js
 const obj = {
     ['h'+'ello']() {
@@ -51,14 +51,14 @@ const obj = {
 };
 console.log(obj.hello()); // hi
 ```
-The main use case for computed property keys is to make it easy to use symbols as property keys.
-계산된 프로퍼티 키의 주요 사용처는 프로퍼티 키로써 Symbol을 사용하기 쉽게 해준다.
+The main use case for computed property keys is to make it easy to use symbols as property keys.  
+계산된 프로퍼티 키의 주요 사용처는 프로퍼티 키로써 Symbol을 사용하기 쉽게 해준다.  
 
 ### 14.1.2 New methods in Object
 ### 14.1.2 객체의 새로운 매소드
 
-The most important new method of Object is assign(). Traditionally, this functionality was called extend() in the JavaScript world. In contrast to how this classic operation works, Object.assign() only considers own (non-inherited) properties.
-객체의 가장 중요한 메소드는 assign()이다. 기존의 자바스크립트 세계에서 이 함수는 extend() 로 불렸다. 기존에 어떻게 동작했었는지와는 별개로 Object.assign()은 고유의 속성(상속받지 않은)으로만 고려된다.
+The most important new method of Object is assign(). Traditionally, this functionality was called extend() in the JavaScript world. In contrast to how this classic operation works, Object.assign() only considers own (non-inherited) properties.  
+객체의 가장 중요한 메소드는 assign()이다. 기존의 자바스크립트 세계에서 이 함수는 extend() 로 불렸다. 기존에 어떻게 동작했었는지와는 별개로 Object.assign()은 고유의 속성(상속받지 않은)으로만 고려된다.  
 
 ```js
 const obj = { foo: 123 };
@@ -71,8 +71,8 @@ console.log(JSON.stringify(obj));
 ### 14.2.1 Method definitions
 ### 14.2.1 메서드 정의
 
-In ECMAScript 5, methods are properties whose values are functions:
-ECMAScript 5에서 매서드는 그 값이 함수인 속성이다:
+In ECMAScript 5, methods are properties whose values are functions:  
+ECMAScript 5에서 매서드는 그 값이 함수인 속성이다:  
 ```js
 var obj = {
     myMethod: function (x, y) {
@@ -80,8 +80,8 @@ var obj = {
     }
 };
 ```
-In ECMAScript 6, methods are still function-valued properties, but there is now a more compact way of defining them:
-ECMAScript 6에서 매서드는 여전히 함수-값 속성이지만, 이를 정의하는 방법은 더 간단하다:
+In ECMAScript 6, methods are still function-valued properties, but there is now a more compact way of defining them:  
+ECMAScript 6에서 매서드는 여전히 함수-값 속성이지만, 이를 정의하는 방법은 더 간단하다:  
 ```js
 const obj = {
     myMethod(x, y) {
@@ -89,8 +89,8 @@ const obj = {
     }
 };
 ```
-Getters and setters continue to work as they did in ECMAScript 5 (note how syntactically similar they are to method definitions):
-게터와 세터는 ECMAScript 5와 마찬가지로 동작한다.(문법적으로 매서드 정의와 매우 유사함을 기억하라):
+Getters and setters continue to work as they did in ECMAScript 5 (note how syntactically similar they are to method definitions):  
+게터와 세터는 ECMAScript 5와 마찬가지로 동작한다.(문법적으로 매서드 정의와 매우 유사함을 기억하라):  
 ```js
 const obj = {
     get foo() {
@@ -99,12 +99,12 @@ const obj = {
     },
     set bar(value) {
         console.log('SET bar to '+value);
-        // return value is ignored
+        // return value is ignored //리턴값이 무시된다.
     }
 };
 ```
-Let’s use obj:
-obj를 이용해보자:
+Let’s use obj:  
+obj를 이용해보자:  
 ```js
 > obj.foo
 GET foo
@@ -113,8 +113,8 @@ GET foo
 SET bar to true
 true
 ```
-There is also a way to concisely define properties whose values are generator functions:
-그 값이 제너레이터 함수인 경우 보다 쉽게 속성 정의를 할 수 있다.
+There is also a way to concisely define properties whose values are generator functions:  
+그 값이 제너레이터 함수인 경우 보다 쉽게 속성 정의를 할 수 있다.  
 ```js
 const obj = {
     * myGeneratorMethod() {
@@ -134,43 +134,42 @@ const obj = {
 ### 14.2.2 Property value shorthands
 ### 14.2.2 속성값 속기
 
-Property value shorthands let you abbreviate the definition of a property in an object literal: If the name of the variable that specifies the property value is also the property key then you can omit the key. This looks as follows.
-
-객체 리터럴에서 속성값의 속기로 간단하게 속성값을 정의할 수 있다.: 변수명으로 속성값을 지정한다면 속성키가 될 수 있으므로 키를 생략할 수 있다. 아래에서 볼 수 있다.
+Property value shorthands let you abbreviate the definition of a property in an object literal: If the name of the variable that specifies the property value is also the property key then you can omit the key. This looks as follows.  
+객체 리터럴에서 속성값의 속기로 간단하게 속성값을 정의할 수 있다.: 변수명으로 속성값을 지정한다면 속성키가 될 수 있으므로 키를 생략할 수 있다. 아래에서 볼 수 있다.  
 
 ```js
 const x = 4;
 const y = 1;
 const obj = { x, y };
 ```
-The last line is equivalent to:
-마지막 줄은 아래와 같다:
+The last line is equivalent to:  
+마지막 줄은 아래와 같다:  
 ```js
 const obj = { x: x, y: y };
 ```
-Property value shorthands work well together with destructuring:
-속성값의 속기는 해체에서도 잘 동작한다.
+Property value shorthands work well together with destructuring:  
+속성값의 속기는 해체에서도 잘 동작한다.  
 ```js
 const obj = { x: 4, y: 1 };
 const {x,y} = obj;
 console.log(x); // 4
 console.log(y); // 1
 ```
-One use case for property value shorthands are multiple return values (which are explained in the chapter on destructuring).
-다중 리턴값에서도 속성값 속기는 이용된다.(해체 챕터에서 설명될 것이다.)
+One use case for property value shorthands are multiple return values (which are explained in the chapter on destructuring).  
+다중 리턴값에서도 속성값 속기는 이용된다.(해체 챕터에서 설명될 것이다.)  
 ### 14.2.3 Computed property keys
 ### 14.2.3 속성 키값 계산
 
-Remember that there are two ways of specifying a key when you set a property.
-속성 키 값 지정에는 두 가지 방법이 있음을 기억하자.
+Remember that there are two ways of specifying a key when you set a property.  
+속성 키 값 지정에는 두 가지 방법이 있음을 기억하자.  
 ```js
     Via a fixed name: obj.foo = true;
     속성명을 고정: obj.foo = true;
     Via an expression: obj['b'+'ar'] = 123;
     표현식을 이용 : obj['b'+'ar'] = 123;
 ```
-In object literals, you only have option #1 in ECMAScript 5. ECMAScript 6 additionally provides option #2:
-ECMAScript 5의 객체 리터럴에서는 #1의 방법밖에는 없었다. ECMAScript 6는 #2 방법도 추가적으로 제공된다:
+In object literals, you only have option #1 in ECMAScript 5. ECMAScript 6 additionally provides option #2:  
+ECMAScript 5의 객체 리터럴에서는 #1의 방법밖에는 없었다. ECMAScript 6는 #2 방법도 추가적으로 제공된다:  
 ```js
 const propKey = 'foo';
 const obj = {
@@ -178,8 +177,8 @@ const obj = {
     ['b'+'ar']: 123
 };
 ```
-This new syntax can also be used for method definitions:
-새로운 문법은 매서드 정의에도 이용할 수 있다:
+This new syntax can also be used for method definitions:  
+새로운 문법은 매서드 정의에도 이용할 수 있다:  
 ```js
 const obj = {
     ['h'+'ello']() {
@@ -189,11 +188,9 @@ const obj = {
 console.log(obj.hello()); // hi
 ```
 
-The main use case for computed property keys are symbols: you can define a public symbol and use it as a special property key that is always unique. One prominent example is the symbol stored in Symbol.iterator. If an object has a method with that key, it becomes iterable: The method must return an iterator, which is used by constructs such as the for-of loop to iterate over the object. The following code demonstrates how that works.
+The main use case for computed property keys are symbols: you can define a public symbol and use it as a special property key that is always unique. One prominent example is the symbol stored in Symbol.iterator. If an object has a method with that key, it becomes iterable: The method must return an iterator, which is used by constructs such as the for-of loop to iterate over the object. The following code demonstrates how that works.  
 
-속성키값 계산에 Symbol이 가장 많이 이용된다 : 정의된 public 심볼을 특별한 속성키로 이용하면 언제나 유일하다. 특별한 예로 Symbol.iterator에 저장된 심볼을 들 수 있다.
-객체가 이 키 값을 가진 메서드를 가지고 있다면 이터러블하다: 매서드는 이터레이터를 반환할 것이고, for-of 반복문과 같은 구조에서 객체의 반복처리에 이용될 수 있다.
-아래의 코드는 어떻게 작동하는지를 보여준다.
+속성키값 계산에 Symbol이 가장 많이 이용된다 : 정의된 public 심볼을 특별한 속성키로 이용하면 언제나 유일하다. 특별한 예로 Symbol.iterator에 저장된 심볼을 들 수 있다.객체가 이 키 값을 가진 메서드를 가지고 있다면 이터러블하다: 매서드는 이터레이터를 반환할 것이고, for-of 반복문과 같은 구조에서 객체의 반복처리에 이용될 수 있다.아래의 코드는 어떻게 작동하는지를 보여준다.  
 ```js
 const obj = {
     * [Symbol.iterator]() { // (A)
@@ -208,39 +205,38 @@ for (const x of obj) {
 // hello
 // world
 ```
-Line A starts a generator method definition with a computed key (the symbol stored in Symbol.iterator).
-A 라인은 계산된 키값으로 정의된 제너레이터 메서드로 시작한다.(Symbol.iterator에 저장된 symbol)
+Line A starts a generator method definition with a computed key (the symbol stored in Symbol.iterator).  
+A 라인은 계산된 키값으로 정의된 제너레이터 메서드로 시작한다.(Symbol.iterator에 저장된 symbol)  
 
 ## 14.3 New methods of Object
 ## 14.3 객체의 새로운 매서드
 ### 14.3.1 Object.assign(target, source_1, source_2, ···)
 
-This method merges the sources into the target: It modifies target, first copies all enumerable own (non-inherited) properties of source_1 into it, then all own properties of source_2, etc. At the end, it returns the target.
-이 메서드는 타겟으로 소스를 병합한다: source_1의 모든 열거된 고유 속성(상속받지 않은), source_2의 모든 고유 속성, 등등등을 복사하여 타겟으로 넣고 타겟을 수정한다.
+This method merges the sources into the target: It modifies target, first copies all enumerable own (non-inherited) properties of source_1 into it, then all own properties of source_2, etc. At the end, it returns the target.  
+이 메서드는 타겟으로 소스를 병합한다: source_1의 모든 열거된 고유 속성(상속받지 않은), source_2의 모든 고유 속성, 등등등을 복사하여 타겟으로 넣고 타겟을 수정한다.  
 ```js
 const obj = { foo: 123 };
 Object.assign(obj, { bar: true });
 console.log(JSON.stringify(obj));
     // {"foo":123,"bar":true}
 ```
-Let’s look more closely at how Object.assign() works:
-Object.assign()이 어떻게 동작하는지 좀더 자세히 보자:
+Let’s look more closely at how Object.assign() works:  
+Object.assign()이 어떻게 동작하는지 좀더 자세히 보자:  
 
 ```js
     Both kinds of property keys: Object.assign() is aware of both strings and symbols as property keys.
     Only enumerable own properties: Object.assign() ignores inherited properties and properties that are not enumerable.
     Reading a value from a source: normal “get” operation (const value = source[propKey]). That means that if the source has a getter whose key is propKey then it will be invoked. All properties created by Object.assign() are data properties, it won’t transfer getters to the target.
-    Writing a value to the target: normal “set” operation (target[propKey] = value). That means that if the target has a setter whose key is propKey then it will be invoked with value.
-
+    Writing a value to the target: normal “set” operation (target[propKey] = value). That means that if the target has a setter whose key is propKey then it will be invoked with value.  
     두 종류의 객체 키 : Object.assign()은 string과 symbol 두 가지를 객체 키로 인식한다.
     열거가능한 고유 속성만 : Object.assign()은 상속받은 속성과 열거가 불가능한 속성은 무시한다.
     소스로부터 값을 읽기 : 일반적인 "get"(const value = source[propKey]) 연산. propKey인 키값을 가진 getter를 가진 소스라면 호출될 것이다.
     Object.asasgin()으로 생성된 모든 속성은 데이터 속성이고, 타겟으로 getter를 복사하지 않는다.
-    타겟에 값 쓰기 : 일반적인 "set" 연산(target[propKey] = value). 이는 타겟이 propKey인 키값을 가진 setter를 가지고 있다면 값으로 호출될 것을 의미한다.
+    타겟에 값 쓰기 : 일반적인 "set" 연산(target[propKey] = value). 이는 타겟이 propKey인 키값을 가진 setter를 가지고 있다면 값으로 호출될 것을 의미한다.  
 ```
 
-This is how you’d copy all properties (not just enumerable ones), while correctly transferring getters and setters, without invoking setters on the target:
-아래는 올바르게 getter와 setter를 복사시 target의 setter를 호출하지 않고, 어떻게 모든 속성(열거 가능한 속성 뿐 아니라)을 복사할 수 있는지를 보여준다.
+This is how you’d copy all properties (not just enumerable ones), while correctly transferring getters and setters, without invoking setters on the target:  
+아래는 올바르게 getter와 setter를 복사시 target의 setter를 호출하지 않고, 어떻게 모든 속성(열거 가능한 속성 뿐 아니라)을 복사할 수 있는지를 보여준다.  
 ```js
 function copyAllProperties(target, ...sources) {
     for (const source of sources) {
@@ -255,24 +251,25 @@ function copyAllProperties(target, ...sources) {
 #### 14.3.1.1 Caveat: Object.assign() doesn’t work well for moving methods
 #### 14.3.1.1 경고: Object.assign() 은 메서드 이동에는 제대로 동작하지 않는다.
 
-On one hand, you can’t move a method that uses super: Such a method has an internal property [[HomeObject]] that ties it to the object it was created in. If you move it via Object.assign(), it will continue to refer to the super-properties of the original object. Details are explained in a section in the chapter on classes.
+On one hand, you can’t move a method that uses super: Such a method has an internal property [[HomeObject]] that ties it to the object it was created in. If you move it via Object.assign(), it will continue to refer to the super-properties of the original object. Details are explained in a section in the chapter on classes.  
 
 한편으로 super를 이용하여 메서드를 이동할 수 없다: 내부적인 속성을 가진 메서드[[HomeObject]]의 경우 그것을 생성시킨 객체에 묶여있다. 만약 Object.assign()으로 이동시키려 하면,
-원래 지속적으로 객체의 상위-속성으로 참조할 것이다. 자세한 내용은 Class 챕터에 설명되어 있다.
+원래 지속적으로 객체의 상위-속성으로 참조할 것이다. 자세한 내용은 Class 챕터에 설명되어 있다.  
 
-On the other hand, enumerability is wrong if you move methods created by an object literal into the prototype of a class. The former methods are all enumerable (otherwise Object.assign() wouldn’t see them, anyway), but the prototype only has non-enumerable methods by default.
-다른 한편으로, 객체 리터럴에 의해 생성된 매서드를 클래스의 프로토 타입으로 이동시키려고 하면 열거가능성이 잘못된다. 전자의 매서드는 모두 열거가능하지만, 프로토타입은 기본적으로 열거불가능한 메서드만 가질 수 있다.
+On the other hand, enumerability is wrong if you move methods created by an object literal into the prototype of a class. The former methods are all enumerable (otherwise Object.assign() wouldn’t see them, anyway), but the prototype only has non-enumerable methods by default.  
+다른 한편으로, 객체 리터럴에 의해 생성된 매서드를 클래스의 프로토 타입으로 이동시키려고 하면 열거가능성이 잘못된다. 전자의 매서드는 모두 열거가능하지만, 프로토타입은 기본적으로 열거불가능한 메서드만 가질 수 있다.  
 
 #### 14.3.1.2 Use cases for Object.assign()
 #### 14.3.1.2 Object.assign()의 쓰임새
 
-Let’s look at a few use cases.
-몇 가지 사용 예시를 보자.
+Let’s look at a few use cases.  
+몇 가지 사용 예시를 보자.  
+
 ##### 14.3.1.2.1 Adding properties to this
 ##### 14.3.1.2.1 this에 속성 추가
 
-You can use Object.assign() to add properties to this in a constructor:
-생성자의 this에 Object.assign()을 이용하여 속성을 추가할 수 있다.
+You can use Object.assign() to add properties to this in a constructor:  
+생성자의 this에 Object.assign()을 이용하여 속성을 추가할 수 있다.  
 ```js
 class Point {
     constructor(x, y) {
@@ -284,8 +281,8 @@ class Point {
 ##### 14.3.1.2.2 Providing default values for object properties
 ##### 14.3.1.2.2 객체 속성에 기본값 제공
 
-Object.assign() is also useful for filling in defaults for missing properties. In the following example, we have an object DEFAULTS with default values for properties and an object options with data.
-Object.assign()은 누락된 속성의 기본값을 채우는데 유용하다. 아래의 예제에, 속성의 기본값을 가진 DEFAULTS라는 객체와 data를 가진 options 라는 객체가 있다.
+Object.assign() is also useful for filling in defaults for missing properties. In the following example, we have an object DEFAULTS with default values for properties and an object options with data.  
+Object.assign()은 누락된 속성의 기본값을 채우는데 유용하다. 아래의 예제에, 속성의 기본값을 가진 DEFAULTS라는 객체와 data를 가진 options 라는 객체가 있다.  
 
 ```js
 const DEFAULTS = {
@@ -297,14 +294,14 @@ function processContent(options) {
     ···
 }
 ```
-In line A, we created a fresh object, copied the defaults into it and then copied options into it, overriding the defaults. Object.assign() returns the result of these operations, which we assign to options.
-라인 A에서 defaults 복사하여 넣은 후 options를 복사하여 넣은, 기본값을 재정의한 새로운 객체를 생성했다. Object.assign()은 이 options에 할당한 이런 작업들을 반환한다.
+In line A, we created a fresh object, copied the defaults into it and then copied options into it, overriding the defaults. Object.assign() returns the result of these operations, which we assign to options.  
+라인 A에서 defaults 복사하여 넣은 후 options를 복사하여 넣은, 기본값을 재정의한 새로운 객체를 생성했다. Object.assign()은 이 options에 할당한 이런 작업들을 반환한다.  
 
 ##### 14.3.1.2.3 Adding methods to objects
 ##### 14.3.1.2.3 객체에 매서드 추가하기
 
-Another use case is adding methods to objects:
-또다른 사용 예는 객체에 메서드를 추가하는 것이다 :
+Another use case is adding methods to objects:  
+또다른 사용 예는 객체에 메서드를 추가하는 것이다 :  
 ```js
 Object.assign(SomeClass.prototype, {
     someMethod(arg1, arg2) {
@@ -315,8 +312,8 @@ Object.assign(SomeClass.prototype, {
     }
 });
 ```
-You could also manually assign functions, but then you don’t have the nice method definition syntax and need to mention SomeClass.prototype each time:
-수동으로 기능을 할당할 수는 있지만, 괜찮은 매서드 정의 구문도 없는데다 매번 SomeClass.prototype을 적어주어야 한다.
+You could also manually assign functions, but then you don’t have the nice method definition syntax and need to mention SomeClass.prototype each time:  
+수동으로 기능을 할당할 수는 있지만, 괜찮은 매서드 정의 구문도 없는데다 매번 SomeClass.prototype을 적어주어야 한다.  
 ```js
 SomeClass.prototype.someMethod = function (arg1, arg2) {
     ···
@@ -329,18 +326,18 @@ SomeClass.prototype.anotherMethod = function () {
 ##### 14.3.1.2.4 Cloning objects
 ##### 14.3.1.2.4 객체 복제
 
-One last use case for Object.assign() is a quick way of cloning objects:
-Object.assign()의 마지막 사용 예시로는 빠르게 객체복제 할 수 있다는 것이다:
+One last use case for Object.assign() is a quick way of cloning objects:  
+Object.assign()의 마지막 사용 예시로는 빠르게 객체복제 할 수 있다는 것이다:  
 ```js
 function clone(orig) {
     return Object.assign({}, orig);
 }
 ```
-This way of cloning is also somewhat dirty, because it doesn’t preserve the property attributes of orig. If that is what you need, you have to use property descriptors.
-이 방식으로 복제하는 것은 오리지널의 속성 특성을 보존하지 않기때문에 좀 지저분하다. 이렇게 할 필요가 있다면 속성 디스크립터를 이용해야 한다.
+This way of cloning is also somewhat dirty, because it doesn’t preserve the property attributes of orig. If that is what you need, you have to use property descriptors.  
+이 방식으로 복제하는 것은 오리지널의 속성 특성을 보존하지 않기때문에 좀 지저분하다. 이렇게 할 필요가 있다면 속성 디스크립터를 이용해야 한다.  
 
-If you want the clone to have the same prototype as the original, you can use Object.getPrototypeOf() and Object.create():
-원래 것과 동일한 프로토타입을 가진 복제를 만들려면 Object.getPrototypeOf()과 Object.create()를 이용하면 된다:
+If you want the clone to have the same prototype as the original, you can use Object.getPrototypeOf() and Object.create():  
+원래 것과 동일한 프로토타입을 가진 복제를 만들려면 Object.getPrototypeOf()과 Object.create()를 이용하면 된다:  
 ```js
 function clone(orig) {
     const origProto = Object.getPrototypeOf(orig);
@@ -350,39 +347,37 @@ function clone(orig) {
 
 ### 14.3.2 Object.getOwnPropertySymbols(obj)
 
-Object.getOwnPropertySymbols(obj) retrieves all own (non-inherited) symbol-valued property keys of obj. It complements Object.getOwnPropertyNames(), which retrieves all string-valued own property keys. Consult a later section for more details on traversing properties.
-
-Object.getOwnPropertySymbols(obj)는 객체의 모든 고유의 symbol값의 속성 키 값을 끌어낸다. 이는 객체의 모든 문자값의 속성키를 끌어내는 Object.getOwnPropertyNames()를 보완한다.
-통과 속성에 대한 자세한 내용은 다음 섹션을 참고하면 된다.
+Object.getOwnPropertySymbols(obj) retrieves all own (non-inherited) symbol-valued property keys of obj. It complements Object.getOwnPropertyNames(), which retrieves all string-valued own property keys. Consult a later section for more details on traversing properties.  
+Object.getOwnPropertySymbols(obj)는 객체의 모든 고유의 symbol값의 속성 키 값을 끌어낸다. 이는 객체의 모든 문자값의 속성키를 끌어내는 Object.getOwnPropertyNames()를 보완한다. 통과 속성에 대한 자세한 내용은 다음 섹션을 참고하면 된다.  
 
 ### 14.3.3 Object.is(value1, value2)
 
-The strict equals operator (===) treats two values differently than one might expect.
-일치 연산자(===)는 기대와는 다르게 두 개의 값을 다룬다.
+The strict equals operator (===) treats two values differently than one might expect.  
+일치 연산자(===)는 기대와는 다르게 두 개의 값을 다룬다.  
 
-First, NaN is not equal to itself.
-첫재로 Nan은 Nan과 동등하지 않다.
+First, NaN is not equal to itself.  
+첫재로 Nan은 Nan과 동등하지 않다.  
 ```js
 > NaN === NaN
 false
 ```
-That is unfortunate, because it often prevents us from detecting NaN:
-이는 안타깝게도 NaN 탐지하는 것을 종종 방해하기 때문이다.
+That is unfortunate, because it often prevents us from detecting NaN:  
+이는 안타깝게도 NaN 탐지하는 것을 종종 방해하기 때문이다.  
 ```js
 > [0,NaN,2].indexOf(NaN)
 -1
 ```
-Second, JavaScript has two zeros, but strict equals treats them as if they were the same value:
-두번째로, JavaScript 는 두가지 제로가 있는데, 일치 연산자는 이 둘을 같은 값으로 다룬다:
+Second, JavaScript has two zeros, but strict equals treats them as if they were the same value:  
+두번째로, JavaScript 는 두가지 제로가 있는데, 일치 연산자는 이 둘을 같은 값으로 다룬다:  
 ```js
 > -0 === +0
 true
 ```
-Doing this is normally a good thing.
-이렇게 하는것이 일반적으로 좋은 것이다.
+Doing this is normally a good thing.  
+이렇게 하는것이 일반적으로 좋은 것이다.  
 
-Object.is() provides a way of comparing values that is a bit more precise than ===. It works as follows:
-Object.is() 는 === 보다 조금 더 정교한 값의 비교를 제공한다. 이는 아래와 같이 작동한다:
+Object.is() provides a way of comparing values that is a bit more precise than ===. It works as follows:  
+Object.is() 는 === 보다 조금 더 정교한 값의 비교를 제공한다. 이는 아래와 같이 작동한다:  
 
 ```js
 > Object.is(NaN, NaN)
@@ -390,14 +385,14 @@ true
 > Object.is(-0, +0)
 false
 ```
-Everything else is compared as with ===.
-이 외의 대부분은 === 랑 똑같이 비교한다.
+Everything else is compared as with ===.  
+이 외의 대부분은 === 랑 똑같이 비교한다.  
 
 #### 14.3.3.1 Using Object.is() to find Array elements
 #### 14.3.3.1 배열 요소 검색을 위한 Object.is()의 사용
 
-If we combine Object.is() with the new ES6 Array method findIndex(), we can find NaN in Arrays:
-Object.is()와 ES6의 새로운 배열 메소드인 findIndex()와 결합하여 이용하면, NaN을 배열에서 찾을 수 있다:
+If we combine Object.is() with the new ES6 Array method findIndex(), we can find NaN in Arrays:  
+Object.is()와 ES6의 새로운 배열 메소드인 findIndex()와 결합하여 이용하면, NaN을 배열에서 찾을 수 있다:  
 
 ```js
 function myIndexOf(arr, elem) {
@@ -407,8 +402,8 @@ function myIndexOf(arr, elem) {
 myIndexOf([0,NaN,2], NaN); // 1
 ```
 
-In contrast, indexOf() does not handle NaN well:
-이와는 대조적으로, indexOf()는 NaN을 제대로 처리하지 못한다:
+In contrast, indexOf() does not handle NaN well:  
+이와는 대조적으로, indexOf()는 NaN을 제대로 처리하지 못한다:  
 ```js
 > [0,NaN,2].indexOf(NaN)
 -1
@@ -416,69 +411,67 @@ In contrast, indexOf() does not handle NaN well:
 
 ### 14.3.4 Object.setPrototypeOf(obj, proto)
 
-This method sets the prototype of obj to proto. The non-standard way of doing so in ECMAScript 5, that is supported by many engines, is via assigning to the special property __proto__. The recommended way of setting the prototype remains the same as in ECMAScript 5: during the creation of an object, via Object.create(). That will always be faster than first creating an object and then setting its prototype. Obviously, it doesn’t work if you want to change the prototype of an existing object.
+This method sets the prototype of obj to proto. The non-standard way of doing so in ECMAScript 5, that is supported by many engines, is via assigning to the special property __proto__. The recommended way of setting the prototype remains the same as in ECMAScript 5: during the creation of an object, via Object.create(). That will always be faster than first creating an object and then setting its prototype. Obviously, it doesn’t work if you want to change the prototype of an existing object.  
 
-이 메서드는 객체의 프로토타입을 proto로 지정한다. ECMAScript 5에서 이렇게 하기 위한 비표준적인 방법은, 많은 엔진에서 지원되는데, __proto__ 라는 특별한 속성에 할당함으로 써 가능하다.
-프로토타입을 지정을 위한 가장 좋은 방법은 ECMAScript 5와 유사하게 남아있다 : 객체 생성시에 Object.create()를 이용하는 것이다.
-이는 객체의 첫 생성이나 프로토 타입을 지정하는것 보다 언제나 더 빠를 것이다. 하지만 이미 존재하는 객체의 프로토 타입을 변경하길 원한다면, 그렇게 작동하지는  않을 것이다.
+이 메서드는 객체의 프로토타입을 proto로 지정한다. ECMAScript 5에서 이렇게 하기 위한 비표준적인 방법은, 많은 엔진에서 지원되는데, __proto__ 라는 특별한 속성에 할당함으로 써 가능하다. 프로토타입을 지정을 위한 가장 좋은 방법은 ECMAScript 5와 유사하게 남아있다 : 객체 생성시에 Object.create()를 이용하는 것이다. 이는 객체의 첫 생성이나 프로토 타입을 지정하는것 보다 언제나 더 빠를 것이다. 하지만 이미 존재하는 객체의 프로토 타입을 변경하길 원한다면, 그렇게 작동하지는  않을 것이다.  
 
 ## 14.4 Traversing properties in ES6
 ## 14.4 ES6에서의 속성 고찰
 ### 14.4.1 Five operations that traverse properties
 ### 14.4.1 속성을 고찰시켜주는 5가지 연산
 
-In ECMAScript 6, the key of a property can be either a string or a symbol. The following are five operations that traverse the property keys of an object obj:
-ECMAScript 6에서, 속성의 키값은 문자열이나 혹은 심볼일 것이다. 아래의 다섯가지 연산은 객체 obj의 속성 키값을 이동시켜준다.
+In ECMAScript 6, the key of a property can be either a string or a symbol. The following are five operations that traverse the property keys of an object obj:  
+ECMAScript 6에서, 속성의 키값은 문자열이나 혹은 심볼일 것이다. 아래의 다섯가지 연산은 객체 obj의 속성 키값을 이동시켜준다.  
 ```js
     Object.keys(obj) : Array<string>
-    retrieves all string keys of all enumerable own (non-inherited) properties.
-    모든 열거 가능한(상속되지 않은) 속성의 문자열 키값을 반환.
-    Object.getOwnPropertyNames(obj) : Array<string>
-    retrieves all string keys of all own properties.
-    모든 속성의 문자열 키값을 반환.
-    Object.getOwnPropertySymbols(obj) : Array<symbol>
-    retrieves all symbol keys of all own properties.
-    모든 속성의 심볼 키 값을 반환.
+    retrieves all string keys of all enumerable own (non-inherited) properties.  
+    모든 열거 가능한(상속되지 않은) 속성의 문자열 키값을 반환.  
+    Object.getOwnPropertyNames(obj) : Array<string>  
+    retrieves all string keys of all own properties.  
+    모든 속성의 문자열 키값을 반환.  
+    Object.getOwnPropertySymbols(obj) : Array<symbol>  
+    retrieves all symbol keys of all own properties.  
+    모든 속성의 심볼 키 값을 반환.  
     Reflect.ownKeys(obj) : Array<string|symbol>
-    retrieves all keys of all own properties.
-    모든 속성의 모든 키값을 반환.
+    retrieves all keys of all own properties.  
+    모든 속성의 모든 키값을 반환.  
     for (const key in obj)
-    retrieves all string keys of all enumerable properties (inherited and own).
-    열거 가능한 속성(상속 받은것 포함)의 모든 문자열 키값을 반환.
+    retrieves all string keys of all enumerable properties (inherited and own).  
+    열거 가능한 속성(상속 받은것 포함)의 모든 문자열 키값을 반환.  
 ```
 ### 14.4.2 Traversal order of properties
 ### 14.4.2 속성의 traversal 순서
 
-ES6 defines two traversal orders for properties.
+ES6 defines two traversal orders for properties.  
 ES6에는 두가지 속성값 탐색 순서가 있다.
 
-Own Property Keys:
+Own Property Keys:  
 고유의 속성 키:
 
-    Retrieves the keys of all own properties of an object, in the following order:
+    Retrieves the keys of all own properties of an object, in the following order:  
     객체의 모든 고유 속성의 키는 다음의 순서로 반환한다. :
         First, the string keys that are integer indices (what these are is explained in the next section), in ascending numeric order.
         Then all other string keys, in the order in which they were added to the object.
-        Lastly, all symbol keys, in the order in which they were added to the object.
+        Lastly, all symbol keys, in the order in which they were added to the object.  
         먼저, 정수 인덱스(이에 대해서는 다음 섹션에서 설명한다.)의 문자열 키 - 숫자 오름차순으로 정렬.
         그리고 나서 그 외 모든 문자열 키 - 객체에 추가된 순서대로.
         마지막으로 모든 심볼 키 - 객체에 추가된 순서대로.
 
-    Used by: Object.assign(), Object.defineProperties(), Object.getOwnPropertyNames(), Object.getOwnPropertySymbols(), Reflect.ownKeys()
-    이용 :Object.assign(), Object.defineProperties(), Object.getOwnPropertyNames(), Object.getOwnPropertySymbols(), Reflect.ownKeys()
+    Used by: Object.assign(), Object.defineProperties(), Object.getOwnPropertyNames(), Object.getOwnPropertySymbols(), Reflect.ownKeys()  
+    이용 :Object.assign(), Object.defineProperties(), Object.getOwnPropertyNames(), Object.getOwnPropertySymbols(), Reflect.ownKeys()  
 
-Enumerable Own Names:
-열거 가능한 고유 명:
+Enumerable Own Names:  
+열거 가능한 고유 명:  
 
-    Retrieves the string keys of all enumerable own properties of an object. The order is not defined by ES6, but it must be the same order in which for-in traverses properties.
-    Used by: JSON.parse(), JSON.stringify(), Object.keys()
-    객체의 모든 열거 가능한 고유 속성의 문자열 키를 반환. 이 순서는 ES6에서 정의된 순서는 아니지만 for-in에서 속성이 도는 동일한 순서일 것이다.
-    이용: JSON.parse(), JSON.stringify(), Object.keys()
+    Retrieves the string keys of all enumerable own properties of an object. The order is not defined by ES6, but it must be the same order in which for-in traverses properties.  
+    Used by: JSON.parse(), JSON.stringify(), Object.keys()  
+    객체의 모든 열거 가능한 고유 속성의 문자열 키를 반환. 이 순서는 ES6에서 정의된 순서는 아니지만 for-in에서 속성이 도는 동일한 순서일 것이다.  
+    이용: JSON.parse(), JSON.stringify(), Object.keys()  
 
-The order in which for-in traverses properties is not defined. Quoting Allen Wirfs-Brock:
+The order in which for-in traverses properties is not defined. Quoting Allen Wirfs-Brock:  
 for-in의 속성 통과하는 순서는 정의되지 않았다. Allen Wirfs-Brock를 인용하면 :
 
-    Historically, the for-in order was not defined and there has been variation among browser implementations in the order they produce (and other specifics). ES5 added Object.keys and the requirement that it should order the keys identically to for-in. During development of both ES5 and ES6, the possibility of defining a specific for-in order was considered but not adopted because of web legacy compatibility concerns and uncertainty about the willingness of browsers to make changes in the ordering they currently produce.
+    Historically, the for-in order was not defined and there has been variation among browser implementations in the order they produce (and other specifics). ES5 added Object.keys and the requirement that it should order the keys identically to for-in. During development of both ES5 and ES6, the possibility of defining a specific for-in order was considered but not adopted because of web legacy compatibility concerns and uncertainty about the willingness of browsers to make changes in the ordering they currently produce.  
     역사적으로, for-in 순서는 정의되지 않았고 구현된 브라우저 간에 편차가 있다. ES5에 Object.keys를 추가했고 키는 for-in에서 동일하게 정렬되어야 함을 요구한다.
     ES5와 ES6을 개발하는 동안, for-in의 명확한 정렬을 정의하기 위한 가능성이 고려되었으나 web 환경의 호환성 문제와 현재 생산된 브라우저가 정렬 방식을 변경하려는 의지에 대한 불확실성때문에 채택되지 않았다.
 
