@@ -1,12 +1,12 @@
 ## 2. FAQ: ECMAScript 6
 
-2장에서는 ECMAScript 6에 대해 자주 묻는 질문에 답한다. 
+2장은 ECMAScript 6에 관한 빈번한 질문에 대답한다. 
 > This chapter answers a few frequently asked questions about ECMAScript 6
 
 ### 2.1 ES6는 어떻게 사용 할 수 있는가? 
 > How can I use ES6 today?
 
-ES6 스펙의 대부분은 현대의 엔진들이 이미 지원하고 있고 Kangax’ ES6 compatibility table 에서 지원 여부를 확인할 수 있다. 
+ES6 스펙의 대부분은 현대의 엔진들에서 이미 지원되고 있고, 지원 여부 확인을 위해서는 Kangax’ ES6 compatibility table 을 살펴보라.
 > Most of ES6 is already supported in current engines, consult Kangax’ ES6 compatibility table to find out what is supported where.
 
 다른 선택지는, (예: ES6 커맨드 라인과 바벨을 이용한 ES6에서 ES5로 변환) “Deploying ECMAScript 6” in “Setting up ES6”. 을 찾아보길 바란다. 

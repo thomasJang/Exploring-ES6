@@ -3,53 +3,55 @@
 
 It took a long time to finish it, but ECMAScript 6, the next version of JavaScript, is finally a reality:
 
-끝내기 위해서 오랜 시간이 걸렸지만, 자바스크립트 다음 버전인 ECMAScript 6은 마침내 현실이 되었다.:
+끝내기 위해 긴 시간 걸렸지만, 자바스크립트 다음 버전인 ECMAScript 6은 마침내 현실이 되었다:
 * It became a standard on 17 June 2015.
 * Its features are slowly appearing in JavaScript engines (as documented in kangax’ ES6 compatibility table).
 * Transpilers (such as Babel and Traceur) let you compile ES6 to ES5.
 * 이것은 2015년 6월 17일 표준이 되었다.
-* 그 기능은 천천히 자바스크립트 엔진에서 나타나고 있다. (kangax의 ES6 호환 테이블 문서 에서)
+* 그 기능은 천천히 자바스크립트 엔진에서 나타나고 있다(kangax의 ES6 호환 테이블 문서 에서). 
 * 트렌스파일러(바벨, Traceur)은 ES5코드를 ES6으로 컴파일 해준다.
 
 The next sections explain concepts that are important in the world of ES6.
 
-다음 섹션은 ES6 세계에서 중요한 개념을 설명한다.
+다음 절은 ES6 세계에서 중요한 개념을 설명한다.
 
 ## 1.1 TC39 (Ecma Technical Committee 39)
-
+## 1.1 TC39 (Ecma 기술 위원회 39)
 TC39 (Ecma Technical Committee 39) is the committee that evolves JavaScript. Its members are companies (among others, all major browser vendors). TC39 meets regularly, its meetings are attended by delegates that members send and by invited experts. Minutes of the meetings are available online and give you a good idea of how TC39 works.
 
-TC39 (Ecma Technical Committee 39)은 자바스크립트를 발전시키는 위원회이다. 주요 브라우져 벤더들이 위원회 회원들 이다. TC39는 정기적으로 모이고, 회원들이 보낸 대리인들과 초대된 전문가들이 참석한다. 회의의 의사록은 온라인에서 볼 수 있고, TC39 일하는 방법 대한 좋은 아이디어를 당신에게 제공한다.
+TC39 (Ecma Technical Committee 39)은 자바스크립트를 발전시키는 위원회이다. 주요 브라우져 벤더들이 위원회 회원이다. TC39는 정기적으로 모이고, 회원들이 보낸 대리인들과 초대된 전문가들이 참석한다. 회의록은 온라인에서 볼 수 있고, TC39 일하는 방식에 대하여 알려준다.
 
 ## 1.2 How ECMAScript 6 was designed
 ## 1.2 ECMAScript 6은 어떻게 설계 되었나
 The ECMAScript 6 design process centers on proposals for features. Proposals are often triggered by suggestions from the developer community. To avoid design by committee, proposals are maintained by champions (1–2 committee delegates).
 
-ECMAScript 6 설계 과정은  기능을 위한 제안으로 집중된다. 제안들은 종종 개발자 커뮤니티 요청 의해 나온다. 의원회에 의한 설계를 피하기 위해서 제안은 챔피언(1~2명 의원회 대표)들을 통해 유지되어진다.
+ECMAScript 6 설계의 과정은 기능대한 제안이 중심이다. 제안들은 대개 개발자 커뮤니티 추천으로터 부터 시작된다. 의원회에 의한 설계를 피하기 위해서 제안은 챔피언(1~2명 의원회 대표)들을 통해 관리 된다.
 
 A proposal goes through the following steps before it becomes a standard:
 
-제안은 표준안이 되기 위에 다음과 같은 과정을 겪는다.
+제안은 표준이 되기 전에 다음 과정을 겪는다.
 * Sketch (informally: “strawman proposal”): A first description of the proposed feature.
-* Proposal: If TC39 agrees that a feature is important, it gets promoted to official proposal status. That does not guarantee it will * become a standard, but it considerably increases its chances. The deadline for ES6 proposals was May 2011, no major new proposals were considered after that.
+* Proposal: If TC39 agrees that a feature is important, it gets promoted to official proposal status. That does not guarantee it will  become a standard, but it considerably increases its chances. The deadline for ES6 proposals was May 2011, no major new proposals were considered after that.
 * Implementations: Proposed features must be implemented, ideally in two JavaScript engines. Implementations and feedback from the community shape the proposal as it evolves.
 * Standard: If the proposal continues to prove itself and is accepted by TC39, it will eventually be included in an edition of the ECMAScript standard. At this point, it is a standard feature.
-* 초고 (비공식적: "strawman 제안"): 제안된 기능의 처음 기술
-* 제안: 만약 TC39가 기능이 중요하다고 동의하면, 그것은 공식 제안 상태가 된다. 이것이 표준이 된다는것을 보장하지 않지만 이 제안한 상당히 큰 가능성이 있다. ES6 제안의 마지막 기한은 2011년 5월 이였다. 그 이후에 더 중요한 제안은 고려되어 지지 않았다.
-* 구현: 제안된 기능은 두 자바스크립트 엔진에서 이상적으로 반드시 구현되어야 한다. 구현과 커뮤티니로부터의 피드백은 그 제안을 마치 진화하는것 처럼 형성한다.
-* 표준: 만약 제안이 계속적으로 스스로를 증명하고 TC39에 의해서 받아드려진다면, 그것은 마침내 ECMAScript 표준 판으로 추가된다. 이 시점에서 제안은 표준기능이다.
+* 초고 Sketch (비공식적: "스트로우맨strawman 제안"): 제안된 기능의 처음 기술
+https://en.wikipedia.org/wiki/Straw_man
+* 제안 Proposal: TC39가 기능이 중요하다고 동의하면, 공식 제안 상태가 된다. 공식 제안은 표준이 된다는것을 보장하지 않지만 이 제안은 큰 가능성이 있다. ES6 제안의 마지막 기한은 2011년 5월 이였다. 그 이후에 더 중요한 제안은 고려되지 않았다.
+* 구현 Implementations: 제안된 기능은 이상적으로 두 자바스크립트 엔진에서 반드시 구현되어야 한다. 구현과 커뮤니티로부터의 피드백은 제안을 진화시키면서 다듬는다.
+* 표준 Standard: 제안이 증명되고 TC39가 받아들이면, 마침내 ECMAScript 표준 판으로 추가된다. 이 시점에서 제안은 표준기능이다.
 
 [Source of this section: “The Harmony Process” by David Herman.]
+[이 절의 원문: "The Harmony Process" 다비드허만]
 
 ### 1.2.1 The design process after ES6
-### 1.2.1 ES6이후 설계 과정
+### 1.2.1 ES6이후 설계 절차
 Starting with ECMAScript 7 (whose official name is ECMAScript 2016), TC39 will time-box releases. The plan is to release a new version of ECMAScript every year, with whatever features are ready at that time. That means that from now on, ECMAScript versions will be relatively small upgrades.
 
-ESMAScript 7은 시작되었고(공식적인 이름은 ECMAScript 2016), TC39는 타입박스로 공개할 것이다. 이 계획은 새로운 ECMAScript 버전을 매년 그때 준비된 기능과 함께 공개하는 것이다. 이것은 이제부터는 ECMAScript 버전들은 비교적 작은 업데이트라는것을 의미 한다.
+ESMAScript 7(공식명칭은 ECMAScript 2016) 부터 TC39는 일정 주기로 공개할 것이다. 계획은 새로운 ECMAScript 버전을 매년 그때 준비된 기능과 함께 공개하는 것이다. 이 말은 이제부터는 ECMAScript 버전들은 비교적 작은 개선될 것을 의미 한다.
 
 Work on ECMAScript 2016 (and later) has already begun, current proposals are listed on GitHub. The process has changed, too, and is described in a TC39 process document.
 
-ECMAScript 2016(그 이후) 작업은 이미 시작되었고, 현재 제안은 깃헙에 정리 되어 있다. 그 과정도 변경 되고 있으며, TC39 프로세서 문서에 기술되고 있다.
+ECMAScript 2016(및 그 이후 버전)에 대한 작업은 이미 시작되었고, 현재 제안은 깃헙에 정리 되어 있다. 그 절차는 변경 되고 있으며, TC39 절차 문서에 기술되고 있다.
 
 ## 1.3 JavaScript versus ECMAScript
 ## 1.3 자바스크립트 대 ECMAScript
