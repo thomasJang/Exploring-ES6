@@ -423,49 +423,77 @@ function objectEntries(obj) {
 
 A significant limitation of generators is that you can only yield while you are (statically) inside a generator function. That is, yielding in callbacks doesn’t work:
 
-제너레이터의 중요한 제한은 yield는 (적적으로) 제너레이터 함수 안에서만  
+제너레이터의 중요한 제한은 (적적으로) 제너레이터 함수 안에서만 일드할 수 있다는 것 이다. 즉, 콜백에서 일드는 작동하지 않는다: 
 
+```javascript
 function* genFunc() {
     ['a', 'b'].forEach(x => yield x); // SyntaxError
 }
+```
 yield is not allowed inside non-generator functions, which is why the previous code causes a syntax error. In this case, it is easy to rewrite the code so that it doesn’t use callbacks (as shown below). But unfortunately that isn’t always possible.
 
+yield는 비 제너레이터 함수에서 허용되지 않고, 이것이 이전 코드에서 문법 오류를 발생한 이유이다. 이 경우에, 코드를 재장하는것이 쉽기 때문에 (아래 보는것과 같이)콜백을 사용하지 않는다. 그러나 불행하게도 언제가 가능하지는 않다.
+
+```javascript
 function* genFunc() {
     for (const x of ['a', 'b']) {
         yield x; // OK
     }
 }
+```
 The upside of this limitation is explained later: it makes generators easier to implement and compatible with event loops.
+위의 제한에 대한 설명은 나중에 한다.: 이것은 제너레이터를 구현과 이벤트 루프와 호환하기 쉽게 만든다.
 
-22.3.6 Recursion via yield*
-You can only use yield within a generator function. Therefore, if you want to implement a recursive algorithm with generator, you need a way to call one generator from another one. This section shows that that is more complicated than it sounds, which is why ES6 has a special operator, yield*, for this. For now, I only explain how yield* works if both generators produce output, I’ll later explain how things work if input is involved.
+### 22.3.6 Recursion via yield*
+### 22.3.6 yield*을 통한 재귀
+
+You can only use yield within a generator function. Therefore, if you want to implement a recursive algorithm with generator, you need a way to call one generator from another one. This section shows that that is more complicated than it sounds, which is why ES6 has a special operator, yield\*, for this. For now, I only explain how yield\* works if both generators produce output, I’ll later explain how things work if input is involved.
+
+제너레이터 함수안에서 yield를 사용 할 수 있다. 그러므로, 제너레이터에서 재귀 알고리즘을 구현하기 원한다면, 다른 곳에서 제너레이터를 호출하는 방법이 필요하다. 이 절은 그것은 들리는것보다 더 복잡하고 ES6에서 이를 위한 특별 연산자 yield\*를 가지는지는 이유에 대해서 볼 것이다. 지금은, 모든 제너레이터가 출력을 만든다면, yield\*가 어떻게 동작하는지 설명하고, 이후에 입력이 포함된 경우 어떻게 동작하는지 설명하겠다.
 
 How can one generator recursively call another generator? Let’s assume you have written a generator function foo:
 
+어떻게 하나의 제너레이터가 재귀적으로 다른 제너레이터를 호출할 수 있는가? 제너레이터 함수 foo를 가정해 보자:
+
+```javascript
 function* foo() {
     yield 'a';
     yield 'b';
 }
+```
+
 How would you call foo from another generator function bar? The following approach does not work!
 
+어떻게 다른 제너레이터 함수인 bar로부터 foo가 호출될까? 다음 접근은 동작하지 않는다!
+
+```javascript
 function* bar() {
     yield 'x';
     foo(); // does nothing!
     yield 'y';
 }
+```
 Calling foo() returns an object, but does not actually execute foo(). That’s why ECMAScript 6 has the operator yield* for making recursive generator calls:
+foo() 호출은 객체를 반환하지만, 실제로 foo()를 실행하지 않는다. 이것이 ECMAScript 6이 재귀 함수 호출을 위해 연산자 yield*를 가진 이유다.  
 
+```javascript
 function* bar() {
     yield 'x';
     yield* foo();
     yield 'y';
 }
 
+
 // Collect all values yielded by bar() in an array
+// bar()를 통한 산출된 모든 값을 배열로 수집한다.
 const arr = [...bar()];
     // ['x', 'a', 'b', 'y']
-Internally, yield* works roughly as follows:
+```
 
+Internally, yield* works roughly as follows:
+내부적으로 yield*는 대략 다음처럼 동작한다:
+
+```javascript
 function* bar() {
     yield 'x';
     for (const value of foo()) {
@@ -473,17 +501,25 @@ function* bar() {
     }
     yield 'y';
 }
+```
 The operand of yield* does not have to be a generator object, it can be any iterable:
+yield*의 피연산자는 제너럴객체가 아니여도 되고, 어떠한 이터러블도 될 수 있다.
 
+```javascript
 function* bla() {
     yield 'sequence';
     yield* ['of', 'yielded'];
     yield 'values';
 }
 
+
 const arr = [...bla()];
     // ['sequence', 'of', 'yielded', 'values']
-22.3.6.1 yield* considers end-of-iteration values
+```
+
+### 22.3.6.1 yield* considers end-of-iteration values
+### 22.3.6.1 yield*는 반복의 마지막 값이 고려된다
+
 Most constructs that support iterables ignore the value included in the end-of-iteration object (whose property done is true). Generators provide that value via return. The result of yield* is the end-of-iteration value:
 
 function* genFuncWithReturn() {
