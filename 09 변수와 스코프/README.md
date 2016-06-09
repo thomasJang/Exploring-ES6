@@ -584,37 +584,37 @@ bar();
 
 자바스크립트에서의 전역 객체( 웹 브라우저의 `window`, Node.js의 `global` )는 특히 성능적인 면에서는 기능이라기 보다 버그에 가깝습니다. 따라서 `ES6`에서는 다음과 같은 구분을 도입하였습니다.
 
-+ 모든 전역 객체의 속성은 전역 변수입니다. 전역 스코프에서 아래 선언들은 전역 객체의 속성을 생성합니다.  
-  `All properties of the global object are global variables. In global scope, the following declarations create such properties:`
- + `var` 선언  
-   `var declarations`
- + `Function` 선언  
-   `Function declarations`
-+ 하지만 이제 전역 객체의 속성이 아닌 전역 변수도 있습니다. 전역 스코프에서 아래 선언들이 그렇습니다.  
-  `But there are now also global variables that are not properties of the global object. In global scope, the following declarations create such variables:`
- + `let` 선언  
-   `let declarations`
- + `const` 선언  
-   `const declarations`
- + `Class` 선언  
-   `Class declarations`
++ `All properties of the global object are global variables. In global scope, the following declarations create such properties:`  
+  모든 전역 객체의 속성은 전역 변수입니다. 전역 스코프에서 아래 선언들은 전역 객체의 속성을 생성합니다.
+ + `var declarations`  
+  `var` 선언
+ + `Function declarations`  
+  `Function` 선언
++ `But there are now also global variables that are not properties of the global object. In global scope, the following declarations create such variables:`  
+  하지만 이제 전역 객체의 속성이 아닌 전역 변수도 있습니다. 전역 스코프에서 아래 선언들이 그렇습니다.
+ + `let declarations`  
+  `let` 선언
+ + `const declarations`  
+  `const` 선언
+ + `Class declarations`  
+  `Class` 선언
 
-## 9.8 함수 선언과 클래스 선언 `Function declarations and class declarations`
-
-함수 선언은...
+## 9.8 `Function declarations and class declarations` 함수 선언과 클래스 선언
 
 `Function declarations…`
 
-+ `let`처럼 블록 스코프를 가집니다.  
-  `are block-scoped, like let.`
-+ `var`처럼 ( 전역 스코프에서 )전역 객체에 속성을 생성합니다.  
-  `create properties on the global object (while in global scope), like var.`
-+ 호이스팅 됩니다. 함수 스코프 내의 어느 위치에서 선언이 되었던 스코프의 시작점에서 생성됩니다.    
-  `are hoisted: independently of where a function declaration is mentioned in its scope, it is always created at the beginning of the scope.`
+함수 선언은...
 
-함수 선언의 호이스팅 예제입니다.
++ `are block-scoped, like let.`  
+  `let`처럼 블록 스코프를 가집니다.
++ `create properties on the global object (while in global scope), like var.`  
+  `var`처럼 ( 전역 스코프에서 )전역 객체에 속성을 생성합니다.
++ `are hoisted: independently of where a function declaration is mentioned in its scope, it is always created at the beginning of the scope.`  
+  호이스팅 됩니다. 함수 스코프 내의 어느 위치에서 선언이 되었던 스코프의 시작점에서 생성됩니다.
 
 `The following code demonstrates the hoisting of function declarations:`
+
+함수 선언의 호이스팅 예제입니다.
 
 ```javascript
 { // 새로운 스코프 진입
@@ -625,20 +625,20 @@ bar();
     }
 }
 ```
-클래스 선언은...
-
 `Class declarations…`
 
-+ 블록 스코프를 가집니다.  
-  `are block-scoped.`
-+ 전역 객체의 속성을 생성하지 않습니다.  
-  `don’t create properties on the global object.`
-+ 호이스팅되지 않습니다.  
-  `are not hoisted.`
+클래스 선언은...
 
-클래스가 호이스팅되지 않는다는 것이 의아해 보일 수도 있습니다. 클래스가 생성하는 것이 함수이기 때문입니다. 호이스팅되지 않는 이유는 `extends` 절의 값들이 이미 선언되고 실행되어 있어야 하기 때문입니다.
++ `are block-scoped.`  
+  블록 스코프를 가집니다.
++ `don’t create properties on the global object.`  
+  전역 객체의 속성을 생성하지 않습니다.
++ `are not hoisted.`  
+  호이스팅되지 않습니다.
 
 `Classes not being hoisted may be surprising, because, under the hood, they create functions. The rationale for this behavior is that the values of their extends clauses are defined via expressions and those expressions have to be executed at the appropriate times.`
+
+클래스가 호이스팅되지 않는다는 것이 의아해 보일 수도 있습니다. 클래스가 생성하는 것이 함수이기 때문입니다. 호이스팅되지 않는 이유는 `extends` 절의 값들이 이미 선언되고 실행되어 있어야 하기 때문입니다.
 
 ```javascript
 { // 새로운 스코프 진입
@@ -654,22 +654,21 @@ bar();
 }
 ```
 
-## 9.9 코딩 스타일 : `const` 대 `let` 대 `var` `Coding style: const versus let versus var`
-
-항상 `let`과 `const`중 하나를 사용할 것을 추천합니다.
+## 9.9 `Coding style: const versus let versus var` 코딩 스타일 : `const` 대 `let` 대 `var`
 
 `I recommend to always use either let or const:`
 
-1. 먼저 `const`가 우선입니다. 값이 변경되지 않는 모든 곳에 사용할 수 있습니다. 다시 말해 변수가 절대 할당문의 좌변이 되지 않거나 `++` 또는 `--` 의 피연산자가 아닐 경우입니다. `const` 변수가 가리키는 객체는 변경될 수 있습니다.  
-  `Prefer const. You can use it whenever a variable never changes its value. In other words: the variable should never be the left-hand side of an assignment or the operand of ++ or --. Changing an object that a const variable refers to is allowed:` 
+항상 `let`과 `const`중 하나를 사용할 것을 추천합니다.
+
+1. `Prefer const. You can use it whenever a variable never changes its value. In other words: the variable should never be the left-hand side of an assignment or the operand of ++ or --. Changing an object that a const variable refers to is allowed:`  
+  먼저 `const`가 우선입니다. 값이 변경되지 않는 모든 곳에 사용할 수 있습니다. 다시 말해 변수가 절대 할당문의 좌변이 되지 않거나 `++` 또는 `--` 의 피연산자가 아닐 경우입니다. `const` 변수가 가리키는 객체는 변경될 수 있습니다.
 
   ```javascript
   const foo = {};
   ```
+  `You can even use const in a for-of loop, because one (immutable) binding is created per loop iteration:`
 
   루프 반복마다 하나의 ( 불변 )바인딩이 생성되기 때문에 `for-of` 루프에서도 사용할 수 있습니다.
-
-  `You can even use const in a for-of loop, because one (immutable) binding is created per loop iteration:`
 
   ```javascript
   for (const x of ['a', 'b']) {
@@ -680,12 +679,12 @@ bar();
   // b
   ```
 
-  `for-of` 루프의 바디 안에서는 변수 `x`를 변경할 수 없습니다.
-
   `Inside the body of the for-of loop, x can’t changed.`
 
-2. 그 외에, 변수의 초기값이 나중에 변경된다면 `let`을 사용합니다.  
-  `Otherwise, use let – when the initial value of a variable changes later on.`
+  `for-of` 루프의 바디 안에서는 변수 `x`를 변경할 수 없습니다.
+
+2. `Otherwise, use let – when the initial value of a variable changes later on.`  
+  그 외에, 변수의 초기값이 나중에 변경된다면 `let`을 사용합니다.
 
   ```javascript
   let counter = 0; // 초기값
@@ -695,28 +694,29 @@ bar();
   obj = { foo: 123 }; // 값을 변경
   ```
 
-3. `var`는 사용하지 않습니다.  
-  `Avoid var.`
-
-이 규칙을 따르면 `var`는 리팩토링이 필요한 래거시 코드에서만 볼 수 있게됩니다.
+3. `Avoid var.`  
+  `var`는 사용하지 않습니다.
 
 `If you follow these rules, var will only appear in legacy code, as a signal that careful refactoring is required.`
 
-`var`는 `let`과 `const`가 하지 않는 전역 객체의 속성이 되는 일을 해주지만 이것은 일반적으로 좋지 않습니다. 필요하다면 `window` 또는 `global`에 속성을 할당을 해도 효과는 같습니다.
+이 규칙을 따르면 `var`는 리팩토링이 필요한 래거시 코드에서만 볼 수 있게됩니다.
 
 `var does one thing that let and const don’t: variables declared via it become properties of the global object. However, that’s generally not a good thing. You can achieve the same effect by assigning to window (in browsers) or global (in Node.js).`
 
-### 9.9.1 또 다른 스타일. `An alternative approach`
+`var`는 `let`과 `const`가 하지 않는 전역 객체의 속성이 되는 일을 해주지만 이것은 일반적으로 좋지 않습니다. 필요하다면 `window` 또는 `global`에 속성을 할당을 해도 효과는 같습니다.
 
-앞에 언급한 코딩 스타일 규칙 뿐 아니라 완전히 불변인 값들( 원시값과 동결된 객체들 )에만 `const`를 사용하는 방법도 있습니다. 두 가지 방법은.
+### 9.9.1 `An alternative approach` 또 다른 스타일.
 
 `An alternative to the just mentioned style rules is to use const only for things that are completely immutable (primitive values and frozen objects). Then we have two approaches:`
 
-1. `const` 우선 (최선) : `const`를 불변 바인딩에 사용합니다.  
-  `Prefer const (recommended): const marks immutable bindings`
-2. `let` 우선 (차선) : `const`을 불변값에 사용합니다.  
-  `Prefer let(alternative): const marks immutable values`
+앞에 언급한 코딩 스타일 규칙 뿐 아니라 완전히 불변인 값들( 원시값과 동결된 객체들 )에만 `const`를 사용하는 방법도 있습니다. 두 가지 방법은.
 
-차선으로도 충분하지만 최선을 사용하는 것을 추천합니다.
+1. `Prefer const (recommended): const marks immutable bindings`  
+  `const` 우선 (최선) : `const`를 불변 바인딩에 사용합니다.
+  
+2. `Prefer let(alternative): const marks immutable values`  
+  `let` 우선 (차선) : `const`을 불변값에 사용합니다.
 
 `#2 is perfectly acceptable; I only lean slightly in favor of #1.`
+
+차선으로도 충분하지만 최선을 사용하는 것을 추천합니다.
