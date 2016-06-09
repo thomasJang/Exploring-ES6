@@ -335,22 +335,40 @@ yield*, an operator for making recursive generator calls, does consider values i
 
 재귀적인 제너레이터 호출을 위한 연산자 yield*는 done 객체의 value값이 고려 되어 집니다. 이것은 나중에 설명 드리겠습니다. 
 
-22.3.3 Throwing an exception from a generator
+### 22.3.3 Throwing an exception from a generator
+### 22.3.3 제너레이터부터 예외 발생
+
 If an exception leaves the body of a generator then next() throws it:
 
+제너레이터 바디에서 예외가 남아 있다면, next() 시에 예외가 발생된다.:
+
+```javascript
 function* genFunc() {
     throw new Error('Problem!');
 }
 const genObj = genFunc();
 genObj.next(); // Error: Problem!
+```
+
 That means that next() can produce three different “results”:
 
-For an item x in an iteration sequence, it returns { value: x, done: false }
-For the end of an iteration sequence with a return value z, it returns { value: z, done: true }
-For an exception that leaves the generator body, it throws that exception.
-22.3.4 Example: iterating over properties
+* For an item x in an iteration sequence, it returns { value: x, done: false }
+* For the end of an iteration sequence with a return value z, it returns { value: z, done: true }
+* For an exception that leaves the generator body, it throws that exception.
+ 
+이것은 next()는 세가지 다른 "결과"를 만들 수 있다는 의미이다:
+* 순환 순서열에서 원소 x를 대한 {value: x, done: false }를 반환한다.
+* 순환 순서열의 종료와 반환값 z에 대한 {value: z, done:true}를 반환한다.
+* 제너레이터 바디에 남겨진 예외에 대하여 예외를 발생 시킨다.
+
+### 22.3.4 Example: iterating over properties
+### 22.3.4 예제: 모든 프로퍼티 순환
+
 Let’s look at an example that demonstrates how convenient generators are for implementing iterables. The following function, objectEntries(), returns an iterable over the properties of an object:
 
+어떻게 간단한 제너레이터가 이터러블을 구현하기 위한 것인지 증명하는 예제를 보자. 다음 objectEntries 함수는 객체의 프로퍼티의 전체 순환을 반환한다:
+
+```javascript
 function* objectEntries(obj) {
     // In ES6, you can use strings or symbols as property keys,
     // Reflect.ownKeys() retrieves both
@@ -360,17 +378,25 @@ function* objectEntries(obj) {
         yield [propKey, obj[propKey]];
     }
 }
-This function enables you to iterate over the properties of an object jane via the for-of loop:
+```
 
+This function enables you to iterate over the properties of an object jane via the for-of loop:
+이 함수는 for-of루프를 통해 jane 객체의 프로퍼티 전체를 순환 가능하게 한다.
+
+```javascript
 const jane = { first: 'Jane', last: 'Doe' };
 for (const [key,value] of objectEntries(jane)) {
     console.log(`${key}: ${value}`);
 }
-// Output:
+// 출력:
 // first: Jane
 // last: Doe
+```
 For comparison – an implementation of objectEntries() that doesn’t use generators is much more complicated:
 
+비교 - 제너레이터를 사용하지 않은 objectEntries() 구현은 더욱더 복잡한다.
+
+```javascript
 function objectEntries(obj) {
     let index = 0;
     let propKeys = Reflect.ownKeys(obj);
@@ -390,8 +416,14 @@ function objectEntries(obj) {
         }
     };
 }
-22.3.5 You can only yield in generators
+```
+
+### 22.3.5 You can only yield in generators
+### 22.3.5 제너레이터에서만 yield가 사용 가능하다
+
 A significant limitation of generators is that you can only yield while you are (statically) inside a generator function. That is, yielding in callbacks doesn’t work:
+
+제너레이터의 중요한 제한은 yield는 (적적으로) 제너레이터 함수 안에서만  
 
 function* genFunc() {
     ['a', 'b'].forEach(x => yield x); // SyntaxError
