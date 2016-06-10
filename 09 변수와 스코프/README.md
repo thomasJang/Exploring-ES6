@@ -10,11 +10,11 @@
 
 `let works similarly to var, but the variable it declares is block-scoped, it only exists within the current block. var is function-scoped.`
 
-`let`은 `var`와 유사하게 동작하지만, `let`으로 선언한 변수는 선언된 블록 내에서만 존재하는 블록 스코프이다. `var`는 함수 스코프이다.
+`let`은 `var`와 유사하게 동작하지만, `let`으로 선언한 변수는 현재 블록 내에서만 존재하는 블록 스코프이다. `var`는 함수 스코프이다.
 
 `In the following code, you can see that the let-declared variable tmp only exists with the block that starts in line A:`
 
-다음 코드에서 `let`으로 선언된 변수 `tmp`는 `A`라인으로 시작된 블록 내에서만 존재하는 것을 볼 수 있다.
+다음 예제에서 `let`으로 선언된 변수 `tmp`는 `A`라인으로 시작된 블록 내에서만 존재하는 것을 볼 수 있다.
 
 ```javascript
 function order(x, y) {
@@ -23,27 +23,27 @@ function order(x, y) {
         x = y;
         y = tmp;
     }
-    console.log(tmp===x); // ReferenceError: tmp는 정의되지 않았다.
+    console.log(tmp===x); // `ReferenceError: tmp is not defined` ReferenceError: tmp는 정의되지 않았다
     return [x, y];
 }
 ```
 
-### 9.1.2 const
+### 9.1.2 `const`
 
 `const works like let, but the variable you declare must be immediately initialized, with a value that can’t be changed afterwards.`
 
-`const`는 `let`처럼 동작하지만, `const`로 선언한 변수는 즉시 초기화되어야한다. 초기화된 이후에 값을 변경할 수 없다.
+`const`는 `let`처럼 동작하지만, `const`로 선언한 변수는 즉시 이후에 변경되지 않는  값으로 초기화되어야한다.
 
 ```javascript
-const foo; // SyntaxError: const 선언에 =이 없다
+const foo; // `SyntaxError: missing = in const declaration` SyntaxError: const 선언에 =이 없다
 
 const bar = 123;
-bar = 456; // TypeError: `bar`는 읽기 전용
+bar = 456; // `TypeError: `bar` is read-only` TypeError: `bar`는 읽기 전용
 ```
 
 `Since for-of creates one binding (storage space for a variable) per loop iteration, it is OK to const-declare the loop variable:`
 
-`for-of` 반복문은 루프 반복마다 하나의 바인딩 ( 변수의 저장 공간 )을 생성하기 때문에 `const`로 루프 변수를 선언하는 것도 가능하다.
+`for-of`는 루프 반복마다 하나의 바인딩 ( 변수의 저장 공간 )을 생성하기 때문에 `const`로 루프 변수를 선언하는 것도 가능하다.
 
 ```javascript
 for (const x of ['a', 'b']) {
@@ -54,7 +54,7 @@ for (const x of ['a', 'b']) {
 // b
 ```
 
-###  9.1.3 `Ways of declaring variables` 변수를 선언하는 방법들
+###  9.1.3 `Ways of declaring variables` 변수를 선언하는 방법
 
 `The following table gives an overview of six ways in which variables can be declared in ES6:`
 
@@ -69,7 +69,7 @@ for (const x of ['a', 'b']) {
 | class | No | Block | No |
 | import | Complete | Module-global | No |
 
-##  9.2 `Block scoping via let and const` `let`과 `const`를 통한 블록 스코핑
+##  9.2 `Block scoping via let and const` `let`과 `const`를 통한 블록 스코프
 
 `Both let and const create variables that are block-scoped – they only exist within the innermost block that surrounds them. The following code demonstrates that the const-declared variable tmp only exists inside the then-block of the if statement:`
 
@@ -80,7 +80,7 @@ function func() {
     if (true) {
         const tmp = 123;
     }
-    console.log(tmp); // ReferenceError: tmp는 정의되지 않았음
+    console.log(tmp); // `ReferenceError: tmp is not defined` ReferenceError: tmp는 정의되지 않았음
 }
 ```
 
@@ -104,14 +104,14 @@ function func() {
 function func() {
   const foo = 5;
   if (···) {
-     const foo = 10; // 블록 밖의 변수 foo를 가림
+     const foo = 10; // `shadows outer `foo`` 블록 밖의 foo를 가림
      console.log(foo); // 10
   }
   console.log(foo); // 5
 }
 ```
 
-## 9.3 `const creates immutable variables` `const` 는 불변 (immutable) 변수를 생성한다
+## 9.3 `const creates immutable variables` `const` 는 불변 immutable 변수를 생성한다
 
 `Variables created by let are mutable:`
 
@@ -125,7 +125,7 @@ console.log(foo); // def
 
 `Constants, variables created by const, are immutable – you can’t assign them a different value:`
 
-`const`로 생성된 변수는 상수로서 다른 값을 할당할 수 없으며 불변이다.
+`const`로 생성된 변수는 상수로서 다른 값을 할당할 수 없는 불변이다.
 
 ```javascript
 const foo = 'abc';
