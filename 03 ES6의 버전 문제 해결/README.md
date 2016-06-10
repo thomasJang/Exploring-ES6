@@ -7,7 +7,7 @@ What is the best way to add new features to a language? This chapter describes t
 ### 3.1 버저닝(Versioning)
 In principle, a new version of a language is a chance to clean it up, by removing outdated features or by changing how features work. That means that new code doesn’t work in older implementations of the language and that old code doesn’t work in a new implementation. Each piece of code is linked to a specific version of the language. Two approaches are common for dealing with versions being different.
 
-원래 언어의 새 버전은 언어를 정비할 수 있는 기회가 되며, 만료된 기능을 제거하거나, 기능 작동 방식 변경을 통해 이루어진다. 이는 새로운 코드가 해당 언어의 옛 구현체에서는 동작하지 않거나, 오래된 코드가 새로운 구현체에서 동작하지 않게 됨을 의미한다. 각각의 코드 조각들은 언어의 특정 버전과 연결되어 있다. 보통 서로 다른 버전을 다루는 데는 두 가지 접근법이 있다.
+원래 언어의 새 버전은 언어를 정비할 수 있는 기회가 되며, 이는 만료된 기능을 제거하거나, 기능 작동 방식 변경을 통해 이루어진다. 이는 새로운 코드가 해당 언어의 옛 구현체에서는 동작하지 않거나, 오래된 코드가 새로운 구현체에서 동작하지 않게 됨을 의미한다. 각각의 코드 조각들은 언어의 특정 버전과 연결되어 있다. 보통 서로 다른 버전을 다루는 데는 두 가지 접근법이 있다.
 
 First, you can take an “all or nothing” approach and demand that, if a code base wants to use the new version, it must be upgraded completely. Python took that approach when upgrading from Python 2 to Python 3. A problem with it is that it may not be feasible to migrate all of an existing code base at once, especially if it is large. Furthermore, the approach is not an option for the web, where you’ll always have old code and where JavaScript engines are updated automatically.
 
@@ -114,9 +114,9 @@ strict 모드에는 3가지 주요 변경 사항을 도입했다.
     + More identifiers are reserved: implements interface let package private protected public static yield
 
 * 문법적 변화 : 이전의 유효한 문법 몇 가지가 strict 모드에서는 금지된다.
-    + with문은  금지된다. with문은 변수 스코프 체인에 사용자가 임의의 객체를 추가하게 하는데, 이는 실행을 느리게 하고 변수가 어떤 것을 참조하고 있는지 알아보기 어렵게 만든다. 
-    + 자격이 없는 식별자(프로퍼티가 아닌 변수)를 지우는 것이 금지된다.
-    + 함수 선언은 오직 스코프의 최상위 수준에서만 가능하다.
+    + with문이 금지된다. with문은 변수 스코프 체인에 사용자가 임의의 객체를 추가하게 하는데, 이는 실행을 느리게 하고 변수가 어떤 것을 참조하고 있는지 알아보기 어렵게 만든다. 
+    + 비정규 식별자(프로퍼티가 아닌 변수) 삭제가 금지된다.
+    + 함수는 반드시 스코프 최상위에서 선언해야 한다.
     + 몇몇 식별자가 예약어에 추가 되었다. : implements interface let package private protected public static yield
    
 * More errors. For example:
