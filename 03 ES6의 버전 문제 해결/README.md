@@ -131,7 +131,7 @@ strict 모드에는 3가지 주요 변경 사항을 도입했다.
  + arguments doesn’t track the current values of parameters, anymore.
  + `this` is `undefined` in non-method functions. In non-strict mode, it refers to the global object (`window`), which meant that global variables were created if you called a constructor without `new`.
 
-* 의미의 변화 : 어떤 것들은 strict 모드에서 다르게 동작한다.
+* 의미의 변화 : 어떤 구현체들은 strict 모드에서 다르게 동작한다.
   + `arguments`는 더이상 매개변수의 최신값을 추적하지 않는다.
   + 메소드가 아닌 함수에서 `this`는 `undefined`이다. non-strict 모드에서 `this`는 전역 객체(`window`)를 참조하는데, 이는 `new` 연산자 없이 생성자를 호출했을 때 전역 변수가 만들어진다는 것을 의미한다. 
     
@@ -193,7 +193,7 @@ ECMAScript 6에서는 모듈과 클래스의 바디에서 암묵적 strict 모�
 
 The bodies of other constructs (such as arrow functions and generator functions) could have been made implicitly strict, too. But given how small these constructs usually are, using them in sloppy mode would have resulted in code that is fragmented between the two modes. Classes and especially modules are large enough to make fragmentation less of an issue.
 
-다른 구조(화살표 함수나, 제네레이터 함수 등)의 바디도 역시 암묵적 strict 모드가 될 수이다. 그러나 보통 이런 구조들이 얼마나 작은지를 고려해 보면, 그것들을 sloppy 모드에서 사용하는 것은 코드가 두 모드 사이에서 파편화되는 결과가 될 수도 있다. 클래스와 특히 모듈은 파편화를 줄일 수 있을 정도로 충분히 크다.
+다른 구현체(화살표 함수나, 제네레이터 함수 등)의 바디도 역시 암묵적 strict 모드가 되어야 한다. 그러나 보통 이런 구현물들이 얼마나 작은지 고려해 보면, sloppy 모드에서 사용하는 것은 두 모드 사이에 결과적으로 파편화된 코드가 될 것이다. 클래스, 그리고 특히 모듈은 파편화를 줄일 수 있을 정도로 충분히 크다.
 
 ### 3.2.6 수정할 수 없는 것들(Things that can’t be fixed)
 The downside of One JavaScript is that you can’t fix existing quirks, especially the following two.
@@ -231,9 +231,9 @@ One JavaScript means making ECMAScript 6 completely backwards compatible. It is 
 
 In the short term, adding ES6 constructs to both strict mode and sloppy mode is more work when it comes to writing the language specification and to implementing it in engines. In the long term, both the spec and engines profit from the language not being forked (less bloat etc.). Programmers profit immediately from One JavaScript, because it makes it easier to get started with ECMAScript 6.
 
-단기적으로 언어 사양을 쓰고, 엔진에서 실행하는 것에 관해서는 ES6 구조를 strict 모드와 sloppy 모드 양쪽 모두에 추가하는 것이 꽤 어려울 것이다. 장기적으로는, 사양과 엔진은 갈라지지 않은 언어에서 장점(덜 비대해짐 등)을 얻을 수 있을 것이다. 프로그래머들은 즉시 하나의 자바스크립트로 이득을 볼 수 있는데, 왜냐하면 이를 통해 ECMAScript 6로 시작하기가 훨씬 더 수월하기 때문이다.
+단기적으로 언어 사양을 쓰고, 엔진에서 실행하는 것에 관해서는 ES6 구현체를 strict 모드와 sloppy 모드 양쪽 모두에 추가하는 것이 꽤 어려울 것이다. 장기적으로는, 사양과 엔진은 갈라지지 않은 언어에서 장점(덜 비대해짐 등)을 얻을 수 있을 것이다. 프로그래머들은 즉시 하나의 자바스크립트로 이득을 볼 수 있는데, 왜냐하면 이를 통해 ECMAScript 6로 시작하기가 훨씬 더 수월하기 때문이다.
 
 ### 3.5 더 읽을거리(Further reading)
 [1] The original 1JS proposal (warning: out of date): “ES6 doesn’t need opt-in” by David Herman.
 
-[1] 데이비드 허먼(David Herman)의 1JS에 대한 제안(warning: out of date): “ES6 doesn’t need opt-in”.
+[1] 데이비드 허먼(David Herman)의 1JS에 대한 제안(warning: out of date): “ES6 doesn’t need opt-in”, 
