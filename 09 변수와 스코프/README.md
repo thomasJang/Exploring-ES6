@@ -141,7 +141,7 @@ foo = 'def'; // TypeError
 
 `const only means that a variable always has the same value, but it does not mean that the value itself is or becomes immutable. For example, obj is a constant, but the value it points to is mutable – we can add a property to it:`
 
-`const`는 변수가 항상 같은 값을 가지고 있다는 의미일 뿐, 값 자체가 불변이 되는 것은 아니다. 예제에서 `obj` 변수는 상수이지만 가리키는 값 객체는 불변이 아니며 속성을 추가할 수 있다.
+`const`는 변수가 항상 같은 값을 가지고 있다는 의미일 뿐, 값 자체가 불변이 되는 것을 의미하지 않는다. 예제에서 `obj`는 상수이지만 가리키는 값은 가변이며 속성을 추가할 수 있다.
 
 ```javascript
 const obj = {};
@@ -151,7 +151,7 @@ console.log(obj.prop); // 123
 
 `We cannot, however assign a different value to obj:`
 
-하지만 `obj`변수에 다른 값을 할당할 수는 없다.
+하지만 `obj`에 다른 값을 할당할 수는 없다.
 
 ```javascript
 obj = {}; // TypeError
@@ -159,7 +159,7 @@ obj = {}; // TypeError
 
 `If you want the value of obj to be immutable, you have to take care of it, yourself, e.g. by freezing it:`
 
-`obj`의 값이 불변하게 하려면, 동결이라던지 필요한 처리를 해주어야 한다.
+`obj`의 값이 불변하게 하려면, 동결같은 따로 처리를 해주어야 한다.
 
 ```javascript
 const obj = Object.freeze({});
@@ -170,14 +170,14 @@ obj.prop = 123; // TypeError
 
 `Keep in mind that Object.freeze() is shallow, it only freezes the properties of its argument, not the objects stored in its properties. For example, the object obj is frozen:`
 
-`Object.freeze()`는 얕다는 것을 기억해야 한다. 즉 `Object.freeze()`는 대상의 속성만을 동결할 뿐, 속성에 할당된 객체는 동결하지 않는다. 아래 예제에서 `obj` 객체는 동결된다.
+`Object.freeze()`는 얕다는 것을 기억해야 한다. 대상의 속성만을 동결할 뿐, 속성에 할당된 객체는 동결하지 않는다. 아래 예제에서 `obj` 객체는 동결된다.
 
 ```javascript
 const obj = Object.freeze({ foo: {} });
 obj.bar = 123
-// TypeError: 객체는 확장될 수 없으므로 bar 프로퍼티를 추가할 수 없다.
+// `TypeError: Can't add property bar, object is not extensible` TypeError: 객체는 확장될 수 없으므로 bar 프로퍼티를 추가할 수 없다.
 obj.foo = {}
-// TypeError: 객체의 읽기 전용 프로퍼티 'foo'에 할당할 수 없다.
+// `TypeError: Cannot assign to read only property 'foo' of #<Object>` TypeError: 객체의 읽기 전용 프로퍼티 'foo'에 할당할 수 없다.
 ```
 
 `But the object obj.foo is not.`
@@ -194,7 +194,7 @@ obj.foo.qux
 
 `Once a const variable has been created, it can’t be changed. But that doesn’t mean that you can’t re-enter its scope and start fresh, with a new value. For example, via a loop:`
 
-한번 `const` 변수가 생성되고나면 값이 변경될 수 없다. 하지만 루프의 스코프에 재진입 했을때 새로운 값으로 갱신되지 않는 것은 아니다. 예제의 루프를 보자.
+`const` 변수는 한번 생성되면 변경될 수 없지만 스코프에 재진입하고 새로운 값으로 갱신될 수 없다는 의미는 아니다. 예제의 루프를 보자.
 
 ```javascript
 function logArgs(...args) {
