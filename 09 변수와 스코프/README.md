@@ -214,7 +214,7 @@ logArgs('Hello', 'everyone');
 
 `A variable declared by let or const has a so-called temporal dead zone (TDZ): When entering its scope, it can’t be accessed (got or set) until execution reaches the declaration. Let’s compare the life cycles of var-declared variables (which don’t have TDZs) and let-declared variables (which have TDZs).`
 
-`let` 또는 `const`로 선언된 변수는 `TDZ` (temporal dead zone)로 불리는 것을 갖게 되며, 스코프에 진입하면 선언부에 도달하기 전까지 할당( `got` or `set` )을 할 수 없게 된다. `TDZ`를 갖지않는 `var` 선언과 `TDZ`를 갖는 `let`선언의 라이프 사이클을 비교해보자.
+`let` 또는 `const`로 선언된 변수는 `TDZ` (temporal dead zone)로 불리는 것을 갖게 되며, 스코프에 진입하면 선언부에 도달하기 전까지 접근( `got` or `set` )을 할 수 없게 된다. `TDZ`를 갖지않는 `var` 선언과 `TDZ`를 갖는 `let`선언의 라이프 사이클을 비교해보자.
 
 ### 9.4.1 `The life cycle of var-declared variables` `var`로 선언된 변수의 라이프사이클
 
@@ -223,9 +223,9 @@ logArgs('Hello', 'everyone');
 `var`로 선언된 변수는 `TDZ`를 갖지 않는다. 라이프 사이클은 다음과 같은 단계로 이루어진다.
 
 1. `When the scope (its surrounding function) of a var variable is entered, storage space (a binding) is created for it. The variable is immediately initialized, by setting it to undefined.`  
-  `var` 변수의 ( `function`으로 감싸진 ) 스코프 영역에 진입하면 변수를 위한 저장 공간( 바인딩 )이 생성되고 변수는 즉시 `undefined`로 초기화된다.
+  `var` 변수의 ( `function`으로 감싸진 ) 스코프 영역에 진입하면 변수를 위한 저장 공간( 바인딩 )이 생성된다. 변수는 즉시 `undefined`로 설정되면서 초기화된다.
 2. `When the execution within the scope reaches the declaration, the variable is set to the value specified by the initializer (an assignment) – if there is one. If there isn’t, the value of the variable remains undefined.`  
-  변수는 선언부에 도달하면 지정( 할당 )된 값으로 설정된다. 또는 지정된 값이 없는 경우에 값은 여전히 `undefined`이다.
+  스코프 내의 선언부에 도달하면 변수는 이니셜라이저로부터 지정( 할당 )된 값으로 설정된다. 지정된 값이 없는 경우에 값은 여전히 `undefined`이다.
 
 ### 9.4.2 `The life cycle of let-declared variables` `let`으로 선언된 변수의 라이프사이클
 
@@ -234,21 +234,21 @@ logArgs('Hello', 'everyone');
 `let`으로 선언된 변수는 `TDZ`를 가지며 라이프 사이클은 다음과 같다.
 
 1. `When the scope (its surrounding block) of a let variable is entered, storage space (a binding) is created for it. The variable remains uninitialized.`  
-  `let` 변수의 블록으로 감싸진 스코프 영역에 진입하면 변수를 위한 저장 공간( 바인딩 )이 생성되고 값은 초기화되지 않는다.
+  `let` 변수의 ( 블록으로 감싸진 ) 스코프 영역에 진입하면 변수를 위한 저장 공간( 바인딩 )이 생성된다. 변수는 초기화되지 않는다.
 2. `Getting or setting an uninitialized variable causes a ReferenceError.`  
   초기화되지 않은 변수에 접근하면 `ReferenceError`가 발생한다.
 3. `When the execution within the scope reaches the declaration, the variable is set to the value specified by the initializer (an assignment) – if there is one. If there isn’t then the value of the variable is set to undefined.`  
-  변수의 선언부에 도달하면 지정( 할당 )된 값으로 설정된다. 지정된 값이 없으면 값은 `undefined`로 설정된다.
+  스코프 내의 선언부에 도달하면 변수는 이니셜라이저로부터 지정( 할당 )된 값으로 설정된다. 지정된 값이 없으면 값은 `undefined`로 설정된다.
 
 `const variables work similarly to let variables, but they must have an initializer (i.e., be set to a value immediately) and can’t be changed.`
 
-`const`변수도 `let`과 유사하게 동작하지만, 반드시 즉시 초기화( 값을 할당 )가 되어야 하고 할당된 값을 변경할 수 없다.
+`const`변수도 `let`변수와 유사하게 동작하지만, 반드시 이니셜라이저를 가져야 하고 ( 즉시 값을 지정해야 한다. ) 이후에 변경될 수 없다.
 
-### 9.4.3 `Examples` 예제 
+### 9.4.3 `Examples` 예제
 
 `Within a TDZ, an exception is thrown if a variable is got or set:`
 
-`TDZ` 내에서 초기화 되지 않은 변수에 접근하면 예외가 발생한다.
+`TDZ` 내에서 변수에 접근하면 예외가 발생한다.
 
 ```javascript
 let tmp = true;
@@ -267,7 +267,7 @@ console.log(tmp); // true
 
 `If there is an initializer then the TDZ ends after the assignment was made:`
 
-초기화가 된 경우 변수에 값이 할당되고나서 `TDZ`는 종료된다.
+이니셜라이저가 있다면 초기값이 할당되고나서 `TDZ`는 종료된다.
 
 ```javascript
 let foo = console.log(foo); // ReferenceError
@@ -290,7 +290,7 @@ if (true) { // 새로운 스코프 진입. TDZ 시작
 }
 ```
 
-### 9.4.4 `typeof throws a ReferenceError for a variable in the TDZ` `TDZ` 안에서 `typeof`를 사용시 `ReferenceError`가 발생하는 경우
+### 9.4.4 `typeof throws a ReferenceError for a variable in the TDZ` `TDZ` 내에서 변수에 `typeof`를 사용시 `ReferenceError`가 발생한다
 
 `If you access a variable in the temporal dead zone via typeof, you get an exception:`
 
