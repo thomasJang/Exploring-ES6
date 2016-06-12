@@ -522,6 +522,9 @@ const arr = [...bla()];
 
 Most constructs that support iterables ignore the value included in the end-of-iteration object (whose property done is true). Generators provide that value via return. The result of yield* is the end-of-iteration value:
 
+이터러블을 지원하는 대부분의 구조에서 순환 객체의 마지막에 포함된 (프로퍼티 done이 true인)값은 무시 된다. 제너레이터는 return을 통해 값을 제공한다. yield*의 결과 값은 마지막 순환값 이다.
+
+```javascript
 function* genFuncWithReturn() {
     yield 'a';
     yield 'b';
@@ -531,14 +534,26 @@ function* logReturned(genObj) {
     const result = yield* genObj;
     console.log(result); // (A)
 }
+```
+
 If we want to get to line A, we first must iterate over all values yielded by logReturned():
 
+만약 A줄을 얻고 싶다면, 우선 logReturned()를 통해 얻어진 뭐든 값을 순환 해야 한다. 
+
+```javascript
 > [...logReturned(genFuncWithReturn())]
+
 The result
 [ 'a', 'b' ]
-22.3.6.2 Iterating over trees
+```
+
+#### 22.3.6.2 Iterating over trees
+#### 22.3.6.2 트리 순환
 Iterating over a tree with recursion is simple, writing an iterator for a tree with traditional means is complicated. That’s why generators shine here: they let you implement an iterator via recursion. As an example, consider the following data structure for binary trees. It is iterable, because it has a method whose key is Symbol.iterator. That method is a generator method and returns an iterator when called.
 
+재귀적를 통한 트리 순환은 간단하고, 전통적인 의미에서 트리 순환을 작성하는것은 복잡하다. 이것이 제너레이터가 빛나는 이유다. 제너레이터는 재귀를 통해 이터레이터를 구현하게 한다. 예제 처럼, 다음 이진트리에 대한 다음 자료 구조 고려해 보자. 자료구조는 Symbol.iterator메소드를 가지고 있기 때문에 이터러블이다. 이 메소드는 제너레이터 메소드 이고, 호출 시에 이터레이터를 반환한다.
+
+```javascript
 class BinaryTree {
     constructor(value, left=null, right=null) {
         this.value = value;
@@ -546,20 +561,24 @@ class BinaryTree {
         this.right = right;
     }
 
-    /** Prefix iteration */
+    /** 전위순회 */
     * [Symbol.iterator]() {
         yield this.value;
         if (this.left) {
             yield* this.left;
-            // Short for: yield* this.left[Symbol.iterator]()
+            // 축약하면: yield* this.left[Symbol.iterator]()
         }
         if (this.right) {
             yield* this.right;
         }
     }
 }
-The following code creates a binary tree and iterates over it via for-of:
+```
 
+The following code creates a binary tree and iterates over it via for-of:
+다음 코드는 이진 트리를 생성하고, for-of를 통해 순환한다.
+
+```javascript
 const tree = new BinaryTree('a',
     new BinaryTree('b',
         new BinaryTree('c'),
@@ -569,12 +588,14 @@ const tree = new BinaryTree('a',
 for (const x of tree) {
     console.log(x);
 }
-// Output:
+// 출력:
 // a
 // b
 // c
 // d
 // e
+```
+
 22.4 Generators as observers (data consumption)
 As consumers of data, generator objects conform to the second half of the generator interface, Observer:
 
