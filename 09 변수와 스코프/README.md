@@ -382,7 +382,7 @@ arr.map(x => x()); // [3,3,3]
 
 `If you let-declare a variable, a new binding is created for each loop iteration:`
 
-`let`으로 변수를 선언하면 `for` 루프의 반복마다 새로운 바인딩이 생성된다.
+`let`으로 변수를 선언하면 각각의 루프 반복마다 새로운 바인딩이 생성된다.
 
 ```javascript
 const arr = [];
@@ -394,19 +394,23 @@ arr.map(x => x()); // [0,1,2]
 
 `This time, each i refers to the binding of one specific iteration and preserves the value that was current at that time. Therefore, each arrow function returns a different value.`
 
-이번에는 `i`가 매 반복마다 바인딩되고, 바인딩 된 시점을 기준으로 값을 가진다. 따라서 각 화살표 함수는 다른 값을 반환한다.
+이번에는, 각각의 `i`는 매 반복마다 하나의 바인딩을 참조하고 바인딩된 시점의 값을 가진다. 따라서 각각의 화살표 함수는 다른 값을 반환한다.
 
 `const works like var, but you can’t change the initial value of a const-declared variable:`
 
-`const`는 `var`처럼 동작하지만, 선언 시점의 초기값을 변경할 수는 없다.
+`const`는 `var`처럼 동작하지만, `const`로 선언된 변수의 초기값은 변경할 수 없다.
+
+> const는 let처럼 동작한다가 맞는 것 아닌가...???
 
 `Getting a fresh binding for each iteration may seem strange at first, but it is very useful whenever you use loops to create functions that refer to loop variables, as explained in a later section.`
 
-반복마다 새로운 바인딩을 얻는 것이 처음엔 이상해 보일 수 있지만, 다음 예제처럼 루프 내에서 루프 변수를 참조하는 함수를 생성하는 경우에 매우 유용하다.
+각각의 반복마다 새로운 바인딩을 얻는 것이 처음엔 이상해 보일 수 있지만, 다음 절의 예제처럼 루프 변수를 참조하는 함수를 생성하기 위해 루프를 사용하는 경우에 매우 유용하다.
 
 > *:notebook: `for loop: per-iteration bindings in the spec` `for` 루프 반복마다 바인딩에 관한 스펙  
 > `The evaluation of the for loop handles var as the second case and let/const as the third case. Only let-declared variables are added to the list perIterationLets (step 9), which is passed to ForBodyEvaluation() as the second-to-last parameter, perIterationBindings.`  
 > `for` 루프의 평가는 `var`를 두번째로 처리하고 `let`, `const`를 세번째로 처리한다. `let`으로 선언된 변수만이 `ForBodyEvaluation()`에 두번째 이후의 파라미터 `perIterationBindings`로 전달되는 `perIterationLets`( 9장 참고 ) 리스트에 추가된다.
+
+> 좀 더 연구 필요...
 
 ### 9.5.2 `for-of loop and for-in loop` `for-of` 루프와 `for-in` 루프
 
@@ -424,7 +428,7 @@ arr.map(x => x()); // [2,2,2]
 
 `let creates one binding per iteration:`
 
-`let`은 매 반복마다 바인딩을 생성한다.
+`let`은 반복마다 하나의 바인딩을 생성한다.
 
 ```javascript
 const arr = [];
