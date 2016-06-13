@@ -1,40 +1,52 @@
 ## 2. FAQ: ECMAScript 6
 
-2장은 ECMAScript 6에 관한 빈번한 질문에 대답한다. 
-> This chapter answers a few frequently asked questions about ECMAScript 6
+This chapter answers a few frequently asked questions about ECMAScript 6
 
-### 2.1 ES6는 어떻게 사용 할 수 있는가? 
-> How can I use ES6 today?
+> 2장은 ECMAScript 6에 관한 빈번한 질문에 대답한다. 
 
-ES6 스펙의 대부분은 현대의 엔진들에서 이미 지원되고 있고, 지원 여부 확인을 위해서는 Kangax’ ES6 compatibility table 을 살펴보라.
-> Most of ES6 is already supported in current engines, consult Kangax’ ES6 compatibility table to find out what is supported where.
+### 2.1 How can I use ES6 today?
 
-다른 선택지는, (예: ES6 커맨드 라인과 바벨을 이용한 ES6에서 ES5로 변환) “Deploying ECMAScript 6” in “Setting up ES6”. 을 찾아보길 바란다. 
-> For other options (e.g. interactive ES6 command lines and transpiling ES6 to ES5 via Babel), consult Chap. “Deploying ECMAScript 6” in “Setting up ES6”.
+> 2.1 현재 ES6는 어떻게 사용 할 수 있는가? 
 
-### 2.2 ECMAScript 6는 이제 ECMAScript 2015로 불려야 하는 것 아닌가? 
-> 2.2 Isn’t ECMAScript 6 now called ECMAScript 2015?
+Most of ES6 is already supported in current engines, consult Kangax’ ES6 compatibility table to find out what is supported where.
 
-그렇다고 할 수도 있고, 아니라고 할 수도 있다. ECMAScript 2015가 공식적인 이름이지만, 모두가 알고 있고 사용하는 이름은 ES6 다. 이 책에서 후자인 ES6를 사용하기로 결정한 것이 바로 그런 이유에서다.
-> Yes and no. The official name is ECMAScript 2015, but ES6 is the name that everyone knows and uses. That’s why I decided to use the latter for this book.
+> ES6 스펙의 대부분은 현재의 엔진들에서 이미 지원되며, 어디서 무엇이 지원되는지 알아보기 위해서 Kangax 의 ES6 호환표 *Kangax’ ES6 compatibility table* 를 살펴보라.
 
-ES6 이후에는, 새로운 절차(TC39 위원회의 ECMAScript 스펙 승인 절차)와 매해 출시 되는 주기를 통해 ECMAScript 에디션이 제작된다. 이것은 새로운 네이밍을 수립하기에 좋은 기회로 볼 수 있다. 그러므로 이 책은 ES6 그 다음 에디션에 "ECMAScript 2016" 이라는 이름을 사용 할 것이다. 
-> After ES6, ECMAScript editions are created via a new process and a yearly release cycle. That seems like a good opportunity to switch to the new naming scheme. Therefore, I’ll use the name “ECMAScript 2016” for the edition after ES6.
+For other options (e.g. interactive ES6 command lines and transpiling ES6 to ES5 via Babel), consult Chap. “Deploying ECMAScript 6” in “Setting up ES6”.
 
-### 2.3 ECMAScript 5 코드를 ECMAScript 6으로 어떻게 통합하는가? 
-> 2.3 How do I migrate my ECMAScript 5 code to ECMAScript 6?`
+> 다른 선택지는, (예: 대화형 ES6 커맨드 라인과 바벨을 이용한 ES6에서 ES5로 변환) “Deploying ECMAScript 6” in “Setting up ES6”. 를 살펴보라.
 
-특별히 해야 할 건 없다. ECMAScript 6는 ECMAScript 5의 상위 집합이기 때문이다. 그래서 ES5로 작성된 모든 코드는 자동적으로 ES6 코드이기도 하다. 이것은 새로운 버전을 채택함에 있어서 굉장히 유용하다. 어떻게 ES6가 이전 버전과 완벽히 호환이 유지되는지는 “One JavaScript” 챕터에서 설명한다. 
-> There is nothing to do: ECMAScript 6 is a superset of ECMAScript 5. Therefore, all of your ES5 code is automatically ES6 code. That helps tremendously with incrementally adopting this new version. How exactly ES6 stays completely backwards compatible is explained in the chapter on “One JavaScript”.
 
-### 2.4 ECMAScript 5를 배우는게 여전히 유효한가? 
-> 2.4 Does it still make sense to learn ECMAScript 5?
+> 2.2 ECMAScript 6는 이제 ECMAScript 2015로 불리지 않는가?
+### 2.2 Isn’t ECMAScript 6 now called ECMAScript 2015?
 
-ES6는 시간이 갈수록 모든 곳에서 더욱 지원이 잘 될 것이다. 그 말이 ECMAScript 5를 더 이상 배우지 말아야 한다는 의미일까? 그렇지 않다는 것에 다음과 같은 몇가지 이유가 있다. 
-> ES6 is increasingly well supported everywhere. Does that mean that you shouldn’t learn ECMAScript 5, anymore? It doesn’t, for several reasons:
+Yes and no. The official name is ECMAScript 2015, but ES6 is the name that everyone knows and uses. That’s why I decided to use the latter for this book.
 
-ECMAScript 6는 ECMAScript 5 의 상위 집합 - 새로운 자바스크립트 버전은 절대로 기존 코드를 망가뜨리지 않는다. 그러한 이유로, ECMAScript 5에 관한 학습에 헛된 것은 없다. 
-> ECMAScript 6 is a superset of ECMAScript 5 – new JavaScript versions must never break existing code. Thus, nothing you learn about ECMAScript 5 is learned in vain.
+> 그렇기도 하고, 아니기도 하다. 공식적인 이름은 ECMAScript 2015 지만, ES6는 모두가 알고 있고 사용하는 이름이다. 그 것이 이 책에서 후자를 사용하기로 결정한 이유이다.
+
+After ES6, ECMAScript editions are created via a new process and a yearly release cycle. That seems like a good opportunity to switch to the new naming scheme. Therefore, I’ll use the name “ECMAScript 2016” for the edition after ES6.
+
+> ES6 이후, ECMAScript 판은 새로운 절차와 매년 출시 주기를 통해 만들어진다. 이 것은 새로운 명명 방식으로 전환하기 위한 좋은 기회로 보인다. 그러므로 이 책은 ES6 그 다음 판에 "ECMAScript 2016" 이라는 이름을 사용 할 것이다. 
+
+### 2.3 How do I migrate my ECMAScript 5 code to ECMAScript 6?`
+> 2.3 ECMAScript 5 코드를 ECMAScript 6으로 어떻게 통합하는가? 
+
+There is nothing to do: ECMAScript 6 is a superset of ECMAScript 5. Therefore, all of your ES5 code is automatically ES6 code. That helps tremendously with incrementally adopting this new version. How exactly ES6 stays completely backwards compatible is explained in the chapter on “One JavaScript”.
+
+> 해야 할 것은 없다 :  ECMAScript 6는 ECMAScript 5의 상위 집합이다. 그러므로, ES5로 작성된 모든 코드는 자동적으로 ES6 코드이다. 이것은  새로운 버전을 올려 적용하는 것에 굉장히 도움을 준다. 어떻게 ES6가 이전 버전과 완벽히 호환이 유지되는지는 “하나의 자바스크립트” 장에서 설명한다. 
+
+
+### 2.4 Does it still make sense to learn ECMAScript 5?
+> 2.4 ECMAScript 5를 배우는게 여전히 타당한가? 
+
+ES6 is increasingly well supported everywhere. Does that mean that you shouldn’t learn ECMAScript 5, anymore? It doesn’t, for several reasons:
+
+> ES6는 갈수록 더 모든 곳에서 지원이 잘 된다. 그 말이 ECMAScript 5를 더 이상 배우지 말아야 한다는 의미일까? 몇가지 이유에서 그렇지 않다. 
+
+ECMAScript 6 is a superset of ECMAScript 5 – new JavaScript versions must never break existing code. Thus, nothing you learn about ECMAScript 5 is learned in vain.
+
+> ECMAScript 6는 ECMAScript 5 의 상위 집합 - 새로운 자바스크립트 버전은 절대로 기존 코드를 망가뜨리지 않는다. 그러한 이유로, ECMAScript 5에 관한 학습에 헛된 것은 없다. 
+
 
 ECMAScript 5의 특징들을 대체하는 ECMAScript 6의 특징들이 몇가지있지만, 그러한 기술들의 기반으로써 여전히 사용된다. 이러한 기저를 이해하는 것은 중요하다. 두 가지 예를 들자면 : class는 내부적으로 생성자로 변환되고 메서드는 여전히 함수이다. (언제나 그래왔듯이).
 > There are several ECMAScript 6 features that kind of replace ECMAScript 5 features, but still use them as their foundations. It is important to understand those foundations. Two examples: classes are internally translated to constructors and methods are still functions (as they have always been).
