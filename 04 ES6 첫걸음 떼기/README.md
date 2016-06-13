@@ -1,24 +1,29 @@
+# 4. First steps with ECMAScript 6
 # 4. ECMAScript 6의 첫 단계
+This chapter helps you take your first steps with ECMAScript 6: It lists ES6 features that are easy to adopt and explains those features via ES5 code.
 
-이 챕터는 당신이 ECMAScript6 첫 단계를 오르는 것을 돕는다. 쉽게 적용하고, ES5를 통해 이 기능을 설명할 ES6 기능 리스트를 만든다.
+이 장은 ECMAScript6 첫 단계를 오르게 돕는다. 적용하기 쉽게 ES6기능을 나열하고, ES5를 통해 이 기능을 설명한다.
 
-ES6 코드를 실행하는 방법에 대한 자세한 내용 (모던 자바스크립트 엔진에서, 바벨 등을 통한 ES6으로 부터 ES5로 컴파일링), 이 책을 참고 해라 "Setting up ES6"(이 책을 온라인에서 읽는것은 공짜이다.)
-
+# 4.1 From var to let/const
 # 4.1 var에서 let/const로
-ES5에서 당신은 변수를 var를 통해 선언했다. 이러한 변수는 함수 스코프이고, 그들의 스코프는 함수 가장 안쪽 둘러쌓인 함수 이다. var의  행동은 때때로 혼란스럽다. 예제를 보면:
+In ES5, you declare variables via var. Such variables are function-scoped, their scopes are the innermost enclosing functions. The behavior of var is occasionally confusing. This is an example:
+
+ES5에서 변수를 var를 통해 선언했다. 이러한 변수는 함수 스코프이고, 이 스코프는 가장 안쪽 함수로 둘러싸여 있다. var의 행동은 때때로 혼란스럽다. 예제를 보면:
 
 ```javascript
 var x = 3;
 function func(randomize) {
     if (randomize) {
-        var x = Math.random(); // (A) scope: whole function
+        var x = Math.random(); // (A) scope: 전체 함수
         return x;
     }
-    return x; // accesses the x from line A
+    return x; // A줄의 x에 접근
 }
 func(false); // undefined
 ```
-func()가 undefined 반환 하는것은 놀랍다. 만약 무슨일이 일어났는지 더 면밀하게 반영하기 위해 이 코드를 재작성 한다면 이유를 알 수 있다.
+That func() returns undefined may be surprising. You can see why if you rewrite the code so that it more closely reflects what is actually going on:
+
+func()가 undefined 반환 하는 것에 놀랄지 모른다. 무슨일이 일어났는지 더 정확하게 반영하기 위해 이 코드를 재작성 한다면 무슨 일이 벌어졌는지 볼 수 있다.
 
 ```javascript
 var x = 3;
@@ -32,11 +37,18 @@ function func(randomize) {
 }
 func(false); // undefined
 ```
-ES6에서 당신은 추가적으로 변수를 let이나 const를 통해서 선언할 수 있다. 이 같은 변수들은 블록 스코프를 갖고, 그들의 스코프는 가장 안쪽에 둘러쌓인 블럭이다. let은 대충 var의 블럭스코프 버전이다. const는 마치 let처럼 동작하지만 값이 변할 수 없는 변수를 생성 한다.
+In ES6, you can additionally declare variables via let and const. Such variables are block-scoped, their scopes are the innermost enclosing blocks. let is roughly a block-scoped version of var. const works like let, but creates variables whose values can’t be changed.
 
-let과 const는 더욱 엄격하게 행동하고, 더 많은 익셉션을 던진다 (예: 당신이 그 선언되기 전에 변수에 접근하면). 블럭 스코프는 코드 조각의 효과가  더욱 지역적으로 유지되도록 돕는다 (이 논증을 위한 다음 섹션을 보아라). 그리고 이것은 함수 스코프보다 더 주요 방법이고 이것은 자바스크립트와 다른 프로그래밍 언어 사이의 이동을 용이하게 한다.
+추가적으로 ES6에서 변수를 let이나 const를 통해서 선언할 수 있다. 이 같은 변수들은 블럭 스코프를 갖고, 이 스코프는 가장 안쪽에 블럭으로 둘러 싸여있다. let은 var의 대충 블럭스코프 버전이다. const는 마치 let처럼 동작하지만 값이 변할 수 없는 변수를 생성 한다.
 
-만약 첫 버전에서 당신이 var를 let으로 바꾸면, 당신은 다른 동작을 볼수 있다.:
+let and const behave more strictly and throw more exceptions (e.g. when you access their variables inside their scope before they are declared). Block-scoping helps with keeping the effects of code fragments more local (see the next section for a demonstration). And it’s more mainstream than function-scoping, which eases moving between JavaScript and other programming languages.
+
+let과 const는 더욱 엄격하게 행동하고, 더 많은 예외(예: 선언되기 전에 변수에 접근하면)를 던진다. 블럭 스코프는 코드 조각의 우효 범위가 더욱 지역적이게 유지 되도록 돕는다 (이 논증을 위한 다음 절을 보아라). 그리고 블럭 스코프는 함수 스코프보다 더 많이 사용되고, 이것은 자바스크립트와 다른 프로그래밍 언어 사이의 이동을 쉽게 한다.
+
+If you replace var with let in the initial version, you get different behavior:
+
+첫 버전에서 var를 let으로 바꾸면, 다른 동작을 볼 수 있다.:
+
 ```javascript
 let x = 3;
 function func(randomize) {
@@ -48,60 +60,93 @@ function func(randomize) {
 }
 func(false); // 3
 ```
+That means that you can’t blindly replace var with let or const in existing code; you have to be careful during refactoring.
 
-이것은 당신이 존재하는 코드에서 var를 let이나 const로 맹목적으로 변경 할 수 없다는 것을 의미한다. 당신인 리팩토링동안 주의를 기울여야 한다.
+이것은 작성된 코드에서 var를 let이나 const로 맹목적으로 변경 할 수 없다는 것을 의미한다. 리팩토리 하는 동안 주의를 기울여야 한다.
 
-내 조언은:
+My advice is:
 
-* const를 선호해라. 당신은 변경되지 않는 모든 변수들은 const을 사용하라.
+* Prefer const. You can use it for all variables whose values never change.
+* Otherwise, use let – for variables whose values do change.
+* Avoid var.
+
+조언은:
+
+* const를 선호해라. 변경되지 않는 모든 변수들은 const을 사용 수 있다.
 * 반면에 let은 값이 변하는 변수를 위해 사용해라.
 * var를 피해라.
- 
-더 자세한 정보: 챕터 "변수와 스코프".
 
+More information: chapter “Variables and scoping”.
+
+더 자세한 정보: "변수와 스코프".
+
+## 4.2 From IIFEs to blocks
 ## 4.2 IIFEs에서 Block으로
-ES5에서 만약 당신이 블럭에서 tmp의 제한된 스코프를 원한다면, 당신은 IIFE(즉시 호출된 함수 표현식)으로 불리는 패턴을 사용해야 한다.
+
+In ES5, you had to use a pattern called IIFE (Immediately-Invoked Function Expression) if you wanted to restrict the scope of a variable tmp to a block:
+
+ES5에서 변수 tmp를 블록으로 스코프를 제한 하길 원한다면, IIFE(즉시 호출된 함수 표현식)으로 불리는 패턴을 사용해야 한다.
 
 ```javascript
-(function () {  // open IIFE
+(function () {  // 열기 IIFE
     var tmp = ···;
     ···
-}());  // close IIFE
+}());  // 닫기 IIFE
 
 console.log(tmp); // ReferenceError
 ```
-ECMAScript 6에서, 당신은 블럭과 let선언(또는 const 선언)을 간단하게 사용할 수 있다.
+In ECMAScript 6, you can simply use a block and a let declaration (or a const declaration):
+
+ECMAScript 6에서, 블럭과 let선언(또는 const 선언)을 간단하게 사용할 수 있다.
+
 ```javascript
-{  // open block
+{  // 블럭 열기
     let tmp = ···;
     ···
-}  // close block
+}  // 블럭 닫기
 
 console.log(tmp); // ReferenceError
 ```
-더 자세한 정보: 섹션 "ES6에서 IIFEs를 피해라"
+More information: section “Avoid IIFEs in ES6”.
 
-## 4.3 문자열 결함에서 템플레이트 리터럴로
+더 자세한 정보: "ES6에서 IIFEs를 피해라"
+
+## 4.3 From concatenating strings to template literals
+## 4.3 문자열 결합에서 템플릿 리터럴로
+With ES6, JavaScript finally gets literals for string interpolation and multi-line strings.
+
 ES6에서, 자바스크립트는 문자열 보간과 멀티라인 문자열을 위한 리터럴을 마침내 얻었다.
 
+### 4.3.1 String interpolation
 ### 4.3.1 문자열 보간
-ES5에서 당신이 그 값과 문자열 조각을 결합을 통해 값을 문자열에 넣었다.
+In ES5, you put values into strings by concatenating those values and string fragments:
+
+ES5에서 값과 문자열 조각을 결합하여 값을 문자열에 넣었다.
 
 ```javascript
 function printCoord(x, y) {
     console.log('('+x+', '+y+')');
 }
 ```
-ES6에서 당신은 템플릿 리터럴을 통해 문자 보간을 사용할 수 있다:
+In ES6 you can use string interpolation via template literals:
+
+ES6에서 템플릿 리터럴을 통해 문자 보간을 사용할 수 있다:
+
 ```javascript
 function printCoord(x, y) {
     console.log(`(${x}, ${y})`);
 }
 ```
+
+### 4.3.2 Multi-line strings
 ### 4.3.2 멀티라인 문자열
+Template literals also help with representing multi-line strings.
+
 템플릿 리터럴은 멀티라인 문자열을 표현하는데 도움을 준다.
 
-예를 들면, 이것은 ES5에서 당신이 하나를 표현하기 위해 해야하는 것 이다:
+For example, this is what you have to do to represent one in ES5:
+
+예를 들면, 이것은 ES5에서 멀티라인을 표현하기 위해 해야 하는 것 이다:
 
 ```javascript
 var HTML5_SKELETON =
@@ -115,7 +160,10 @@ var HTML5_SKELETON =
     '</body>\n' +
     '</html>\n';
 ```
-만약 당신이 백슬래쉬를 통해 뉴라인을 이스케이프 한다면, 이것은 좀더 좋게 보여진다(그러나 당신은 여전히 명시적으로 뉴라인을 추가해야 한다.):
+
+If you escape the newlines via backslashes, things look a bit nicer (but you still have to explicitly add newlines):
+
+백슬래쉬를 통해 뉴라인을 이스케이프 한다면, 좀 더 좋게 보여진다(그러나 당신은 여전히 명시적으로 뉴라인을 추가해야 한다.):
 
 ```javascript
 var HTML5_SKELETON = '\
@@ -129,6 +177,8 @@ var HTML5_SKELETON = '\
     </body>\n\
     </html>';
 ```
+ES6 template literals can span multiple lines:
+
 ES6 템플릿 리터럴은 여러줄에 걸쳐 있을 수 있다.:
 
 ```javascript
@@ -143,11 +193,16 @@ const HTML5_SKELETON = `
     </body>
     </html>`;
 ```
-(이 예제는 얼마나 많은 공백이 포함하고 있는지 차이가 나지만 이 경우에는 별 문제가 없다.)
+(The examples differ in how much whitespace is included, but that doesn’t matter in this case.)
+(이 예제는 얼마나 많은 공백이 포함하고 있는지에 대해 차이가 나지만 이 경우에는 별 문제가 없다.)
 
-더 자세한 정보: 챕터 "템플릿 리터럴과 태그드 템플릿".
+More information: chapter “Template literals and tagged templates”.
 
+더 자세한 정보: "템플릿 리터럴과 태그드 템플릿".
+
+## 4.4 From function expressions to arrow functions
 ## 4.4 함수표현법에서 애로우 함수로
+
 현재 ES5 코드에서, 당신이 함수 표현식을 사용할 때 this를 주의해야 한다. 다음 예제에서 나는 헬퍼 변수 _this(A줄)를 생성하여 UiComponent의 this를 B줄에서 접근 할수 있다.
 ```javascript
 function UiComponent() {
