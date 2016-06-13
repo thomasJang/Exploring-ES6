@@ -339,7 +339,7 @@ if (!('someGlobal' in window)) {
 2. `For const: Making const work properly is difficult. Quoting Allen Wirfs-Brock: “TDZs … provide a rational semantics for const. There was significant technical discussion of that topic and TDZs emerged as the best solution.” let also has a temporal dead zone so that switching between let and const doesn’t change behavior in unexpected ways.`  
   `const`를 위해 : `const`를 제대로 사용하는 것은 어렵다. `Allen Wirfs-Brock`의 말에 따르자면, "`TDZ`는 `const`를 위해 합리적인 의미론을 제공한다. 이 주제에 대한 중요한 기술적인 토론이 있었고 `TDZ`가 최고의 솔루션으로 채택되었다." `let` 또한 `TDZ`를 가지고 있기 때문에 `let`과 `const`를 서로 바꾸어 써도 예상치 못하게 동작하는 일은 없다.
 3. `Future-proofing for guards: JavaScript may eventually have guards, a mechanism for enforcing at runtime that a variable has the correct value (think runtime type check). If the value of a variable is undefined before its declaration then that value may be in conflict with the guarantee given by its guard.`  
-  추후 `guards`를 지원하기 위해 : 자바스크립트는 언젠가 런타임에 변수가 올바른 값을 가지고 있는지 검사( 타입 체크처럼 )하는 매커니즘인 `guards`를 가질 수도 있다. 변수가 선언되기 전에 이미 `undefined`값을 가지고 있다면 `guards`가 보장해 주는 결과와 충돌이 일어날 수 있다.
+  추후 `guards`를 지원하기 위해 : 자바스크립트는 언젠가 런타임에 변수가 올바른 값을 가지고 있는지 검사( 타입 체크처럼 )하는 매커니즘인 `guards`를 가질 수도 있다. 변수의 값이 선언되기 전에 `undefined`라면 `guards`가 보장해 주는 결과와 충돌이 일어날 수 있다.
 
 ### 9.4.6 `Further reading` 더 읽을거리 
 
@@ -366,7 +366,7 @@ if (!('someGlobal' in window)) {
 
 `var-declaring a variable in the head of a for loop creates a single binding (storage space) for that variable:`
 
-`for` 루프의 헤드에서 선언한 `var`변수는 변수를 위한 단일 바인딩( 저장 공간 )을 생성한다.
+`for`루프의 헤드에서 `var`로 변수를 선언하는 것은 변수를 위한 단일 바인딩( 저장 공간 )을 생성한다.
 
 ```javascript
 const arr = [];
@@ -378,7 +378,7 @@ arr.map(x => x()); // [3,3,3]
 
 `Every i in the bodies of the three arrow functions refers to the same binding, which is why they all return the same value.`
 
-바디안에서 세번 실행되는 화살표 함수의 모든 `i` 변수는 같은 바인딩을 가리키고 있다. 따라서 모든 반환값이 같게 된다.
+세번 실행되는 화살표 함수의 바디에 있는 모든 `i`는 같은 바인딩을 참조하기 때문에 모두 같은 값을 반환한다.
 
 `If you let-declare a variable, a new binding is created for each loop iteration:`
 
