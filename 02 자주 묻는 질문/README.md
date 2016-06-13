@@ -16,9 +16,9 @@ For other options (e.g. interactive ES6 command lines and transpiling ES6 to ES5
 
 > 다른 선택지는, (예: 대화형 ES6 커맨드 라인과 바벨을 이용한 ES6에서 ES5로 변환) “Deploying ECMAScript 6” in “Setting up ES6”. 를 살펴보라.
 
+### 2.2 Isn’t ECMAScript 6 now called ECMAScript 2015?
 
 > 2.2 ECMAScript 6는 이제 ECMAScript 2015로 불리지 않는가?
-### 2.2 Isn’t ECMAScript 6 now called ECMAScript 2015?
 
 Yes and no. The official name is ECMAScript 2015, but ES6 is the name that everyone knows and uses. That’s why I decided to use the latter for this book.
 
