@@ -306,11 +306,11 @@ if (true) {
 
 `Why? The rationale is as follows: foo is not undeclared, it is uninitialized. You should be aware of its existence, but aren’t. Therefore, being warned seems desirable.`
 
-왜냐하면, 개발자가 `foo` 변수의 존재를 인지할 수는 있겠지만 이론적으로 `foo` 변수는 선언되지 않았고 초기화되지 않았기 때문이다. 따라서 경고가 나타나는 것은 바람직하다.
+왜냐하면, 개발자가 `foo`의 존재를 인지할 수는 있지만 이론적으로 `foo`는 선언되지 않았고 초기화되지 않았기 때문이다. 따라서 경고해 주는 것이 바람직하다.
 
 `Furthermore, this kind of check is only useful for conditionally creating global variables. That’s something that only advanced JavaScript programmers should do and it can only be achieved via var.`
 
-또한 이런 류의 검사는 전역 변수의 생성 여부를 체크하는 경우에만 유용하다. 주로 자바스크립트 숙련자들이 사용하는데 `var`를 사용할 때에만 유효하다.
+또한 이런 검사는 조건적으로 전역변수를 생성하는 경우에만 유용하다. 주로 자바스크립트 숙련자들이 사용하며 `var`를 사용할 때만 유효하다.
 
 `There is a way to check whether a global variable exists that does not involve typeof:`
 
@@ -330,12 +330,12 @@ if (!('someGlobal' in window)) {
 
 `The former way of creating a global variable only works in global scope (and therefore not inside ES6 modules).`
 
-전역 변수를 생성하는 전자의 방법은 글로벌 스코프에서만 작동한다. `ES6`모듈 안에서는 가능하지 않다.
+전역 변수를 생성하는 전자의 방법은 전역 스코프에서만 작동하며, `ES6`모듈 안에서는 가능하지 않다.
 
 ### 9.4.5 `Why is there a temporal dead zone?` `TDZ`가 필요한 이유
 
 1. `To catch programming errors: Being able to access a variable before its declaration is strange. If you do so, it is normally by accident and you should be warned about it.`  
-  프로그래밍 에러를 잡기위해 : 선언 전에 변수에 접근이 가능하다는 것은 이상하다. 문제를 일으키기 쉬운 부분이기 때문에 경고를 해주는 것이 좋다.
+  프로그래밍 에러를 잡기위해 : 선언 전에 변수에 접근이 가능하다는 것은 이상하다. 이것은 일반적으로 문제로 간주되며 경고를 해주어야 한다.
 2. `For const: Making const work properly is difficult. Quoting Allen Wirfs-Brock: “TDZs … provide a rational semantics for const. There was significant technical discussion of that topic and TDZs emerged as the best solution.” let also has a temporal dead zone so that switching between let and const doesn’t change behavior in unexpected ways.`  
   `const`를 위해 : `const`를 제대로 사용하는 것은 어렵다. `Allen Wirfs-Brock`의 말에 따르자면, "`TDZ`는 `const`를 위해 합리적인 의미론을 제공한다. 이 주제에 대한 중요한 기술적인 토론이 있었고 `TDZ`가 최고의 솔루션으로 채택되었다." `let` 또한 `TDZ`를 가지고 있기 때문에 `let`과 `const`를 서로 바꾸어 써도 예상치 못하게 동작하는 일은 없다.
 3. `Future-proofing for guards: JavaScript may eventually have guards, a mechanism for enforcing at runtime that a variable has the correct value (think runtime type check). If the value of a variable is undefined before its declaration then that value may be in conflict with the guarantee given by its guard.`  
