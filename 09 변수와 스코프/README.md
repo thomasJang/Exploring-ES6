@@ -32,7 +32,7 @@ function order(x, y) {
 
 `const works like let, but the variable you declare must be immediately initialized, with a value that can’t be changed afterwards.`
 
-`const`는 `let`처럼 동작하지만, `const`로 선언한 변수는 즉시 이후에 변경되지 않는  값으로 초기화되어야한다.
+`const`는 `let`처럼 동작하지만, 선언한 변수는 이후에 변경될 수 없는 값으로 즉시 초기화되어야 한다.
 
 ```javascript
 const foo; // `SyntaxError: missing = in const declaration` SyntaxError: const 선언에 =이 없다
