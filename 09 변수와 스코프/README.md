@@ -43,7 +43,7 @@ bar = 456; // `TypeError: `bar` is read-only` TypeError: `bar`는 읽기 전용
 
 `Since for-of creates one binding (storage space for a variable) per loop iteration, it is OK to const-declare the loop variable:`
 
-`for-of`가 루프 반복마다 하나의 바인딩( 변수의 저장 공간 )을 생성하므로 `const`로 루프 변수를 선언할 수 있다.
+`for-of`가 루프 반복마다 하나의 바인딩( 변수의 저장 공간 ) `binding` 을 생성하므로 `const`로 루프 변수를 선언할 수 있다.
 
 ```javascript
 for (const x of ['a', 'b']) {
@@ -141,7 +141,7 @@ foo = 'def'; // TypeError
 
 `const only means that a variable always has the same value, but it does not mean that the value itself is or becomes immutable. For example, obj is a constant, but the value it points to is mutable – we can add a property to it:`
 
-`const`는 변수가 항상 같은 값을 가지고 있다는 의미일 뿐, 값 자체가 불변이 되는 것을 의미하지 않는다. 예제에서 `obj`는 상수이지만 가리키는 값은 가변이며 속성을 추가할 수 있다.
+`const`는 변수가 항상 같은 값을 가지고 있다는 의미일 뿐, 값 자체가 불변이 되는 것을 의미하지 않는다. 예제에서 `obj`는 상수이지만 가리키는 값은 가변이며 프로퍼티를 추가할 수 있다.
 
 ```javascript
 const obj = {};
@@ -159,7 +159,7 @@ obj = {}; // TypeError
 
 `If you want the value of obj to be immutable, you have to take care of it, yourself, e.g. by freezing it:`
 
-`obj`의 값이 불변하게 하려면, 동결같은 따로 처리를 해주어야 한다.
+`obj`의 값이 불변하게 하려면, 동결 `Object.freeze()` 같은 따로 처리를 해주어야 한다.
 
 ```javascript
 const obj = Object.freeze({});
@@ -170,7 +170,7 @@ obj.prop = 123; // TypeError
 
 `Keep in mind that Object.freeze() is shallow, it only freezes the properties of its argument, not the objects stored in its properties. For example, the object obj is frozen:`
 
-`Object.freeze()`는 얕다는 것을 기억해야 한다. 대상의 속성만을 동결할 뿐, 속성에 할당된 객체는 동결하지 않는다. 아래 예제에서 `obj` 객체는 동결된다.
+`Object.freeze()`는 얕다는 것을 기억해야 한다. 대상의 프로퍼티만을 동결할 뿐, 프로퍼티에 할당된 객체는 동결하지 않는다. 아래 예제에서 `obj` 객체는 동결된다.
 
 ```javascript
 const obj = Object.freeze({ foo: {} });
@@ -591,13 +591,13 @@ bar();
 자바스크립트의 전역 객체( 웹 브라우저의 `window`, Node.js의 `global` )는 기능보다 특히 성능에 관한 버그가 더 많다. 그래서 `ES6`는 구분을 도입하였다.
 
 + `All properties of the global object are global variables. In global scope, the following declarations create such properties:`  
-  모든 전역 객체의 속성은 전역 변수이다. 전역 스코프에서 아래 선언들은 그런 속성을 생성한다.
+  모든 전역 객체의 프로퍼티는 전역 변수이다. 전역 스코프에서 아래 선언들은 그런 프로퍼티를 생성한다.
  + `var declarations`  
   `var` 선언
  + `Function declarations`  
   `Function` 선언
 + `But there are now also global variables that are not properties of the global object. In global scope, the following declarations create such variables:`  
-  하지만 이제 전역 객체의 속성이 아닌 전역 변수도 있다. 전역 스코프에서 아래 선언들이 그런 변수를 생성한다.
+  하지만 이제 전역 객체의 프로퍼티가 아닌 전역 변수도 있다. 전역 스코프에서 아래 선언들이 그런 변수를 생성한다.
  + `let declarations`  
   `let` 선언
  + `const declarations`  
@@ -614,7 +614,7 @@ bar();
 + `are block-scoped, like let.`  
   `let`처럼 블록 스코프를 가진다.
 + `create properties on the global object (while in global scope), like var.`  
-  `var`처럼 ( 전역 스코프에서 )전역 객체에 속성을 생성한다.
+  `var`처럼 ( 전역 스코프에서 )전역 객체에 프로퍼티를 생성한다.
 + `are hoisted: independently of where a function declaration is mentioned in its scope, it is always created at the beginning of the scope.` 
   호이스팅된다. 스코프 내의 어느 위치에서 함수의 선언이 작성되었든 항상 스코프의 시작점에서 생성된다.
 
@@ -638,7 +638,7 @@ bar();
 + `are block-scoped.`  
   블록 스코프를 가진다.
 + `don’t create properties on the global object.`  
-  전역 객체의 속성을 생성하지 않는다.
+  전역 객체의 프로퍼티를 생성하지 않는다.
 + `are not hoisted.`  
   호이스팅되지 않는다.
 
@@ -709,7 +709,7 @@ bar();
 
 `var does one thing that let and const don’t: variables declared via it become properties of the global object. However, that’s generally not a good thing. You can achieve the same effect by assigning to window (in browsers) or global (in Node.js).`
 
-`var`는 `let`과 `const`와 달리 변수가 선언되었을 때 전역 객체의 속성이 되는 일을 하는데 이것은 일반적으로 좋지 않다. (브라우저에서 ) `window` 또는 (`Node.js`에서 ) `global`에 할당하는 것으로 같은 효과를 낼 수 있다.
+`var`는 `let`과 `const`와 달리 변수가 선언되었을 때 전역 객체의 프로퍼티가 되는 일을 하는데 이것은 일반적으로 좋지 않다. (브라우저에서 ) `window` 또는 (`Node.js`에서 ) `global`에 할당하는 것으로 같은 효과를 낼 수 있다.
 
 ### 9.9.1 `An alternative approach` 또 다른 접근 방식.
 
