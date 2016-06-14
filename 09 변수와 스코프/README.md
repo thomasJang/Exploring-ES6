@@ -647,14 +647,14 @@ bar();
 클래스가 내부적으로 함수를 생성하기 때문에 호이스팅되지 않는 것이 놀라울 수도 있다. 이것의 이론적 해석은 클래스의 `extends`절의 값은 표현식을 통해 정의되고 적절한 시점에 실행되어야만 한다는 것이다.
 
 ```javascript
-{ // 새로운 스코프 진입
+{ // `Enter a new scope` 새로운 스코프 진입
 
     const identity = x => x;
 
-    // MyClass는 TDZ에 있다.
+    // `Here we are in the temporal dead zone of `MyClass`` MyClass의 TDZ
     const inst = new MyClass(); // ReferenceError
 
-    // extend 절이 있다.
+    // `Note the expression in the `extends` clause` extends 절의 표현식을 주의
     class MyClass extends identity(Object) {
     }
 }
@@ -667,14 +667,14 @@ bar();
 항상 `let`과 `const`중 하나를 사용할 것을 추천한다.
 
 1. `Prefer const. You can use it whenever a variable never changes its value. In other words: the variable should never be the left-hand side of an assignment or the operand of ++ or --. Changing an object that a const variable refers to is allowed:`  
-  먼저 `const`가 우선이다. 값이 변경되지 않는 모든 곳에 사용할 수 있다. 다시 말해 변수가 절대 할당문의 좌변이 되지 않거나 `++` 또는 `--` 의 피연산자가 아닐 경우이다. `const` 변수가 가리키는 객체는 변경될 수 있다.
+  `const`를 사용한다. 변수의 값이 절대로 변경되지 않을 때 사용할 수 있다. 다시 말해 변수가 절대 할당문의 좌변이 되거나 `++` 또는 `--`의 피연산자가 되는 일이 없을 때를 말한다. `const` 변수가 참조하는 객체를 변경하는 것은 허용된다.
 
   ```javascript
   const foo = {};
   ```
   `You can even use const in a for-of loop, because one (immutable) binding is created per loop iteration:`
-
-  루프 반복마다 하나의 ( 불변 )바인딩이 생성되기 때문에 `for-of` 루프에서도 사용할 수 있다.
+  
+  루프 반복마다 하나의 ( 불변 ) 바인딩이 생성되기 때문에 `for-of`루프 안에서도 `const`를 사용할 수 있다.
 
   ```javascript
   for (const x of ['a', 'b']) {
@@ -686,18 +686,18 @@ bar();
   ```
 
   `Inside the body of the for-of loop, x can’t changed.`
-
-  `for-of` 루프의 바디 안에서는 변수 `x`를 변경할 수 없다.
+  
+  `for-of`루프의 바디 안에서 `x`는 변경될 수 없다.
 
 2. `Otherwise, use let – when the initial value of a variable changes later on.`  
-  그 외에, 변수의 초기값이 나중에 변경된다면 `let`을 사용한다.
+  그 외에, 나중에 변수의 초기값이 변경될 때는 `let`을 사용한다.
 
   ```javascript
-  let counter = 0; // 초기값
-  counter++; // 값을 변경
+  let counter = 0; // `initial value` 초기값
+  counter++; // `change` 변경
   
-  let obj = {}; // 초기값
-  obj = { foo: 123 }; // 값을 변경
+  let obj = {}; // `initial value` 초기값
+  obj = { foo: 123 }; // `change` 변경
   ```
 
 3. `Avoid var.`  
@@ -705,23 +705,22 @@ bar();
 
 `If you follow these rules, var will only appear in legacy code, as a signal that careful refactoring is required.`
 
-이 규칙을 따르면 `var`는 리팩토링이 필요한 래거시 코드에서만 볼 수 있게 된다.
+이 규칙을 따른다면 `var`는 신중한 리팩토링이 필요하다는 신호로서 레거시 코드에서만 나타나게 될 것이다.
 
 `var does one thing that let and const don’t: variables declared via it become properties of the global object. However, that’s generally not a good thing. You can achieve the same effect by assigning to window (in browsers) or global (in Node.js).`
 
-`var`는 `let`과 `const`가 하지 않는 전역 객체의 속성이 되는 일을 해주지만 이것은 일반적으로 좋지 않다. 필요하다면 `window` 또는 `global`에 속성을 할당을 해도 효과는 같다.
+`var`는 `let`과 `const`와 달리 변수가 선언되었을 때 전역 객체의 속성이 되는 일을 하는데 이것은 일반적으로 좋지 않다. (브라우저에서 ) `window` 또는 (`Node.js`에서 ) `global`에 할당하는 것으로 같은 효과를 낼 수 있다.
 
-### 9.9.1 `An alternative approach` 또 다른 스타일.
+### 9.9.1 `An alternative approach` 또 다른 접근 방식.
 
 `An alternative to the just mentioned style rules is to use const only for things that are completely immutable (primitive values and frozen objects). Then we have two approaches:`
 
-앞에 언급한 코딩 스타일 규칙 뿐 아니라 완전히 불변인 값들( 원시값과 동결된 객체들 )에만 `const`를 사용하는 방법도 있다. 두 가지 방법은.
+앞에 설명한 스타일 규칙의 접근 방식은 완전히 불변일 때만 ( 원시값과 동결 객체 ) `const`를 사용한다. 그 후에는 두가지 방법이 있다.
 
 1. `Prefer const (recommended): const marks immutable bindings`  
-  `const` 우선 (최선) : `const`를 불변 바인딩에 사용한다.
-  
+  `const`를 사용 (최선) : `const`가 불변인 바인딩을 표시한다.
 2. `Prefer let(alternative): const marks immutable values`  
-  `let` 우선 (차선) : `const`을 불변값에 사용한다.
+  `let`을 사용 (차선) : `const`가 불변인 값을 표시한다.
 
 `#2 is perfectly acceptable; I only lean slightly in favor of #1.`
 
