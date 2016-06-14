@@ -454,6 +454,8 @@ arr.map(x => x()); // [0,1,2]
 > + `Destructuring (step 5.i.iii): is handled via one case of BindingInitialization (ForDeclaration), which invokes another case of BindingInitialization (BindingPattern).`  
 > + 해체(5.i.iii장)는 `BindingInitialization` (`BindingPattern`)라는 다른 케이스를 초기화하는 `BindingInitialization`(`ForDeclaration`)에서 하나의 케이스로 처리된다.
 
+> 보충 필요
+
 ### 9.5.3 `Why are per-iteration bindings useful?` 왜 반복 마다 바인딩은 유용할까?
 
 `The following is an HTML page that displays three links:`
@@ -461,11 +463,11 @@ arr.map(x => x()); // [0,1,2]
 다음은 세 개의 링크를 보여주는 `HTML`페이지이다.
 
 1. `If you click on “yes”, it is translated to “ja”.`  
-  yes를 클릭하면 일본어(ja)로 번역된다.  
+  "yes"를 클릭하면 "ja"( 일본어 )로 번역된다.  
 2. `If you click on “no”, it is translated to “nein”.`  
-  no를 클릭하면 러시아어(nein)로 번역된다.  
+  "no"를 클릭하면 "nein"( 러시아어 )로 번역된다.  
 3. `If you click on “perhaps”, it is translated to “vielleicht”.`  
-  perhaps를 클릭하면 독일어(vielleicht)로 번역된다.  
+  "perhaps"를 클릭하면 "vielleicht"( 독일어 )로 번역된다.  
 
 ```html
 <!doctype html>
@@ -498,19 +500,19 @@ arr.map(x => x()); // [0,1,2]
 
 `What is displayed depends on the variable target (line B). If we were to use var instead of let in line (A), there would be a single binding for the whole loop and target would have the value 'vielleicht', afterwards. Therefore, no matter what link you click on, you would always get the translation 'vielleicht'.`
 
-무엇이 보여질지는 `B`라인에 있는 `target`변수에 따라 다르다. 만약 A라인에서 `let` 대신 `var`를 사용했다면, 모든 루프 반복에서 단일 바인딩을 사용했을 것이고 `target`의 값은 결국 `vielleicht`가 되었을 것이다. 따라서 어떤 링크를 클릭하더라도 항상 독일어로 번역이 되었을 것이다.
+무엇이 보여질지는 `B`라인에 있는 `target`변수에 따라 다르다. `A`라인에서 `let` 대신에 `var`를 사용했다면, 모든 루프에 단일 바인딩이 생겼을 것이고 `target`은 결국 `vielleicht`값을 가졌을 것이다. 따라서 어떤 링크를 클릭했더라도 항상 `vielleicht`로 번역되었을 것이다.
 
 `Thankfully, with let, we get one binding per loop iteration and the translations are displayed correctly.`
 
-고맙게도 `let`은 루프 반복마다 하나의 바인딩을 가지기 때문에 코드는 제대로 동작한다.
+고맙게도 `let`을 사용하면 루프 반복마다 하나의 바인딩을 얻게 되고 번역은 제대로 보여진다.
 
 ## 9.6 `Parameters` 파라미터
 
-### 9.6.1 `Parameters versus local variables` 파라미터 와 로컬 변수
+### 9.6.1 `Parameters versus local variables` 파라미터 대 로컬 변수
 
 `If you let-declare a variable that has the same name as a parameter, you get a static (load-time) error:`
 
-만약 `let`으로 선언한 변수가 파라미터와 같은 이름으로 선언된다면 정적 에러(load-time)가 발생한다.
+`let`으로 선언한 변수가 파라미터와 같은 이름으로 선언된다면 정적 에러(load-time)가 발생한다.
 
 ```javascript
 function func(arg) {
