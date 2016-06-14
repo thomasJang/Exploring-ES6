@@ -45,26 +45,35 @@ ES6 is increasingly well supported everywhere. Does that mean that you shouldn�
 
 ECMAScript 6 is a superset of ECMAScript 5 – new JavaScript versions must never break existing code. Thus, nothing you learn about ECMAScript 5 is learned in vain.
 
-> ECMAScript 6는 ECMAScript 5 의 상위 집합 - 새로운 자바스크립트 버전은 절대로 기존 코드를 망가뜨리지 않는다. 그러한 이유로, ECMAScript 5에 관한 학습에 헛된 것은 없다. 
+
+> ECMAScript 6는 ECMAScript 5 의 상위 집합이다 - 새로운 자바스크립트 버전은 절대로 기존 코드를 망가뜨리지 않는다. 그러한 이유로, ECMAScript 5 관해 헛되이 학습되어지는 것은 없다.
+
+There are several ECMAScript 6 features that kind of replace ECMAScript 5 features, but still use them as their foundations. It is important to understand those foundations. Two examples: classes are internally translated to constructors and methods are still functions (as they have always been).
+
+> ECMAScript 5의 기능을 대체하는 ECMAScript 6의 기능이 몇가지 있지만, ECMAScript 6의 가반으로써 ECMAScript 5를 여전히 사용한다. 이러한 기반을 이해하는 것은 중요하다. 두 가지 예를 들자면 : class는 내부적으로 생성자로 변환되고 메서드는 여전히 함수이다. (언제나 그래왔듯이).
+
+As long as ECMAScript 6 is compiled to ECMAScript 5, it is useful to understand the output of the compilation process. And you’ll have to compile to ES5 for a while (probably years), until you can rely on ES6 being available in all relevant browsers. It’s important to be able to understand legacy code.
+
+> ECMAScript 6가 ECMAScript 5로 컴파일 될 뿐만 아니라 컴파일 절차의 산출물을 이해하는 것도 유용하다. 그리고 한동안은 ES5로 컴파일을 해야만 할 것이다.(아마도 수년간) 모든 적절한 브라우저에서 이용 가능한 ES6에 기댈 수 있을 때까지 말이다. 레거시 코드를 이해할수 있게 되는 것은 중요하다. 
 
 
-ECMAScript 5의 특징들을 대체하는 ECMAScript 6의 특징들이 몇가지있지만, 그러한 기술들의 기반으로써 여전히 사용된다. 이러한 기저를 이해하는 것은 중요하다. 두 가지 예를 들자면 : class는 내부적으로 생성자로 변환되고 메서드는 여전히 함수이다. (언제나 그래왔듯이).
-> There are several ECMAScript 6 features that kind of replace ECMAScript 5 features, but still use them as their foundations. It is important to understand those foundations. Two examples: classes are internally translated to constructors and methods are still functions (as they have always been).
 
-ECMAScript 6이 ECMAScript 5로 컴파일 되는 것 뿐만 아니라 컴파일 절차의 산출물을 이해하는 것도 유용하다. 그리고 한동안은 ES5로 컴파일을 해야만 할 것이다.(아마도 수년간) 모든 적절한 브라우저에서 ES6가 이용가능한 수준이 될 때까지 말이다. 레거시 코드를 이해할수 있게 되는 것은 중요하다. 
-> As long as ECMAScript 6 is compiled to ECMAScript 5, it is useful to understand the output of the compilation process. And you’ll have to compile to ES5 for a while (probably years), until you can rely on ES6 being available in all relevant browsers. It’s important to be able to understand legacy code.
+### 2.5 Is ES6 bloated?
+> 2.5 ES6는 비대한가? 
 
-### 2.5 ES6는 비대한가? 
-> 2.5 Is ES6 bloated?
+One occasionally comes across accusations of ES6 being bloated and introducing too much useless syntactic sugar (more convenient syntax for something that already exists).
 
-ES6가 비대해지기만 하고 쓸모 없는 편의 문법(이미 존재하는 무언가를 위한 더욱 편리한 문법)을 제공한다는 불만이 있다. 
-> One occasionally comes across accusations of ES6 being bloated and introducing too much useless syntactic sugar (more convenient syntax for something that already exists).
+> ES6가 비대해지기만 하고 너무나도 쓸모 없는 편의 문법(이미 존재하는 무언가를 위한 더욱 편리한 문법)을 소개한다는 불만이 있다. 
 
-그러나 여러모로, 자바스크립트는 이제 막 파이썬이나 루비 같은 언어에 발 맞추어 가고 있을 뿐이다. 그 두 언어는 더 많은 기능을 가지고 있고 더욱 풍부한 표준 라이브러리를 포함하고 있다. 
-> However, in many ways, JavaScript is just now catching up with languages such as Python and Ruby. Both still have more features and come with a much richer standard library.
 
-ES6가 너무 비대해지고 있다는 불만을 제기한다면, 한동안 ES6를 직접 써보는 걸 권한다. 그 누구도 새로운 기능을 사용해야한다고 강제 하지는 않는다. 작은 부분에서부터 시작한 다음에(“First steps with ECMAScript 6”를 추천한다) 더 새로운 기능도 써보면 ES6 더욱 편할 것이다. 지금까지 ES6를 현업에 사용하는 사람들(이에 관해 읽기만 하는 사람과는 대조적으로)에게 받은 피드백은 너무나도 긍정적이다. 
-> If someone complains about ES6 being too big, I suggest that they try it out for a while. Nobody forces you to use any of the new features. You can start small (consult Chap. “First steps with ECMAScript 6” for suggestions) and then use more new features, as you grow more comfortable with ES6. So far, the feedback I get from people who have actually programmed with ES6 (as opposed to read about it) is overwhelmingly positive.
+However, in many ways, JavaScript is just now catching up with languages such as Python and Ruby. Both still have more features and come with a much richer standard library.
+
+> 그러나 여러모로, 자바스크립트는 이제 막 파이썬이나 루비 같은 언어에 발 맞추어 가고 있을 뿐이다. 그 두 언어는 더 많은 기능을 가지고 있고 더욱 풍부한 표준 라이브러리를 포함하고 있다. 
+
+
+If someone complains about ES6 being too big, I suggest that they try it out for a while. Nobody forces you to use any of the new features. You can start small (consult Chap. “First steps with ECMAScript 6” for suggestions) and then use more new features, as you grow more comfortable with ES6. So far, the feedback I get from people who have actually programmed with ES6 (as opposed to read about it) is overwhelmingly positive.
+
+> ES6가 너무 비대해지고 있다는 불만을 제기한다면, 한동안 ES6를 직접 써보는 걸 권한다. 그 누구도 새로운 기능을 사용해야한다고 강제 하지는 않는다. 작은 부분에서부터 시작한 다음에(“First steps with ECMAScript 6”를 추천한다) 더 새로운 기능도 써보면 ES6 더욱 편할 것이다. 지금까지 ES6를 현업에 사용하는 사람들(이에 관해 읽기만 하는 사람과는 대조적으로)에게 받은 피드백은 너무나도 긍정적이다. 
 
 더욱이, 겉보기에 편의 문법으로 보이는 것들은(클래스와 모듈 같은 것) 언어에 매우 필요한 표준화를 불러왔고 향후 기능들을 위한 기반으로써 제공된다. 
 > Furthermore, things that superficially look like syntactic sugar (such as classes and modules) bring much-needed standardization to the language and serve as foundations for future features.
