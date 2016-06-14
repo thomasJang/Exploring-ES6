@@ -203,7 +203,9 @@ More information: chapter “Template literals and tagged templates”.
 ## 4.4 From function expressions to arrow functions
 ## 4.4 함수표현법에서 애로우 함수로
 
-현재 ES5 코드에서, 당신이 함수 표현식을 사용할 때 this를 주의해야 한다. 다음 예제에서 나는 헬퍼 변수 _this(A줄)를 생성하여 UiComponent의 this를 B줄에서 접근 할수 있다.
+In current ES5 code, you have to be careful with this whenever you are using function expressions. In the following example, I create the helper variable _this (line A) so that the this of UiComponent can be accessed in line B.
+
+현재 ES5 코드에서, 함수 표현식을 사용할 때 this를 주의 해야 한다. 다음 예제에서 헬퍼 변수 _this(A줄)를 생성하였기 때문에 UiComponent의 this를 B줄에서 접근 할수 있다.
 ```javascript
 function UiComponent() {
     var _this = this; // (A)
@@ -217,7 +219,10 @@ UiComponent.prototype.handleClick = function () {
     ···
 };
 ```
-ES6에서 당신은 애로우 함수를 사용하여 this(A줄)를 덮지 않을 수 있다.:
+In ES6, you can use arrow functions, which don’t shadow this (line A):
+
+ES6에서 애로우 함수를 사용하면, 이 때 this(A줄)를 덮지 않을 수 있다.:
+
 ```javascript
 function UiComponent() {
     var button = document.getElementById('myButton');
@@ -227,9 +232,15 @@ function UiComponent() {
     });
 }
 ```
-(ES6에서 당신은 또한 생성자 함수 대신에 클래스를 사용하는 옵션이 있다. 이것 나중에 살펴보자)
+(In ES6, you also have the option of using a class instead of a constructor function. That is explored later.)
+
+(ES6에서는 또한 생성자 함수 대신에 클래스를 사용하는 선택이 있다. 이것은 나중에 살펴보자)
+
+Arrow functions are especially handy for short callbacks that only return results of expressions.
 
 애로우 함수는 단지 표현식의 값을 반환하는 짧은 콜백에 특히 편리하다.
+
+In ES5, such callbacks are relatively verbose:
 
 ES5에서, 이런 콜백은 비교적 장황하다:
 
@@ -237,22 +248,34 @@ ES5에서, 이런 콜백은 비교적 장황하다:
 var arr = [1, 2, 3];
 var squares = arr.map(function (x) { return x * x });
 ```
+In ES6, arrow functions are much more concise:
+
 ES6에서, 애로우 함수는 더욱더 간결하다.:
 
 ```javascript
 const arr = [1, 2, 3];
 const squares = arr.map(x => x * x);
 ```
+When defining parameters, you can even omit parentheses if the parameters are just a single identifier. Thus: (x) => x * x and x => x * x are both allowed.
 
-파라미터를 정의시, 만약 파라미터가 단 하나라면, 당신은 심지어 괄호를 뺄 수 있다. 따라서: (x) => x * x 와 x => x * x 는 둘다 허용된다.
+파라미터를 정의시, 파라미터가 단 하나의 식별자 라면, 당신은 심지어 괄호를 뺄 수 있다. 따라서: (x) => x * x 와 x => x * x 는  둘다 허용된다.
 
-더 자세한 내용은: 챕터 "애로우 함수".
+More information: chapter “Arrow functions”.
 
+더 자세한 내용은: "애로우 함수" 장.
+
+## 4.5 Handling multiple return values
 ## 4.5 다중 리턴 값 다루기
-어떤 함수나 메소드는 다중 값을 배열이나 객체를 통해 반환한다. ES5에서 당신은 다중 값을 원할 때 항상 중간 값 생성이 필요하다. ES6에서는 해체(destructuring)를 통해 중간값 변수를 피할 수 있다.
+Some functions or methods return multiple values via arrays or objects. In ES5, you always need to create intermediate variables if you want to access those values. In ES6, you can avoid intermediate variables via destructuring.
 
+특정 함수나 메소드는 다중 값을 배열이나 객체를 통해 반환한다. ES5에서 다중 값 접근을 원하면, 항상 중간 변수 생성이 필요하다. ES6에서는 해체(destructuring)를 통해 중간 변수를 피할 수 있다.
+
+### 4.5.1 Multiple return values via arrays
 ### 4.5.1 배열을 통한 다중 리턴 값
-exec()는 유사배열을 통해 캡쳐된 그룹을 반환한다. ES5에서 당신은 심지어 그룹중에서 원하는 값이 있을때, 중간 변수 (아래 예제의 matchObj)가 필요하다.:
+exec() returns captured groups via an Array-like object. In ES5, you need an intermediate variable (matchObj in the example below), even if you are only interested in the groups:
+
+exec()는 유사배열을 통해 캡쳐된 그룹을 반환한다. ES5에서 비록 그룹 중에서 하나만 원하는 값이 있더라도, 중간 변수 (아래 예제의 matchObj)가 필요하다.:
+
 ```javascript
 var matchObj =
     /^(\d\d\d\d)-(\d\d)-(\d\d)$/
@@ -261,18 +284,26 @@ var year = matchObj[1];
 var month = matchObj[2];
 var day = matchObj[3];
 ```
+In ES6, destructuring makes this code simpler:
+
 ES6에서는 해체는 이 코드를 단순하게 해준다.:
 ```javascript
 const [, year, month, day] =
     /^(\d\d\d\d)-(\d\d)-(\d\d)$/
     .exec('2999-12-31');
 ```
-배열 패턴의 시작부분의 빈 슬롯은 인덱스가 0인 요소를 건너뛴다.
+The empty slot at the beginning of the Array pattern skips the Array element at index zero.
 
-### 객체를 통한 다중 값 반환
-메소드인 Object.getOwnPropertyDescriptor()는 프로퍼티 디스크립터를 반환한다. 디스크립터 객체는 그 프로퍼티의 다양한 값을 갖는다.
+배열 패턴의 시작부분인 빈 슬롯은 인덱스가 0인 배열 요소를 건너뛴다.
 
-ES5에서 심지어 당신이 이 객체 중 프로퍼티에 흥미가 있으면 여전히 중간 변수(아래의 예제 propDesc)가 필요하다.:
+### 4.5.2 Multiple return values via objects
+### 4.5.2 객체를 통한 다중 값 반환
+The method Object.getOwnPropertyDescriptor() returns a property descriptor, an object that holds multiple values in its properties.
+메소드인 Object.getOwnPropertyDescriptor()는 프로퍼티 디스크립터를 반환하고, 디스크립터 객체는 그 프로퍼티의 다중 값을 갖는다.
+
+In ES5, even if you are only interested in the properties of an object, you still need an intermediate variable (propDesc in the example below):
+
+ES5에서 비록 이 객체 중 하나의 프로퍼티만 원한다 하더라도, 여전히 중간 변수(아래의 예제 propDesc)가 필요하다.:
 
 ```javascript
 var obj = { foo: 123 };
@@ -283,7 +314,8 @@ var configurable = propDesc.configurable;
 
 console.log(writable, configurable); // true true
 ```
-ES6에서 당신은 해채를 사용할 수 있다.:
+In ES6, you can use destructuring:
+ES6에서 해체를 사용할 수 있다:
 
 ```javascript
 const obj = { foo: 123 };
@@ -293,14 +325,20 @@ const {writable, configurable} =
 
 console.log(writable, configurable); // true true
 ```
-{writable, configurable} 는 아래의 축약이다.:
+{writable, configurable} is an abbreviation for:
+
+{writable, configurable} 는 다음의 약어 이다:
 ```javascript
 { writable: writable, configurable: configurable }
 ```
-더 자세한 정보는: 챕터 "해체".
+More information: chapter “Destructuring”.
+더 자세한 정보: "해체" 장.
 
+## 4.6 From for to forEach() to for-of
 ## 4.6 for에서 forEach()로 for-of로
-ES5이전에는, 당신은 배열을 아래 처럼 순환했다.::
+Prior to ES5, you iterated over Arrays as follows:
+
+ES5 이전에는, 배열을 다음 처럼 순환했다:
 
 ```javascript
 var arr = ['a', 'b', 'c'];
@@ -309,16 +347,21 @@ for (var i=0; i<arr.length; i++) {
     console.log(elem);
 }
 ```
-ES5에서는, 당신은 배열 메소드 forEach 사용에 대한 선택이 있다.:
+In ES5, you have the option of using the Array method forEach():
+
+ES5에서는, 당신은 배열 메소드 forEach 사용에 대한 선택권이 있다.:
 
 ```javascript
 arr.forEach(function (elem) {
     console.log(elem);
 });
 ```
-for 루프는 당신이 정지 할 수 있는 이점이 있고, forEach는 간결하다는 이점이 있다.
+A for loop has the advantage that you can break from it, forEach() has the advantage of conciseness.
 
-ES6에서는 for-fo 루프는 두 이점을 결합한다.:
+for 루프는 당신이 정지 할 수 있는 장점이 있지만, forEach는 간결하다는 장점이 있다.
+
+In ES6, the for-of loop combines both advantages:
+ES6에서는 for-fo 루프는 두 장점을 갖는다:
 
 ```javascript
 const arr = ['a', 'b', 'c'];
@@ -326,17 +369,24 @@ for (const elem of arr) {
     console.log(elem);
 }
 ```
-만약 당신이 각 배열의 원소의 인덱스나 값을 원한다면 새로운 배열 메소드 entires()와 해체를 통해 for-of는 당신에게 다루게 해 준다.:
+If you want both index and value of each array element, for-of has got you covered, too, via the new Array method entries() and destructuring:
+
+각 배열의 원소의 인덱스나 값을 원한다면 새로운 배열 메소드 entires()와 해체, for-of를 사용하여 할 수 있다:
 
 ```javascript
 for (const [index, elem] of arr.entries()) {
     console.log(index+'. '+elem);
 }
 ```
-더 자세한 내용: 챕터 "for-of 루프"
+More information: Chap. “The for-of loop”.
 
+더 자세한 내용: "for-of 루프" 장
+
+## 4.7 Handling parameter default values
 ## 4.7 파라미터 기본값 다루기
-ES5에서 당신은 파라미터의 기본값을 아래 처럼 지정한다.:
+In ES5, you specify default values for parameters like this:
+
+ES5에서 파라미터의 기본값을 이 같이 지정한다.:
 
 ```javascript
 function foo(x, y) {
@@ -345,17 +395,22 @@ function foo(x, y) {
     ···
 }
 ```
-ES6는 더 좋은 문법을 갖는다.:
+ES6 has nicer syntax:
+
+ES6는 더 좋은 문법을 갖는다:
 
 ```javascript
 function foo(x=0, y=0) {
     ···
 }
 ```
-ES6에서 추가적인 이득은 파라미터 기본값은 오직 undefined에 의해 유발되며 반면에 ES5이전에서는 어느 거짓인 값(falsy)에 의 해 유발된다.
+An added benefit is that in ES6, a parameter default value is only triggered by undefined, while it is triggered by any falsy value in the previous ES5 code.
 
-더 자세한 내용: 섹션 "파라미터 기본값".
+ES6에서 추가적인 이득은 파라미터 기본값은 단지 undefined에 의해 유발되며 반면에 ES5이전에서는 거짓인 값(falsy)에 의해 유발된다.
 
+더 자세한 내용: "파라미터 기본값" 절.
+
+## 4.8 Handling named parameters
 ## 4.8 기명 파라미터 다루기
 자바스크립트에서 파라미터에 이름을 붙이는 흔한 방법은 객체리터럴을 통한 것이다(옵션 객체 패턴으로 불리는).:
 

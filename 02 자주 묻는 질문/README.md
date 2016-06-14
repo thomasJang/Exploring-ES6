@@ -63,54 +63,65 @@ As long as ECMAScript 6 is compiled to ECMAScript 5, it is useful to understand 
 
 One occasionally comes across accusations of ES6 being bloated and introducing too much useless syntactic sugar (more convenient syntax for something that already exists).
 
-> ES6가 비대해지기만 하고 너무나도 쓸모 없는 편의 문법(이미 존재하는 무언가를 위한 더욱 편리한 문법)을 소개한다는 불만이 있다. 
+> 간혹 ES6가 비대해진다는 비난과 너무나도 쓸모 없는 편의 문법(이미 존재하는 무언가를 위한 더욱 편리한 문법)을 소개한다는 인상을 남긴다.
 
 
 However, in many ways, JavaScript is just now catching up with languages such as Python and Ruby. Both still have more features and come with a much richer standard library.
 
-> 그러나 여러모로, 자바스크립트는 이제 막 파이썬이나 루비 같은 언어에 발 맞추어 가고 있을 뿐이다. 그 두 언어는 더 많은 기능을 가지고 있고 더욱 풍부한 표준 라이브러리를 포함하고 있다. 
-
+> 그러나 여러모로, 자바스크립트는 이제 막 파이썬이나 루비 같은 언어에 발 맞추어 가고 있을 뿐이다. 그 두 언어는 더 많은 기능을 가지며  더욱 풍부한 표준 라이브러리가 딸려있다.
 
 If someone complains about ES6 being too big, I suggest that they try it out for a while. Nobody forces you to use any of the new features. You can start small (consult Chap. “First steps with ECMAScript 6” for suggestions) and then use more new features, as you grow more comfortable with ES6. So far, the feedback I get from people who have actually programmed with ES6 (as opposed to read about it) is overwhelmingly positive.
 
-> ES6가 너무 비대해지고 있다는 불만을 제기한다면, 한동안 ES6를 직접 써보는 걸 권한다. 그 누구도 새로운 기능을 사용해야한다고 강제 하지는 않는다. 작은 부분에서부터 시작한 다음에(“First steps with ECMAScript 6”를 추천한다) 더 새로운 기능도 써보면 ES6 더욱 편할 것이다. 지금까지 ES6를 현업에 사용하는 사람들(이에 관해 읽기만 하는 사람과는 대조적으로)에게 받은 피드백은 너무나도 긍정적이다. 
+> 너무 거대해지고 있는 ES6에 관해 불만을 제기한다면, 한동안 ES6를 직접 써보는 걸 권한다. 그 누구도 새로운 기능을 사용해야한다고 강제 하지는 않는다. 작은 부분에서부터 시작한 다음에(“First steps with ECMAScript 6”를 추천한다) 더욱 새로운 기능을 써보면, 당신이 성장하는 만큼 ES6가 더욱 마음에 들 것이다. 지금까지 ES6로 실제 프로그래밍을 하는 사람들(이에 관해 읽기만 하는 사람과는 대조적으로)에게 받은 피드백은 너무나도 긍정적이다. 
 
-더욱이, 겉보기에 편의 문법으로 보이는 것들은(클래스와 모듈 같은 것) 언어에 매우 필요한 표준화를 불러왔고 향후 기능들을 위한 기반으로써 제공된다. 
-> Furthermore, things that superficially look like syntactic sugar (such as classes and modules) bring much-needed standardization to the language and serve as foundations for future features.
+Furthermore, things that superficially look like syntactic sugar (such as classes and modules) bring much-needed standardization to the language and serve as foundations for future features.
 
-마지막으로, 몇몇 기능들은 일반적인 프로그래머를 위한 것이 아니라 라이브러리 작성자들을 위해 만들어졌다. (예: 제너레이터, 이터레이터, 프록시) "일반적인 프로그래머"들은 표면적인 부분만 알아도 된다. 
-> Lastly, several features were not created for normal programmers, but for library authors (e.g. generators, iterators, proxies). “Normal programmers” only need to know them superficially if at all.
+> 더욱이, 겉보기에 편의 문법으로 보이는 것들은(클래스와 모듈 같은 것) 언어에 매우 필요한 표준화를 불러왔고 향후 기능들을 위한 기반의 역할을 한다.
 
-### 2.6 ES6의 스펙은 매우 거대하지 않은가? 
-> 2.6 Isn’t the ES6 specification very big?
 
-ECMAScript 스펙은 정말 엄청나게 성장하고 있다. ECMAScript 5.1 PDF 문서는 245페이지이고, ES6 PDF문서는 593페이지로 이루어졌다. 그러나 비교 기준으로, 자바 8 버전의 스팩은 724페이지로 이루어져 있다.(목차 제외) 더욱이 ES6 스펙은 많은 다른 언어 스펙에서 누락시킨 스펙들을 정의된 구현체로써 상세 내용을 포함한다. 또한 이는 표준라이브러리가 어떻게 동작하는지 명시한다.
-> The ECMAScript specification has indeed grown tremendously: The ECMAScript 5.1 PDF had 245 pages, the ES6 PDF has 593 pages. But, for comparison, the Java 8 language specification has 724 pages (excluding an index). Furthermore, the ES6 specification contains details that many other language specifications omit as implementation-defined. It also specifies how its standard library works1.
+Lastly, several features were not created for normal programmers, but for library authors (e.g. generators, iterators, proxies). “Normal programmers” only need to know them superficially if at all.
+> 마지막으로, 몇몇 기능들은 일반적인 프로그래머를 위한 것이 아니라 라이브러리 작성자들을 위해 만들어졌다. (예: 제너레이터, 이터레이터, 프록시) "일반적인 프로그래머"들은 항상 표면적인 부분만 알아도 된다.
 
-### 2.7 ES6는 배열내포(array comprehensions)를 지원하는가? 
-> 2.7 Does ES6 have array comprehensions?
 
-원래 ES6는 배열과 제너레이터 내포를 지원하려고 했었다.(하스켈과 파이썬과 유사하게) 그러나 TC39 위원회가 두 가지 길을 탐험하길 원해서 추가되지는 않았다. 
+### 2.6 Isn’t the ES6 specification very big?
+> 2.6 ES6의 스펙은 매우 거대하지 않은가? 
 
-> Originally, ES6 was to have Array and generator comprehensions (similarly to Haskell and Python). But they were not added, because TC39 wanted to explore two avenues:
+The ECMAScript specification has indeed grown tremendously: The ECMAScript 5.1 PDF had 245 pages, the ES6 PDF has 593 pages. But, for comparison, the Java 8 language specification has 724 pages (excluding an index). Furthermore, the ES6 specification contains details that many other language specifications omit as implementation-defined. It also specifies how its standard library works1.
+> ECMAScript 스펙은 정말 엄청나게 성장해왔다. ECMAScript 5.1 PDF 문서는 245페이지이고, ES6 PDF문서는 593페이지를 갖는다. 그러나 비교 기준으로, 자바 8 버전의 스팩은 724페이지(목차 제외)이다. 더욱이 ES6 스펙은 많은 다른 언어 스펙에서 누락시킨 스펙들을 정의된 구현체로써 상세 내용을 포함한다. 또한 이는 표준라이브러리가 어떻게 동작하는지 명시한다.
 
-+ 임의의 데이터 타입을 위해 작동하는 comprehensions를 생성하게 될 수도 있다.(마이크로소프트의 LINQ를 떠올려보라)
-+ comprehensions가 하는 일을 수행하기 위해서는 이터레이터 메소드가 더 나은 방법이 될 수도 있다. 
 
-> `It may be possible to create comprehensions that work for arbitrary datatypes (think Microsoft’s LINQ).`
-> `It may also be possible that methods for iterators are a better way to achieve what comprehensions do.`
 
-### 2.8 ES6는 정적 타입인가? 
-> 2.8 Is ES6 statically typed?
+### 2.7 Does ES6 have array comprehensions?
+> 2.7 ES6는 배열내포(array comprehensions)를 지원하는가? 
 
-정적 타입은 ES6에 포함된 부분이 아니다. 그러나 다음의 두 가지 기술은 자바스크립트에 정적인 타입을 추가한다. 이런 유사한 특징들이 종내에는 표준화 될 수도 있다.
+Originally, ES6 was to have Array and generator comprehensions (similarly to Haskell and Python). But they were not added, because TC39 wanted to explore two avenues:
+
+> 원래 ES6는 배열과 제너레이터 내포를 갖는 것이었다(하스켈과 파이썬과 유사하게) 그러나 TC39 위원회가 두 가지 길을 탐험하길 원해서 추가되지는 않았다. 
+
++ `It may be possible to create comprehensions that work for arbitrary datatypes (think Microsoft’s LINQ).`
++ `It may also be possible that methods for iterators are a better way to achieve what comprehensions do.`
+
++ 임의의 데이터 타입을 위해 작동하는 내포를 생성하게 될 수 있다.(마이크로소프트의 LINQ를 떠올려보라)
++ 또한 이터레이터 메소드는 내포가 하는 일을 수행하기 위한 더 나은 방법일 수 있다
+
+
+### 2.8 Is ES6 statically typed?
+> 2.8 ES6는 정적 타입인가? 
+
+
 > Static typing is not part of ES6. However, the following two technologies add static typing to JavaScript. Similar features may eventually be standardized.
 
-+ 마이크로소프트 타입스크립트 : 타입스크립트는 ES6에 선택적인 타입 어노테이션이 추가된 것이다. 
-> Microsoft TypeScript: is basically ES6 plus optional type annotations. At the moment, it is compiled to ES5 and throws away the type information while doing so. Optionally, it can also make that information available at runtime, for type introspection and for runtime type checks.
+정적 타입은 ES6의 일부가 아니다. 그러나 다음의 두 가지 기술은 자바스크립트에 정적인 타입을 추가한다. 유사한 기능들이 종내에는 표준화 될 수도 있다.
 
-+ 페이스북 플로우: 플로우는 플로우 분석에 기반을 둔 ECMAScript 6를 위한 타입 체커이다. 예를 들어 선택적인 타입 어노테이션만을 언어에 추가하고 타입을 추론하고 확인한다. 플로우는 ES6를 ES5로 변환하는데 도움을 주지는 않는다.
-> Facebook Flow: is a type checker for ECMAScript 6 that is based on flow analysis. As such, it only adds optional type annotations to the language and infers and checks types. It does not help with compiling ES6 to ES5.
+
++ Microsoft TypeScript: is basically ES6 plus optional type annotations. At the moment, it is compiled to ES5 and throws away the type information while doing so. Optionally, it can also make that information available at runtime, for type introspection and for runtime type checks.
+
+> 마이크로소프트 타입스크립트: 타입스크립트는 ES6에 선택적인 타입 어노테이션이 추가된 것이다. ES5 로 컴파일되고 그 동안에 타입 정보는 버려진다. 부가적으로 타입 정보는 런타임에 이용가능하게 만든다. 
+
+
++ Facebook Flow: is a type checker for ECMAScript 6 that is based on flow analysis. As such, it only adds optional type annotations to the language and infers and checks types. It does not help with compiling ES6 to ES5.
+
+> 페이스북 플로우: 플로우는 플로우 분석에 기반을 둔 ECMAScript 6를 위한 타입 체커이다. 예를 들어 선택적인 타입 어노테이션만을 언어에 추가하고 타입을 추론하고 확인한다. 플로우는 ES6를 ES5로 변환하는데 도움을 주지는 않는다.
 
 정적 타입의 두 가지 장점 : 
 > Two benefits of static typing are:
