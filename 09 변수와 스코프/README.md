@@ -43,7 +43,7 @@ bar = 456; // `TypeError: `bar` is read-only` TypeError: `bar`는 읽기 전용
 
 `Since for-of creates one binding (storage space for a variable) per loop iteration, it is OK to const-declare the loop variable:`
 
-`for-of`가 루프 반복마다 하나의 바인딩( 변수의 저장 공간 )을 생성하므로 루프 변수를 `const`로 선언할 수 있다.
+`for-of`가 루프 반복마다 하나의 바인딩( 변수의 저장 공간 )을 생성하므로 `const`로 루프 변수를 선언할 수 있다.
 
 ```javascript
 for (const x of ['a', 'b']) {
