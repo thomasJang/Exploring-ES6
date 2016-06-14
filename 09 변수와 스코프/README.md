@@ -512,17 +512,17 @@ arr.map(x => x()); // [0,1,2]
 
 `If you let-declare a variable that has the same name as a parameter, you get a static (load-time) error:`
 
-`let`으로 선언한 변수가 파라미터와 같은 이름으로 선언된다면 정적 에러(load-time)가 발생한다.
+`let`으로 파라미터와 같은 이름을 가진 변수를 선언하면 정적 에러( 로드 시점 )가 발생한다.
 
 ```javascript
 function func(arg) {
-    let arg; // static error: duplicate declaration of `arg`
+    let arg; // `static error: duplicate declaration of `arg`` 정적 에러: arg 변수 선언의 중복
 }
 ```
 
 `Doing the same inside a block shadows the parameter:`
 
-블록 안에서 같은 이름으로 선언하면 파라미터는 가려진다.
+블록 안에서 파라미터와 같은 이름을 가진 변수를 선언하면 파라미터를 가린다.
 
 ```javascript
 function func(arg) {
@@ -534,17 +534,17 @@ function func(arg) {
 
 `In contrast, var-declaring a variable that has the same name as a parameter does nothing, just like re-declaring a var variable within the same scope does nothing.`
 
-반면, `var`로 선언한 변수가 파라미터와 같은 이름으로 선언되면 아무 일도 일어나지 않는다. 함수 스코프 내에서 `var`변수를 재선언한 것과 같다.
+반면, 파라미터와 같은 이름을 가진 변수를 `var`로 선언하는 것은 아무일도 하지 않는다. 같은 스코프 내에서 `var`변수를 재선언한 것과 같다.
 
 ```javascript
 function func(arg) {
-    var arg; // 아무일도 일어나지 않는다.
+    var arg; // `does nothing` 아무일도 하지 않는다.
 }
 
 function func(arg) {
     {
-        // arg는 여전히 같은 var 스코프에 존재.
-        var arg; // 아무일도 일어나지 않는다.
+        // `We are still in same `var` scope as `arg`` arg는 여전히 같은 var 스코프
+        var arg; // `does nothing` 아무일도 하지 않는다.
     }
 }
 ```
