@@ -553,16 +553,16 @@ function func(arg) {
 
 `If parameters have default values, they are treated like a sequence of let statements and are subject to temporal dead zones:`
 
-파라미터가 기본값을 가지는 경우, `let` 선언의 연속처럼 처리되고 `TDZ`를 가지게 된다.
+파라미터가 기본 값을 가지면, `let`문의 연속처럼 처리되고, `TDZ`의 대상이 된다.
 
 ```javascript
-// 정상: y는 x가 선언된 이후에 x에 접근하고 있다.
+// `OK: `y` accesses `x` after it has been declared` 정상: y는 x가 선언된 이후에 x에 접근하고 있다.
 function foo(x=1, y=x) {
     return [x, y];
 }
 foo(); // [1,1]
 
-// 에러: x가 TDZ안에서 y에 접근하고 있다.
+// `Exception: `x` tries to access `y` within TDZ` 에러: x가 TDZ안에서 y에 접근하고 있다.
 function bar(x=y, y=2) {
     return [x, y];
 }
