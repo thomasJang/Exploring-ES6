@@ -573,7 +573,7 @@ bar(); // ReferenceError
 
 `The scope of parameter default values is separate from the scope of the body (the former surrounds the latter). That means that methods or functions defined “inside” parameter default values don’t see the local variables of the body:`
 
-파라미터의 기본값 스코프는 바디의 스코프와는 다르다. ( 전자가 후자를 감싼다. ) 파라미터의 기본값으로 정의된 메소드나 함수는 바디 내의 지역 변수를 참조할 수 없다.
+파라미터 기본값의 스코프는 바디의 스코프와 분리된다. ( 전자가 후자를 감싼다. ) 파라미터 기본값 "안에서" 선언된 메소드 또는 함수는 바디의 지역 변수를 알 수 없는 것이다.
 
 ```javascript
 const foo = 'outer';
@@ -588,16 +588,16 @@ bar();
 
 `JavaScript’s global object (window in web browsers, global in Node.js) is more a bug than a feature, especially with regard to performance. That’s why it makes sense that ES6 introduces a distinction:`
 
-자바스크립트에서의 전역 객체( 웹 브라우저의 `window`, Node.js의 `global` )는 특히 성능적인 면에서는 기능이라기 보다 버그에 가깝다. 따라서 `ES6`에서는 다음과 같은 구분을 도입하였다.
+자바스크립트의 전역 객체( 웹 브라우저의 `window`, Node.js의 `global` )는 기능보다 특히 성능에 관한 버그가 더 많다. 그래서 `ES6`는 구분을 도입하였다.
 
 + `All properties of the global object are global variables. In global scope, the following declarations create such properties:`  
-  모든 전역 객체의 속성은 전역 변수이다. 전역 스코프에서 아래 선언들은 전역 객체의 속성을 생성한다.
+  모든 전역 객체의 속성은 전역 변수이다. 전역 스코프에서 아래 선언들은 그런 속성을 생성한다.
  + `var declarations`  
   `var` 선언
  + `Function declarations`  
   `Function` 선언
 + `But there are now also global variables that are not properties of the global object. In global scope, the following declarations create such variables:`  
-  하지만 이제 전역 객체의 속성이 아닌 전역 변수도 있다. 전역 스코프에서 아래 선언들이 그렇다.
+  하지만 이제 전역 객체의 속성이 아닌 전역 변수도 있다. 전역 스코프에서 아래 선언들이 그런 변수를 생성한다.
  + `let declarations`  
   `let` 선언
  + `const declarations`  
@@ -615,17 +615,17 @@ bar();
   `let`처럼 블록 스코프를 가진다.
 + `create properties on the global object (while in global scope), like var.`  
   `var`처럼 ( 전역 스코프에서 )전역 객체에 속성을 생성한다.
-+ `are hoisted: independently of where a function declaration is mentioned in its scope, it is always created at the beginning of the scope.`  
-  호이스팅된다. 함수 스코프 내의 어느 위치에서 선언이 되었던 스코프의 시작점에서 생성된다.
++ `are hoisted: independently of where a function declaration is mentioned in its scope, it is always created at the beginning of the scope.` 
+  호이스팅된다. 스코프 내의 어느 위치에서 함수의 선언이 작성되었든 항상 스코프의 시작점에서 생성된다.
 
 `The following code demonstrates the hoisting of function declarations:`
 
-함수 선언의 호이스팅 예제이다.
+다음 예제는 함수 선언의 호이스팅을 보여준다.
 
 ```javascript
-{ // 새로운 스코프 진입
+{ // `Enter a new scope` 새로운 스코프 진입
 
-    console.log(foo()); // 호이스팅이 되기 때문에 정상.
+    console.log(foo()); // `OK, due to hoisting` 호이스팅 되므로 정상.
     function foo() {
         return 'hello';
     }
@@ -644,7 +644,7 @@ bar();
 
 `Classes not being hoisted may be surprising, because, under the hood, they create functions. The rationale for this behavior is that the values of their extends clauses are defined via expressions and those expressions have to be executed at the appropriate times.`
 
-클래스가 생성하는 것이 함수이기 때문에 클래스가 호이스팅되지 않는다는 것이 의아해 보일 수도 있다.  호이스팅되지 않는 이유는 `extends` 절의 값들이 이미 선언되고 실행되어 있어야 하기 때문이다.
+클래스가 내부적으로 함수를 생성하기 때문에 호이스팅되지 않는 것이 놀라울 수도 있다. 이것의 이론적 해석은 클래스의 `extends`절의 값은 표현식을 통해 정의되고 적절한 시점에 실행되어야만 한다는 것이다.
 
 ```javascript
 { // 새로운 스코프 진입
