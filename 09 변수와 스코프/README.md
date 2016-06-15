@@ -14,7 +14,7 @@
 
 `In the following code, you can see that the let-declared variable tmp only exists with the block that starts in line A:`
 
-다음 예제에서 `let`으로 선언된 변수 `tmp`는 `A`라인으로 시작된 블록 내에서만 존재하는 것을 볼 수 있다.
+다음 예제에서 `let`으로 선언된 변수 `tmp`는 (A)로 시작된 블록 내에서만 존재하는 것을 볼 수 있다.
 
 ```javascript
 function order(x, y) {
