@@ -135,7 +135,7 @@ Two benefits of static typing are:
 
 Both TypeScript and Flow are using the same notation. Type annotations are optional, which makes this approach relatively lightweight. Even without annotations, types can often be inferred. Therefore, this kind of type checking is even useful for completely unannotated code, as a consistency check.
 
-> 타입스크립트와 플로우는 똑같은 표기법을 이용한다. 타입 어노테이션은 필수가 아닌 선택적이며 이러한 접근을 상대적으로 가볍게 만든다. 어노테이션이 없을지라도, 타입은 종종 추론 될 수 있다. 그러므로 타입을 확인하는 이런 방법은 어노테이션이 전혀 붙지 않은 코드조차 일관성 검사 측면에서 유용하다.
+> 타입스크립트와 플로우는 똑같은 표기법을 이용한다. 타입 어노테이션은 필수가 아닌 선택적이며 이 접근법을 상대적으로 가볍게 만든다. 어노테이션이 없을지라도, 타입은 종종 추론 될 수 있다. 그러므로 타입을 확인하는 이런 방법은 어노테이션이 전혀 붙지 않은 코드조차 일관성 검사 측면에서 유용하다.
 
 
 ### 2.9 Where can I find more ES6 resources?
