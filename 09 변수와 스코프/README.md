@@ -10,7 +10,7 @@
 
 `let works similarly to var, but the variable it declares is block-scoped, it only exists within the current block. var is function-scoped.`
 
-`let`은 `var`와 유사하게 동작하지만, `let`으로 선언한 변수는 현재 블록 내에서만 존재하는 블록 스코프이다. `var`는 함수 스코프이다.
+`let`은 `var`와 유사하게 동작하지만, `let`으로 선언한 변수는 블록 스코프이며, 현재 블록에서만 존재한다. `var`는 함수 스코프이다.
 
 `In the following code, you can see that the let-declared variable tmp only exists with the block that starts in line A:`
 
