@@ -135,7 +135,7 @@ foo = 'def'; // TypeError
 > :notebook: `Spec detail: changing a const variable always throws a TypeError`  
 > 스펙에 따르면 `const` 변수의 값을 변경하는 것은 항상 `TypeError`가 발생한다.  
 > `Normally, changing an immutable binding only causes an exception in strict mode, as per SetMutableBinding(). But const-declared variables always produce strict bindings – see FunctionDeclarationInstantiation(func, argumentsList), step 35.b.i.1.`  
-> 일반적으로, 불변 바인딩을 변경하는 것은 `strict mode`에서만 [`SetMutableBinding()`](http://www.ecma-international.org/ecma-262/6.0/#sec-declarative-environment-records-setmutablebinding-n-v-s)에서 예외가 발생한다. 하지만 `const`로 변수를 선언하면 언제나 엄격한( strict )바인딩을 생성한다. - 35.b.i.1 장의 [FunctionDeclarationInstantiation(func, argumentsList)](http://www.ecma-international.org/ecma-262/6.0/#sec-functiondeclarationinstantiation)를 확인하세요.
+> 일반적으로, 불변 바인딩을 변경하는 것은 `strict mode`에서만 [`SetMutableBinding()`](http://www.ecma-international.org/ecma-262/6.0/#sec-declarative-environment-records-setmutablebinding-n-v-s)에서 예외가 발생한다. 하지만 `const`로 변수를 선언하면 언제나 엄격한( strict )바인딩을 생성한다. - 35.b.i.1 장의 [FunctionDeclarationInstantiation(func, argumentsList)](http://www.ecma-international.org/ecma-262/6.0/#sec-functiondeclarationinstantiation)를 참고하자.
 
 ### 9.3.1 `Pitfall: const does not make the value immutable` 함정 : `const`는 값을 불변으로 만들지 않는다. 
 
@@ -159,7 +159,7 @@ obj = {}; // TypeError
 
 `If you want the value of obj to be immutable, you have to take care of it, yourself, e.g. by freezing it:`
 
-`obj`의 값이 불변하게 하려면, 동결 `Object.freeze()` 같은 따로 처리를 해주어야 한다.
+`obj`의 값이 불변하게 하려면, 동결 `Object.freeze()` 같은 개별 처리를 해주어야 한다.
 
 ```javascript
 const obj = Object.freeze({});
@@ -190,7 +190,7 @@ obj.foo.qux
 // 'abc'
 ```
 
-### 9.3.2 `const in loop bodies` 루프 바디 안에서의 `const`
+### 9.3.2 `const in loop bodies` 루프 바디에서의 `const`
 
 `Once a const variable has been created, it can’t be changed. But that doesn’t mean that you can’t re-enter its scope and start fresh, with a new value. For example, via a loop:`
 
@@ -214,7 +214,7 @@ logArgs('Hello', 'everyone');
 
 `A variable declared by let or const has a so-called temporal dead zone (TDZ): When entering its scope, it can’t be accessed (got or set) until execution reaches the declaration. Let’s compare the life cycles of var-declared variables (which don’t have TDZs) and let-declared variables (which have TDZs).`
 
-`let` 또는 `const`로 선언된 변수는 `TDZ` (temporal dead zone)로 불리는 것을 갖게 되며, 스코프에 진입하면 선언부에 도달하기 전까지 접근( `got` or `set` )을 할 수 없게 된다. `TDZ`를 갖지않는 `var` 선언과 `TDZ`를 갖는 `let`선언의 라이프 사이클을 비교해보자.
+`let` 또는 `const`로 선언된 변수는 `TDZ` `temporal dead zone`로 불리는 것을 갖게 되며, 스코프에 진입하면 선언부에 도달하기 전까지 접근( `got` or `set` )을 할 수 없게 된다. `TDZ`를 갖지않는 `var` 선언과 `TDZ`를 갖는 `let`선언의 라이프 사이클을 비교해보자.
 
 ### 9.4.1 `The life cycle of var-declared variables` `var`로 선언된 변수의 라이프사이클
 
@@ -306,7 +306,7 @@ if (true) {
 
 `Why? The rationale is as follows: foo is not undeclared, it is uninitialized. You should be aware of its existence, but aren’t. Therefore, being warned seems desirable.`
 
-왜냐하면, 개발자가 `foo`의 존재를 인지할 수는 있지만 이론적으로 `foo`는 선언되지 않았고 초기화되지 않았기 때문이다. 따라서 경고해 주는 것이 바람직하다.
+왜냐하면, 개발자가 `foo`의 존재를 인지할 수는 있지만 이론적으로 `foo`는 선언, 초기화되지 않았기 때문이다. 따라서 경고해 주는 것이 바람직하다.
 
 `Furthermore, this kind of check is only useful for conditionally creating global variables. That’s something that only advanced JavaScript programmers should do and it can only be achieved via var.`
 
@@ -330,20 +330,20 @@ if (!('someGlobal' in window)) {
 
 `The former way of creating a global variable only works in global scope (and therefore not inside ES6 modules).`
 
-전역 변수를 생성하는 전자의 방법은 전역 스코프에서만 작동하며, `ES6`모듈 안에서는 가능하지 않다.
+전역 변수를 생성하는 전자의 방법은 전역 스코프에서만 작동하며, `ES6`모듈에서는 가능하지 않다.
 
 ### 9.4.5 `Why is there a temporal dead zone?` `TDZ`가 필요한 이유
 
 1. `To catch programming errors: Being able to access a variable before its declaration is strange. If you do so, it is normally by accident and you should be warned about it.`  
-  프로그래밍 에러를 잡기위해 : 선언 전에 변수에 접근이 가능하다는 것은 이상하다. 이것은 일반적으로 문제로 간주되며 경고를 해주어야 한다.
+  프로그래밍 에러를 잡기위해 : 선언 전에 변수에 접근이 가능하다는 것은 이상하다. 이렇게 하는 것은  일반적으로 문제일으키며 경고해주어야 한다.
 2. `For const: Making const work properly is difficult. Quoting Allen Wirfs-Brock: “TDZs … provide a rational semantics for const. There was significant technical discussion of that topic and TDZs emerged as the best solution.” let also has a temporal dead zone so that switching between let and const doesn’t change behavior in unexpected ways.`  
-  `const`를 위해 : `const`를 제대로 사용하는 것은 어렵다. `Allen Wirfs-Brock`의 말에 따르자면, "`TDZ`는 `const`를 위해 합리적인 의미론을 제공한다. 이 주제에 대한 중요한 기술적인 토론이 있었고 `TDZ`가 최고의 솔루션으로 채택되었다." `let` 또한 `TDZ`를 가지고 있기 때문에 `let`과 `const`를 서로 바꾸어 써도 예상치 못하게 동작하는 일은 없다.
+  `const`를 위해 : `const`를 제대로 사용하는 것은 어렵다. `Allen Wirfs-Brock`의 말에 따르자면, "`TDZ`는 `const`를 위해 합리적인 체계를 제공한다. 이 주제에 대한 중요한 기술적인 토론이 있었고 `TDZ`가 최고의 솔루션으로 채택되었다." `let` 또한 `TDZ`를 가지기 때문에 `let`과 `const`를 교체하는 것은 예상치 못한 방향으로 기능이 변경되지 않는다.
 3. `Future-proofing for guards: JavaScript may eventually have guards, a mechanism for enforcing at runtime that a variable has the correct value (think runtime type check). If the value of a variable is undefined before its declaration then that value may be in conflict with the guarantee given by its guard.`  
   추후 `guards`를 지원하기 위해 : 자바스크립트는 언젠가 런타임에 변수가 올바른 값을 가지고 있는지 검사( 타입 체크처럼 )하는 매커니즘인 `guards`를 가질 수도 있다. 변수의 값이 선언되기 전에 `undefined`라면 `guards`가 보장해 주는 결과와 충돌이 일어날 수 있다.
 
 ### 9.4.6 `Further reading` 더 읽을거리 
 
-이 섹션에서 참고한 자료 `Sources of this section:`
+원문 `Sources of this section:`
 
 - [“Performance concern with let/const”](https://esdiscuss.org/topic/performance-concern-with-let-const)
 - [“Bug 3009 – typeof on TDZ variable”](https://bugs.ecmascript.org/show_bug.cgi?id=3009)
@@ -562,7 +562,7 @@ function foo(x=1, y=x) {
 }
 foo(); // [1,1]
 
-// `Exception: `x` tries to access `y` within TDZ` 에러: x가 TDZ안에서 y에 접근하고 있다.
+// `Exception: `x` tries to access `y` within TDZ` 에러: x가 TDZ 내에서 y에 접근하고 있다.
 function bar(x=y, y=2) {
     return [x, y];
 }
@@ -674,7 +674,7 @@ bar();
   ```
   `You can even use const in a for-of loop, because one (immutable) binding is created per loop iteration:`
   
-  루프 반복마다 하나의 ( 불변 ) 바인딩이 생성되기 때문에 `for-of`루프 안에서도 `const`를 사용할 수 있다.
+  루프 반복마다 하나의 ( 불변 ) 바인딩이 생성되기 때문에 `for-of`루프에서도 `const`를 사용할 수 있다.
 
   ```javascript
   for (const x of ['a', 'b']) {
