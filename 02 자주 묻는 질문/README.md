@@ -118,28 +118,31 @@ Originally, ES6 was to have Array and generator comprehensions (similarly to Has
 
 > 마이크로소프트 타입스크립트: 타입스크립트는 ES6에 선택적인 타입 어노테이션이 추가된 것이다. ES5 로 컴파일되고 그 동안에 타입 정보는 버려진다. 부가적으로 타입 정보는 런타임에 이용가능하게 만든다. 
 
-
 + Facebook Flow: is a type checker for ECMAScript 6 that is based on flow analysis. As such, it only adds optional type annotations to the language and infers and checks types. It does not help with compiling ES6 to ES5.
 
 > 페이스북 플로우: 플로우는 플로우 분석에 기반을 둔 ECMAScript 6를 위한 타입 체커이다. 예를 들어 선택적인 타입 어노테이션만을 언어에 추가하고 타입을 추론하고 확인한다. 플로우는 ES6를 ES5로 변환하는데 도움을 주지는 않는다.
 
-정적 타입의 두 가지 장점 : 
-> Two benefits of static typing are:
+Two benefits of static typing are:
+> 정적 타입의 두 가지 장점 : 
 
-+ 정적 타입은 코드가 정적으로 분석되기 때문에, 에러의 확실한 카테고리를 더욱 빨리 찾을 수 있게한다. (개발중에, 코드의 실행이 없이도) 그래서 정적 타입은 테스팅과 다른 오류를 잡는것에 있어서 상호 보완적이다. 
-> It allows you to detect a certain category of errors earlier, because the code is analyzed statically (during development, without running code). As such, static typing is complementary to testing and catches different errors.
++ It allows you to detect a certain category of errors earlier, because the code is analyzed statically (during development, without running code). As such, static typing is complementary to testing and catches different errors.
 
-+ 정적 타입은 IDE의 자동 완성을 돕는다. 
-> It helps IDEs with auto-completion.
+> 정적 타입은 코드가 정적으로 분석되기 때문에, 에러의 확실한 카테고리를 더욱 빨리 찾을 수 있게한다. (개발중에, 코드의 실행이 없이도) 그래서 정적 타입은 테스팅과 다른 오류를 잡는것에 있어서 상호 보완적이다. 
 
-타입스크립트와 플로우는 똑같은 표기법을 이용한다. 타입 어노테이션은 필수가 아닌 선택적이며 이러한 접근을 상대적으로 가볍게 만든다. 어노테이션이 없을지라도, 타입은 종종 추론 될 수 있다. 그러므로 타입을 확인하는 이런 방법은 어노테이션이 전혀 붙지 않은 코드조차 일관성 검사 측면에서 유용하게 쓰인다.
-> Both TypeScript and Flow are using the same notation. Type annotations are optional, which makes this approach relatively lightweight. Even without annotations, types can often be inferred. Therefore, this kind of type checking is even useful for completely unannotated code, as a consistency check.
++ It helps IDEs with auto-completion.
 
-### 2.9 더 많은 ES6 자료는 어디에서 찾을수 있나? 
-> 2.9 Where can I find more ES6 resources?
+> 정적 타입은 IDE의 자동 완성을 돕는다. 
 
-아래는 ES6 학습에 도움되는 두 가지 자료이다. 
-> These are two lists with ES6 resources:`
+Both TypeScript and Flow are using the same notation. Type annotations are optional, which makes this approach relatively lightweight. Even without annotations, types can often be inferred. Therefore, this kind of type checking is even useful for completely unannotated code, as a consistency check.
+
+> 타입스크립트와 플로우는 똑같은 표기법을 이용한다. 타입 어노테이션은 필수가 아닌 선택적이며 이러한 접근을 상대적으로 가볍게 만든다. 어노테이션이 없을지라도, 타입은 종종 추론 될 수 있다. 그러므로 타입을 확인하는 이런 방법은 어노테이션이 전혀 붙지 않은 코드조차 일관성 검사 측면에서 유용하다.
+
+
+### 2.9 Where can I find more ES6 resources?
+> 2.9 더 많은 ES6 자료는 어디에서 찾을수 있나? 
+
+These are two lists with ES6 resources:
+> 아래는 ES6 학습에 도움되는 두 가지 자료이다. 
 
 + “ECMAScript 6 Tools” by Addy Osmani.
 + “ECMAScript 6 Learning!” by Eric Douglas.
