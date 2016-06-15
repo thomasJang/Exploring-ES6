@@ -63,7 +63,7 @@ As long as ECMAScript 6 is compiled to ECMAScript 5, it is useful to understand 
 
 One occasionally comes across accusations of ES6 being bloated and introducing too much useless syntactic sugar (more convenient syntax for something that already exists).
 
-> 간혹 ES6가 비대해진다는 비난과 너무나도 쓸모 없는 편의 문법(이미 존재하는 무언가를 위한 더욱 편리한 문법)을 소개한다는 인상을 남긴다.
+> 때로는 ES6가 비대해진다는 비난과 너무나도 쓸모 없는 편의 문법(이미 존재하는 무언가를 위한 더욱 편리한 문법)을 소개한다는 인상을 남긴다.
 
 
 However, in many ways, JavaScript is just now catching up with languages such as Python and Ruby. Both still have more features and come with a much richer standard library.
@@ -72,15 +72,15 @@ However, in many ways, JavaScript is just now catching up with languages such as
 
 If someone complains about ES6 being too big, I suggest that they try it out for a while. Nobody forces you to use any of the new features. You can start small (consult Chap. “First steps with ECMAScript 6” for suggestions) and then use more new features, as you grow more comfortable with ES6. So far, the feedback I get from people who have actually programmed with ES6 (as opposed to read about it) is overwhelmingly positive.
 
-> 너무 거대해지고 있는 ES6에 관해 불만을 제기한다면, 한동안 ES6를 직접 써보는 걸 권한다. 그 누구도 새로운 기능을 사용해야한다고 강제 하지는 않는다. 작은 부분에서부터 시작한 다음에(“First steps with ECMAScript 6”를 추천한다) 더욱 새로운 기능을 써보면, 당신이 성장하는 만큼 ES6가 더욱 마음에 들 것이다. 지금까지 ES6로 실제 프로그래밍을 하는 사람들(이에 관해 읽기만 하는 사람과는 대조적으로)에게 받은 피드백은 너무나도 긍정적이다. 
+> 너무 거대해지고 있는 ES6에 관해 누군가 불만을 제기한다면, 한동안 ES6를 직접 써보는 걸 권한다. 그 누구도 새로운 기능을 사용해야한다고 강제 하지는 않는다. 작은 부분에서부터 시작한 다음에(“First steps with ECMAScript 6”를 추천한다) 더욱 새로운 기능을 써보면, 당신이 성장하는 만큼 ES6가 더욱 마음에 들 것이다. 지금까지 ES6로 실제 프로그래밍을 하는 사람들(이에 관해 읽기만 하는 사람과는 대조적으로)에게 받은 피드백은 너무나도 긍정적이다. 
 
 Furthermore, things that superficially look like syntactic sugar (such as classes and modules) bring much-needed standardization to the language and serve as foundations for future features.
 
-> 더욱이, 겉보기에 편의 문법으로 보이는 것들은(클래스와 모듈 같은 것) 언어에 매우 필요한 표준화를 불러왔고 향후 기능들을 위한 기반의 역할을 한다.
+> 뿐만 아니라 겉보기에 편의 문법으로 보이는 것들은(클래스와 모듈 같은 것) 언어에 매우 필요한 표준화를 불러왔고 향후 기능들을 위한 기반의 역할을 한다.
 
 
 Lastly, several features were not created for normal programmers, but for library authors (e.g. generators, iterators, proxies). “Normal programmers” only need to know them superficially if at all.
-> 마지막으로, 몇몇 기능들은 일반적인 프로그래머를 위한 것이 아니라 라이브러리 작성자들을 위해 만들어졌다. (예: 제너레이터, 이터레이터, 프록시) "일반적인 프로그래머"들은 항상 표면적인 부분만 알아도 된다.
+> 마지막으로, 몇몇 기능들은 일반적인 프로그래머를 위한 것이 아니라 라이브러리 작성자들을 위해 만들어졌다. (예: 제너레이터, 이터레이터, 프록시) "일반적인 프로그래머"들은 이런 기능들을 표면적으로라도 알아야한다.
 
 
 ### 2.6 Isn’t the ES6 specification very big?
