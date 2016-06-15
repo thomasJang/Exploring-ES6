@@ -428,41 +428,41 @@ This method sets the prototype of obj to proto. The non-standard way of doing so
 ### 14.4.1 속성을 고찰시켜주는 5가지 연산
 
 In ECMAScript 6, the key of a property can be either a string or a symbol. The following are five operations that traverse the property keys of an object obj:  
-ECMAScript 6에서, 속성의 키값은 문자열이나 혹은 심볼일 것이다. 아래의 다섯가지 연산은 객체 obj의 속성 키값을 이동시켜준다.  
+ECMAScript 6에서, 프로퍼티의 키값은 문자열이나 혹은 심볼 둘다 될 수 있다. 아래의 다섯가지 연산은 객체 obj의 속성 키값을 이동시켜준다.  
 ```js
     Object.keys(obj) : Array<string>
     retrieves all string keys of all enumerable own (non-inherited) properties.  
-    모든 열거 가능한(상속되지 않은) 속성의 문자열 키값을 반환.  
+    모든 열거 가능한(상속되지 않은) 프로퍼티의 문자열 키값을 반환.  
     Object.getOwnPropertyNames(obj) : Array<string>  
     retrieves all string keys of all own properties.  
-    모든 속성의 문자열 키값을 반환.  
+    모든 프로퍼티의 문자열 키값을 반환.  
     Object.getOwnPropertySymbols(obj) : Array<symbol>  
     retrieves all symbol keys of all own properties.  
-    모든 속성의 심볼 키 값을 반환.  
+    모든 프로퍼티의 심볼 키 값을 반환.  
     Reflect.ownKeys(obj) : Array<string|symbol>
     retrieves all keys of all own properties.  
-    모든 속성의 모든 키값을 반환.  
+    모든 프로퍼티의 모든 키값을 반환.  
     for (const key in obj)
     retrieves all string keys of all enumerable properties (inherited and own).  
-    열거 가능한 속성(상속 받은것 포함)의 모든 문자열 키값을 반환.  
+    열거 가능한 프로퍼티(상속 받은것 포함)의 모든 문자열 키값을 반환.  
 ```
 ### 14.4.2 Traversal order of properties
-### 14.4.2 속성의 traversal 순서
+### 14.4.2 프로퍼티의 traversal 순서
 
 ES6 defines two traversal orders for properties.  
-ES6에는 두가지 속성값 탐색 순서가 있다.
+ES6에는 두가지 프로퍼티 값 탐색 순서가 있다.
 
 Own Property Keys:  
 고유의 속성 키:
 
     Retrieves the keys of all own properties of an object, in the following order:  
-    객체의 모든 고유 속성의 키는 다음의 순서로 반환한다. :
+    객체의 모든 고유 프로퍼티의 키는 다음의 순서로 반환한다. :  
         First, the string keys that are integer indices (what these are is explained in the next section), in ascending numeric order.
         Then all other string keys, in the order in which they were added to the object.
         Lastly, all symbol keys, in the order in which they were added to the object.  
-        먼저, 정수 인덱스(이에 대해서는 다음 섹션에서 설명한다.)의 문자열 키 - 숫자 오름차순으로 정렬.
-        그리고 나서 그 외 모든 문자열 키 - 객체에 추가된 순서대로.
-        마지막으로 모든 심볼 키 - 객체에 추가된 순서대로.
+        먼저, 정수 인덱스(이에 대해서는 다음 장에서 설명한다.)의 문자열 키 - 숫자 오름차순으로 정렬.  
+        그리고 나서 그 외 모든 문자열 키 - 객체에 추가된 순서대로.  
+        마지막으로 모든 심볼 키 - 객체에 추가된 순서대로.  
 
     Used by: Object.assign(), Object.defineProperties(), Object.getOwnPropertyNames(), Object.getOwnPropertySymbols(), Reflect.ownKeys()  
     이용 :Object.assign(), Object.defineProperties(), Object.getOwnPropertyNames(), Object.getOwnPropertySymbols(), Reflect.ownKeys()  
@@ -472,45 +472,44 @@ Enumerable Own Names:
 
     Retrieves the string keys of all enumerable own properties of an object. The order is not defined by ES6, but it must be the same order in which for-in traverses properties.  
     Used by: JSON.parse(), JSON.stringify(), Object.keys()  
-    객체의 모든 열거 가능한 고유 속성의 문자열 키를 반환. 이 순서는 ES6에서 정의된 순서는 아니지만 for-in에서 속성이 도는 동일한 순서일 것이다.  
+    객체의 모든 열거 가능한 고유 프로퍼티의 문자열 키를 반환. 이 순서는 ES6에서 정의된 순서는 아니지만 for-in에서 프로퍼티를 .  
     이용: JSON.parse(), JSON.stringify(), Object.keys()  
 
 The order in which for-in traverses properties is not defined. Quoting Allen Wirfs-Brock:  
-for-in의 속성 통과하는 순서는 정의되지 않았다. Allen Wirfs-Brock를 인용하면 :
+for-in에서 프로퍼티가 통과하는 순서는 정의되지 않았다. Allen Wirfs-Brock를 인용하면 :
 
     Historically, the for-in order was not defined and there has been variation among browser implementations in the order they produce (and other specifics). ES5 added Object.keys and the requirement that it should order the keys identically to for-in. During development of both ES5 and ES6, the possibility of defining a specific for-in order was considered but not adopted because of web legacy compatibility concerns and uncertainty about the willingness of browsers to make changes in the ordering they currently produce.  
-    역사적으로, for-in 순서는 정의되지 않았고 구현된 브라우저 간에 편차가 있다. ES5에 Object.keys를 추가했고 키는 for-in에서 동일하게 정렬되어야 함을 요구한다.
-    ES5와 ES6을 개발하는 동안, for-in의 명확한 정렬을 정의하기 위한 가능성이 고려되었으나 web 환경의 호환성 문제와 현재 생산된 브라우저가 정렬 방식을 변경하려는 의지에 대한 불확실성때문에 채택되지 않았다.
+    역사적으로, for-in 순서는 정의되지 않았고 구현된 브라우저 간에 편차가 있다. ES5는 Object.keys를 추가했고 Object.keys의 요구사항은 키가 for-in에서 동일하게 정렬되어야 한다는 것이다.
+    ES5와 ES6을 개발하는 동안, for-in의 정렬 사양을 정의하기 위한 가능성이 고려되었으나 web 환경의 호환성 문제와 현재 생산된 브라우저가 정렬 방식을 변경하려는 의지의 불확실성 때문에 채택되지 않았다.  
 
-
-#### 14.4.2.1 Integer indices
-#### 14.4.2.1 정수 색인
+#### 14.4.2.1 Integer indices  
+#### 14.4.2.1 정수 색인  
 
 Many engines treat integer indices specially, even though they are still strings (at least as far as the ES6 spec is concerned). Therefore, it makes sense to treat them as a separate category of keys.
-많은 엔진이 아직은 문자열이지만, 정수의 색인을 분명하게 다루고 있다.(최소한 ES6 스펙에서는 고려됨). 이는 이들을 키의 별도 항목으로 관리되어야 한다는 것이다.
+많은 엔진이 아직은 문자열이지만, 정수의 색인을 분명하게 다루고 있다.(최소한 ES6 스펙에서는 고려됨). 그렇기때문에 이들을 키의 별도 항목으로 관리되어야 한다.
 
-Roughly, an integer index is a string that, if converted to a 53-bit non-negative integer and back is the same value. Therefore:
-대체적으로, 정수 색인은 문자열이다, 53-bit의 음수가 아닌 정수로 전환했다가 다시 전환하면 이는 같은 값이다. 따라서 :
+Roughly, an integer index is a string that, if converted to a 53-bit non-negative integer and back is the same value. Therefore:  
+대체적으로, 정수 색인은 문자열이다, 53-bit의 음수가 아닌 정수로 전환했다가 다시 전환하면 이는 같은 값이다. 따라서 :  
 
     '10' and '2' are integer indices.
     '02' is not an integer index. Converting it to an integer and back results in the different string '2'.
-    '3.141' is not an integer index, because 3.141 is not an integer.
+    '3.141' is not an integer index, because 3.141 is not an integer.  
     '10'과 '2'는 정수 색인이다.
     '02' 는 정수 색인이 아니다. 이를 정수로 변환 했다가 돌아오면 그 결과는 '2'라는 다른 문자이다.
-    '3.141'은 정수 색인이 아니다, 왜냐면 3.141이 정수가 아니기 때문이다.
+    '3.141'은 정수 색인이 아니다, 왜냐면 3.141이 정수가 아니기 때문이다.  
 
-In ES6, instances of String and Typed Arrays have integer indices. The indices of normal Arrays are a subset of integer indices: they have a smaller range of 32 bits. For more information on Array indices, consult “Array Indices in Detail” in “Speaking JavaScript”.
+In ES6, instances of String and Typed Arrays have integer indices. The indices of normal Arrays are a subset of integer indices: they have a smaller range of 32 bits. For more information on Array indices, consult “Array Indices in Detail” in “Speaking JavaScript”.  
 ES6에서 String과 Typed Arrays의 인스턴스는 정수 색인을 가지고 있다. 일반 배열의 색인은 정수 색인의 집합이다 : 32bit보다 작은 범위를 가진다. 배열 색인의 보다 많은 정보는 "자바스크립트를 말하다(Speaking JavaScript)"의
-"Array Indices in Detail"에 설명되어 있다.
+"Array Indices in Detail"에 설명되어 있다.  
 
-Integer indices have a 53-bit range, because thats the largest range of integers that JavaScript can handle. For details, see Sect. “Safe integers”.
-정수 색인은 53 bit의 범위를 가진다, 때문에 JavaScript를 다루는 가장 큰 정수 범위가 된다. 자세한 내용은 "Safe integers" 섹션을 보면 된다.
+Integer indices have a 53-bit range, because thats the largest range of integers that JavaScript can handle. For details, see Sect. “Safe integers”.  
+정수 색인은 53 bit의 범위를 가진다, 때문에 JavaScript를 다루는 가장 큰 정수 범위가 된다. 자세한 내용은 "Safe integers" 섹션을 보면 된다.  
 
 #### 14.4.2.2 Example
-#### 14.4.2.2 예
+#### 14.4.2.2 예  
 
-The following code demonstrates the traversal order “Own Property Keys”:
-아래의 코드는 "고유 속성 키값"의 탐색 순서를 보여준다.:
+The following code demonstrates the traversal order “Own Property Keys”:  
+아래의 코드는 "고유 속성 키값"의 탐색 순서를 보여준다.:  
 ```js
 const obj = {
     [Symbol('first')]: true,
@@ -524,25 +523,25 @@ Reflect.ownKeys(obj);
     // [ '2', '10', '02', '01',
     //   Symbol('first'), Symbol('second') ]
 ```
-Explanation:
-설명 :
+Explanation:  
+설명 :  
 
     '2' and '10' are integer indices, come first and are sorted numerically (not in the order in which they were added).
     '02' and '01' are normal string keys, come next and appear in the order in which they were added to obj.
-    Symbol('first') and Symbol('second') are symbols and come last, in the order in which they were added to obj.
+    Symbol('first') and Symbol('second') are symbols and come last, in the order in which they were added to obj.  
     '2'와 '10'은 정수 색인이고 제일 처음에 숫자로 정렬된다.(추가된 순서로 정렬되는게 아니라)
     '02'와 '01'은 일반 문자 키로, obj에 추가된 순서로 그 다음에 나타난다.
-    Symbol('first')와 Symbol('second')는 심볼로서 가장 마지막에 그들이 추가된 순서에 맞춰 나타난다.
+    Symbol('first')와 Symbol('second')는 심볼로서 가장 마지막에 그들이 추가된 순서에 맞춰 나타난다.  
 
-#### 14.4.2.3 Why does the spec standardize in which order property keys are returned?
-#### 14.4.2.3 왜 속성 키값의 반환 스펙을 표준화하려고 하는가?
+#### 14.4.2.3 Why does the spec standardize in which order property keys are returned?  
+#### 14.4.2.3 왜 속성 키값의 반환 스펙을 표준화하려고 하는가?  
 
-Answer by Tab Atkins Jr.:
-Tab Atkins Jr.에 따르면:
+Answer by Tab Atkins Jr.:  
+Tab Atkins Jr.에 따르면:  
 
-    Because, for objects at least, all implementations used approximately the same order (matching the current spec), and lots of code was inadvertently written that depended on that ordering, and would break if you enumerated it in a different order. Since browsers have to implement this particular ordering to be web-compatible, it was specced as a requirement.
-    적어도 객체에 대해서는, 모든 구현이 대략 비슷한 순서를 사용하였고, 이를 따라 많은 코드들이 잘못 짜여져 있어, 이를 다른 순서로 열거하게 되면 중단되어 버리기 때문이다.
-    브라우저가 이 웹 호환되는 특정 순서를 구현해야 했으므로, 이 스펙이 필요한 것이다.
+    Because, for objects at least, all implementations used approximately the same order (matching the current spec), and lots of code was inadvertently written that depended on that ordering, and would break if you enumerated it in a different order. Since browsers have to implement this particular ordering to be web-compatible, it was specced as a requirement.  
+    왜냐하면, 적어도 객체에 있어서는, 모든 구현이 대략 비슷한 정렬을 사용하였고, 이를 따라 많은 코드들이 잘못 짜여져 있어, 이를 다른 순서로 열거하게 되면 중단되어 버리기 때문이다.
+    브라우저가 이 웹 호환되는 특정 순서를 구현해야 했으므로, 이 스펙이 필요한 것이다.  
 -------------------------
     There was some discussion about breaking from this in Maps/Sets, but doing so would require us to specify an order that is impossible for code to depend on; in other words, we’d have to mandate that the ordering be random, not just unspecified. This was deemed too much effort, and creation-order is reasonable valuable (see OrderedDict in Python, for example), so it was decided to have Maps and Sets match Objects.
     Map/Set에서의 이 중단에 대한 논의가 조금 있었으나, 특정 순서를 이를 임의의 순서로
@@ -1135,7 +1134,7 @@ I find toJSON() cleaner than enumerability for the current use case. It also giv
 현재의 사용 예에는 열거가능성보다 toJSON()이 좀더 확실함을 발견했다. toJSON()은 쉽게 컨트롤 할 수 있는데, 객체에 존재하지 않는 프로퍼티를 내보낼 수 있기 때문이다.
 
 ### 14.7.4 Naming inconsistencies
-### 14.7.4 불일치 네이밍
+### 14.7.4 명명 불일치
 
 In general, a shorter name means that only enumerable properties are considered:
 일반적으로 짧은 네임은 열거가능 프로퍼티만 고려한다.
