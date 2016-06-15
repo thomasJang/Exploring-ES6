@@ -6,7 +6,7 @@
 
 Classes (which are explained in the next chapter) are the major new OOP feature in ECMAScript 6. However, it also includes new features for object literals and new utility methods in Object. This chapter describes them.
 
-ECMAScript 6에서 클래스는 새로운 OOP의 주요한 부분이다. 그러나 객체 리터럴의 새로운 특성, 그리고 객체의 새로운 utility method 역시 포함하고 있다.
+ECMAScript 6에서 클래스는 새로운 OOP의 주요한 부분이다. 그러나 ECMAScript 6는 객체 리터럴의 새로운 특성과 객체의 새로운 utility method 역시 포함하고 있다.
 
 ## 14.1 Overview
 ## 14.1 개요
@@ -23,7 +23,7 @@ const obj = {
 };
 ```
 Property value shorthands:  
-프로퍼티값 축약:  
+프로퍼티 값 축약:  
 ```js
 const first = 'Jane';
 const last = 'Doe';
@@ -42,7 +42,7 @@ const obj = {
 };
 ```
 This new syntax can also be used for method definitions:  
-이 새로운 문법은 매소드 정의에도 사용될 수 있다:  
+이 새로운 문법은 매소드 정의에도 사용할 수 있다:  
 ```js
 const obj = {
     ['h'+'ello']() {
@@ -58,7 +58,7 @@ The main use case for computed property keys is to make it easy to use symbols a
 ### 14.1.2 객체의 새로운 매소드
 
 The most important new method of Object is assign(). Traditionally, this functionality was called extend() in the JavaScript world. In contrast to how this classic operation works, Object.assign() only considers own (non-inherited) properties.  
-객체의 가장 중요한 메소드는 assign()이다. 기존의 자바스크립트 세계에서 이 함수는 extend() 로 불렸다. 기존에 어떻게 동작했었는지와는 별개로 Object.assign()은 고유의 속성(상속받지 않은)으로만 고려된다.  
+객체의 가장 중요한 메소드는 assign()이다. 기존에는 자바스크립트 세계에서 이 기능은 extend()로 불렸다. 기존에 어떻게 동작했었는지와는 별개로 Object.assign()은 고유의 속성(상속받지 않은)으로만 고려된다.  
 
 ```js
 const obj = { foo: 123 };
@@ -69,10 +69,10 @@ console.log(JSON.stringify(obj));
 ## 14.2 New features of object literals
 ## 14.2 객체 리터럴의 새로운 특징
 ### 14.2.1 Method definitions
-### 14.2.1 메서드 정의
+### 14.2.1 메소드 정의
 
 In ECMAScript 5, methods are properties whose values are functions:  
-ECMAScript 5에서 매서드는 그 값이 함수인 속성이다:  
+ECMAScript 5에서의 매소드는 그 값이 함수인 프로퍼티이다:  
 ```js
 var obj = {
     myMethod: function (x, y) {
@@ -81,7 +81,7 @@ var obj = {
 };
 ```
 In ECMAScript 6, methods are still function-valued properties, but there is now a more compact way of defining them:  
-ECMAScript 6에서 매서드는 여전히 함수-값 속성이지만, 이를 정의하는 방법은 더 간단하다:  
+ECMAScript 6에서의 매소드는 여전히 함수-값 프로퍼티이지만, 이제 더 간단한 방법으로 정의할 수 있다:  
 ```js
 const obj = {
     myMethod(x, y) {
@@ -90,7 +90,7 @@ const obj = {
 };
 ```
 Getters and setters continue to work as they did in ECMAScript 5 (note how syntactically similar they are to method definitions):  
-게터와 세터는 ECMAScript 5와 마찬가지로 동작한다.(문법적으로 매서드 정의와 매우 유사함을 기억하라):  
+게터와 세터는 ECMAScript 5에서 동작했던 대로 여전히 동작한다.(구문상 메소드 정의와 매우 유사함을 기억하자):  
 ```js
 const obj = {
     get foo() {
@@ -114,7 +114,7 @@ SET bar to true
 true
 ```
 There is also a way to concisely define properties whose values are generator functions:  
-그 값이 제너레이터 함수인 경우 보다 쉽게 속성 정의를 할 수 있다.  
+값이 제너레이터 함수인 프로퍼티는 쉽게 정의할 수 있다.  
 ```js
 const obj = {
     * myGeneratorMethod() {
@@ -123,7 +123,7 @@ const obj = {
 };
 ```
 This code is equivalent to:
-이 코드는 아래와 같다:
+이 코드는 아래의 코드와 같다:
 ```js
 const obj = {
     myGeneratorMethod: function* () {
@@ -132,10 +132,10 @@ const obj = {
 };
 ```
 ### 14.2.2 Property value shorthands
-### 14.2.2 속성값 속기
+### 14.2.2 프로퍼티 값 축약
 
 Property value shorthands let you abbreviate the definition of a property in an object literal: If the name of the variable that specifies the property value is also the property key then you can omit the key. This looks as follows.  
-객체 리터럴에서 속성값의 속기로 간단하게 속성값을 정의할 수 있다.: 변수명으로 속성값을 지정한다면 속성키가 될 수 있으므로 키를 생략할 수 있다. 아래에서 볼 수 있다.  
+프로퍼티 값 축약은 객체 리터럴에서 프로퍼티 정의를 간략하게 할 수 있다. 프로퍼티 값을 지정하는 변수 명도 프로퍼티 키의 경우에는 키를 생략 할 수 있다. 이는 아래와 같다.
 
 ```js
 const x = 4;
@@ -143,12 +143,14 @@ const y = 1;
 const obj = { x, y };
 ```
 The last line is equivalent to:  
-마지막 줄은 아래와 같다:  
+마지막 줄은  
 ```js
 const obj = { x: x, y: y };
 ```
+과 같다:  
+
 Property value shorthands work well together with destructuring:  
-속성값의 속기는 해체에서도 잘 동작한다.  
+프로퍼티 값의 축약은 해체와 함께 잘 동작한다.  
 ```js
 const obj = { x: 4, y: 1 };
 const {x,y} = obj;
@@ -156,20 +158,23 @@ console.log(x); // 4
 console.log(y); // 1
 ```
 One use case for property value shorthands are multiple return values (which are explained in the chapter on destructuring).  
-다중 리턴값에서도 속성값 속기는 이용된다.(해체 챕터에서 설명될 것이다.)  
+프로퍼티 값 축약의 다른 사용 예는 다중 값 리턴이다. (이는 해체destructuring 장에 설명되어 있다.)  
+
 ### 14.2.3 Computed property keys
-### 14.2.3 속성 키값 계산
+### 14.2.3 계산된 프로퍼티 키
 
 Remember that there are two ways of specifying a key when you set a property.  
-속성 키 값 지정에는 두 가지 방법이 있음을 기억하자.  
+프로퍼티를 설정할 때 키를 지정하는 데에는 두 가지 방법이 있음을 기억하자.  
+
 ```js
     Via a fixed name: obj.foo = true;
-    속성명을 고정: obj.foo = true;
+    프로퍼티 이름을 고정: obj.foo = true;
     Via an expression: obj['b'+'ar'] = 123;
     표현식을 이용 : obj['b'+'ar'] = 123;
 ```
 In object literals, you only have option #1 in ECMAScript 5. ECMAScript 6 additionally provides option #2:  
-ECMAScript 5의 객체 리터럴에서는 #1의 방법밖에는 없었다. ECMAScript 6는 #2 방법도 추가적으로 제공된다:  
+객체 리터럴에서, ECMAScript 5는 #1 한가지 방법 밖에 없었다. ECMAScript 6에는 #2 의 방법을 추가적으로 제공한디:   
+
 ```js
 const propKey = 'foo';
 const obj = {
@@ -178,7 +183,7 @@ const obj = {
 };
 ```
 This new syntax can also be used for method definitions:  
-새로운 문법은 매서드 정의에도 이용할 수 있다:  
+이 새로운 문법은 매소드 정의에도 이용할 수 있다:  
 ```js
 const obj = {
     ['h'+'ello']() {
@@ -190,7 +195,8 @@ console.log(obj.hello()); // hi
 
 The main use case for computed property keys are symbols: you can define a public symbol and use it as a special property key that is always unique. One prominent example is the symbol stored in Symbol.iterator. If an object has a method with that key, it becomes iterable: The method must return an iterator, which is used by constructs such as the for-of loop to iterate over the object. The following code demonstrates how that works.  
 
-속성키값 계산에 Symbol이 가장 많이 이용된다 : 정의된 public 심볼을 특별한 속성키로 이용하면 언제나 유일하다. 특별한 예로 Symbol.iterator에 저장된 심볼을 들 수 있다.객체가 이 키 값을 가진 메서드를 가지고 있다면 이터러블하다: 매서드는 이터레이터를 반환할 것이고, for-of 반복문과 같은 구조에서 객체의 반복처리에 이용될 수 있다.아래의 코드는 어떻게 작동하는지를 보여준다.  
+계산된 속성키의 주된 사용처는 심볼Symbol이다: 퍼블릭public symbol을 정의할 수 있고 이를 항상 유일한 특별한 프로퍼티 키로 이용할 수 있다. 한 가지 명확한 예는 symbol은 Symbol.iterator에 저장된다는 것이다. 객체가 키인 메소드를 가지고 있을 때 이는 이터러블 할 것이다: 이 메소드는 이터레이터iterator를 반환할 것이고 이것은 for-of 루프와 같은 구문에 객체의 반복에 이용된다.
+아래의 코드는 어떻게 동작하는지를 보여준다.   
 ```js
 const obj = {
     * [Symbol.iterator]() { // (A)
@@ -206,14 +212,15 @@ for (const x of obj) {
 // world
 ```
 Line A starts a generator method definition with a computed key (the symbol stored in Symbol.iterator).  
-A 라인은 계산된 키값으로 정의된 제너레이터 메서드로 시작한다.(Symbol.iterator에 저장된 symbol)  
+A 라인은 계산된 키값으로 정의된 제너레이터 메소드로 시작한다.(Symbol.iterator에 저장된 symbol)  
 
 ## 14.3 New methods of Object
-## 14.3 객체의 새로운 매서드
+## 14.3 객체의 새로운 매소드
 ### 14.3.1 Object.assign(target, source_1, source_2, ···)
 
 This method merges the sources into the target: It modifies target, first copies all enumerable own (non-inherited) properties of source_1 into it, then all own properties of source_2, etc. At the end, it returns the target.  
-이 메서드는 타겟으로 소스를 병합한다: source_1의 모든 열거된 고유 속성(상속받지 않은), source_2의 모든 고유 속성, 등등등을 복사하여 타겟으로 넣고 타겟을 수정한다.  
+이 메소드는 소스를 타겟으로 병합한다: 이 메소드는 타겟을 수정하여, source_1의 모든 열거가능한enumerable 고유 속성(상속받지 않은non-inherited)을 복사하여 타겟에 넣은 다음, source_2도 넣는다. 마지막에는 타겟을 리턴한다.   
+
 ```js
 const obj = { foo: 123 };
 Object.assign(obj, { bar: true });
@@ -228,15 +235,16 @@ Object.assign()이 어떻게 동작하는지 좀더 자세히 보자:
     Only enumerable own properties: Object.assign() ignores inherited properties and properties that are not enumerable.
     Reading a value from a source: normal “get” operation (const value = source[propKey]). That means that if the source has a getter whose key is propKey then it will be invoked. All properties created by Object.assign() are data properties, it won’t transfer getters to the target.
     Writing a value to the target: normal “set” operation (target[propKey] = value). That means that if the target has a setter whose key is propKey then it will be invoked with value.  
-    두 종류의 객체 키 : Object.assign()은 string과 symbol 두 가지를 객체 키로 인식한다.
-    열거가능한 고유 속성만 : Object.assign()은 상속받은 속성과 열거가 불가능한 속성은 무시한다.
-    소스로부터 값을 읽기 : 일반적인 "get"(const value = source[propKey]) 연산. propKey인 키값을 가진 getter를 가진 소스라면 호출될 것이다.
-    Object.asasgin()으로 생성된 모든 속성은 데이터 속성이고, 타겟으로 getter를 복사하지 않는다.
-    타겟에 값 쓰기 : 일반적인 "set" 연산(target[propKey] = value). 이는 타겟이 propKey인 키값을 가진 setter를 가지고 있다면 값으로 호출될 것을 의미한다.  
+    두 종류의 객체 키 : Object.assign()은 string과 symbol 모두를 프로퍼티 키로 인식한다.  
+    열거가능한 고유 프로퍼티만 : Object.assign()은 상속받은 프로퍼티와 열거가 불가능한 프로퍼티는 무시한다.  
+    소스로부터 값을 읽기 : 일반적인 "get"(const value = source[propKey]) 연산. 이는 게터getter를 가진 소스인 경우 키 값이 propKey인 라면 호출될 것임을 의미한다.  
+    Object.asasgin()으로 생성된 모든 프로퍼티는 데이터 프로퍼티이고, 이는 타겟으로 getter를 복사하지 않는다.  
+    타겟에 값 쓰기 : 일반적인 "set" 연산(target[propKey] = value). 이는 만약 타겟이 세터setter를 프로퍼티 키로 가지고 있다면 호출 될 것임을 의미한다.  
 ```
 
 This is how you’d copy all properties (not just enumerable ones), while correctly transferring getters and setters, without invoking setters on the target:  
-아래는 올바르게 getter와 setter를 복사시 target의 setter를 호출하지 않고, 어떻게 모든 속성(열거 가능한 속성 뿐 아니라)을 복사할 수 있는지를 보여준다.  
+이것은 모든 프로퍼티(열거 가능한 것 뿐 아니라)를 getter와 setter를 올바르게 이동하는 동안 타겟의 setter를 호출하지 않고 어떻게 카피할 수 있는가이다.
+
 ```js
 function copyAllProperties(target, ...sources) {
     for (const source of sources) {
@@ -249,27 +257,26 @@ function copyAllProperties(target, ...sources) {
 }
 ```
 #### 14.3.1.1 Caveat: Object.assign() doesn’t work well for moving methods
-#### 14.3.1.1 경고: Object.assign() 은 메서드 이동에는 제대로 동작하지 않는다.
+#### 14.3.1.1 경고: Object.assign()은 메소드 이동에는 제대로 동작하지 않는다.
 
 On one hand, you can’t move a method that uses super: Such a method has an internal property [[HomeObject]] that ties it to the object it was created in. If you move it via Object.assign(), it will continue to refer to the super-properties of the original object. Details are explained in a section in the chapter on classes.  
-
-한편으로 super를 이용하여 메서드를 이동할 수 없다: 내부적인 속성을 가진 메서드[[HomeObject]]의 경우 그것을 생성시킨 객체에 묶여있다. 만약 Object.assign()으로 이동시키려 하면,
-원래 지속적으로 객체의 상위-속성으로 참조할 것이다. 자세한 내용은 Class 챕터에 설명되어 있다.  
+한편으로, super를 이용하는 메소드를 이동할 수 없다: 내부적인 프로퍼티 [[HomeObject]]를 가진 매소드는 그것을 생성시킨 객체에 묶여있다. 만약 Object.assign()으로 이동시키려 하면
+원래 객체의 상위-프로퍼티로 계속 간주될 것이다. 자세한 내용은 Class 장에 설명되어 있다.  
 
 On the other hand, enumerability is wrong if you move methods created by an object literal into the prototype of a class. The former methods are all enumerable (otherwise Object.assign() wouldn’t see them, anyway), but the prototype only has non-enumerable methods by default.  
-다른 한편으로, 객체 리터럴에 의해 생성된 매서드를 클래스의 프로토 타입으로 이동시키려고 하면 열거가능성이 잘못된다. 전자의 매서드는 모두 열거가능하지만, 프로토타입은 기본적으로 열거불가능한 메서드만 가질 수 있다.  
+다른 한편으로, 객체 리터럴에 의해 생성된 매소드를 클래스의 프로토 타입 안으로 이동시키려고 하면 열거가능성이 잘못된다. 앞의 메소드는 모두 열거가능하지만(반면 Object.assign()은 어쨌든 메소드를 볼 것이다. ), 프로토타입은 기본적으로 열거불가능한 메소드만 가질 수 있다.  
 
 #### 14.3.1.2 Use cases for Object.assign()
-#### 14.3.1.2 Object.assign()의 쓰임새
+#### 14.3.1.2 Object.assign()의 사용 예
 
 Let’s look at a few use cases.  
-몇 가지 사용 예시를 보자.  
+몇 가지 사용 예를 보자.  
 
 ##### 14.3.1.2.1 Adding properties to this
-##### 14.3.1.2.1 this에 속성 추가
+##### 14.3.1.2.1 this에 프로퍼티 추가
 
 You can use Object.assign() to add properties to this in a constructor:  
-생성자의 this에 Object.assign()을 이용하여 속성을 추가할 수 있다.  
+생성자의 this에 Object.assign()을 이용하여 프로퍼티를 추가할 수 있다.  
 ```js
 class Point {
     constructor(x, y) {
@@ -279,10 +286,10 @@ class Point {
 ```
 
 ##### 14.3.1.2.2 Providing default values for object properties
-##### 14.3.1.2.2 객체 속성에 기본값 제공
+##### 14.3.1.2.2 객체 프로퍼티에 기본값 제공
 
 Object.assign() is also useful for filling in defaults for missing properties. In the following example, we have an object DEFAULTS with default values for properties and an object options with data.  
-Object.assign()은 누락된 속성의 기본값을 채우는데 유용하다. 아래의 예제에, 속성의 기본값을 가진 DEFAULTS라는 객체와 data를 가진 options 라는 객체가 있다.  
+Object.assign()은 누락된 프로퍼티의 기본값을 채우는데 유용하다. 아래의 예제에는 속성의 기본값을 가진 DEFAULTS라는 객체와 data를 가진 options 라는 객체가 있다.  
 
 ```js
 const DEFAULTS = {
@@ -295,13 +302,13 @@ function processContent(options) {
 }
 ```
 In line A, we created a fresh object, copied the defaults into it and then copied options into it, overriding the defaults. Object.assign() returns the result of these operations, which we assign to options.  
-라인 A에서 defaults 복사하여 넣은 후 options를 복사하여 넣은, 기본값을 재정의한 새로운 객체를 생성했다. Object.assign()은 이 options에 할당한 이런 작업들을 반환한다.  
+A 라인에서 새로운 객체를 생성했고, defaults를 복사하여 그 객체에 넣고 options를 복사하여 넣어 defaults를 재정의 하였다. Object.assign()은 이 작업의 결과를 반환하는데, 이는 options에 할당한 것이다.
 
 ##### 14.3.1.2.3 Adding methods to objects
-##### 14.3.1.2.3 객체에 매서드 추가하기
+##### 14.3.1.2.3 객체에 매소드 추가하기
 
 Another use case is adding methods to objects:  
-또다른 사용 예는 객체에 메서드를 추가하는 것이다 :  
+또 다른 사용 예는 객체에 메소드를 추가하는 것이다 :  
 ```js
 Object.assign(SomeClass.prototype, {
     someMethod(arg1, arg2) {
@@ -313,7 +320,7 @@ Object.assign(SomeClass.prototype, {
 });
 ```
 You could also manually assign functions, but then you don’t have the nice method definition syntax and need to mention SomeClass.prototype each time:  
-수동으로 기능을 할당할 수는 있지만, 괜찮은 매서드 정의 구문도 없는데다 매번 SomeClass.prototype을 적어주어야 한다.  
+수동으로 기능을 할당할 수는 있지만, 괜찮은 매소드 정의 문법도 없는데다 매번 SomeClass.prototype을 적어주어야 한다.  
 ```js
 SomeClass.prototype.someMethod = function (arg1, arg2) {
     ···
@@ -327,17 +334,17 @@ SomeClass.prototype.anotherMethod = function () {
 ##### 14.3.1.2.4 객체 복제
 
 One last use case for Object.assign() is a quick way of cloning objects:  
-Object.assign()의 마지막 사용 예시로는 빠르게 객체복제 할 수 있다는 것이다:  
+Object.assign()의 마지막 사용 예시로는 빠른 객체복제 방법이다:  
 ```js
 function clone(orig) {
     return Object.assign({}, orig);
 }
 ```
 This way of cloning is also somewhat dirty, because it doesn’t preserve the property attributes of orig. If that is what you need, you have to use property descriptors.  
-이 방식으로 복제하는 것은 오리지널의 속성 특성을 보존하지 않기때문에 좀 지저분하다. 이렇게 할 필요가 있다면 속성 디스크립터를 이용해야 한다.  
+이 방식으로 복제하는 것은 오리지널의 속성 특성을 보존하지 않기 때문에 좀 지저분하다. 이렇게 할 필요가 있다면 프로퍼티 디스크립터 descriptor를 이용해야 한다.  
 
 If you want the clone to have the same prototype as the original, you can use Object.getPrototypeOf() and Object.create():  
-원래 것과 동일한 프로토타입을 가진 복제를 만들려면 Object.getPrototypeOf()과 Object.create()를 이용하면 된다:  
+원래 것과 동일한 프로토타입을 가진 복제를 만들려면, Object.getPrototypeOf()과 Object.create()를 이용하면 된다:  
 ```js
 function clone(orig) {
     const origProto = Object.getPrototypeOf(orig);
@@ -348,7 +355,7 @@ function clone(orig) {
 ### 14.3.2 Object.getOwnPropertySymbols(obj)
 
 Object.getOwnPropertySymbols(obj) retrieves all own (non-inherited) symbol-valued property keys of obj. It complements Object.getOwnPropertyNames(), which retrieves all string-valued own property keys. Consult a later section for more details on traversing properties.  
-Object.getOwnPropertySymbols(obj)는 객체의 모든 고유의 symbol값의 속성 키 값을 끌어낸다. 이는 객체의 모든 문자값의 속성키를 끌어내는 Object.getOwnPropertyNames()를 보완한다. 통과 속성에 대한 자세한 내용은 다음 섹션을 참고하면 된다.  
+Object.getOwnPropertySymbols(obj)는 모든 고유의 symbol값의 프로퍼티 객체 키 값을 끌어낸다. 이는 객체의 모든 문자값의 프로퍼티키를 끌어내는 Object.getOwnPropertyNames()를 보완한다. 통과 속성에 대한 자세한 내용은 다음 섹션을 참고하면 된다.  
 
 ### 14.3.3 Object.is(value1, value2)
 
@@ -368,7 +375,7 @@ That is unfortunate, because it often prevents us from detecting NaN:
 -1
 ```
 Second, JavaScript has two zeros, but strict equals treats them as if they were the same value:  
-두번째로, JavaScript 는 두가지 제로가 있는데, 일치 연산자는 이 둘을 같은 값으로 다룬다:  
+두번째로, JavaScript 는 두 가지 제로가 있는데, 일치 연산자는 이 둘을 같은 값으로 다룬다:  
 ```js
 > -0 === +0
 true
@@ -413,7 +420,7 @@ In contrast, indexOf() does not handle NaN well:
 
 This method sets the prototype of obj to proto. The non-standard way of doing so in ECMAScript 5, that is supported by many engines, is via assigning to the special property __proto__. The recommended way of setting the prototype remains the same as in ECMAScript 5: during the creation of an object, via Object.create(). That will always be faster than first creating an object and then setting its prototype. Obviously, it doesn’t work if you want to change the prototype of an existing object.  
 
-이 메서드는 객체의 프로토타입을 proto로 지정한다. ECMAScript 5에서 이렇게 하기 위한 비표준적인 방법은, 많은 엔진에서 지원되는데, __proto__ 라는 특별한 속성에 할당함으로 써 가능하다. 프로토타입을 지정을 위한 가장 좋은 방법은 ECMAScript 5와 유사하게 남아있다 : 객체 생성시에 Object.create()를 이용하는 것이다. 이는 객체의 첫 생성이나 프로토 타입을 지정하는것 보다 언제나 더 빠를 것이다. 하지만 이미 존재하는 객체의 프로토 타입을 변경하길 원한다면, 그렇게 작동하지는  않을 것이다.  
+이 메서드는 객체의 프로토타입을 proto로 지정한다. ECMAScript 5에서 이렇게 하기 위한 비표준적인 방법은, 많은 엔진에서 지원되는데, __proto__ 라는 특별한 프로퍼티에 할당함으로 써 가능하다. 프로토타입을 지정을 위한 가장 좋은 방법은 ECMAScript 5와 동일하게 남아있다 : 객체 생성시에 Object.create()를 이용하는 것이다. 이는 객체의 첫 생성이나 프로토 타입을 지정하는 것보다 언제나 더 빠를 것이다. 하지만 이미 존재하는 객체의 프로토 타입을 변경하길 원한다면, 그렇게 작동하지는 않을 것이다.  
 
 ## 14.4 Traversing properties in ES6
 ## 14.4 ES6에서의 속성 고찰
