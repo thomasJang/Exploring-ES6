@@ -1,12 +1,15 @@
-#해체(Destructuring)
+# `Destructuring` 해체 `Destructuring`
 
-ECMAScript6 에서는 객체나 배열(possibly nested)의 값을 추출하기위한 편리한 방법으로 *해체(destructuring)*를 지원한다. 이번 챕터에서는 해체가 어떻게 동작하는지 설명하고 유용한 예제도 함께 제공한다.
+## 10.1 `Overview` 개요
 
-##10.1 개요
-해체는 데이터 할당을 받는 곳에서(이를테면 할당 연산자의 좌변), 데이터의 일부를 추출하기 위한 패턴 사용을 가능하게 한다.
+`Destructuring is a convenient way of extracting values from data stored in (possibly nested) objects and Arrays. It can be used in locations that receive data (such as the left-hand side of an assignment). How to extract the values is specified via patterns (read on for examples).`
 
-##10.1.1 객체 해체(Object destructuring)
-객체 해체하기:
+해체는 ( 아마도 포함된 )객체와 배열에 저장된 데이터에서 값을 추출하는 편리한 방법이다. 할당문의 좌변같은 데이터를 받는 위치에서 사용될 수 있다. 값을 추출하는 방법은 패턴에 의해 규정되었다. 예제를 계속 보자.
+
+## 10.1.1 `Object destructuring` 객체 해체
+
+`Destructuring objects:` 객체 해체하기.
+
 ```javascript
 const obj = { first: 'Jane', last: 'Doe' };
 const {first: f, last: l} = obj;
@@ -16,8 +19,11 @@ const {first: f, last: l} = obj;
 const {first, last} = obj;
 // first = 'Jane'; last = 'Doe'
 ```    
-    
-해체는 반환된 값의 처리를 돕는다 : 
+
+`Destructuring helps with processing return values:`
+
+해체는 반환값의 처리를 도와준다.
+
 ```javascript
 const obj = { foo: 123 };
 
@@ -25,22 +31,32 @@ const {writable, configurable} = Object.getOwnPropertyDescriptor(obj, 'foo');
 
 console.log(writable, configurable); // true true
 ```
-##10.1.2 배열해체(Array destructuring)
+## 10.1.2 `Array destructuring` 배열해체
 
-모든 이터러블은 배열 해체가 가능하다.
+`Array destructuring (works for all iterable values):`
+
+배열 해체하기. ( 모든 이터러블 값에 작동한다. )
+
 ```javascript
 const iterable = ['a', 'b'];
 const [x, y] = iterable;
     // x = 'a'; y = 'b'
 ```
-해체는 반환된 값의 처리를 돕는다 : 
+
+`Destructuring helps with processing return values:`
+
+해체는 반환값의 처리를 도와준다.
 
 ```javascript
 const [all, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
 ```
 
-##10.1.3 해체는 어디에서 쓰이는가?
-해체는 다음과 같은 곳에서 쓰일 수 있다:
+## 10.1.3 `Where can destructuring be used?` 해체는 어디서 사용될 수 있는가?
+
+`Destructuring can be used in the following locations:`
+
+해체는 아래 위치에서 사용될 수 있다.
+
 ```javascript
 // 변수 선언:
 const [x] = ['a'];
@@ -55,7 +71,10 @@ var [x] = ['a'];
 function f([x]) { ··· }
 f(['a']);
 ```
-해체는 for-of 루프에서도 동작한다:
+
+`You can also destructure in a for-of loop:`
+
+`for-of` 루프 안에서도 해체할 수 있다.
 
 ```javascript
 const arr1 = ['a', 'b'];
@@ -79,25 +98,42 @@ for (const {name, age} of arr2) {
 // John 40
 ```
 
-##10.2 배경지식: 데이터 생성 vs 데이터 추출
+## 10.2 `Background: Constructing data versus extracting data` 배경: 데이터 구축 대 데이터 추출
 
-해체가 무엇인지 완벽히 이해하기 위해서 먼저 broader context를 알아보자. 자바스크립트는 데이터 생성을 위한 연산을 가진다 :
+`To fully understand what destructuring is, let’s first examine its broader context. JavaScript has operations for constructing data:`
+
+해체가 무엇인지 완전히 이해하기 위해 먼저 큰 맥락을 살펴보자. 자바스크립트는 데이터를 구축하는 행동을 가지고 있다.
+
 ```javascript
 const obj = {};
 obj.first = 'Jane';
 obj.last = 'Doe';
 ```
-그리고 데이터 추출을 위한 연산도 가진다:
+
+`And it has operations for extracting data:`
+
+그리고 값을 추출하기 위한 행동을 가지고 있다.
+
 ```javascript
 const f = obj.first;
 const l = obj.last;
 ```
-우리가 객체 생성에 사용해오던 똑같은 문법임을 주목하라.
 
-객체생성을 위한 더 나은 문법인 객체 리터럴 :
+`Note that we are using the same syntax that we have used for constructing.`
+
+구축을 위해 사용했던 것과 같은 문법을 사용한 것을 기억하라.
+
+`There is nicer syntax for constructing – an object literal:`
+
+객체 리터럴이라는 구축을 위한 더 나은 문법이 있다.
+
 ```javascript
 const obj = { first: 'Jane', last: 'Doe' };
 ```
+
+`Destructuring in ECMAScript 6 enables the same syntax for extracting data, where it is called an object pattern:`
+
+
 
 ECMAScript6의 해체는 데이터 추출을 위해 객체 패턴으로 불리는 곳에서 동일한 문법을 가능케한다.:
 ```javascript
