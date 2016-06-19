@@ -459,6 +459,9 @@ The following table shows what happens if you explicitly or implicitly convert s
 | Conversion to | Explicit conversion |	Coercion (implicit conversion) |
 |---------------|---------------------|--------------------------------|
 | boolean | Boolean(sym) → OK | !sym → OK |
+| number | Number(sym) → TypeError | sym*2 → TypeError |
+| string | String(sym) → OK | ''+sym → TypeError |
+| | sym.toString() → OK | `${sym}` → TypeError |
 
 boolean	Boolean(sym) → OK	!sym → OK
 number	Number(sym) → TypeError	sym*2 → TypeError
