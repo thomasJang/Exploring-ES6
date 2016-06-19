@@ -203,12 +203,15 @@ console.log(obj[FOO]()); // bar
 
 ### 7.2.2 Enumerating own property keys
 > 7.2.2 각자의 프로퍼티키를 열거하기 
+
 Given that there is now a new kind of value that can become the key of a property, the following terminology is used for ECMAScript 6:
 
-Property keys are either strings or symbols.
-String-valued property keys are called property names.
-Symbol-valued property keys are called property symbols.
++ Property keys are either strings or symbols.
++ String-valued property keys are called property names.
++ Symbol-valued property keys are called property symbols.
+
 Let’s examine the API for enumerating own property keys by first creating an object.
+> API 를 알아보자 
 
 ```js
 const obj = {
@@ -220,6 +223,7 @@ Object.defineProperty(obj, 'nonEnum', { enumerable: false });
 ```
    
 Object.getOwnPropertyNames() ignores symbol-valued property keys:
+> Object.getOwnPropertyNames()는 심볼로 평가되는 프로퍼티 키를 무시한다.
 
 ```js
 Object.getOwnPropertyNames(obj)
@@ -227,6 +231,7 @@ Object.getOwnPropertyNames(obj)
 ```
 
 Object.getOwnPropertySymbols() ignores string-valued property keys:
+> Object.getOwnPropertySymbols()는 문자열로 평가되는 프로퍼티 키를 무시한다.
 
 ```js
 Object.getOwnPropertySymbols(obj)
@@ -247,9 +252,13 @@ Object.keys(obj)
 ```
 
 The name Object.keys clashes with the new terminology (only string keys are listed). Object.names or Object.getEnumerableOwnPropertyNames would be a better choice now.
+> Object.keys는 새로운 용어(문자열 키만 나열된다)와 충돌한다. Object.names 또는 Object.getEnumerableOwnPropertyNames 가 이제 더 나은 선택이 될 것이다.
 
 ## 7.3 Using symbols to represent concepts
+> 7.3 개념을 나타내기 위해 심볼을 사용하기
+
 In ECMAScript 5, one often represents concepts (think enum constants) via strings. For example:
+> ECMAScript 5 에서는, 문자열로 컨셉을 종종 표현했다. 예를 들면:
 
 ```js
 var COLOR_RED    = 'Red';
@@ -261,6 +270,7 @@ var COLOR_VIOLET = 'Violet';
 ```
 
 However, strings are not as unique as we’d like them to be. To see why, let’s look at the following function.
+> 하지만 문자열은 우리가 원하는 것만큼 고유하지 않다. 왜 그런지 알아보기 위해, 다음 함수를 보자.  
 
 ```js
 function getComplement(color) {
@@ -283,6 +293,7 @@ function getComplement(color) {
 }
 ```
 It is noteworthy that you can use arbitrary expressions as switch cases, you are not limited in any way. For example:
+스위치문으로 임의의 표현식을 사용할 수 있고 아무런 제한을 받지 않는다는것은 주목할만하다. 예를 들어:
 
 ```js
 function isThree(x) {
@@ -296,13 +307,20 @@ function isThree(x) {
 ```
 
 We use the flexibility that switch offers us and refer to the colors via our constants (COLOR_RED etc.) instead of hard-coding them ('RED' etc.).
+> 우리은 스위치가 제공한다 유연성 (COLOR_RED 등) 하드코딩 대신에 ('RED' 등) 상수를 통해 색깔을 참조하거 뭐래~~~
 
 Interestingly, even though we do so, there can still be mix-ups. For example, someone may define a constant for a mood:
+>  흥미롭게도 
 
+```js
 var MOOD_BLUE = 'BLUE';
+```
+
 Now the value of BLUE is not unique anymore and MOOD_BLUE can be mistaken for it. If you use it as a parameter for getComplement(), it returns 'ORANGE' where it should throw an exception.
+> 이제 BLUE의 값은 더 이상 고유하지 않고 MOOD_BLUE는 실수가 될 수 있다. getComplement()를 위한 파라미터로 이를 사용한다면 예외를 던지는 곳에서 'ORANGE'를 반환한다. 
 
 Let’s use symbols to fix this example. Now we can also use the ES6 feature const, which lets us declare actual constants (you can’t change what value is bound to a constant, but the value itself may be mutable).
+> 이 예제를 고치기 위해 심볼을 사용하자. 이제 실제 상수를 선언할 수 있게 하는 ES6 기능인 const를 사용할 수 있다. (상수에 할당된 값은 변경할 수 없지만, 이 값은 스스로 변할 수도 있다) 
 
 ```js
 const COLOR_RED    = Symbol('Red');
@@ -314,19 +332,35 @@ const COLOR_VIOLET = Symbol('Violet');
 ```
 
 Each value returned by Symbol is unique, which is why no other value can be mistaken for BLUE now. Intriguingly, the code of getComplement() doesn’t change at all if we use symbols instead of strings, which shows how similar they are.
+> 심볼에 의해 반환된 각각의 값은 고유하고 ~~~~~~~. 아주 흥미롭게도 getComplement()의 코드는 전혀 바꾸지 않는다. 문자열 대신에 심볼을 사용한다면 ~~~~~
 
 ## 7.4 Symbols as keys of properties
-Being able to create properties whose keys never clash with other keys is useful in two situations:
+> 7.4 프로퍼티의 키인 심볼
 
-For non-public properties in inheritance hierarchies.
-To keep meta-level properties from clashing with base-level properties.
+Being able to create properties whose keys never clash with other keys is useful in two situations:
+> 
+
++ For non-public properties in inheritance hierarchies.
++ To keep meta-level properties from clashing with base-level properties.
+
+> 상속 계층에서 공개되지 않은 프로퍼티를 위해
+> meta-level 프로퍼티가 base-level 프로퍼티와 충돌하는 것을 막기 위해
 
 ### 7.4.1 Symbols as keys of non-public properties
-Whenever there are inheritance hierarchies in JavaScript (e.g. created via classes, mixins or a purely prototypal approach), you have two kinds of properties:
+> 7.4.1 공개되지 않은 프로퍼티의 키인 심볼
 
-Public properties are seen by clients of the code.
-Private properties are used internally within the pieces (e.g. classes, mixins or objects) that make up the inheritance hierarchy. (Protected properties are shared between several pieces and face the same issues as private properties.)
+Whenever there are inheritance hierarchies in JavaScript (e.g. created via classes, mixins or a purely prototypal approach), you have two kinds of properties:
+자바스크립트에서 상속 계층(클래스, 믹스인, 순수한 프로토타입 접근법)은 언제든지 두 종류의 프로퍼티를 갖는다.
+
++ Public properties are seen by clients of the code.
++ Private properties are used internally within the pieces (e.g. classes, mixins or objects) that make up the inheritance hierarchy. (Protected properties are shared between several pieces and face the same issues as private properties.)
+
+> 공개 프로퍼티는 코드의 클라이언트에 의해 보인다.
+> 비공개 프로퍼티는 내부적으로 상속 계층을 구성하는 조각(클래스, 믹스인 또는 객체) 내에서 사용된다. 
+
 For usability’s sake, public properties usually have string keys. But for private properties with string keys, accidental name clashes can become a problem. Therefore, symbols are a good choice. For example, in the following code, symbols are used for the private properties _counter and _action.
+
+> 사용 적합성을 위해 공개 프로퍼티는 일반적으로 문자열 키를 갖는다. 그러나 문자열 키인 비공개 프로퍼티를 위해 우연한 이름 충돌이 문제가 될 수 있다. 그래서 심볼이 좋은 선택이다. 예를 들어, 다음 코드에서 심볼은 _counter 와 _action 인 비공개 프로퍼티로 사용된다.
 
 ```js
 const _counter = Symbol('counter');
@@ -350,11 +384,17 @@ class Countdown {
 
 Note that symbols only protect you from name clashes, not from unauthorized access, because you can find out all own property keys – including symbols – of an object via Reflect.ownKeys(). If you want protection there, as well, you can use one of the approaches listed in Sect. “Private data for classes”.
 
+심볼은 비허가된 접근이 아니라 오로지 이름 충돌만을 방어한다는 점을 알아두어야한다. Reflect.ownKeys()를 이용하면 심볼을 포함한 모든 프로퍼티 키를 찾을 수 있기 때문이다. 비허가된 접근의 방어 또한 원한다면, 5장 3절 "클래스의 비공개 데이터"에 나열된 접근법중에 하나를 사용 할 수 있다.
+
 ### 7.4.2 Symbols as keys of meta-level properties
+> 7.4.2 메타레벨 프로퍼티의 키로써 심볼
 
 Symbols having unique identities makes them ideal as keys of public properties that exist on a different level than “normal” property keys, because meta-level keys and normal keys must not clash. One example of meta-level properties are methods that objects can implement to customize how they are treated by a library. Using symbol keys protects the library from mistaking normal methods as customization methods.
+> 고유한 정체성을 갖는 심볼은 "보통" 프로퍼티 키보다 다른 레벨의 공개 프로퍼티의 키로써 적절하게 만든다. 메타레벨 키와 보통 키는 충돌하면 안되기 때문이다. 메타레벨 프로퍼티의 한가지 예는 객체가 라이브러리로 취급되는 메서드이다. 후.....~~~~~~
+심볼키를 사용하는 것은 라이브러리를 일반적인 메서드를 실수 보호한다 ~~~
 
 Iterability in ECMAScript 6 is one such customization. An object is iterable if it has a method whose key is the symbol (stored in) Symbol.iterator. In the following code, obj is iterable.
+> ECMAScript 6에서 이터러빌리티는 하나의 그런 사용자 정의이다. 객체는 키가 심볼(Symbol.iterator에 저장된)인 메서드를 갖는다면 이터러블하다. 다음 코드에서, obj는 이터러블하다.
 
 ```js
 const obj = {
@@ -378,23 +418,27 @@ const obj = {
 ```
 
 The iterability of obj enables you to use the for-of loop and similar JavaScript features:
+> obj의 이터러빌리티는 for-of 루프의 사용 그리고 유사한 자바스크립트의 기능 사용을 가능케한다.
 
 ```js
 for (const x of obj) {
     console.log(x);
 }
 
-// Output:
+// 출력:
 // hello
 // world
 ```
 
 ### 7.4.3 Examples of name clashes in JavaScript’s standard library
+> 7.4.3 자바스크립트 표준 라이브러리에서 이름 충돌의 예
+
 In case you think that name clashes don’t matter, here are three examples of where name clashes caused problems in the evolution of the JavaScript standard library:
 
-When the new method Array.prototype.values() was created, it broke existing code where with was used with an Array and shadowed a variable values in an outer scope (bug report 1, bug report 2). Therefore, a mechanism was introduced to hide properties from with (Symbol.unscopables).
-String.prototype.contains clashed with a method added by MooTools and had to be renamed to String.prototype.includes (bug report).
-The ES2016 method Array.prototype.contains also clashed with a method added by MooTools and had to be renamed to Array.prototype.includes (bug report).
++ When the new method Array.prototype.values() was created, it broke existing code where with was used with an Array and shadowed a variable values in an outer scope (bug report 1, bug report 2). Therefore, a mechanism was introduced to hide properties from with (Symbol.unscopables).
++ String.prototype.contains clashed with a method added by MooTools and had to be renamed to String.prototype.includes (bug report).
++ The ES2016 method Array.prototype.contains also clashed with a method added by MooTools and had to be renamed to Array.prototype.includes (bug report).
+
 In contrast, adding iterability to an object via the property key Symbol.iterator can’t cause problems, because that key doesn’t clash with anything.
 
 These examples demonstrate what it means to be a web language: backward compatibility is crucial, which is why compromises are occasionally necessary when evolving the language. As a side benefit, evolving old JavaScript code bases is simpler, too, because new ECMAScript versions never (well, hardly ever) break them.
