@@ -460,16 +460,21 @@ The following table shows what happens if you explicitly or implicitly convert s
 |---------------|---------------------|--------------------------------|
 | boolean | Boolean(sym) → OK | !sym → OK |
 | number | Number(sym) → TypeError | sym*2 → TypeError |
-| string | String(sym) → OK | ''+sym → TypeError |
-| | sym.toString() → OK | `${sym}` → TypeError |
+| string | String(sym) → OK  sym.toString() → OK | ''+sym → TypeError |
+| | sym.toString() → OK | \`${sym}\` → TypeError |
 
-boolean	Boolean(sym) → OK	!sym → OK
-number	Number(sym) → TypeError	sym*2 → TypeError
-string	String(sym) → OK	''+sym → TypeError
- 	sym.toString() → OK	`${sym}` → TypeError
+| 변환 대상 | 명시적 변환 |	강제 (암묵적 변환) |
+|---------------|---------------------|--------------------------------|
+| boolean | Boolean(sym) → OK | !sym → OK |
+| number | Number(sym) → TypeError | sym*2 → TypeError |
+| string | String(sym) → OK  sym.toString() → OK | ''+sym → TypeError |
+| | sym.toString() → OK | \`${sym}\` → TypeError |
 
 ### 7.5.1 Pitfall: coercion to string
+> 7.5.1 함정: 문자열로 강제 변환
+
 Coercion to string being forbidden can easily trip you up:
+
 
 ```js
 const sym = Symbol();
@@ -479,6 +484,7 @@ console.log(`A symbol: ${sym}`); // TypeError
 ```
 
 To fix these problems, you need an explicit conversion to string:
+> 이런 문제를 수정하려면 문자열로 명시적 변환을 해야한다.
 
 ```js
 console.log('A symbol: '+String(sym)); // OK
@@ -486,10 +492,16 @@ console.log(`A symbol: ${String(sym)}`); // OK
 ```
 
 ### 7.5.2 Making sense of the coercion rules
+> 7.5.2 강제 변환 규칙을 받아들이기
+
 Coercion (implicit conversion) is often forbidden for symbols. This section explains why.
+강제(명시적 변환)는 심볼에 종종 금지된다. 이번절에서 그 이유를 설명한다.
 
 #### 7.5.2.1 Truthiness checks are allowed
+> Truthiness 체크는 허용된다.
+
 Coercion to boolean is always allowed, mainly to enable truthiness checks in if statements and other locations:
+
 
 ```js
 if (value) { ··· }
@@ -498,20 +510,38 @@ param = param || 0;
 ```
 
 #### 7.5.2.2 Accidentally turning symbols into property keys
-Symbols are special property keys, which is why you want to avoid accidentally converting them to strings, which are a different kind of property keys. This could happen if you use the addition operator to compute the name of a property:
+> 7.5.2.2 심볼이 프로퍼티키로 우연히 변하는 것
 
+Symbols are special property keys, which is why you want to avoid accidentally converting them to strings, which are a different kind of property keys. This could happen if you use the addition operator to compute the name of a property:
+> 심볼은 특별한 프로퍼티 키다. 
+
+```js
 myObject['__' + value]
+```
+
 That’s why a TypeError is thrown if value is a symbol.
+> value가 심볼이라면 TypeError가 발생되는 이유이다.
 
 #### 7.5.2.3 Accidentally turning symbols into Array indices
-You also don’t want to accidentally turn symbols into Array indices. The following is code where that could happen if value is a symbol:
 
+You also don’t want to accidentally turn symbols into Array indices. The following is code where that could happen if value is a symbol:
+> 심볼이 배열 인덱스로 의도치 않게 바뀌는것 또한 원치 않는다. 다음은 value가 심볼이라면 발생 발생할 수 있는 곳의 코드다.
+
+```js
 myArray[1 + value]
+```
+
 That’s why the addition operator throws an error in this case.
+> 이 경우에는 추가 연산자가 오류를 던지는 이유이다.
 
 ### 7.5.3 Explicit and implicit conversion in the spec
+> 명세에서의 명시적 그리고 암묵적 변환
+
 #### 7.5.3.1 Converting to boolean
+> 7.5.3.1 불리언으로 강제 변환
+
 To explicitly convert a symbol to boolean, you call Boolean(), which returns true for symbols:
+심볼을 불리언으로 명시적 변환을 하기 위해서는 Boolean()을 호출하면 된다. 이는 심볼에 true를 반환한다:
 
 ```js
 const sym = Symbol('hello');
@@ -520,8 +550,10 @@ true
 ```
 
 Boolean() computes its result via the internal operation ToBoolean(), which returns true for symbols and other truthy values.
+> Boolean()은 내부 연산자인 ToBoolean()을 통해 계산한다. 이것은 심볼과 다른 truthy한 값에 true를 반환한다.
 
 Coercion also uses ToBoolean():
+> 강제 변환도 ToBoolean()을 사용한다:
 
 ```js
 !sym
@@ -529,7 +561,10 @@ false
 ```
 
 #### 7.5.3.2 Converting to number
+> 숫자로 변환하기
+
 To explicitly convert a symbol to number, you call Number():
+> 심볼을 숫자로 명시적으로 변환하려면 Number()를 호출한다: 
 
 ```js
 const sym = Symbol('hello');
@@ -538,8 +573,10 @@ TypeError: can't convert symbol to number
 ```
 
 Number() computes its result via the internal operation ToNumber(), which throws a TypeError for symbols.
+> Number()는 내부 연산자인 ToNumber()를 통해 결과를 계산한다. 이것은 심볼에 타입에러를 발생시킨다.
 
 Coercion also uses ToNumber():
+> 강제는 ToNumber() 또한 사용한다:
 
 ```js
 +sym
@@ -547,7 +584,10 @@ TypeError: can't convert symbol to number
 ```
 
 #### 7.5.3.3 Converting to string
+> 문자열로 변환하기
+
 To explicitly convert a symbol to string, you call String():
+> 심볼을 문자열로 명시적으로 변환하려면 String()을 호출한다:
 
 ```js
 const sym = Symbol('hello');
@@ -556,6 +596,7 @@ String(sym)
 ```
 
 If the parameter of String() is a symbol then it handles the conversion to string itself and returns the string Symbol() wrapped around the description that was provided when creating the symbol. If no description was given, the empty string is used:
+
 
 ```js
 String(Symbol())
@@ -577,12 +618,19 @@ TypeError: can't convert symbol to string
 ```
 
 #### 7.5.3.4 Not allowed: converting via the binary addition operator (+)
-The addition operator works as follows:
 
-Convert both operands to primitives.
-If one of the operands is a string, coerce both operands to strings (via ToString()), concatenate them and return the result.
-Otherwise, coerce both operands to numbers, add them and return the result.
+The addition operator works as follows:
+> 더하기 연산자는 다음과 같이 동작한다.
+
++ Convert both operands to primitives.
+> 양쪽 피연산자 모두 원시 타입으로 변환시킨다.
++ If one of the operands is a string, coerce both operands to strings (via ToString()), concatenate them and return the result.
+> 피연산자중 하나가 문자열이라면, 양쪽 피연산자 모두 문자열로(ToString()을 통해) 강제시키고, 둘을 연결하여 결과를 반환한다.
++ Otherwise, coerce both operands to numbers, add them and return the result.
+> 그렇지 않으면, 양쪽 피연산자 모두 숫자로 강제시키고 합산하여 결과를 반환한다.
+
 Coercion to either string or number throws an exception, which means that you can’t (directly) use the addition operator for symbols:
+> 문자열이나 숫자로 강제하는 것은 예외를 발생시킨다. 이것은 심볼에 더하기 연산자를 (직접적으로) 사용할 수 없는 것을 의미한다:
 
 ```js
 '' + Symbol()
@@ -592,10 +640,16 @@ TypeError: can't convert symbol to number
 ```
 
 ## 7.6 JSON and symbols
+> 7.6 JSON과 심볼
+
 ### 7.6.1 Generating JSON via JSON.stringify()
+> 7.6.1 JSON.stringify()로 JSON 생성하기
+
 JSON.stringify() converts JavaScript data to JSON strings. A preprocessing step lets you customize that conversion: a callback, a so-called replacer, can replace any value inside the JavaScript data with another one. That means that it can encode JSON-incompatible values (such as symbols and dates) as JSON-compatible values (such as strings). JSON.parse() lets you reverse this process via a similar mechanism1.
+> JSON.stringify()는 자바스크립트 데이터를 JSON 문자열로 변환한다. 전처리 단계는 변환은 커스터마이징 할 수 있게 한다: 콜백, 소위 대체자(replacer)로 불리는 이것은 자바스크립트 데이터 내부의 어떤 값이라도 다른 것으로 변환할 수 있다. JSON 비호환 값(가령 심볼과 날짜)이 JSON 호환 값(가령 문자열)으로 인코딩될 수 있음을 의미한다. JSON.parse()는 유사한 메커니즘으로 이 과정을 반대로 실행한다.
 
 However, stringify ignores non-string property keys, so this approach works only if symbols are property values. For example, like this:
+> 하지만 stringify는 문자열이 아닌 프로퍼티 키는 무시한다. 따라서 이 접근법은 심볼이 프로퍼티 값일 때만 작동한다. 예를 들면 다음과 같다.
 
 ```js
 function symbolReplacer(key, value) {
@@ -613,10 +667,13 @@ console.log(str);
 ```
 
 A symbol is encoded as a string by putting '@@' before and after the symbol’s key. Note that only symbols that were created via Symbol.for() have such a key.
+> 심볼은 심볼의 키 전 후에 '@@' 를 붙인 문자열로 인코딩된다. Symbol.for() 로 생성된 심볼만이 그러한 키를 갖는것에 유의하라.
 
 ### 7.6.2 Parsing JSON via JSON.parse()
+> JSON.parse()로 JSON 파싱하기
 
 JSON.parse() converts JSON strings to JavaScript data. A postprocessing step lets you customize that conversion: a callback, a so-called reviver, can replace any value inside the initial output with another one. That means that it can decode non-JSON data (such as symbols and dates) stored in JSON data (such as strings)2. This looks as follows.
+> JSON.parse()는 JSON 문자열을 자바스크립트 데이터로 변환한다. 후처리 단계는 변환을 커스터마이징할 수 있게 한다: 콜백, 소위 리바이버(reviver)로 불리는 이것은 초기 출력 안의 어떤 값을 다른 값으로 대체할 수 있다. 이것은 JSON 데이터(가령 문자열)에 저장된 JSON이 아닌 데이터(가령 심볼과 날짜)를 디코딩 할 수 있음을 의미한다. 이것은 다음과 같이 나타난다.
 
 ```js
 const REGEX_SYMBOL_STRING = /^@@(.*)@@$/;
@@ -636,16 +693,22 @@ console.log(parse);
 ```
 
 Strings that start and end with '@@' are converted to symbols by extracting the symbol key in the middle.
+> 시작과 끝이 '@@'인 문자열은 중간에서 심볼키를 추출하여 심볼로 변환된다.  
 
 ## 7.7 Wrapper objects for symbols
+> 심볼을 위한 감싸기 객체 
 
 While all other primitive values have literals, you need to create symbols by function-calling Symbol. Thus, it is relatively easy to accidentally invoke Symbol as a constructor. That produces instances of Symbol and is not very useful. Therefore, an exception is thrown when you try to do that:
+> 
 
 ```js
 > new Symbol()
 TypeError: Symbol is not a constructor
+```
+
 There is still a way to create wrapper objects, instances of Symbol: Object, called as a function, converts all values to objects, including symbols.
 
+```js
 > const sym = Symbol();
 > typeof sym
 'symbol'
@@ -658,7 +721,10 @@ true
 ```
 
 ### 7.7.1 Accessing properties via [ ] and wrapped keys
+> []와 감싸진 키를 이용해서 프로퍼티에 접근하기
+
 The square bracket operator [ ] for accessing properties unwraps string wrapper objects and symbol wrapper objects. Let’s use the following object to examine this phenomenon.
+> 프로퍼티에 접근하기 위환 대괄호 연산자[]는 문자열 감싸미 객체와 심볼 감싸미 객체를 푼다. 이 현상을 살펴보기 위해 다음 객체를 사용해보자.
 
 ```js
 const sym = Symbol('yes');
@@ -669,6 +735,7 @@ const obj = {
 ```
 
 Interaction:
+> 상호작용:
 
 ```js
 > const wrappedSymbol = Object(sym);
@@ -685,17 +752,23 @@ Interaction:
 ```
 
 #### 7.7.1.1 Property access in the spec
+> 7.7.1.1 명세에서 프로퍼티 접근
 
 The operator for getting and setting properties uses the internal operation ToPropertyKey(), which works as follows:
+> 프로퍼티를 얻거나 설정하기 위한 연산자는 내부 연산인 ToPropertyKey()를 사용한다. 이것은 다음과 같이 동작한다:
 
-Convert the operand to a primitive via ToPrimitive() with the preferred type string:
-Primitive values are returned as is.
-Most objects are converted via the method toString() – if it returns a primitive value. Otherwise, valueOf() is used – if it returns a primitive value. Otherwise, a TypeError is thrown.
-Symbol objects are one exception: they are converted to the symbols that they wrap.
-If the result is a symbol, return it.
-Otherwise, coerce the result to string via ToString().
-7.8 Crossing realms with symbols
++ Convert the operand to a primitive via ToPrimitive() with the preferred type string:
+ - Primitive values are returned as is.
+ - Most objects are converted via the method toString() – if it returns a primitive value. Otherwise, valueOf() is used – if it returns a primitive value. Otherwise, a TypeError is thrown.
+ - Symbol objects are one exception: they are converted to the symbols that they wrap.
++ If the result is a symbol, return it.
++ Otherwise, coerce the result to string via ToString().
+
+## 7.8 Crossing realms with symbols
+> 심볼과 함께 영역 건너기
+
 This is an advanced topic.
+> 이것은 고급 주제이다.
 
 A code realm (short: realm) is a context in which pieces of code exist. It includes global variables, loaded modules and more. Even though code exists “inside” exactly one realm, it may have access to code in other realms. For example, each frame in a browser has its own realm. And execution can jump from one frame to another, as the following HTML demonstrates.
 
