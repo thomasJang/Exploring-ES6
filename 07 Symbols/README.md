@@ -199,7 +199,7 @@ console.log(obj[FOO]()); // bar
 ```
 
 ### 7.2.2 Enumerating own property keys
-> 7.2.2 각자의 프로퍼티키를 열거하기 
+> 7.2.2 프로퍼티키 열거하기 
 
 Given that there is now a new kind of value that can become the key of a property, the following terminology is used for ECMAScript 6:
 
@@ -262,7 +262,7 @@ The name Object.keys clashes with the new terminology (only string keys are list
 > 7.3 개념을 나타내기 위해 심볼을 사용하기
 
 In ECMAScript 5, one often represents concepts (think enum constants) via strings. For example:
-> ECMAScript 5 에서는, 문자열로 컨셉을 종종 표현했다. 예를 들면:
+> ECMAScript 5 에서는, 문자열로 컨셉(열거 상수를 생각해보라)을 종종 표현한다. 예를 들면:
 
 ```js
 var COLOR_RED    = 'Red';
