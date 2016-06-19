@@ -210,42 +210,59 @@ String-valued property keys are called property names.
 Symbol-valued property keys are called property symbols.
 Let’s examine the API for enumerating own property keys by first creating an object.
 
+```js
 const obj = {
     [Symbol('my_key')]: 1,
     enum: 2,
     nonEnum: 3
 };
-Object.defineProperty(obj,
-    'nonEnum', { enumerable: false });
+Object.defineProperty(obj, 'nonEnum', { enumerable: false });
+```
+   
 Object.getOwnPropertyNames() ignores symbol-valued property keys:
 
-> Object.getOwnPropertyNames(obj)
+```js
+Object.getOwnPropertyNames(obj)
 ['enum', 'nonEnum']
+```
+
 Object.getOwnPropertySymbols() ignores string-valued property keys:
 
-> Object.getOwnPropertySymbols(obj)
+```js
+Object.getOwnPropertySymbols(obj)
 [Symbol(my_key)]
+```
+
 Reflect.ownKeys() considers all kinds of keys:
 
-> Reflect.ownKeys(obj)
+```js
+Reflect.ownKeys(obj)
 [Symbol(my_key), 'enum', 'nonEnum']
+```
 Object.keys() only considers enumerable property keys that are strings:
 
-> Object.keys(obj)
+```js
+Object.keys(obj)
 ['enum']
+```
+
 The name Object.keys clashes with the new terminology (only string keys are listed). Object.names or Object.getEnumerableOwnPropertyNames would be a better choice now.
 
-7.3 Using symbols to represent concepts
+## 7.3 Using symbols to represent concepts
 In ECMAScript 5, one often represents concepts (think enum constants) via strings. For example:
 
+```js
 var COLOR_RED    = 'Red';
 var COLOR_ORANGE = 'Orange';
 var COLOR_YELLOW = 'Yellow';
 var COLOR_GREEN  = 'Green';
 var COLOR_BLUE   = 'Blue';
 var COLOR_VIOLET = 'Violet';
+```
+
 However, strings are not as unique as we’d like them to be. To see why, let’s look at the following function.
 
+```js
 function getComplement(color) {
     switch (color) {
         case COLOR_RED:
@@ -264,8 +281,10 @@ function getComplement(color) {
             throw new Exception('Unknown color: '+color);
     }
 }
+```
 It is noteworthy that you can use arbitrary expressions as switch cases, you are not limited in any way. For example:
 
+```js
 function isThree(x) {
     switch (x) {
         case 1 + 1 + 1:
@@ -274,6 +293,8 @@ function isThree(x) {
             return false;
     }
 }
+```
+
 We use the flexibility that switch offers us and refer to the colors via our constants (COLOR_RED etc.) instead of hard-coding them ('RED' etc.).
 
 Interestingly, even though we do so, there can still be mix-ups. For example, someone may define a constant for a mood:
@@ -283,26 +304,31 @@ Now the value of BLUE is not unique anymore and MOOD_BLUE can be mistaken for it
 
 Let’s use symbols to fix this example. Now we can also use the ES6 feature const, which lets us declare actual constants (you can’t change what value is bound to a constant, but the value itself may be mutable).
 
+```js
 const COLOR_RED    = Symbol('Red');
 const COLOR_ORANGE = Symbol('Orange');
 const COLOR_YELLOW = Symbol('Yellow');
 const COLOR_GREEN  = Symbol('Green');
 const COLOR_BLUE   = Symbol('Blue');
 const COLOR_VIOLET = Symbol('Violet');
+```
+
 Each value returned by Symbol is unique, which is why no other value can be mistaken for BLUE now. Intriguingly, the code of getComplement() doesn’t change at all if we use symbols instead of strings, which shows how similar they are.
 
-7.4 Symbols as keys of properties
+## 7.4 Symbols as keys of properties
 Being able to create properties whose keys never clash with other keys is useful in two situations:
 
 For non-public properties in inheritance hierarchies.
 To keep meta-level properties from clashing with base-level properties.
-7.4.1 Symbols as keys of non-public properties
+
+### 7.4.1 Symbols as keys of non-public properties
 Whenever there are inheritance hierarchies in JavaScript (e.g. created via classes, mixins or a purely prototypal approach), you have two kinds of properties:
 
 Public properties are seen by clients of the code.
 Private properties are used internally within the pieces (e.g. classes, mixins or objects) that make up the inheritance hierarchy. (Protected properties are shared between several pieces and face the same issues as private properties.)
 For usability’s sake, public properties usually have string keys. But for private properties with string keys, accidental name clashes can become a problem. Therefore, symbols are a good choice. For example, in the following code, symbols are used for the private properties _counter and _action.
 
+```js
 const _counter = Symbol('counter');
 const _action = Symbol('action');
 class Countdown {
@@ -320,13 +346,17 @@ class Countdown {
         }
     }
 }
+```
+
 Note that symbols only protect you from name clashes, not from unauthorized access, because you can find out all own property keys – including symbols – of an object via Reflect.ownKeys(). If you want protection there, as well, you can use one of the approaches listed in Sect. “Private data for classes”.
 
-7.4.2 Symbols as keys of meta-level properties
+### 7.4.2 Symbols as keys of meta-level properties
+
 Symbols having unique identities makes them ideal as keys of public properties that exist on a different level than “normal” property keys, because meta-level keys and normal keys must not clash. One example of meta-level properties are methods that objects can implement to customize how they are treated by a library. Using symbol keys protects the library from mistaking normal methods as customization methods.
 
 Iterability in ECMAScript 6 is one such customization. An object is iterable if it has a method whose key is the symbol (stored in) Symbol.iterator. In the following code, obj is iterable.
 
+```js
 const obj = {
     data: [ 'hello', 'world' ],
     [Symbol.iterator]() {
@@ -345,8 +375,11 @@ const obj = {
         };
     }
 };
+```
+
 The iterability of obj enables you to use the for-of loop and similar JavaScript features:
 
+```js
 for (const x of obj) {
     console.log(x);
 }
@@ -354,7 +387,9 @@ for (const x of obj) {
 // Output:
 // hello
 // world
-7.4.3 Examples of name clashes in JavaScript’s standard library
+```
+
+### 7.4.3 Examples of name clashes in JavaScript’s standard library
 In case you think that name clashes don’t matter, here are three examples of where name clashes caused problems in the evolution of the JavaScript standard library:
 
 When the new method Array.prototype.values() was created, it broke existing code where with was used with an Array and shadowed a variable values in an outer scope (bug report 1, bug report 2). Therefore, a mechanism was introduced to hide properties from with (Symbol.unscopables).
@@ -364,7 +399,7 @@ In contrast, adding iterability to an object via the property key Symbol.iterato
 
 These examples demonstrate what it means to be a web language: backward compatibility is crucial, which is why compromises are occasionally necessary when evolving the language. As a side benefit, evolving old JavaScript code bases is simpler, too, because new ECMAScript versions never (well, hardly ever) break them.
 
-7.5 Converting symbols to other primitive types
+## 7.5 Converting symbols to other primitive types
 The following table shows what happens if you explicitly or implicitly convert symbols to other primitive types:
 
 Conversion to	Explicit conversion	Coercion (implicit conversion)
@@ -372,82 +407,116 @@ boolean	Boolean(sym) → OK	!sym → OK
 number	Number(sym) → TypeError	sym*2 → TypeError
 string	String(sym) → OK	''+sym → TypeError
  	sym.toString() → OK	`${sym}` → TypeError
-7.5.1 Pitfall: coercion to string
+
+### 7.5.1 Pitfall: coercion to string
 Coercion to string being forbidden can easily trip you up:
 
+```js
 const sym = Symbol();
 
 console.log('A symbol: '+sym); // TypeError
 console.log(`A symbol: ${sym}`); // TypeError
+```
+
 To fix these problems, you need an explicit conversion to string:
 
+```js
 console.log('A symbol: '+String(sym)); // OK
 console.log(`A symbol: ${String(sym)}`); // OK
-7.5.2 Making sense of the coercion rules
+```
+
+### 7.5.2 Making sense of the coercion rules
 Coercion (implicit conversion) is often forbidden for symbols. This section explains why.
 
-7.5.2.1 Truthiness checks are allowed
+#### 7.5.2.1 Truthiness checks are allowed
 Coercion to boolean is always allowed, mainly to enable truthiness checks in if statements and other locations:
 
+```js
 if (value) { ··· }
 
 param = param || 0;
-7.5.2.2 Accidentally turning symbols into property keys
+```
+
+#### 7.5.2.2 Accidentally turning symbols into property keys
 Symbols are special property keys, which is why you want to avoid accidentally converting them to strings, which are a different kind of property keys. This could happen if you use the addition operator to compute the name of a property:
 
 myObject['__' + value]
 That’s why a TypeError is thrown if value is a symbol.
 
-7.5.2.3 Accidentally turning symbols into Array indices
+#### 7.5.2.3 Accidentally turning symbols into Array indices
 You also don’t want to accidentally turn symbols into Array indices. The following is code where that could happen if value is a symbol:
 
 myArray[1 + value]
 That’s why the addition operator throws an error in this case.
 
-7.5.3 Explicit and implicit conversion in the spec
-7.5.3.1 Converting to boolean
+### 7.5.3 Explicit and implicit conversion in the spec
+#### 7.5.3.1 Converting to boolean
 To explicitly convert a symbol to boolean, you call Boolean(), which returns true for symbols:
 
-> const sym = Symbol('hello');
-> Boolean(sym)
+```js
+const sym = Symbol('hello');
+Boolean(sym)
 true
+```
+
 Boolean() computes its result via the internal operation ToBoolean(), which returns true for symbols and other truthy values.
 
 Coercion also uses ToBoolean():
 
-> !sym
+```js
+!sym
 false
-7.5.3.2 Converting to number
+```
+
+#### 7.5.3.2 Converting to number
 To explicitly convert a symbol to number, you call Number():
 
-> const sym = Symbol('hello');
-> Number(sym)
+```js
+const sym = Symbol('hello');
+Number(sym)
 TypeError: can't convert symbol to number
+```
+
 Number() computes its result via the internal operation ToNumber(), which throws a TypeError for symbols.
 
 Coercion also uses ToNumber():
 
-> +sym
+```js
++sym
 TypeError: can't convert symbol to number
-7.5.3.3 Converting to string
+```
+
+#### 7.5.3.3 Converting to string
 To explicitly convert a symbol to string, you call String():
 
-> const sym = Symbol('hello');
-> String(sym)
+```js
+const sym = Symbol('hello');
+String(sym)
 'Symbol(hello)'
+```
+
 If the parameter of String() is a symbol then it handles the conversion to string itself and returns the string Symbol() wrapped around the description that was provided when creating the symbol. If no description was given, the empty string is used:
 
-> String(Symbol())
+```js
+String(Symbol())
 'Symbol()'
+```
+
 The toString() method returns the same string as String(), but neither of these two operations calls the other one, they both call the same internal operation SymbolDescriptiveString().
 
-> Symbol('hello').toString()
+```js
+Symbol('hello').toString()
 'Symbol(hello)'
+```
+
 Coercion is handled via the internal operation ToString(), which throws a TypeError for symbols. One method that coerces its parameter to string is Number.parseInt():
 
-> Number.parseInt(Symbol())
+```js
+Number.parseInt(Symbol())
 TypeError: can't convert symbol to string
-7.5.3.4 Not allowed: converting via the binary addition operator (+)
+```
+
+#### 7.5.3.4 Not allowed: converting via the binary addition operator (+)
 The addition operator works as follows:
 
 Convert both operands to primitives.
@@ -455,16 +524,20 @@ If one of the operands is a string, coerce both operands to strings (via ToStrin
 Otherwise, coerce both operands to numbers, add them and return the result.
 Coercion to either string or number throws an exception, which means that you can’t (directly) use the addition operator for symbols:
 
-> '' + Symbol()
+```js
+'' + Symbol()
 TypeError: can't convert symbol to string
-> 1 + Symbol()
+1 + Symbol()
 TypeError: can't convert symbol to number
-7.6 JSON and symbols
-7.6.1 Generating JSON via JSON.stringify()
+```
+
+## 7.6 JSON and symbols
+### 7.6.1 Generating JSON via JSON.stringify()
 JSON.stringify() converts JavaScript data to JSON strings. A preprocessing step lets you customize that conversion: a callback, a so-called replacer, can replace any value inside the JavaScript data with another one. That means that it can encode JSON-incompatible values (such as symbols and dates) as JSON-compatible values (such as strings). JSON.parse() lets you reverse this process via a similar mechanism1.
 
 However, stringify ignores non-string property keys, so this approach works only if symbols are property values. For example, like this:
 
+```js
 function symbolReplacer(key, value) {
     if (typeof value === 'symbol') {
         return '@@' + Symbol.keyFor(value) + '@@';
@@ -477,11 +550,15 @@ const obj = { myKey: MY_SYMBOL };
 const str = JSON.stringify(obj, symbolReplacer);
 console.log(str);
     // {"myKey":"@@http://example.com/my_symbol@@"}
+```
+
 A symbol is encoded as a string by putting '@@' before and after the symbol’s key. Note that only symbols that were created via Symbol.for() have such a key.
 
-7.6.2 Parsing JSON via JSON.parse()
+### 7.6.2 Parsing JSON via JSON.parse()
+
 JSON.parse() converts JSON strings to JavaScript data. A postprocessing step lets you customize that conversion: a callback, a so-called reviver, can replace any value inside the initial output with another one. That means that it can decode non-JSON data (such as symbols and dates) stored in JSON data (such as strings)2. This looks as follows.
 
+```js
 const REGEX_SYMBOL_STRING = /^@@(.*)@@$/;
 function symbolReviver(key, value) {
     if (typeof value === 'string') {
@@ -496,11 +573,15 @@ function symbolReviver(key, value) {
 
 const parsed = JSON.parse(str, symbolReviver);
 console.log(parse);
+```
+
 Strings that start and end with '@@' are converted to symbols by extracting the symbol key in the middle.
 
-7.7 Wrapper objects for symbols
+## 7.7 Wrapper objects for symbols
+
 While all other primitive values have literals, you need to create symbols by function-calling Symbol. Thus, it is relatively easy to accidentally invoke Symbol as a constructor. That produces instances of Symbol and is not very useful. Therefore, an exception is thrown when you try to do that:
 
+```js
 > new Symbol()
 TypeError: Symbol is not a constructor
 There is still a way to create wrapper objects, instances of Symbol: Object, called as a function, converts all values to objects, including symbols.
@@ -514,16 +595,22 @@ There is still a way to create wrapper objects, instances of Symbol: Object, cal
 'object'
 > wrapper instanceof Symbol
 true
-7.7.1 Accessing properties via [ ] and wrapped keys
+```
+
+### 7.7.1 Accessing properties via [ ] and wrapped keys
 The square bracket operator [ ] for accessing properties unwraps string wrapper objects and symbol wrapper objects. Let’s use the following object to examine this phenomenon.
 
+```js
 const sym = Symbol('yes');
 const obj = {
     [sym]: 'a',
     str: 'b',
 };
+```
+
 Interaction:
 
+```js
 > const wrappedSymbol = Object(sym);
 > typeof wrappedSymbol
 'object'
@@ -535,7 +622,10 @@ Interaction:
 'object'
 > obj[wrappedString]
 'b'
-7.7.1.1 Property access in the spec
+```
+
+#### 7.7.1.1 Property access in the spec
+
 The operator for getting and setting properties uses the internal operation ToPropertyKey(), which works as follows:
 
 Convert the operand to a primitive via ToPrimitive() with the preferred type string:
@@ -549,6 +639,7 @@ This is an advanced topic.
 
 A code realm (short: realm) is a context in which pieces of code exist. It includes global variables, loaded modules and more. Even though code exists “inside” exactly one realm, it may have access to code in other realms. For example, each frame in a browser has its own realm. And execution can jump from one frame to another, as the following HTML demonstrates.
 
+```html
 <head>
     <script>
         function test(arr) {
@@ -570,6 +661,8 @@ A code realm (short: realm) is a context in which pieces of code exist. It inclu
     <iframe srcdoc="<script>window.parent.test([])</script>">
 </iframe>
 </body>
+```
+
 The problem is that each realm has its own local copy of Array and, because objects have individual identities, those local copies are considered different, even though they are essentially the same object. Similarly, libraries and user code are loaded once per realm and each realm has a different version of the same object.
 
 In contrast, members of the primitive types boolean, number and string don’t have individual identities and multiple copies of the same value are not a problem: The copies are compared “by value” (by looking at the content, not at the identity) and are considered equal.
@@ -578,6 +671,7 @@ Symbols have individual identities and thus don’t travel across realms as smoo
 
 You ask the registry for a symbol via Symbol.for() and retrieve the string associated with a symbol (its key) via Symbol.keyFor():
 
+```js
 > const sym = Symbol.for('Hello everybody!');
 > Symbol.keyFor(sym)
 'Hello everybody!'
@@ -585,8 +679,10 @@ As expected, cross-realm symbols, such as Symbol.iterator, that are provided by 
 
 > Symbol.keyFor(Symbol.iterator)
 undefined
-7.9 FAQ: symbols
-7.9.1 Can I use symbols to define private properties?
+```
+
+## 7.9 FAQ: symbols
+### 7.9.1 Can I use symbols to define private properties?
 The original plan was for symbols to support private properties (there would have been public and private symbols). But that feature was dropped, because using “get” and “set” (two meta-object protocol operations) for managing private data does not interact well with proxies:
 
 On one hand, you want a proxy to be able to completely isolate its target (for membranes) and to intercept all MOP operations applied to its target.
@@ -595,7 +691,7 @@ These two goals are at odds.
 
 The chapter on classes explains your options for managing their private data.
 
-7.9.2 Are symbols primitives or objects?
+### 7.9.2 Are symbols primitives or objects?
 In some ways, symbols are like primitive values, in other ways, they are like objects:
 
 Symbols are like strings (primitive values) w.r.t. what they are used for: as representations of concepts and as property keys.
@@ -611,12 +707,12 @@ Wrapping an object with a proxy doesn’t change what it can be used for.
 Objects can be introspected: via instanceof, Object.keys(), etc.
 Them not having these abilities makes life easier for the specification and the implementations. There are also reports from the V8 team that when handling property keys, it is simpler to treat primitives differently than objects.
 
-7.9.3 Do we really need symbols? Aren’t strings enough?
+### 7.9.3 Do we really need symbols? Aren’t strings enough?
 In contrast to strings, symbols are unique and prevent name clashes. That is nice to have for tokens such as colors, but it is essential for supporting meta-level methods such as the one whose key is Symbol.iterator. Python uses the special name __iter__ to avoid clashes. You can reserve double underscore names for programming language mechanisms, but what is a library to do? With symbols, we have an extensibility mechanism that works for everyone. As you can see later, in the section on public symbols, JavaScript itself already makes ample use of this mechanism.
 
 There is one hypothetical alternative to symbols when it comes to clash-free property keys: use a naming convention. For example, strings with URLs (e.g. 'http://example.com/iterator'). But that would introduce a second category of property keys (versus “normal” property names that are usually valid identifiers and don’t contain colons, slashes, dots, etc.), which is basically what symbols are, anyway. Thus it is more elegant to explicitly turn those keys into a different kind of value.
 
-7.9.4 Are JavaScript’s symbols like Ruby’s symbols?
+### 7.9.4 Are JavaScript’s symbols like Ruby’s symbols?
 No, they are not.
 
 Ruby’s symbols are basically literals for creating values. Mentioning the same symbol twice produces the same value twice:
@@ -625,28 +721,30 @@ Ruby’s symbols are basically literals for creating values. Mentioning the same
 The JavaScript function Symbol() is a factory for symbols – each value it returns is unique:
 
 Symbol('foo') !== Symbol('foo')
-7.10 The spelling of well-known symbols: why Symbol.iterator and not Symbol.ITERATOR (etc.)?
+
+## 7.10 The spelling of well-known symbols: why Symbol.iterator and not Symbol.ITERATOR (etc.)?
 Well-known symbols are stored in properties whose names start with lowercase characters and are camel-cased. In a way, these properties are constants and it is customary for constants to have all-caps names (Math.PI etc.). But the reasoning for their spelling is different: Well-known symbols are used instead of normal property keys, which is why their “names” follow the rules for property keys, not the rules for constants.
 
-7.11 The symbol API
+## 7.11 The symbol API
 This section gives an overview of the ECMAScript 6 API for symbols.
 
-7.11.1 The function Symbol
+### 7.11.1 The function Symbol
 Symbol(description?) : symbol
 Creates a new symbol. The optional parameter description allows you to give the symbol a description. The only way to access the description is to convert the symbol to a string (via toString() or String()). The result of such a conversion is 'Symbol('+description+')'.
 Symbol is can’t be used as a constructor – an exception is thrown if you invoke it via new.
 
-7.11.2 Methods of symbols
+### 7.11.2 Methods of symbols
 The only useful method that symbols have is toString() (as provided via Symbol.prototype.toString()).
 
-7.11.3 Converting symbols to other values
+### 7.11.3 Converting symbols to other values
 Conversion to	Explicit conversion	Coercion (implicit conversion)
 boolean	Boolean(sym) → OK	!sym → OK
 number	Number(sym) → TypeError	sym*2 → TypeError
 string	String(sym) → OK	''+sym → TypeError
  	sym.toString() → OK	`${sym}` → TypeError
 object	Object(sym) → OK	Object.keys(sym) → OK
-7.11.4 Well-known symbols
+
+### 7.11.4 Well-known symbols
 The global object Symbol has several properties that serve as constants for so-called well-known symbols. These symbols let you configure how ES6 treats an object, by using them as property keys. This is a list of all well-known symbols:
 
 Customizing basic language operations (explained in Chap. “New OOP features besides classes”):
@@ -673,7 +771,8 @@ Symbol.species (method)
 Configures how built-in methods (such as Array.prototype.map()) create objects that are similar to this. The details are explained in the chapter on classes.
 Symbol.isConcatSpreadable (boolean)
 Configures whether Array.prototype.concat() adds the indexed elements of an object to its result (“spreading”) or the object as a single element (details are explained in the chapter on Arrays).
-7.11.5 Global symbol registry
+
+### 7.11.5 Global symbol registry
 If you want a symbol to be the same in all realms, you need to create it via the global symbol registry. The following method lets you do that:
 
 Symbol.for(str) : symbol
@@ -682,5 +781,6 @@ Another method lets you make the reverse look up and found out under which key a
 
 Symbol.keyFor(sym) : string
 returns the string that is associated with the symbol sym in the registry. If sym isn’t in the registry, this method returns undefined.
+
 [Speaking JS] Details are explained in the chapter on JSON.↩
 [Speaking JS] The details are explained in the chapter on JSON.↩
