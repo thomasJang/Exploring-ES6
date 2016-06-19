@@ -178,33 +178,56 @@ const [x, y] = ['a', 'b']; // x = 'a'; y = 'b'
   - `The parts of an Array pattern are elements, the elements are again patterns (recursively).`
     배열 패턴의 부분은 원소이다.  원소는 다시 패턴이다. ( 재귀 )
 
-말인즉슨, 얼마든지 깊게 패턴을 응용할 수 있다 :
+`That means that you can nest patterns, arbitrarily deeply:`
+
+패턴을 얼마든지 깊게 포함할 수 있다.
+
 ```javascript
 const obj = { a: [{ foo: 123, bar: 'abc' }, {}], b: true };
 const { a: [{foo: f}] } = obj; // f = 123
 ```
 
-##10.3.1 필요한 값 골라내기 
-객체를 해체하려 한다면 당신이 관심있는 그 프로퍼티만 언급하면 된다. :
+## 10.3.1 `Pick what you need` 필요한 것을 가려내기
+
+`If you destructure an object, you mention only those properties that you are interested in:`
+
+객체를 해체한다면 관심있는 프로퍼티만 기술한다.
+
 ```javascript
 const { x: x } = { x: 7, y: 3 }; // x = 7
 ```
-배열을 해체한다면 배열의 앞에서 부터 추출할 수 있다.
+
+`If you destructure an Array, you can choose to only extract a prefix:`
+
+배열을 해체한다면 추출할 프리픽스만 고를 수 있다.
+
 ```javascript
 const [x,y] = ['a', 'b', 'c']; // x='a'; y='b';
 ```
-##10.4 패턴이 값의 내부에 접근하는 방법?
-할당패턴 = 값, 이러한 패턴이 어떻게 값에 접근 할 수 있을까?
 
+## 10.4 `How do patterns access the innards of values?` 패턴은 어떻게 값의 내부에 접근하는가?
 
-##10.4.1 객체 패턴은 값을 객체로 강제한다.
-객체 패턴은 프로퍼티에 접근하기 전에 오브젝트로 소스 해체를 강제한다. 그 말인 즉슨 이것은 primitive 값에도 동작한다.
+`In an assignment ( pattern = someValue ), how does the pattern access what’s inside someValue?`
+
+할당패턴 ( `pattern = someValue` ) 에서 패턴은 어떻게 `someValue` 내부에 접근하는가?
+
+## 10.4.1 `Object patterns coerce values to objects` 객체 패턴은 값을 객체로 강제한다
+
+`The object pattern coerces destructuring sources to objects before accessing properties. That means that it works with primitive values:`
+
+객체 패턴은 프로퍼티에 접근하기 전에 소스를 객체로 해체하는 것을 강제한다. 원시값과 작동한다.
+
 ```javascript
 const {length : len} = 'abc'; // len = 3
 const {toString: s} = 123; // s = Number.prototype.toString
 ```
-##10.4.1.1 객체 해체의 실패 
-Object() 를 통한 객체변환은 수행되지 않지만, 내부 연산자인  ToObject() 는 가능하다. Object()는 절대 실패하지 않는다.:
+
+## 10.4.1.1 `Failing to object-destructure a value` 값을 객체 해체하는 것의 실패
+
+`The coercion to object is not performed via Object(), but via the internal operation ToObject(). Object() never fails:`
+
+객체의 강제는 `Object()`가 아닌 내부 동작인 `ToObject()`를 통해 수행된다. `Object()`는 절대 실패하지 않는다.
+
 ```javascript
 > typeof Object('abc')
 'object'
@@ -216,42 +239,68 @@ true
 > Object(null)
 {}
 ```
-ToObject undefined나 null에 대응 할 경우에는 타입에러를 낸다. 그러므로 해체가 프로퍼티에 접근하기 이전이라고 하더라도 다음의 해체는 실패한다. :
+`ToObject() throws a TypeError if it encounters undefined or null. Therefore, the following destructurings fail, even before destructuring accesses any properties:`
+
+이 정의는 null가 발생하면 ToObject ()는 형식 오류가 발생합니다. 따라서, 다음과 같은 구조 조정은 destructuring 어떤 속성에 접근하기도 전에 실패 :
+
 ```javascript
 const { prop: x } = undefined; // TypeError
 const { prop: y } = null; // TypeError
 ```
-위 결과로써, 값이 객체에 강제되는지 여부를 알기위해 빈 객체 패턴{}을 사용 할 수 있음을 알 수 있다. 우리가 봤듯이 오직 undeifned와 null만 그렇지 않다.:
+
+`As a consequence, you can use the empty object pattern {} to check whether a value is coercible to an object. As we have seen, only undefined and null aren’t:`
+
+결과적으로, 당신은 값이 객체에 강제 할 수 있는지 여부를 점검하려면 빈 객체 패턴을 {} 사용할 수 있습니다. 우리가 보았 듯이, 오직 정의와 null가되지 않습니다 :
+
 ```javascript
-({} = [true, false]); // OK, 배열은 객체에 coercible 하다.
-({} = 'abc'); // OK, 문자열은 객체에 coercible 하다.
+({} = [true, false]); // `OK, Arrays are coercible to objects` OK, 배열은 객체에 강제 할 수 있습니다
+({} = 'abc'); // `OK, strings are coercible to objects` OK, 문자열은 객체에 강제 할 수 있습니다
 
 ({} = undefined); // TypeError
 ({} = null); // TypeError
 ```
-자바스크립트에서 문(statements)은 중괄호로 시작되면 안되기 때문에 표현식을 둘러싸고 있는 소괄호가 필요하다.
 
-##10.4.2 이터러블과 함께 동작하는 배열 패턴
-배열해체는 소스의 요소(Elements)를 얻기위해 이터레이터를 사용한다. 그러므로 어떤 값이 이터러블이라면 배열해체가 가능하다.
-이터러블 값의 예제를 보자. 
+`The parentheses around the expressions are necessary because statements must not begin with curly braces in JavaScript (details are explained later).`
 
-문자열은 이터러블이다 : 
+문은 자바 스크립트에서 중괄호 (자세한 내용은 나중에 설명)로 시작하지해야하기 때문에 표현의 주위에 괄호가 필요합니다.
+
+## 10.4.2 `Array patterns work with iterables` 배열 패턴을 반복 가능 객체 작동
+
+`Array destructuring uses an iterator to get to the elements of a source. Therefore, you can Array-destructure any value that is iterable. Let’s look at examples of iterable values.`
+
+배열 destructuring는 소스의 요소에 도착하는 반복자를 사용합니다. 따라서 반복 가능한 임의의 값을 배열-destructure 수 있습니다. 의는 반복 가능한 값의 예를 살펴 보자.
+
+`Strings are iterable:`
+
+문자열은 이터러블이다.
+
 ```javascript
 const [x,...y] = 'abc'; // x='a'; y=['b', 'c']
 ```
 
-이터레이터는 code points (“Unicode characters”, 21 bits)를 반환하는 것이지 code units(“JavaScript characters”, 16 bits)를 반환하는게 아님을 유념하라. (자세한 내용은 “Chapter 24. Unicode and JavaScript” in “Speaking JavaScript”. 를 참고하라. 예를 들어 :
+`Don’t forget that the iterator over strings returns code points (“Unicode characters”, 21 bits), not code units (“JavaScript characters”, 16 bits). (For more information on Unicode, consult the chapter “Chapter 24. Unicode and JavaScript” in “Speaking JavaScript”.) For example:`
+
+문자열을 통해 반복자가 코드 포인트 ( "유니 코드 문자", 21 비트)가 아닌 코드 단위 ( "자바 스크립트 문자", 16 비트)를 반환하는 것을 잊지 마십시오. 예를 들어 (. 유니 코드에 대한 자세한 내용은 "자바 스크립트를 말하기"의 장 "제 24 장 유니 코드와 자바 스크립트"를 참조)
+
 ```javascript
 const [x,y,z] = 'a\uD83D\uDCA9c'; // x='a'; y='\uD83D\uDCA9'; z='c'
 ```
 
-인덱스로 Set 의 요소에 접근 할 수는 없지만, 이터레이터를 이용하면 접근이 가능하다. 그러므로 Set도 배열해체가 가능하다. :
+`You can’t access the elements of a Set via indices, but you can do so via an iterator. Therefore, Array destructuring works for Sets:`
+
+당신은 인덱스를 통해 설정의 요소에 액세스 할 수 있지만 반복자를 통해 수행 할 수 있습니다. 따라서, 배열 destructuring는 설정 작동 :
+
 ```javascript
 const [x,y] = new Set(['a', 'b']); // x='a'; y='b’;
 ```
-Set 이터레이터는 요소가 삽입된 그 위치에서 순서대로 요소(elements)를 리턴한다. 이것이 이전의 해체 결과가 항상 같은 이유이다.
 
-무한수열. 해체는 무한 수열에도 동작한다. 제너레이터 allNaturalNumbers() 는 0,1,2.... 을 yield하는 이터레이터를 반환한다.
+`The Set iterator always returns elements in the order in which they were inserted, which is why the result of the previous destructuring is always the same.`
+
+설정 반복자는 항상 이전 destructuring의 결과가 항상 동일 왜 그들이 삽입 된 순서에 요소를 반환합니다.
+
+`Infinite sequences. Destructuring also works for iterators over infinite sequences. The generator function allNaturalNumbers() returns an iterator that yields 0, 1, 2, etc.`
+
+무한 시퀀스. Destructuring는 무한 시퀀스를 통해 반복자 작동합니다. 발전기 기능 allNaturalNumbers ()는 0, 1, 2 등을 산출 반복자를 반환
 
 ```javascript
 function* allNaturalNumbers() {
@@ -261,71 +310,115 @@ function* allNaturalNumbers() {
 }
 ```
 
-무한 수열에서 처음 3개의 요소를 추출하는 해체 코드이다.
+`The following destructuring extracts the first three elements of that infinite sequence.`
+
+다음 destructuring는 무한 시퀀스의 처음 세 요소를 추출한다.
+
 ```javascript
 const [x, y, z] = allNaturalNumbers(); // x=0; y=1; z=2
 ```
 
-##10.4.2.1 값 배열해체의 실패 Failing to Array-destructure a value
-객체를 반환하는 Symbol.iterator가 key인 메소드를 가지고 있다면 이 값은 이터러블이다. 배열해체는 해체하려는 값이 이터러블이 아니면 타입에러를 낸다. :
+## 10.4.2.1 `Failing to Array-destructure a value` 배열-destructure 값으로 실패
+
+`A value is iterable if it has a method whose key is Symbol.iterator that returns an object. Array-destructuring throws a TypeError if the value to be destructured isn’t iterable:`
+
+그것은 누구의 키 객체를 반환 Symbol.iterator 수있는 방법이있는 경우 값은 반복 가능한 것입니다. 탈구되는 값이 반복 가능한 아닌 경우 배열 destructuring는 형식 오류가 발생합니다 :
+
 ```javascript
 let x;
-[x] = [true, false]; // OK, Arrays are iterable
-[x] = 'abc'; // OK, strings are iterable
-[x] = { * [Symbol.iterator]() { yield 1 } }; // OK, iterable
+[x] = [true, false]; // `OK, Arrays are iterable` 정상, 배열은 이터러블이다
+[x] = 'abc'; // `OK, strings are iterable` 정상, 문자열은 이터러블이다.
+[x] = { * [Symbol.iterator]() { yield 1 } }; // `OK, iterable` 정상, 이터러블
 
-[x] = {}; // TypeError, empty objecdts are not iterable
-[x] = undefined; // TypeError, not iterable
-[x] = null; // TypeError, not iterable
+[x] = {}; // `TypeError, empty objecdts are not iterable` TypeError, 빈 객체는 이터러블이 아니다
+[x] = undefined; // `TypeError, not iterable` TypeError, 이터러블이 아니다
+[x] = null; // `TypeError, not iterable` TypeError, 이터러블이 아니다
 ```
-이 타입에러는 이터러블의 각 요소에 접근하기 이전에도 발생한다. 이 말인 즉슨, 값이 이터러블인지 아닌지 체크하기 위해 빈배열 패턴을 사용 할 수 있다. 
+
+`The TypeError is thrown even before accessing elements of the iterable, which means that you can use the empty Array pattern [] to check whether a value is iterable:`
+
+형식 오류 심지어 당신이 값이 반복 가능 여부를 확인하기 위해 빈 배열 패턴 []을 사용할 수 있다는 것을 의미 반복자의 요소에 액세스하기 전에 발생합니다 :
+
 ```javascript
-[] = {}; // TypeError, empty objects are not iterable
-[] = undefined; // TypeError, not iterable
-[] = null; // TypeError, not iterable
+[] = {}; // `TypeError, empty objects are not iterable` TypeError, 빈 객체는 이터러블이 아니다
+[] = undefined; // `TypeError, not iterable` TypeError, 이터러블이 아니다
+[] = null; // `TypeError, not iterable` TypeError, 이터러블이 아니다
 ```
 
-##10.5 매칭되는 부분이 없다면?
-자바스크립트가 존재하지 않는 프로퍼티나 배열 요소를 다루는 방법과 유사하게, 소스에서 대상이 존재하지 않으면 해체는 조용히 실패한다.: 
-이러한 부분의 내부는 undefined와 매칭된다. 내부가 변수라면 해당 변수는 undefined가 세팅된것이다.:
+## 10.5 `If a part has no match` 일부 일치가없는 경우
+
+`Similarly to how JavaScript handles non-existent properties and Array elements, destructuring fails silently if the target mentions a part that doesn’t exist in the source: the interior of the part is matched against undefined. If the interior is a variable that means that the variable is set to undefined:`
+
+대상이 소스에 존재하지 않는 부분을 언급하는 경우 마찬가지로 자바 스크립트가 존재하지 않는 특성 및 배열 요소를 처리하는 방법에, destructuring는 자동으로 실패 : 부품의 내부는 정의와 일치합니다. 내부 변수가 정의로 설정되는 것을 의미 가변 인 경우 :
+
 ```javascript
 const [x] = []; // x = undefined
 const {prop:y} = {}; // y = undefined
 ```
 
-객체 패턴과 배열 패턴이 undefined로 매치되면 타입에러를 내는것을 기억하라 
+`Remember that object patterns and Array patterns throw a TypeError if they are matched against undefined.`
 
-##10.5.1 기본값
+객체 패턴을 기억하고 그들이 정의에 대해 일치하는 경우 배열 패턴은 형식 오류를 throw합니다.
 
-기본값은 패턴의 특징 중에 하나이다.: 객체패턴 또는 배열 패턴에서 매칭되는 부분이 없다면 이것은 다음으로 매칭된다:
+## 10.5.1 `Default values` 기본값
 
-기본값.(명시되었다면)
-undefined(그렇지 않다면)
-따라서 기본값을 제공하는 것은 부가적이다.
+`Default values are a feature of patterns: If a part (an object property or an Array element) has no match in the source, it is matched against:`
 
-예제를 살펴보자. 다음 해체 구문에서, 인덱스가 0인 요소는 우변과 매치되지 않는다. 그러므로, 해체는 x에 3을 매칭하는 것으로 계속 한다.
+기본값은 패턴의 특징이다 : 부분 (객체 속성 또는 배열 요소)은 소스에서 일치가 없다면, 그것은 대해 일치한다 :
+
+- `its default value (if specified)`  
+  기본값 ( 지정된 경우 )
+- `undefined (otherwise)`  
+  undefined ( 그 외 )
+
+`That is, providing a default value is optional.`
+
+즉 디폴트 값은 선택 제공한다.
+
+`Let’s look at an example. In the following destructuring, the element at index 0 has no match on the right-hand side. Therefore, destructuring continues by matching x against 3, which leads to x being set to 3.`
+
+예제를 살펴 보자. 다음 destructuring에서 인덱스 0의 요소는 오른쪽에 일치가 없습니다. 따라서, destructuring는 3으로 설정되고 x를 리드 3에 대한 X를 일치시켜 계속됩니다.
+
 ```javascript
 const [x=3, y] = []; // x = 3; y = undefined
 ```
-객체 패턴의 기본값 사용도 가능하다:
+
+`You can also use default values in object patterns:`
+
+또한 객체 패턴에 기본 값을 사용할 수 있습니다 :
+
 ```javascript
 const {foo: x=3, bar: y} = {}; // x = 3; y = undefined
 ```
-##10.5.1.1 undefined 는 기본값을 발생시킨다.
-만약 매칭되는 값이 없거나 undefined 인 경우에는 기본값이 사용된다.:
+
+## 10.5.1.1 `undefined triggers default values` 정의되지 않은 트리거 기본값
+
+`Default values are also used if a part does have a match and that match is undefined:`
+
+일부가 일치하는 항목을 가지고 그 경기가 정의되지 않은 경우 기본 값도 사용된다 :
+
 ```javascript
 const [x=1] = [undefined]; // x = 1
 const {prop: y=2} = {prop: undefined}; // y = 2
 ```
-이런 동작을 위한 합리적인 이유는, 파라미터 기본값 섹션인다음 장에서 설명한다. 
 
-##10.5.1.2 기본값은 필요한 경우에 대입된다.
-필요한 경우 기본값은 스스로 연산된다. 다시 말하면 이 해체 구문은 :
+`The rationale for this behavior is explained in the next chapter, in the section on parameter default values.`
+
+이 문제에 대한 이론적 근거는 매개 변수의 기본값 섹션에서 다음 장에 설명되어 있습니다.
+
+## 10.5.1.2 `Default values are computed on demand` 기본값은 필요에 따라 계산된다
+
+`The default values themselves are only computed when they are needed. In other words, this destructuring:`
+
+기본값은 필요할 때 자신 만 계산 값. 즉,이 destructuring :
 
 ```javascript
 const {prop: y=someFunc()} = someValue;
 ```
-위 코드는 아래와 같다.
+
+`is equivalent to:`
+
+동일합니다 :
 
 ```javascript
 let y;
@@ -336,7 +429,10 @@ if (someValue.prop === undefined) {
 }
 ```
 
-console.log()를 사용해서 이를 관찰 할 수 있다.
+`You can observe that if you use console.log():`
+
+`console.log()`를 사용하여 관찰할 수 있다.
+
 ```javascript
 > function log(x) { console.log(x); return 'YES' }
 
@@ -350,60 +446,99 @@ hello
 123
 ```
 
-두 번째 해체 구문에서 초기값은 triggered 되지 않고 log() 또한 호출되지 않는다.
+`In the second destructuring, the default value is not triggered and log() is not called.`
 
+두 번째 destructuring에서 기본 값이 트리거되지 않고 로그는 ()가 호출되지 않습니다.
 
-##10.5.1.3 기본 값은 패턴안의 다른 변수를 참조 할 수 있다.
-기본값은 같은 패턴안의 다른 변수를 포함하여 어떤 변수도 참조가능하다 : 
+## 10.5.1.3 `Default values can refer to other variables in the pattern` 기본 값은 패턴에서 다른 변수를 참조 할 수 있습니다
+
+`A default value can refer to any variable, including another variable in the same pattern:`
+
+디폴트 값은 동일한 패턴의 다른 변수를 포함하여 모든 변수를 참조 할 수 있습니다
+
 ```javascript
 const [x=3, y=x] = [];     // x=3; y=3
 const [x=3, y=x] = [7];    // x=7; y=7
 const [x=3, y=x] = [7, 2]; // x=7; y=2
 ```
 
-다른 방법들 : 변수 x와 y 는 좌변에서 우변으로 선언되고 만약 선언되기 이전에 접근 한다면 ReferenceError 를 낸다.:
+`However, order matters: the variables x and y are declared from left to right and produce a ReferenceError if they are accessed before their declaration:`
+
+변수 X와 Y가 왼쪽에서 오른쪽으로 선언되고 그들의 선언하기 전에 액세스되는 경우 ReferenceError가 생산 : 그러나, 물질을 순서 :
+
 ```javascript
 const [x=y, y=3] = []; // ReferenceError
 ```
 
-##10.5.1.4 패턴의 기본값
-우리는 변수의 기본값만을 봐왔지만, 기본값은 패턴에도 연관지을 수 있다 :
+## 10.5.1.4 `Default values for patterns` 패턴의 기본값
+
+`So far we have only seen default values for variables, but you can also associate them with patterns:`
+
+지금까지 우리는 변수에 대한 기본 값을 볼 수있다, 그러나 당신은 또한 패턴을 연결할 수 있습니다 :
+
 ```javascript
 const [{ prop: x } = {}] = [];
 ```
-이게 무엇을 의미하는가? 기본값 법칙을 다시 보자
 
-소스에서 매칭되는 부분이 없다면 해체는 기본값으로 계속한다.[…]
+`What does this mean? Recall the rule for default values:`
 
-0번 인덱스의 요소는 매칭되지 않고 이것이 해체가 지속되는 이유이다.:
+이것은 무엇을 의미 하는가? 디폴트 값에 대한 규칙을 불러 :
+
+> `If the part has no match in the source, destructuring continues with the default value […].`  
+> 일부 소스의 일치가없는 경우, destructuring 기본값 [...] 계속합니다.
+
+`The element at index 0 has no match, which is why destructuring continues with:`
+
+인덱스 0 요소는 destructuring이 계속 왜 일치를,이 없습니다 :
+
 ```javascript
 const { prop: x } = {}; // x = undefined
 ```
- 패턴을 { prop: x} 인 변수 패턴으로 바꾼다면 왜 이게 동작하는지 쉽게 알수있다.
+
+`You can more easily see why things work this way if you replace the pattern { prop: x } with the variable pattern:`
+
+당신이 패턴을 교체하면 일이 이런 식으로 일을 왜 더 쉽게 볼 수 있습니다 {프로 : X} 변수 패턴 :
  
 ```javascript
 const [pattern = {}] = [];
 ```
-더 복잡한 기본값. 패턴을 위한 기본값을 더 살표보자. 다음 예제에서 우리는 기본값을 이용해 x에 값을 할당한다. { prop: 123 }:
+
+`More complex default values. Let’s further explore default values for patterns. In the following example, we assign a value to x via the default value { prop: 123 }:`
+
+더 복잡한 기본값. 의 추가 패턴에 대한 기본 값을 알아 보자. 다음 예에서, 우리는 기본값을 통해 X에 {: (123) 소품} 값을 할당 :
+
 ```javascript
 const [{ prop: x } = { prop: 123 }] = [];
 ```
-딘덱스 0번의 배열요소는 우변에 매칭되지 않기 때문에 해체는 계속 되고 x는 123으로 세팅된다.
+
+`Because the Array element at index 0 has no match on the right-hand side, destructuring continues as follows and x is set to 123.`
+
+인덱스 0의 배열 요소는 오른쪽에 일치하는이 없기 때문에 다음이고, x는 123로 설정되어, destructuring가 계속됩니다.
 
 ```javascript
 const { prop: x } = { prop: 123 };  // x = 123
 ```
-그러나 우변이 0번 인덱스의 요소를 가지고 있다면 x는 이 과정에서 값이 할당되지 않는다. 왜냐하면 기본값이 트리거 되지 않기 때문이다.
+
+`However, x is not assigned a value in this manner if the right-hand side has an element at index 0, because then the default value isn’t triggered.`
+
+다음 기본값이 발생되지 않기 때문에 오른편은 인덱스 0의 요소를 갖는 경우, X는 이와 같이 값이 할당되지 않는다.
 
 ```javascript
 const [{ prop: x } = { prop: 123 }] = [{}];
 ```
-여기서 해체는 다음과 같이 계속 된다.:
+
+`In this case, destructuring continues with:`
+
+이 경우, destructuring은 계속 :
+
 ```javascript
 const { prop: x } = {}; // x = undefined
 ```
 
-할당되길 원하면 객체나 속성이 없고 x가 123이 되길 원하면 x의 기본값을 명시해야 한다.:
+`Thus, if you want x to be 123 if either the object or the property is missing, you need to specify a default value for x itself:`
+
+당신이 원하는 경우 개체 또는 속성이없는 하나가, 당신은 그 자체 x의 디폴트 값을 지정해야하는 경우 따라서 x는 123이어야합니다 :
+
 ```javascript
 const [{ prop: x=123 } = {}] = [{}];
 ```
