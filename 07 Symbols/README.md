@@ -8,14 +8,14 @@
 
 Symbols are a new primitive type in ECMAScript 6.
 
-> 심볼은 ECMAScript 6에서 새로운 기본 타입이다. 
+> 심볼은 ECMAScript 6의 새로운 원시 타입이다. 
 
 ### 7.1.1 Use case 1: unique property keys
 > 7.1.1 이용 사례 1: 고유 프로퍼티 키
 
 Symbols are mainly used as unique property keys – a symbol never clashes with any other property key (symbol or string). For example, you can make an object iterable (usable via the for-of loop and other language mechanisms), by using the symbol stored in Symbol.iterator as the key of a method (more information on iterables is given in the chapter on iteration):
 
-> 심볼은 고유 프로퍼티 키로 주로 사용된다 - 심볼은 다른 어떤 프로퍼티키와 절대 충돌하지 않는다(심볼 또는 문자열). 예를 들어 객체 이터러블을 만들수 있다(for-of 루프와 다른 언어 메카니즘을 통해 사용가능한) 메소드의 키로써 Symbol.iterator 에 저장된 심볼을 사용해서 (이터러블에 관한 더 많은 정보는 이터레이션 장에서 
+> 심볼은 고유 프로퍼티 키로 주로 사용된다 - 심볼은 다른 어떤 프로퍼티키와 절대 충돌하지 않는다(심볼 또는 문자열). 객체 이터러블(for-of 루프와 다른 언어 메카니즘을 통해 이용 가능한)을 만드는 것을 예로 들 수 있는데, 객체 이터러블은 메소드의 키인 Symbol.iterator 안에 저장된 심볼을 사용해서 만들어진다. (이터러블에 관한 더 많은 정보는 이터레이션 장에 기재되어 있다) : 
 
 ```js
 const iterableObject = {
@@ -42,8 +42,7 @@ for (const x of iterableObject) {
 ```
 
 In line A, a symbol is used as the key of the method. This unique marker makes the object iterable and enables us to use the for-of loop.
-
-> A 라인에서, 심볼은 메소드의 키로써 사용된다. 이 고유한 마커는 객체 이터러블을 만들고 for-of 루프를 사용가능하게 한다.
+> A 라인에서, 심볼은 메소드의 키로써 사용된다. 이 고유한 마커는 객체를 이터러블하게 만들고 for-of 루프를 사용 가능하게 만든다.
 
 ### 7.1.2 Use case 2: constants representing concepts
 
@@ -51,7 +50,7 @@ In line A, a symbol is used as the key of the method. This unique marker makes t
 
 In ECMAScript 5, you may have used strings to represent concepts such as colors. In ES6, you can use symbols and be sure that they are always unique:
 
-> ECMAScript 5에서, 색깔같은 개념을 나타내기 위해서 문자열을 사용해왔을 것이다. ES6 에서는, 심볼을 사용할 수있고 이 심볼은 언제나 고유 하다는 것을 확신 할 수 있다.
+> ECMAScript 5에서는 색깔같은 개념을 나타내기 위해서 문자열을 사용해왔을 것이다. ES6 에서는 심볼을 사용할 수있고 이 심볼은 항상 고유 하다는 것을 확신 할 수 있다.
 
 ```js
 const COLOR_RED    = Symbol('Red');
@@ -87,7 +86,7 @@ function getComplement(color) {
 Coercing (implicitly converting) symbols to strings throws exceptions:
 > 심볼을 문자열로 강제 변환하는 것(암묵적 변환)은 예외를 발생시킨다.
 
-```
+```js
 const sym = Symbol('desc');
 
 const str1 = '' + sym; // TypeError
@@ -106,10 +105,10 @@ Forbidding coercion prevents some errors, but also makes working with symbols mo
 > 강제 변환을 방어하는 것은 몇몇 오류를 예방하지만, 심볼을 사용한 작업을 더욱 복잡하게 만들기도 한다.
 
 ### 7.1.4 Which operations related to property keys are aware of symbols?
-> 7.1.4 프로퍼티키에 연관된 어떤 연산자가 심볼을 아는가?
+> 7.1.4 프로퍼티키에 관련된 어떤 연산자가 심볼을 인지하는가?
 
 The following operations are aware of symbols as property keys:
-> 다음 연산자들이 프로퍼티 키로써 심볼을 알고 있다.
+> 다음 연산자들은 프로퍼티 키로써의 심볼을 인지한다.
 
 ```js
 Reflect.ownKeys()
@@ -118,7 +117,7 @@ Object.assign()
 ```
 
 The following operations ignore symbols as property keys:
-> 다음 연산자들은 프로퍼티키로써 심볼을 무시한다.
+> 다음 연산자들은 프로퍼티키로써의 심볼을 무시한다.
 
 ```js
 Object.keys()
@@ -130,14 +129,13 @@ for-in loop
 > 7.2 새로운 원시 타입
 
 ECMAScript 6 introduces a new primitive type: symbols. They are tokens that serve as unique IDs. You create symbols via the factory function Symbol() (which is loosely similar to String returning strings if called as a function):
-> ECMAScript 6는 새로운 원시 타입을 소개한다 : 심볼. 심볼은 고유한 ID로써 존재하는 토큰이다. 팩토리 함수인 Symbol()로 심볼을 생성한다(함수로 호출되면 문자열을 반환하는 String과 느슨하게 유사하다)
+> ECMAScript 6는 새로운 원시 타입을 소개한다 : 심볼. 심볼은 고유한 아이디로써 존재하는 토큰이다. 팩토리 함수인 Symbol()로 심볼을 생성한다(함수로 호출되면 문자열을 반환하는 String과 느슨하게 유사하다)
 
 ```js
 const symbol1 = Symbol();
 ```
 
 Symbol() has an optional string-valued parameter that lets you give the newly created Symbol a description. That description is used when the symbol is converted to a string (via toString() or String()):
-
 > Symbol()은 문자열로 평가되는 파라미터를 갖는다. 이 파라미터는 선택적이며 새롭게 생성된 심볼에게 설명을 부여한다. 이 설명은 심볼이 문자열로 변환 될 때 사용된다(toString() 또는 String()을 통해)
 
 ```js
@@ -163,7 +161,7 @@ typeof Symbol()
 ```
 
 ### 7.2.1 Symbols as property keys
-> 7.2.1 프로퍼티키로써 심볼
+> 7.2.1 프로퍼티키로써의 심볼
 
 Symbols can be used as property keys:
 > 심볼은 프로퍼티키로 사용될 수 있다.
@@ -177,7 +175,6 @@ console.log(obj[MY_KEY]); // 123
 ```
 
 Classes and object literals have a feature called computed property keys: You can specify the key of a property via an expression, by putting it in square brackets. In the following object literal, we use a computed property key to make the value of MY_KEY the key of a property.
-
 > 클래스와 객체 리터럴은 계산된 프로퍼티 키 *computed property keys*로 불리는 기능을 갖는다 : 표현식을 통해 프로퍼티의 키를 대괄호 안에 넣음으로써 이를 특정할 수 있다. 다음 객체리터럴에서, MY_KEY 의 값을 프로퍼티의 키로 만들기 위해 계산된 프로퍼티 키를 사용한다. 
 
 ```js
@@ -210,8 +207,12 @@ Given that there is now a new kind of value that can become the key of a propert
 + String-valued property keys are called property names.
 + Symbol-valued property keys are called property symbols.
 
+> 프로퍼티키는 문자열 또는 심볼이다.
+> 문자열로 평가되는 프로퍼티키는 프로퍼티 이름이라 칭한다.
+> 심볼로 평가되는 프로퍼티키는 프로퍼티 심볼이라 칭한다.
+
 Let’s examine the API for enumerating own property keys by first creating an object.
-> API 를 알아보자 
+> 프로퍼티키를 나열하기 위해 객체를 먼저 만들어야하는 API를 알아보자
 
 ```js
 const obj = {
@@ -239,12 +240,15 @@ Object.getOwnPropertySymbols(obj)
 ```
 
 Reflect.ownKeys() considers all kinds of keys:
+> Reflect.ownKeys() 는 모든 종류의 키를 고려한다.
 
 ```js
 Reflect.ownKeys(obj)
 [Symbol(my_key), 'enum', 'nonEnum']
 ```
+
 Object.keys() only considers enumerable property keys that are strings:
+> Object.keys()는 오로지 문자열로 열거 가능한 프로퍼티키만 고려한다 :
 
 ```js
 Object.keys(obj)
