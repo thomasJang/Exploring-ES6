@@ -133,38 +133,50 @@ const obj = { first: 'Jane', last: 'Doe' };
 
 `Destructuring in ECMAScript 6 enables the same syntax for extracting data, where it is called an object pattern:`
 
+ECMA의 해체는 객체 패턴을 사용한 곳에서 데이터를 추출하기 위해 같은 문법을 가능하게 한다. 
 
-
-ECMAScript6의 해체는 데이터 추출을 위해 객체 패턴으로 불리는 곳에서 동일한 문법을 가능케한다.:
 ```javascript
 const { first: f, last: l } = obj;
 ```
-객체 리터럴을 통해 여러개의 프로퍼티를 한 번에 만들 수 있듯이, 객체 해체 패턴도 여러래의 프로퍼티를 한 번에 추출 할 수 있다.  
 
+`Just as the object literal lets us create multiple properties at the same time, the object pattern lets us extract multiple properties at the same time.`
 
-이러한 패턴들을 통하여 배열을 해체하는 것도 가능하다 :
+객체 리터럴이 한번에 여러개의 프로퍼티를 생성해 주는 것처럼, 객체 패턴은 한번에 여러 개의 프로퍼티를 추출해준다.
+
+`You can also destructure Arrays via patterns:`
+
+패턴을 통해 배열을 해체할 수도 있다.
+
 ```javascript
 const [x, y] = ['a', 'b']; // x = 'a'; y = 'b'
 ```
 
-##10.3 패턴(Patterns)
+##10.3 `Patterns` 패턴
 
-다음은 해체에 관련된 용어를 설명한다.:
+`The following two parties are involved in destructuring:`
 
-해체 소스: 해체될 데이터. 예를 들면, 해체 할당식의 우변.
+다음 두 부분은 해체에 관련이 있다.
 
-해체 타겟: 해체를 위해 사용되는 패턴. 해체 할당식의 좌변.
+- `Destructuring source: the data to be destructured. For example, the right-hand side of a destructuring assignment.`  
+  헤체 소스: 데이터는 파괴될 것이다. 예를 들어, 해체 할당의 우변이다.
+- `Destructuring target: the pattern used for destructuring. For example, the left-hand side of a destructuring assignment.`  
+  해체 타겟: 파괴를 위해 패턴이 사용된다. 예를 들어, 해체 할당의 좌변이다.
 
-해체 대상은 다음중 하나이다.:
+`The destructuring target is either one of three patterns:`
 
-할당 대상. 예 : 없음.
-변수선언과 매개변수 정의에서는, 오직 변수에 대한 참조만 허용된다. 해체 할당에서 여러가지 옵션이 있지만 나중에 설명하겠다.
-
-객체 패턴. 예: { first: «pattern», last: «pattern» }
-객체 패턴의 parts는 프로퍼티이고 이 프로퍼티 값은 다시 패턴이다(재귀적으로).
-
-배열 배턴. 예: [ «pattern», «pattern» ]
-배열패턴의 parts는 요소이고 이 요소들은 다시 패턴이다(재귀적으로).
+해체 타겟은 세가지 패턴 중 하나이다.
+- `Assignment target. For example: x`  
+  할당 대상. 예를 들어 `x`  
+  - `In variable declarations and parameter definitions, only references to variables are allowed. In destructuring assignment, you have more options, as I’ll explain later.`  
+    변수 선언과 파라미터 정의에서 변수의 참조만 허용된다. 해체 할당에서는 옵션이 더 있다. 뒤에 설명한다.
+- `Object pattern. For example: { first: «pattern», last: «pattern» }`  
+  객체 패턴. 예를 들어 `{ first: <<pattern>>, last: <<pattern>> }`
+  - `The parts of an object pattern are properties, the property values are again patterns (recursively).`  
+    객체 패턴의 부분은 프로퍼티이다. 프로퍼티 값은 다시 패턴이다. ( 재귀 )
+- `Array pattern. For example: [ «pattern», «pattern» ]`  
+  배열 패턴. 예를 들어 `[ <<pattern>>>, <<pattern>> ]`
+  - `The parts of an Array pattern are elements, the elements are again patterns (recursively).`
+    배열 패턴의 부분은 원소이다.  원소는 다시 패턴이다. ( 재귀 )
 
 말인즉슨, 얼마든지 깊게 패턴을 응용할 수 있다 :
 ```javascript
