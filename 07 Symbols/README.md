@@ -438,19 +438,28 @@ for (const x of obj) {
 > 7.4.3 자바스크립트 표준 라이브러리에서 이름 충돌의 예
 
 In case you think that name clashes don’t matter, here are three examples of where name clashes caused problems in the evolution of the JavaScript standard library:
+> 이름 충돌이 문제되지 않을 때를 대비하여, 
 
 + When the new method Array.prototype.values() was created, it broke existing code where with was used with an Array and shadowed a variable values in an outer scope (bug report 1, bug report 2). Therefore, a mechanism was introduced to hide properties from with (Symbol.unscopables).
 + String.prototype.contains clashed with a method added by MooTools and had to be renamed to String.prototype.includes (bug report).
 + The ES2016 method Array.prototype.contains also clashed with a method added by MooTools and had to be renamed to Array.prototype.includes (bug report).
 
 In contrast, adding iterability to an object via the property key Symbol.iterator can’t cause problems, because that key doesn’t clash with anything.
+> 대조적으로, 프로퍼티키인 Symbol.iterator로 객체에 이터러빌리티를 추가하는 것으로는 문제를 발생시킬 수 없다. 키가 다른 것과 충돌하지 않기 때문이다.
 
 These examples demonstrate what it means to be a web language: backward compatibility is crucial, which is why compromises are occasionally necessary when evolving the language. As a side benefit, evolving old JavaScript code bases is simpler, too, because new ECMAScript versions never (well, hardly ever) break them.
+> 이러한 예제들은 웹 언어라는게 어떤 의미인지 증명한다 : 하위 호환성은 중대하며 언어가 서서히 진화할 때 타협이 가끔 필요한 이유이다. 부수적인 이점으로, 오래된 자바스크립트 코드 기반을 발전시키는 것은 더욱 간단하다. 새로운 ECMAScript 버전은 절대(거의) 기존 코드를 망가뜨리지 않기 때문이다.
 
 ## 7.5 Converting symbols to other primitive types
-The following table shows what happens if you explicitly or implicitly convert symbols to other primitive types:
+> 7.5 심볼을 다른 원시 타입으로 변환하기
 
-Conversion to	Explicit conversion	Coercion (implicit conversion)
+The following table shows what happens if you explicitly or implicitly convert symbols to other primitive types:
+다음 테이블은 심볼이 다른 원시 타입으로 명시적 또는 암묵적 변환될 때 어떤 일이 발생하는지 보여준다.
+
+| Conversion to | Explicit conversion |	Coercion (implicit conversion) |
+|---------------|---------------------|--------------------------------|
+| boolean | Boolean(sym) → OK | !sym → OK |
+
 boolean	Boolean(sym) → OK	!sym → OK
 number	Number(sym) → TypeError	sym*2 → TypeError
 string	String(sym) → OK	''+sym → TypeError
