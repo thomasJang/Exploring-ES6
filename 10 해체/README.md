@@ -542,84 +542,133 @@ const { prop: x } = {}; // x = undefined
 ```javascript
 const [{ prop: x=123 } = {}] = [{}];
 ```
-여기 객체는 다음처럼 우변이 [{}] 나 []에 상관없이 독립적으로 지속된다.
+
+`Here, destructuring continues as follows, independently of whether the right-hand side is [{}] or [].`
+
+다음 여기서 destructuring 독립적 우측인지의 계속 [{}] 또는 [].
 
 ```javascript
 const { prop: x=123 } = {}; // x = 123
 ```
 
-아직 혼란스러운가?
-나중에 알고리즘으로써의 관점에서 해체를 살펴보겠다. 이것은 또 다른 인사이트를 줄 것이다.
+> *:notebook: `Still confused?`  
+  아직도 혼란?
+> `A later section explains destructuring from a different angle, as an algorithm. That may give you additional insight.`  
+  다음 섹션은 알고리즘으로, 다른 각도에서 destructuring 설명합니다. 그것은 당신에게 추가 통찰력을 제공 할 수 있습니다.
 
-##10.6 더 많은 객체 해체 약칭
-##10.6.1 속성값 바로 가기
+## 10.6 `More object destructuring features` 이상의 오브젝트 destructuring 기능
 
-속성값의 약칭은 객체 리터럴의 특징이다.: 만약 속성값이 이름이 키와 같은 변수를 통해 제공된다면 키를 제외해도 해체는 동작한다.:
+## 10.6.1 `Property value shorthands` 속성 값 속기
+
+`Property value shorthands are a feature of object literals: If the value of a property is provided via a variable whose name is the same as the key, you can omit the key. This works for destructuring, too:`
+
+속성 값 shorthands 객체 리터럴의 특징은 다음과 같습니다 속성 값은 이름이 키와 동일한 변수를 통해 제공되는 경우, 키를 생략 할 수 있습니다. 이도 destructuring 작동 :
 
 ```javascript
 const { x, y } = { x: 11, y: 8 }; // x = 11; y = 8
 ```
 
-이 선언은 다음과 비교할만하다.
-```javascript
+`This declaration is equivalent to:`
 
+이 선언은 동일합니다 :
+
+```javascript
 const { x: x, y: y } = { x: 11, y: 8 };
 ```
-또한 기본값과 함께 속성값 약칭을 섞을 수 있다.:
+
+`You can also combine property value shorthands with default values:`
+
+또한 기본 값으로 속성 값 속기를 결합 할 수 있습니다 :
+
 ```javascript
 const { x, y = 1 } = {}; // x = undefined; y = 1
 ```
 
-##10.6.2 계산된 속성키
-계산된 속성키는 다른 해체를 위해 동작하는 객체 리터럴 특징이다.: 대괄호를 이용한다면 표현식을 통해 속성키를 명시할 수 있다. :
+## 10.6.2 `Computed property keys` 계산 된 프로퍼티 키
+
+`Computed property keys are another object literal feature that also works for destructuring: You can specify the key of a property via an expression, if you put it in square brackets:`
+
+계산 된 속성 키도 destructuring 작동 다른 객체 리터럴 기능입니다 : 당신은 괄호에 넣어 당신은, 식을 통해 속성의 키를 지정할 수 있습니다 :
+
 ```javascript
 const FOO = 'foo';
 const { [FOO]: f } = { foo: 123 }; // f = 123
 ```
-계산된 속성키는 심볼키인 프로퍼티의 해체를 허용한다.:
+
+`Computed property keys allow you to destructure properties whose keys are symbols:`
+
+계산 된 속성 키는 그 키를 상징 특성을 destructure 할 수 있습니다 :
+
 ```javascript
-// 심볼키를 가지는 속성의 생성과 해체
+// `Create and destructure a property whose key is a symbol` 그 키 상징 인 속성을 만들고 destructure
 const KEY = Symbol();
 const obj = { [KEY]: 'abc' };
 const { [KEY]: x } = obj; // x = 'abc'
 
-// Array.prototype[Symbol.iterator] 추출
+// `Extract Array.prototype[Symbol.iterator]` 추출 Array.prototype으로 [Symbol.iterator]
 const { [Symbol.iterator]: func } = [];
 console.log(typeof func); // function
 ```
 
-##10.7 더 많은 배열 해체의 특징
-##10.7.1 생략
-해체 구문 사이의 배열의 빈 구멍은 생략할 수 있다.:
+## 10.7 `More Array destructuring features` 더 많은 배열 destructuring 기능
+
+## 10.7.1 `Elision` 생략
+
+`Elision lets you use the syntax of Array “holes” to skip elements during destructuring:`
+
+생략하면 destructuring 동안 요소를 건너 배열 "구멍"의 구문을 사용할 수 있습니다 :
+
 ```javascript
 const [,, x, y] = ['a', 'b', 'c', 'd']; // x = 'c'; y = 'd'
 ```
 
-##10.7.2 나머지 연산자(rest operator) (...)
-나머지 연산자는 배열의 각 요소의 추출한 배열가능케 한다. 배열 패턴의 마지막 파라미터로 나머지 연산자를 사용할 수 있다.:
+## 10.7.2 `Rest operator (...)` 나머지 연산자 (...)
+
+`The rest operator lets you extract the remaining elements of an Array into an Array. You can only use the operator as the last part inside an Array pattern:`
+
+나머지 연산자를 사용하면 배열로 배열의 나머지 요소를 추출 할 수 있습니다. 당신은 배열 패턴 내부의 마지막 부분으로 연산자를 사용할 수 있습니다 :
+
 ```javascript
 const [x, ...y] = ['a', 'b', 'c']; // x='a'; y=['b', 'c']
 ```
-나머지 연산자는 데이터를 추출한다. 펼침 연산자(...) 의 문법도 똑같다. 펼침 연산자는 데이터를 배열 리터럴과 함수 호출에 공헌한다. 이건 다음 챕터에서 설명한다.
 
-만약 연산자가 요소를 찾지 못한다면, 빈배열로 매칭된다. 때문에 undefined나 null은 절대 할당되지 않는다.
+> *:notebook: `The rest operator operator extracts data. The same syntax (...) is used by the spread operator, which contributes data to Array literals and function calls and is explained in the next chapter.`  
+  나머지 연산자 연산자는 데이터를 추출한다. 같은 구문 (...)를 배열 리터럴 및 함수 호출로 데이터를 기여하고, 다음 장에 설명되어 확산 연산자에 의해 사용된다.
+  
+`If the operator can’t find any elements, it matches its operand against the empty Array. That is, it never produces undefined or null. For example:`
+
+운전자가 임의의 요소를 찾을 수없는 경우, 빈 어레이에 대해 피연산자 일치한다. 즉, 그것은 정의되지 않은 또는 null 발생하지 않습니다. 예를 들면 :
 
 ```javascript
 const [x, y, ...z] = ['a']; // x='a'; y=undefined; z=[]
 ```
-나머지 연산자의 피연산자가 변수일 필요는 없다. 이 역시 패턴을 사용하면 된다. :
+
+`The operand of the rest operator doesn’t have to be a variable, you can use patterns, too:`
+
+나머지 연산자의 피연산자는 당신도 패턴을 사용할 수있는 변수가 될 필요가 없습니다 :
+
 ```javascript
 const [x, ...[y, z]] = ['a', 'b', 'c'];
     // x = 'a'; y = 'b'; z = 'c'
 ```
-나머지 연산자는 다음의 해체를 발생시킨다:
+
+`The rest operator triggers the following destructuring:`
+
+나머지 연산자는 다음 destructuring 트리거 :
+
 ```javascript
 [y, z] = ['b', 'c']
 ```
-펼침 연산자는  (...) 나머지 연산자와 완전히 똑같이 생겼다. 그러나 나머지 연산자는 함수 호출과 배열 리터럴 안에서만 사용된다.(해체 패턴 안이 아니라)
 
-10.8 변수가 아닌 곳에도 할당가능하다.
-해체를 통한 할당이라면, 각 할당 타겟은 객체의 프로퍼티(obj.prop) 참조나 배열의 요소(arr[0]) 참조를 포함하여 일반적인 할당문의 좌변에서 허용되는 모든 것이 될 수 있다. 
+> *:notebook: `The spread operator (...) looks exactly like the rest operator, but it is used inside function calls and Array literals (not inside destructuring patterns).`  
+  확산 연산자 (...)를 정확히 나머지 연산자처럼 보이는,하지만 함수 호출 및 배열 리터럴 (안 내부 destructuring 패턴)의 내부에 사용됩니다.
+
+## 10.8 `You can assign to more than just variables` 당신은 변수보다 더에 할당 할 수있는
+
+`If you assign via destructuring, each assignment target can be everything that is allowed on the left-hand side of a normal assignment, including a reference to a property (obj.prop) and a reference to an Array element (arr[0]).`
+
+만약 destructuring 통해 할당하는 경우, 각각의 할당 대상 속성 (obj.prop)에 대한 참조를 포함하는 통상의 할당의 왼쪽에 허용되는 모든하고 배열 요소에 대한 참조가 될 수있다 (도착을 [0]) .
+
 ```javascript
 const obj = {};
 const arr = [];
@@ -630,36 +679,75 @@ console.log(obj); // {prop:123}
 console.log(arr); // [true]
 ```
 
-또한 나머지 연산자(...)를 이용해서 객체 프로퍼티와 배열 요소를 할당 할 수도 있다.
+`You can also assign to object properties and Array elements via the rest operator (...):`
+
+또한 나머지 연산자 (...)를 통해 특성 및 배열 요소를 객체에 할당 할 수 있습니다 :
 
 ```javascript
 const obj = {};
 [first, ...obj.prop] = ['a', 'b', 'c'];
     // first = 'a'; obj.prop = ['b', 'c']
 ```
-만약 해체를 이용해서 변수를 선언하거나 파라미터를 정의 한다면, simple identifiers를 사용해야한다. 객체 프로퍼티나 배열의 요소를 참조하면 안된다.
 
+`If you declare variables or define parameters via destructuring then you must use simple identifiers, you can’t refer to object properties and Array elements.`
 
-##10.9 해체의 Pitfalls
-해체를 사용할 때 2가지 유념해야할 사항이 있다.
+당신이 변수를 선언 또는 destructuring를 통해 매개 변수를 다음 간단한 식별자를 사용합니다 정의하면 특성 및 배열 요소를 객체를 참조 할 수 없습니다.
 
-중괄호로 선언문을 시작하면 안된다.
-You can’t start a statement with a curly brace.
+##10.9 `Pitfalls of destructuring` 해체의 함정
 
-해체문에는 변수 선언이나 변수 할당이 가능하다. 둘 다 동시에 하는 것은 불가능하다.
-다음 두 섹션에 자세한 내용이 있다.
+`There are two things to be mindful of when using destructuring:`
 
-##10.9.1 중괄호로 선언문을 시작하지 말아라
-코드 블럭이 중괄호로 시작하기 때문에, 선언문은 그렇게 하면 안된다. 이것은 할당문에서 객체 해체를 사용할 때 불편하다 :
+destructuring을 사용할 때 염두하는 방법은 두 가지가 있습니다 :
+
+- `You can’t start a statement with a curly brace.`  
+  당신은 중괄호로 성명을 시작할 수 없습니다.
+- `During destructuring, you can either declare variables or assign to them, but not both.`  
+  그러나 둘, destructuring 동안, 당신은 변수를 선언 할 수 있습니다 그들에게 할당합니다.
+
+`The next two sections have the details.`
+
+다음 두 섹션에서는 세부 사항이 있습니다.
+
+## 10.9.1 `Don’t start a statement with a curly brace` 중괄호와 함께 문을 시작하지 마십시오
+
+`Because code blocks begin with a curly brace, statements must not begin with one. This is unfortunate when using object destructuring in an assignment:`
+
+코드 블록은 중괄호로 시작하기 때문에, 문은 하나로 시작하지 않아야합니다. 할당에 개체 destructuring를 사용할 때 불행한 일이다 :
+
 ```javascript
 { a, b } = someObject; // SyntaxError
 ```
-감싸는 괄호안에 완전한 표현식을 써넣어야 한다:
 
+`The work-around is to put the complete expression in parentheses:`
+
+작업 주위에 괄호 안에 완전한 표현을 넣어하는 것입니다 :
+
+```javascript
 ({ a, b } = someObject); // ok
+```
 
-##10.9.2 이미 존재하는 변수에 선언과 할당을 조합하면 안된다.
-변수선언을 해체하는 곳에서, 소스의 모든 변수는 선언된다. 다음 예제를 보자. 변수 b를 선언하고 존재하는 변수 f를 참조하지만 동작하지 않는다.
+`The following syntax does not work:`
+
+다음 구문은 작동하지 않습니다
+
+```javascript
+({ a, b }) = someObject; // SyntaxError
+```
+
+`With let, var and const, curly braces never cause problems:`
+
+하자, VAR 및 const를 통한 중괄호 적 문제가 발생할 수 :
+
+```javascript
+const { a, b } = someObject; // OK
+```
+
+## 10.9.2 `You can’t mix declaring and assigning to existing variables` 당신은 선언하고 기존의 변수에 할당 혼합 할 수 없습니다
+
+`Within a destructuring variable declaration, every variable in the source is declared. In the following example, we are trying to declare the variable b and refer to the existing variable f, which doesn’t work.`
+
+destructuring 변수 선언 내에서 소스의 모든 변수는 선언된다. 다음 예에서, 우리는 변수 B를 선언하고 작동하지 않는 기존의 변수 F를 참조하려고합니다.
+
 ```javascript
 let f;
 ···
@@ -667,7 +755,10 @@ let { foo: f, bar: b } = someObject;
     // During parsing (before running the code):
     // SyntaxError: Duplicate declaration, f
 ```
-b를 선언하기 위해 해체 할당을 사용하고 있다.:
+
+`The fix is to use a destructuring assignment and to declare b beforehand:`
+
+수정은 destructuring 할당을 사용하고 사전에 b를 선언하는 것입니다 :
 
 ```javascript
 let f;
@@ -676,52 +767,81 @@ let b;
 ({ foo: f, bar: b }) = someObject;
 ```
 
-##10.10 해체의 예제
-몇가지 간단한 예제로 시작해보자.
+## 10.10 `Examples of destructuring` destructuring의 예
 
-for-of 반복문은 해체를 지원한다:
+`Let’s start with a few smaller examples.`
+
+의 몇 가지 작은 예제와 함께 시작하자.
+
+`The for-of loop supports destructuring:`
+
+는 대한-의 루프는 destructuring을 지원합니다
+
 ```javascript
 const map = new Map().set(false, 'no').set(true, 'yes');
 for (const [key, value] of map) {
   console.log(key + ' is ' + value);
 }
 ```
-값을 바꾸기 위해 해체를 사용 할 수 있다. 엔진이 최적화를 해줄수 있으므로 배열이 생성되지 않는다.
+
+`You can use destructuring to swap values. That is something that engines could optimize, so that no Array would be created.`
+
+당신은 값을 교환하는 destructuring를 사용할 수 있습니다. 즉, 어떤 배열이 만들어지지 될 수 있도록 엔지니어, 최적화 할 수있는 일이다.
 
 ```javascript
 [a, b] = [b, a];
 ```
-배열을 스플릿 하기 위해 해체를 사용 할 수 있다
-:
+
+`You can use destructuring to split an Array:`
+
+당신은 배열을 분할 destructuring을 사용할 수 있습니다 :
+
 ```javascript
 const [first, ...rest] = ['a', 'b', 'c'];
     // first = 'a'; rest = ['b', 'c']
 ```
-##10.10.1 반환된 배열 해체하기
 
-자바스크립트에 내장된 몇가지 기능은 배열을 반환한다. 해체는 이러한 처리를 돕는다:
+## 10.10.1 `Destructuring returned Arrays` 반환 된 배열을 Destructuring
+
+`Some built-in JavaScript operations return Arrays. Destructuring helps with processing them:`
+
+일부는 내장 된 자바 스크립트 작업은 배열을 반환합니다. Destructuring 그들을 처리에 도움이 
+
 ```javascript
 const [all, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
 ```
-그룹(완벽히 일치하지 않는)을 찾고 싶다면, 0번 인덱스에서 배열요소를 건너뛰는것으로 생략 가능하다:
+
+`If you are only interested in the groups (and not in the complete match, all), you can use elision to skip the array element at index 0:`
+
+만 그룹에 관심이 있다면 (전체 경기에서가 아니라, 모든), 당신은 인덱스 0에서 배열 요소를 건너 암시를 사용할 수 있습니다 :
+
 ```javascript
 const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
 ```
-exec() 는 표현식이 매칭되지 않으면 null을 반환한다. 불행히도 null을 기본값으로 다루지는 못한다. 이것은 ||연산자를 사용해야만 하는 이유가 되는 예제이다:
+
+`exec() returns null if the regular expression doesn’t match. Unfortunately, you can’t handle null via default values, which is why you must use the Or operator (||) in this case:`
+
+정규 표현식이 일치하지 않는 경우 간부 인 ()는 null를 돌려줍니다. 불행하게도, 당신은 당신이이 경우에 또는 연산자 (||)를 사용해야합니다 이유입니다, 기본값을 통해 널 (null) 처리 할 수 없습니다 :
 
 ```javascript
 const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec(someStr) || [];
 ```
 
-Array.prototype.split()은 배열을 반환한다. 그러므로 해체는 배열이 아닌 각 요소 안에서 유용하다:
+`Array.prototype.split() returns an Array. Therefore, destructuring is useful if you are interested in the elements, not the Array:`
+
+Array.prototype.split는 () 배열을 반환합니다. 당신이 요소가 아닌 배열에 관심이 있다면 따라서, destructuring 유용합니다 :
+
 ```javascript
 const cells = 'Jane\tDoe\tCTO'
 const [firstName, lastName, title] = cells.split('\t');
 console.log(firstName, lastName, title);
 ```
 
-##10.10.2 반환된 객체 해체하기
-해체는 함수나 메소드에 의해 반환된 객체의 데이터를 추출하는데도 유용하다. 예를 들면 이터레이터 메소드인 next()는 done과 value 두가지 속성을 갖는 객체를 반환한다. 다음 코드는 이터레이터를 이용해 배열의 모든 요소 로그를 찍는다. 해체는 line A에서 사용된다.
+## 10.10.2 `Destructuring returned objects` 반환 된 개체를 Destructuring
+
+`Destructuring is also useful for extracting data from objects that are returned by functions or methods. For example, the iterator method next() returns an object with two properties, done and value. The following code logs all elements of Array arr via the iterator iter. Destructuring is used in line A.`
+
+Destructuring은 함수 나 메소드에 의해 반환되는 객체에서 데이터를 추출하는 데 유용합니다. 예를 들어, 다음 반복자 방법은 () 수행과 가치, 두 가지 속성을 가진 개체를 반환합니다. 다음 코드는 도착 반복자 ITER를 통해 배열의 모든 요소를 기록합니다. Destructuring 라인 A에 사용된다
 
 ```javascript
 const arr = ['a', 'b'];
@@ -733,8 +853,11 @@ while (true) {
 }
 ```
 
-##10.10.3 이터러블 값의 배열해체
-이터러블 값의 배열해체도 동작 한다. 이것은 때때로 유용하다:
+## 10.10.3 `Array-destructuring iterable values` 반복 가능한 값을 배열 destructuring
+
+`Array-destructuring works with any iterable value. That is occasionally useful:`
+
+배열 destructuring는 반복 가능한 값으로 작동합니다. 즉, 가끔 유용하다 :
 
 ```javascript
 const [x,y] = new Set().add('a').add('b');
@@ -744,9 +867,12 @@ const [a,b] = 'foo';
     // a = 'f'; b = 'o'
 ```
 
-##10.10.4 값을 여러번 반환하기
+## 10.10.4 `Multiple return values` 여러 반환 값
 
-값을 여러번 반환하는 유용함을 알아보기 위해, findElement(a, p)를 구현해보자. 이 함수는 true를 리턴하는 함수 p의 배열에서 첫 번째 요소를 찾는다. 문제는 그 함수가 무엇을 반환해야 하는가 이다.
+`To see the usefulness of multiple return values, let’s implement a function findElement(a, p) that searches for the first element in the Array a for which the function p returns true. The question is: what should that function return? Sometimes one is interested in the element itself, sometimes in its index, sometimes in both. The following implementation returns both.`
+
+여러 반환 값의 유용성을 확인하려면,의 함수 (P)가 true를 반환하는 배열 A의 첫 번째 요소 검색 기능 findElement의 (a, p)를 구현할 수 있습니다. 질문 : 그 함수가 무엇을 반환해야? 때로는 하나는 때때로 모두에서, 때로는 인덱스에서 요소 자체에 관심이있다. 다음 구현은 모두 반환합니다.
+
 ```javascript
 function findElement(array, predicate) {
     for (const [index, element] of array.entries()) { // (A)
@@ -758,19 +884,31 @@ function findElement(array, predicate) {
 }
 ```
 
-line A에서, 배열 메소드 entries() 는 [index, element] 쌍으로 가진 이터러블을 반환한다. 한번의 이터레이션 마다 한 쌍을 해체한다. line B에서 객체  { element: element, index: index } 를 반환하기 위해 속성값 약칭을 사용한다.
+`In line A, the Array method entries() returns an iterable over [index,element] pairs. We destructure one pair per iteration. In line B, we use property value shorthands to return the object { element: element, index: index }.`
 
-findElement()를 사용해봅시다. 다음 예제에서, 몇몇 ECMAScript 6 특징들은 더 간략한 코딩을 가능하게 해준다.: 콜백은 arrow function 으로, 반환값은 속성값의 약칭인 객체 패턴으로 해체된다
+A 라인으로, 배열 방법 항목은 () [인덱스 요소] 쌍을 통해 반복 가능한을 반환합니다. 우리는 반복 당 한 쌍의 destructure. {지수 : 요소, 인덱스 요소} 라인 B에서, 우리는 개체를 반환하는 속성 값 shorthands을 사용합니다.
+
+`Let’s use findElement(). In the following example, several ECMAScript 6 features allow us to write more concise code: The callback is an arrow function, the return value is destructured via an object pattern with property value shorthands.`
+
+이제 findElement를 사용하자 (). 다음 예에서, 여러 가지의 ECMAScript 6 기능은 우리가 더 간결한 코드를 작성할 수 : 콜백은 화살표 함수, 반환 값은 속성 값 shorthands와 객체 패턴을 통해 탈구된다.
+
 ```javascript
 const arr = [7, 8, 6];
 const {element, index} = findElement(arr, x => x % 2 === 0);
     // element = 8, index = 1
 ```
-속성 키를 참조하는 인덱스와 요소 때문에 우리가 언급한 그 순서는 상관이 없다. 
+
+`Due to index and element also referring to property keys, the order in which we mention them doesn’t matter:`
+
+때문에 인덱스 요소는 속성 키를 참조로, 우리는 그들에게 중요하지 않습니다 언급되는 순서 :
+
 ```javascript
 const {index, element} = findElement(···);
 ```
-인덱스와 요소 모두 요구되는 케이스를 성공적으로 다뤘다. 그 것들중에 하나에만 관심이 있었다면 어떨까? 이것은 ECMAScript6에 이르러 해결되었다. 우리의 구현은 이제 그게 가능하다. 그리고 문법 과부하는 하나의 반환값 으로 비교된다.
+
+`We have successfully handled the case of needing both index and element. What if we are only interested in one of them? It turns out that, thanks to ECMAScript 6, our implementation can take care of that, too. And the syntactic overhead compared to functions with single return values is minimal.`
+
+우리는 성공적으로 인덱스와 요소 모두를 필요로하는 경우를 처리했다. 우리가 그들 중 하나에만 관심이있는 경우? 그것은 ECMAScript를 6 덕분에, 우리의 구현도 그 돌볼 수 있다는 것을 밝혀졌습니다. 그리고 하나의 반환 값과 기능에 비해 구문 오버 헤드가 최소화됩니다.
 
 ```javascript
 const a = [7, 8, 6];
@@ -782,80 +920,120 @@ const {index} = findElement(a, x => x % 2 === 0);
     // index = 1
 ```
 
-매번 우리가 필요한 속성값을 추출한다 
+`Each time, we only extract the value of the one property that we need.`
 
-##10.11 해체 알고리즘
-이번 섹션은 다른관점에서 해체를 바라볼 것이다.: 재귀적 패턴 매칭 알고리즘
+때마다, 우리는 우리가 필요로하는 하나의 속성 값을 추출합니다.
 
-이 다른 관점은 특히 기본값을 이해하는데 도움을 준다. 만약 완벽히 이해되지 않는다면 계속 읽어봐라
+## 10.11 `The destructuring algorithm` destructuring 알고리즘
 
-마지막으로 다음 2개의 함수선언문의 차이점을 설명하기 위한 알고리즘을 사용 할 것이다.
+`This section looks at destructuring from a different angle: as a recursive pattern matching algorithm.`
+
+이 섹션에서는 다른 각도에서 destructuring 본다 : 재귀 패턴 매칭 알고리즘으로.
+
+> *:notebook: `This different angle should especially help with understanding default values. If you feel you don’t fully understand them yet, read on.`  
+  이것은 다른 각도 특히 이해 기본값으로 도움이 될 것이다. 당신은 당신이 완전히 아직 이해가 안 느끼는 경우에 읽어 보시기 바랍니다.
+
+`At the end, I’ll use the algorithm to explain the difference between the following two function declarations.`
+
+마지막에, I는 다음과 같은 두 함수 선언의 차이를 설명하기위한 알고리즘을 사용한다.
+
 ```javascript
 function move({x=0, y=0} = {})         { ··· }
 function move({x, y} = { x: 0, y: 0 }) { ··· }
 ```
-##10.11.1 알고리즘
-해체 할당은 다음과 같이 생겼다.
 
-«pattern» = «value»
-값으로 부터 데이터 추출을 위한 패턴을 사용을 원한다. 이제부터 그 방법에 대한 알고리즘을 설명 할 것이다. 이것은 패턴 매칭에 의한 함수형 프로그래밍으로 알려져 있다.(이하 매칭). 이 알고리즘은 값의 패턴매칭이 되는 해체 할당을 위해 ← 를 연산자로 규정하고 이러한 과정이 진행되며 변수에 할당한다.
+## 10.11.1 `The algorithm` 알고리즘
 
-«pattern» ← «value»
+`A destructuring assignment looks like this:`
 
-이 알고리즘은 좌측을 가르키는 연산자를 받는 재귀적 법칙에 의해 명시된다. 이 선언적인 표기법은 종종 사용되지만 알고리즘의 스펙을 더 간결하게 만든다. 각각의 법칙은 두 부분으로 나뉜다.
+destructuring 할당은 다음과 같습니다 :
 
-head는 룰에 의해 어떤 피연산자부가 다뤄질지 명시한다.
-body는 다음에 무엇을 할지 명시한다.
+`«pattern» = «value»`
 
-오직 해체 할당을 위한 알고리즘만 보여준다. 변수 선언을 해체하는 것과와 파라미터선언을 해체하는 것은 비슷하게 작동한다.
+`We want to use pattern to extract data from value. I’ll now describe an algorithm for doing so, which is known in functional programming as pattern matching (short: matching). The algorithm specifies the operator ← (“match against”) for destructuring assignment that matches a pattern against a value and assigns to variables while doing so:`
 
-고급 특징들을 다루지는 않는다. (계산된 속성 키, 속성값, 할당자로써의 객체 속성 또는 배열요소). 기본만 다룬다.
+우리는 값에서 데이터를 추출하는 패턴을 사용하고 싶습니다. (: 일치하는 짧은) 지금은 패턴 매칭과 같은 함수형 프로그래밍에 알려진 그렇게하는 알고리즘을 설명 할 것이다. 이 알고리즘은 값에 대해 패턴과 일치하고 이렇게하면서 변수에 할당 할당을 destructuring에 대한 연산자 ← ( "에 대한 일치")을 지정합니다 :
 
+`«pattern» ← «value»`
 
-##10.11.1.1 패턴
-하나의 패턴은 다음과 같다:
+`The algorithm is specified via recursive rules that take apart both operands of the ← operator. The declarative notation may take some getting used to, but it makes the specification of the algorithm more concise. Each rule has two parts:`
 
-변수: x
-객체 패턴: {«properties»}
-배열 패턴: [«elements»]
-각각의 섹션은 다음중 하나의 상황을 설명한다.
+알고리즘은 떨어져 ← 연산자의 두 피연산자을 재귀 규칙을 통해 지정됩니다. 선언적 표기 일부가 익숙해 취할 수 있지만, 더 간결한 알고리즘의 명세를 만든다. 각 규칙은 두 부분으로 구성되어 있습니다 :
 
-##10.11.1.2 변수
-(1) x ← value (including undefined and null)
+- `The head specifies which operands are handled by the rule.`  
+  헤드는 피연산자 규칙에 의해 처리되는 지정합니다.
+- `The body specifies what to do next.`
+  바디는 다음에 무엇을 지정합니다.
+
+`I only show the algorithm for destructuring assignment. Destructuring variable declarations and destructuring parameter definitions work similarly.`
+
+난 단지 지정을 destructuring에 대한 알고리즘을 보여줍니다. 변수 선언을 Destructuring 및 destructuring 매개 변수 정의는 유사하게 작동합니다.
+
+`I don’t cover advanced features (computed property keys; property value shorthands; object properties and array elements as assignment targets), either. Only the basics.`
+
+하나, 나는 고급 기능 (개체 속성 및 할당 대상으로 배열 요소; 속성 값 약식 계산 된 속성 키)을 포함하지 않습니다. 만 기본.
+
+``
+
+## 10.11.1.1 `Patterns` 패턴
+
+`A pattern is either:`
+
+패턴 중 하나입니다 :
+
+- `A variable: x`  
+  변수 : X
+- `An object pattern: {«properties»}`  
+  객체 패턴 : `{«properties»}`
+- `An Array pattern: [«elements»]`  
+  배열 패턴 : `[«elements»]`
+
+`Each of the following sections describes one of these three cases.`
+
+다음의 각 섹션에서는이 세 가지 사례 중 하나에 대해 설명합니다.
+
+## 10.11.1.2 `Variable` 변수
+- (1) x ← value (including undefined and null)  
   x = value
-  
-##10.11.1.3 객체패턴
-(2a) {«properties»} ← undefined  
-  throw new TypeError();  
-(2b) {«properties»} ← null  
-  throw new TypeError();  
-(2c) {key: «pattern», «properties»} ← obj  
-  «pattern» ← obj.key  
-  {«properties»} ← obj  
-(2d) {key: «pattern» = default_value, «properties»} ← obj  
-  const tmp = obj.key;  
-    ```javascript
+
+## 10.11.1.3 `Object pattern` 객체패턴
+
+- (2a) {«properties»} ← undefined  
+  `throw new TypeError();`
+- (2b) {«properties»} ← null  
+  `throw new TypeError();`
+- (2c) {key: «pattern», «properties»} ← obj  
+  `«pattern» ← obj.key`  
+  `{«properties»} ← obj`  
+- (2d) {key: «pattern» = default_value, «properties»} ← obj  
+  ```javascript
+  const tmp = obj.key;
   if (tmp !== undefined) {
       «pattern» ← tmp
   } else {
       «pattern» ← default_value
   }
   ```
-  
   {«properties»} ← obj  
-(2e) {} ← obj
-  // 좌변의 빈 프로퍼티, 아무것도 안함
-  
-##10.11.1.4 배열 패턴
-배열 패턴과 이터러블. 배열해체를 위한 알고리즘은 배열 패턴과 이터러블로 시작한다.
+- (2e) {} ← obj
+  `// No properties left, nothing to do` // 좌변의 빈 프로퍼티, 아무것도 안함`
 
-(3a) [«elements»] ← non_iterable  
-assert(!isIterable(non_iterable))  
-  throw new TypeError();  
-(3b) [«elements»] ← iterable  
-assert(isIterable(iterable))  
-  const iterator = iterable[Symbol.iterator]();  
-  «elements» ← iterator  
+## 10.11.1.4 `Array pattern` 배열 패턴
+
+`Array pattern and iterable. The algorithm for Array destructuring starts with an Array pattern and an iterable:`
+
+배열 패턴과 반복 가능. 배열 destructuring에 대한 알고리즘은 배열 패턴과 반복 가능한 시작 :
+
+- (3a) [«elements»] ← non_iterable  
+  assert(!isIterable(non_iterable))  
+  `throw new TypeError();`
+- (3b) [«elements»] ← iterable  
+  assert(isIterable(iterable))  
+  `const iterator = iterable[Symbol.iterator]();`  
+  «elements» ← iterator
+
+`Helper function:`
+
 헬퍼 함수:  
 
 ```javascript
@@ -865,37 +1043,39 @@ function isIterable(value) {
         && typeof value[Symbol.iterator] === 'function');
 }
 ```
-배열 요소와 이터레이터. 이 알고리즘은 패턴(화살표의 좌변부)의 요소와 이터러블에서 얻어진 이터레이터(화살표의 우변부)로 함께 지속된다.
 
-(3c) «pattern», «elements» ← iterator  
+`Array elements and iterator. The algorithm continues with the elements of the pattern (left-hand side of the arrow) and the iterator that was obtained from the iterable (right-hand side of the arrow).`
+
+배열 요소와 반복자. 이 알고리즘은 패턴 (화살표 왼쪽)의 요소와 반복 가능한 (화살표 오른쪽)로부터 얻은 반복자를 계속합니다.
+
+- (3c) «pattern», «elements» ← iterator  
   «pattern» ← getNext(iterator) // undefined after last item  
-  «elements» ← iterator  
-(3d) «pattern» = default_value, «elements» ← iterator  
-```javascript
-  const tmp = getNext(iterator);  // undefined after last item  
+  «elements» ← iterator
+- (3d) «pattern» = default_value, «elements» ← iterator  
+  ```javascript
+  const tmp = getNext(iterator);  // undefined after last item
   if (tmp !== undefined) {
       «pattern» ← tmp
   } else {
       «pattern» ← default_value
   }
   ```
-  «elements» ← iterator  
-  
-(3e) , «elements» ← iterator (hole, elision)  
-  getNext(iterator); // skip  
-  «elements» ← iterator  
-(3f) ...«pattern» ← iterator (always last part!)  
-```javascript
+  `«elements» ← iterator`
+- (3e) , «elements» ← iterator (hole, elision)  
+  `getNext(iterator); // skip`  
+  `«elements» ← iterator`
+- (3f) ...«pattern» ← iterator (always last part!)  
+  ```javascript
   const tmp = [];
   for (const elem of iterator) {
       tmp.push(elem);
   }
   ```
-  «pattern» ← tmp  
-  
-(3g) ← iterator  
-  // No elements left, nothing to do  
-헬퍼 함수:  
+  `«pattern» ← tmp`
+- (3g) ← iterator  
+  `// No elements left, nothing to do`
+
+`Helper function:`
 
 ```javascript
 function getNext(iterator) {
@@ -904,8 +1084,11 @@ function getNext(iterator) {
 }
 ```
 
-##10.11.2 알고리즘 적용
-다음의 함수선언문은 *이름있는 파라미터(named parameters)*를 가지고 있다. 이 기술은 파라미터 핸들링 챕터에서 때때로 options object 라고 불리거나 설명된다. 이 파라미터는 해체를 사용하고 x와 y가 생략될 수 있는 방법의 기본값을 사용한다. 그러나 아래 코드의 마지막 라인에서 보듯이 객체와 함께있는 파라미터도 생략 가능하다. 이 특징은 함수 선언문의 머리에서  {} 를 통해 사용된다.
+## 10.11.2 `Applying the algorithm` 알고리즘 적용
+
+`The following function definition has named parameters, a technique that is sometimes called options object and explained in the chapter on parameter handling. The parameters use destructuring and default values in such a way that x and y can be omitted. But the object with the parameter can be omitted, too, as you can see in the last line of the code below. This feature is enabled via the = {} in the head of the function definition.`
+
+다음 함수 정의는 매개 변수, 때로는 옵션 개체를 호출하고 매개 변수 처리에 관한 장에서 설명하는 기술을 임명했다. 파라미터 x 및 y는 생략 할 수있는 방법으로 destructuring 값과 디폴트 값을 사용한다. 아래의 코드의 마지막 줄에서 볼 수 있지만 매개 변수를 사용하여 객체도 생략 할 수 있습니다. 이 기능은 함수 정의의 머리에 = {}를 통해 사용할 수 있습니다.
 
 ```javascript
 function move1({x=0, y=0} = {}) {
@@ -916,43 +1099,154 @@ move1({x: 3}); // [3, 0]
 move1({}); // [0, 0]  
 move1(); // [0, 0]  
 ```
-그러나 이전에 왜 코드 스니핏에서 파라미터를 선언해야 하는가? 다음은 완벽히 적합한 ES6 code코드 인가?
+
+`But why would you define the parameters as in the previous code snippet? Why not as follows – which is also completely legal ES6 code?`
+
+그런데 왜 당신은 이전 코드에서와 같이 매개 변수를 정의 할 것인가? 또한 완전히 법적 ES6 코드이다 - 왜 다음과 같은?
 
 ```javascript
 function move2({x, y} = { x: 0, y: 0 }) {
     return [x, y];
 }
 ```
-move1()이 왜 올바른지 알기위해 두 가지 예제를 위한 함수를 사용해보자. 그 전에 우선, 어떻게 파라미터 전달이 매칭에 의해 설명 될수 있는지를 먼저 보자. 
 
-##10.11.2.1 배경: 매칭을 이용한 파라미터 전달
-함수 호출을 위해, 일반적인 파라미터(함수 선언 내)들은 실제 파라미터로 매칭된다.(함수 호출 내) 예제와 같이 다음 함수선언과 호출을 하라.
+`To see why move1() is correct, let’s use both functions for two examples. Before we do that, let’s see how the passing of parameters can be explained via matching.`
+
+이동 한 ()가 정확한 이유를 확인하기 위해,이 두 가지 예 모두 기능을 사용할 수 있습니다. 우리가 그렇게하기 전에, 매개 변수의 통과가 일치를 통해 설명 할 수있는 방법을 살펴 보자.
+
+## 10.11.2.1 `Background: passing parameters via matching` 배경 : 일치를 통해 매개 변수를 전달
+
+`For function calls, formal parameters (inside function definitions) are matched against actual parameters (inside function calls). As an example, take the following function definition and the following function call.`
+
+함수 호출의 경우, (함수 정의 내부) 형식 매개 변수 (함수 호출 내부) 실제 매개 변수에 일치합니다. 예를 들어, 다음 함수를 정의하고, 다음 함수 호출을 수행.
+
 ```javascript
 function func(a=0, b=0) { ··· }
 func(1, 2);
 ```
-파라미터 a와 b는 다음의 해체와 유사한 과정으로 세팅된다.  
 
-[a=0, b=0] ← [1, 2]  
+`The parameters a and b are set up similarly to the following destructuring.`
 
-##10.11.2.2 사용하기  move2()  
- move2() 해체가 어떻게 이뤄지는지 보자.  
+매개 변수 a와 b는 다음 destructuring 유사하게 설정됩니다.
 
+`[a=0, b=0] ← [1, 2]`
 
-예제 1. move2()의 해체 과정:  
+## 10.11.2.2 `Using move2()` move2() 사용하기
 
-[{x, y} = { x: 0, y: 0 }] ← []  
-오직 좌변부의 배열 요소는 우변과 매치되지 않는다 이것은 {x,y} 가 기본값에 매칭되는 이유이고 우변부의 데이터에 반대된다. (rules 3b, 3d):
+`Let’s examine how destructuring works for move2().`
 
-{x, y} ← { x: 0, y: 0 }  
-좌변은 속성값 약칭을 소유한다 이것은 다음과 같다.
+이제 destructuring가) (Move2와 작동 방법을 살펴 보자.
 
-{x: x, y: y} ← { x: 0, y: 0 }  
-이 해체는 아래 내용처럼 두 개의 할당과 같은 결과로 이끈다.(rule 2c, 1):  
+`Example 1. move2() leads to this destructuring:`
 
-x = 0;  
-y = 0;  
+예 1 Move2와 ()이 destructuring로 연결 :
 
-##10.11.3 결론 
-예제에서는 기본값이 패턴부(객체의 프로퍼티 또는 배열 요소)의 특징임을 증명합니다. 일치하는 부분이 없거나 undefined 라면 기본값이 사용 됩니다. 말인즉슨, 패턴은 기본값과 일치됩니다.
+`[{x, y} = { x: 0, y: 0 }] ← []`
 
+`The only Array element on the left-hand side does not have a match on the right-hand side, which is why {x,y} is matched against the default value and not against data from the right-hand side (rules 3b, 3d):`
+
+왼쪽의 전용 어레이 소자 {X, Y}이 규칙도 3b (그리고 우측의 데이터에 대해 디폴트 값과 일치하는 이유는 오른쪽에서 매치를 없다 3 차원) :
+
+`{x, y} ← { x: 0, y: 0 }`
+
+`The left-hand side contains property value shorthands, it is an abbreviation for:`
+
+왼쪽은의 약어이며, 속성 값 shorthands이 포함되어 있습니다
+
+`{x: x, y: y} ← { x: 0, y: 0 }`
+
+`This destructuring leads to the following two assignments (rule 2c, 1):`
+
+이 destructuring가 (규칙 (2C), 1) 다음의 두 가지 과제로 이어진다
+
+```javascript
+x = 0;
+y = 0;
+```
+
+`However, this is the only case in which the default value is used.`
+
+그러나, 이러한 디폴트 값이 사용되는 유일한 경우이다.
+
+`Example 2. Let’s examine the function call move2({z:3}) which leads to the following destructuring:`
+
+예 2.의가 살펴 보자 함수 호출 영화 2 ({Z : 3}) 다음 destructuring에 이르게 :
+
+`[{x, y} = { x: 0, y: 0 }] ← [{z:3}]`
+
+`There is an Array element at index 0 on the right-hand side. Therefore, the default value is ignored and the next step is (rule 3d):`
+
+오른쪽에 인덱스 0에서 배열의 요소가있다. 따라서, 디폴트 값은 무시하고, 다음 단계 (룰 3D)이다 :
+
+`{x, y} ← { z: 3 }`
+
+`That leads to both x and y being set to undefined, which is not what we want.`
+
+즉, x와 y 모두가 우리가 원하는 것을하지 않은, undefined로 설정되는 리드.
+
+## `10.11.2.3 Using move1()` move1() 사용하기
+
+`Let’s try move1().`
+
+`move1`을 시도해보자.
+
+`Example 1: move1()`
+
+예제1: move1()
+
+`[{x=0, y=0} = {}] ← []`
+
+`We don’t have an Array element at index 0 on the right-hand side and use the default value (rule 3d):`
+
+우리는 오른쪽에 인덱스 0 배열 요소를 가지고 기본값 (룰 3D)을 사용하지 않는다 :
+
+`{x=0, y=0} ← {}`
+
+`The left-hand side contains property value shorthands, which means that this destructuring is equivalent to:`
+
+이 destructuring가 동등하다는 것을 의미 측이 속성 값 shorthands이 포함 된 좌측 :
+
+`{x: x=0, y: y=0} ← {}`
+
+`Neither property x nor property y have a match on the right-hand side. Therefore, the default values are used and the following destructurings are performed next (rule 2d):`
+
+어느 속성 X 나 속성 y는 오른쪽에 일치있다. 따라서, 디폴트 값을 사용하여 다음 destructurings 다음 (룰 2D)에 수행된다 :
+
+```javascript
+x ← 0
+y ← 0
+```
+
+`That leads to the following assignments (rule 1):`
+
+즉, 다음과 같은 과제 (규칙 1)로 연결 :
+
+```javascript
+x = 0
+y = 0
+```
+
+Example 2: move1({z:3})
+
+`[{x=0, y=0} = {}] ← [{z:3}]`
+
+`The first element of the Array pattern has a match on the right-hand side and that match is used to continue destructuring (rule 3d):`
+
+어레이 패턴의 첫 번째 요소는 우측의 매치를 가지며, 그 일치 destructuring (룰 3D)을 계속하기 위해 사용된다 :
+
+`{x=0, y=0} ← {z:3}`
+
+`Like in example 1, there are no properties x and y on the right-hand side and the default values are used:`
+
+실시 예 1과 마찬가지로,이 우측에는 특성 X와 Y는없고 디폴트 값이 사용된다 :
+
+```javascript
+x = 0
+y = 0
+```
+
+## 10.11.3 `Conclusion` 결론
+
+`The examples demonstrate that default values are a feature of pattern parts (object properties or Array elements). If a part has no match or is matched against undefined then the default value is used. That is, the pattern is matched against the default value, instead.`
+
+예는 기본 값이 패턴 부품 (개체 속성 또는 배열 요소)의 기능이 있음을 보여줍니다. 일부 일치가 없습니다 또는 정의에 일치하는 경우 기본값이 사용됩니다. 즉, 패턴 대신에, 디폴트 값에 대해 일치한다.
