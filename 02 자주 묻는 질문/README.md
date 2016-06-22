@@ -14,7 +14,7 @@ Most of ES6 is already supported in current engines, consult Kangax’ ES6 compa
 
 For other options (e.g. interactive ES6 command lines and transpiling ES6 to ES5 via Babel), consult Chap. “Deploying ECMAScript 6” in “Setting up ES6”.
 
-> 다른 선택지는, (예: 대화형 ES6 커맨드 라인과 바벨을 이용한 ES6에서 ES5로 변환) “Deploying ECMAScript 6” in “Setting up ES6”. 를 살펴보라.
+> 다른 선택지는, (대화형 ES6 커맨드 라인과 바벨을 이용한 ES6에서 ES5로 변환 등) Setting up ES6의 Deploying ECMAScript 6*역서 없음 16/06/22*를 살펴보라.
 
 ### 2.2 Isn’t ECMAScript 6 now called ECMAScript 2015?
 
@@ -26,14 +26,14 @@ Yes and no. The official name is ECMAScript 2015, but ES6 is the name that every
 
 After ES6, ECMAScript editions are created via a new process and a yearly release cycle. That seems like a good opportunity to switch to the new naming scheme. Therefore, I’ll use the name “ECMAScript 2016” for the edition after ES6.
 
-> ES6 이후, ECMAScript 판은 새로운 절차와 매년 출시 주기를 통해 만들어진다. 이 것은 새로운 명명 방식으로 전환하기 위한 좋은 기회로 보인다. 그러므로 이 책은 ES6 그 다음 판에 "ECMAScript 2016" 이라는 이름을 사용 할 것이다. 
+> ES6 이후, ECMAScript 판은 새로운 절차와 매년 출시 주기를 통해 만들어진다. 이것은 새로운 명명 방식으로 전환하기 위한 좋은 기회로 보인다. 그러므로 나는 ES6 그 다음 버전에 "ECMAScript 2016"이라는 이름을 사용 할 것이다. 
 
 ### 2.3 How do I migrate my ECMAScript 5 code to ECMAScript 6?`
-> 2.3 ECMAScript 5 코드를 ECMAScript 6으로 어떻게 통합하는가? 
+> 2.3 ECMAScript 5 코드를 ECMAScript 6로 어떻게 이전하는가? 
 
 There is nothing to do: ECMAScript 6 is a superset of ECMAScript 5. Therefore, all of your ES5 code is automatically ES6 code. That helps tremendously with incrementally adopting this new version. How exactly ES6 stays completely backwards compatible is explained in the chapter on “One JavaScript”.
 
-> 해야 할 것은 없다 :  ECMAScript 6는 ECMAScript 5의 상위 집합이다. 그러므로, ES5로 작성된 모든 코드는 자동적으로 ES6 코드이다. 이 새로운 버전을 점진적으로 적용하는 것에 굉장히 도움을 준다. 어떻게 ES6가 이전 버전과 완벽히 호환이 유지되는지는 “하나의 자바스크립트” 장에서 설명한다. 
+> 해야 할 것은 없다 :  ECMAScript 6는 ECMAScript 5의 상위 집합이다. 그러므로, ES5로 작성된 모든 코드는 자동적으로 ES6 코드이다. 이런 방식은 새로운 버전을 점진적으로 적용하는 것에 굉장한 도움을 준다. 어떻게 ES6가 이전 버전과 완벽히 호환이 유지되는지는 “하나의 자바스크립트” 장에서 설명한다. 
 
 
 ### 2.4 Does it still make sense to learn ECMAScript 5?
@@ -46,7 +46,7 @@ ES6 is increasingly well supported everywhere. Does that mean that you shouldn�
 ECMAScript 6 is a superset of ECMAScript 5 – new JavaScript versions must never break existing code. Thus, nothing you learn about ECMAScript 5 is learned in vain.
 
 
-> ECMAScript 6는 ECMAScript 5 의 상위 집합이다 - 새로운 자바스크립트 버전은 절대로 기존 코드를 망가뜨리지 않는다. 그러한 이유로, ECMAScript 5 관해 헛되이 학습되어지는 것은 없다.
+> ECMAScript 6는 ECMAScript 5 의 상위 집합이다 - 새로운 자바스크립트 버전은 절대로 기존 코드를 망가뜨리지 않는다. 그러한 이유로, ECMAScript 5 관해 헛되이 학습되는 것은 없다.
 
 There are several ECMAScript 6 features that kind of replace ECMAScript 5 features, but still use them as their foundations. It is important to understand those foundations. Two examples: classes are internally translated to constructors and methods are still functions (as they have always been).
 
@@ -54,7 +54,7 @@ There are several ECMAScript 6 features that kind of replace ECMAScript 5 featur
 
 As long as ECMAScript 6 is compiled to ECMAScript 5, it is useful to understand the output of the compilation process. And you’ll have to compile to ES5 for a while (probably years), until you can rely on ES6 being available in all relevant browsers. It’s important to be able to understand legacy code.
 
-> ECMAScript 6가 ECMAScript 5로 컴파일 될 뿐만 아니라 컴파일 절차의 산출물을 이해하는 것도 유용하다. 그리고 한동안은 ES5로 컴파일을 해야만 할 것이다.(아마도 수년간) 모든 적절한 브라우저에서 이용 가능한 ES6에 기댈 수 있을 때까지 말이다. 레거시 코드를 이해할수 있게 되는 것은 중요하다. 
+> ECMAScript 6가 ECMAScript 5로 컴파일될 뿐만 아니라 컴파일 절차의 산출물을 이해하는 것도 유용하다. 그리고 한동안은 ES5로 컴파일해야만 할 것이다.(아마도 수년간) 모든 적절한 브라우저에서 이용 가능한 ES6에 기댈 수 있을 때까지 말이다. 레거시 코드를 이해할 수 있게 되는 것은 중요하다. 
 
 
 
@@ -63,7 +63,7 @@ As long as ECMAScript 6 is compiled to ECMAScript 5, it is useful to understand 
 
 One occasionally comes across accusations of ES6 being bloated and introducing too much useless syntactic sugar (more convenient syntax for something that already exists).
 
-> 때로는 ES6가 비대해진다는 비난과 매우 쓸모 없는 편의 문법(이미 존재하는 무언가를 위한 더욱 편리한 문법)을 소개한다는 인상을 남긴다.
+> 때로는 ES6가 비대해진다는 비난과 매우 쓸모없는 편의 문법(이미 존재하는 무언가를 위한 더욱 편리한 문법)을 소개한다는 인상을 남긴다.
 
 
 However, in many ways, JavaScript is just now catching up with languages such as Python and Ruby. Both still have more features and come with a much richer standard library.
@@ -72,11 +72,11 @@ However, in many ways, JavaScript is just now catching up with languages such as
 
 If someone complains about ES6 being too big, I suggest that they try it out for a while. Nobody forces you to use any of the new features. You can start small (consult Chap. “First steps with ECMAScript 6” for suggestions) and then use more new features, as you grow more comfortable with ES6. So far, the feedback I get from people who have actually programmed with ES6 (as opposed to read about it) is overwhelmingly positive.
 
-> 너무 거대해지고 있는 ES6에 관해 누군가 불만을 제기한다면, 한동안 ES6를 직접 써보는 걸 권한다. 아무도 새로운 기능을 사용해야 한다고 강제하지 않는다. 작게 시작하고 나서(“First steps with ECMAScript 6”를 추천한다) 더 많은 새로운 기능을 사용해보면, 당신이 성장함에 따라 ES6가 더욱 편안해질 것이다.  지금까지 ES6로 실제 프로그래밍을 해본 사람들(읽어본 사람과는 대조적으로)에게 받은 피드백은 압도적으로 긍정적이다.
+> 너무 거대해지고 있는 ES6에 관해 누군가 불만을 제기한다면, 한동안 ES6를 직접 써보는 걸 권한다. 아무도 새로운 기능을 사용해야 한다고 강제하지 않는다. 작게 시작하고 나서(ES6 첫걸음 떼기 장을 살펴보길 권한다) 더 많은 새로운 기능을 사용해보면, 당신이 성장함에 따라 ES6가 더욱 편안해질 것이다. 지금까지 ES6로 실제 프로그래밍을 해본 사람들(읽어본 사람과는 대조적으로)에게 받은 피드백은 압도적으로 긍정적이다.
 
 Furthermore, things that superficially look like syntactic sugar (such as classes and modules) bring much-needed standardization to the language and serve as foundations for future features.
 
-> 뿐만 아니라 겉보기에 편의 문법으로 보이는 것들은(클래스와 모듈 같은 것) 언어에 매우 필요한 표준화를 불러왔고 향후 기능들을 위한 기반의 역할을 한다.
+> 그뿐만 아니라 겉보기에 편의 문법으로 보이는 것들은(클래스와 모듈 같은 것) 언어에 매우 필요한 표준화를 불러왔고 향후 기능들을 위한 기반의 역할을 한다.
 
 
 Lastly, several features were not created for normal programmers, but for library authors (e.g. generators, iterators, proxies). “Normal programmers” only need to know them superficially if at all.
@@ -88,43 +88,43 @@ Lastly, several features were not created for normal programmers, but for librar
 
 The ECMAScript specification has indeed grown tremendously: The ECMAScript 5.1 PDF had 245 pages, the ES6 PDF has 593 pages. But, for comparison, the Java 8 language specification has 724 pages (excluding an index). Furthermore, the ES6 specification contains details that many other language specifications omit as implementation-defined. It also specifies how its standard library works1.
 
-> ECMAScript 사양은 엄청나게 성장해왔다. ECMAScript 5.1 PDF 문서는 245페이지이고, ES6 PDF문서는 593페이지를 갖는다. 하지만 비교해보자면, 자바 8 버전의 스팩은 724페이지(목차 제외)이다. !!!나아가 ES6 사양은 많은 다른 언어 사양에서 구현을 정의하는 것으로써의 상세를 누락시킨 스펙들을 정의된 구현 정의를 포함한다. ES6 사양은 또한 표준라이브러리가 어떻게 동작하는지 규정한다.!!!
+> ECMAScript 사양은 엄청나게 성장해왔다. ECMAScript 5.1 PDF 문서는 245페이지이고, ES6 PDF문서는 593페이지를 갖는다. 하지만 비교해보자면, 자바 8 버전의 언어 사양은 724페이지(목차 제외)이다. 나아가 ES6 사양은 많은 다른 언어 사양에서 구현은 되었으나 생락된 상세 내용을 포함한다. 이런 내용은 표준라이브러리가 어떻게 동작하는지 또한 규정한다.
 
 ### 2.7 Does ES6 have array comprehensions?
-> 2.7 ES6는 배열함축(array comprehensions) 지원하는가? 
+> 2.7 ES6는 배열함축*array comprehensions*을 지원하는가? 
 
 Originally, ES6 was to have Array and generator comprehensions (similarly to Haskell and Python). But they were not added, because TC39 wanted to explore two avenues:
 
-> 원래 ES6는 배열과 제너레이터 함축 갖는 것이었다(하스켈과 파이썬과 유사하게) !!그러나 TC39 위원회가 아래 두 가지 가능성을 실험해보길 길을 탐험하길 원해서 추가되지는 않았다. !!그러나 TC39 위원회는 다음의 두 선택지를 검토하기 위해 이를 추가하지 않았다.
+> 원래 ES6는 배열과 제너레이터 함축을 갖는 것이었다(하스켈과 파이썬과 유사하게) 그러나 TC39 위원회는 다음의 두 선택지를 검토하기 위해 이를 추가하지 않았다.
 
 + `It may be possible to create comprehensions that work for arbitrary datatypes (think Microsoft’s LINQ).`
 + `It may also be possible that methods for iterators are a better way to achieve what comprehensions do.`
 
 + 임의의 데이터 타입을 위해 작동하는 함축을 생성하게 될 수 있다.(마이크로소프트의 LINQ를 떠올려보라)
-+ 또한 이터레이터 메소드는 내포가 하는 일을 수행하기 위한 더 나은 방법일 수 있다
++ 또한 이터레이터 메소드는 함축이 하는 일을 수행하기 위한 더 나은 방법일 수 있다
 
 ### 2.8 Is ES6 statically typed?
 > 2.8 ES6는 정적 타입인가? 
 
 > Static typing is not part of ES6. However, the following two technologies add static typing to JavaScript. Similar features may eventually be standardized.
 
-정적 타입은 ES6의 일부가 아니다. 하지만 다음의 두 가지 기술은 자바스크립트에 정적 타입을 추가한다. 유사한 기능들이 종내에는 표준화 될 수도 있다.
+정적 타입은 ES6의 일부가 아니다. 하지만 다음의 두 가지 기술은 자바스크립트에 정적 타입을 추가한다. 유사한 기능들이 종내에는 표준화될 수도 있다.
 
 
 + Microsoft TypeScript: is basically ES6 plus optional type annotations. At the moment, it is compiled to ES5 and throws away the type information while doing so. Optionally, it can also make that information available at runtime, for type introspection and for runtime type checks. 
 
-> 마이크로소프트 타입스크립트: 타입스크립트는 ES6에 선택적인 타입 어노테이션이 추가된 것이다. ES5 로 컴파일되면서 타입 정보는 버려진다. 부가적으로 타입 정보는 런타임에 이용가능하게 만든다. !형 추론, 형검사!
+> 마이크로소프트 타입스크립트: 타입스크립트는 ES6에 선택적인 타입 어노테이션이 추가된 것이다. ES5로 컴파일되고 바로 타입 정보는 버려진다. 타입 추론과 런타임 타입 검사를 위해서 선택적으로 런타임에 이 정보를 사용 가능하게 만들 수도 있다.
 
 + Facebook Flow: is a type checker for ECMAScript 6 that is based on flow analysis. As such, it only adds optional type annotations to the language and infers and checks types. It does not help with compiling ES6 to ES5.
 
-> 페이스북 플로우: 플로우는 플로우 분석에 기반을 둔 ECMAScript 6를 위한 타입 체커이다. 예를 들어 선택적인 타입 어노테이션만을 언어에 추가하고 타입을 추론하고 확인한다. 플로우는 ES6를 ES5로 변환하는데 도움을 주지는 않는다.
+> 페이스북 플로우: 플로우는 플로우 분석에 기반을 둔 ECMAScript 6를 위한 타입 검사기다. 예를 들어 선택적인 타입 어노테이션만을 언어에 추가하고 타입을 추론하고 확인한다. 플로우는 ES6를 ES5로 변환하는데 도움을 주지는 않는다.
 
 Two benefits of static typing are:
 > 정적 타입의 두 가지 장점 : 
 
 + It allows you to detect a certain category of errors earlier, because the code is analyzed statically (during development, without running code). As such, static typing is complementary to testing and catches different errors.
 
-> 정적 타입은 코드가 정적으로 분석되기 때문에, 에러의 확실한 카테고리를 더욱 빨리 찾을 수 있다.(개발중에 코드 실행 없이) 그래서 정적 타입은 테스팅과 상호 보완적이며 다른 종류의 에러를 잡아낸다.
+> 정적 타입은 코드가 정적으로 분석되기 때문에, 에러의 확실한 카테고리를 더욱 빨리 찾을 수 있다(개발중에 코드 실행 없이) 그래서 정적 타입은 테스팅과 상호 보완적이며 다른 종류의 에러를 잡아낸다.
 
 + It helps IDEs with auto-completion.
 
@@ -132,7 +132,7 @@ Two benefits of static typing are:
 
 Both TypeScript and Flow are using the same notation. Type annotations are optional, which makes this approach relatively lightweight. Even without annotations, types can often be inferred. Therefore, this kind of type checking is even useful for completely unannotated code, as a consistency check.
 
-> 타입스크립트와 플로우는 똑같은 표기법을 이용한다. 타입 어노테이션은 선택사항이어서 상대적으로 가볍게 접근할 수 있다. 어노테이션이 없을지라도, 타입은 종종 추론 될 수 있다. 그러므로 타입을 확인하는 이런 방법은 어노테이션이 전혀 붙지 않은 코드조차 일관성 검사 측면에서 유용하다.
+> 타입스크립트와 플로우는 똑같은 표기법을 이용한다. 타입 어노테이션은 선택사항이어서 상대적으로 가볍게 접근할 수 있다. 어노테이션이 없을지라도, 타입은 종종 추론될 수 있다. 그러므로 타입을 확인하는 이런 방법은 어노테이션이 전혀 붙지 않은 코드조차 일관성 검사 측면에서 유용하다.
 
 ### 2.9 Where can I find more ES6 resources?
 > 2.9 더 많은 ES6 자료는 어디에서 찾을수 있나? 
@@ -140,5 +140,8 @@ Both TypeScript and Flow are using the same notation. Type annotations are optio
 These are two lists with ES6 resources:
 > 아래는 ES6 학습에 도움되는 두 가지 자료이다. 
 
-+ “ECMAScript 6 Tools” by Addy Osmani.
-+ “ECMAScript 6 Learning!” by Eric Douglas.
++ “ECMAScript 6 Tools” by Addy Osmani. 
++ “ECMAScript 6 Learning!” by Eric Douglas. 
+
+> ECMAScript 6 Tools 에디 오스마니 (역서 없음 16/06/22 https://github.com/addyosmani/es6-tools)
+> ECMAScript 6 Learning! 에릭 더글라스 (역서 없음 16/06/22 https://github.com/ericdouglas/ES6-Learning)
