@@ -412,14 +412,20 @@ ES6에서 추가적인 이득은 파라미터 기본값은 단지 undefined에 �
 
 ## 4.8 Handling named parameters
 ## 4.8 기명 파라미터 다루기
-자바스크립트에서 파라미터에 이름을 붙이는 흔한 방법은 객체리터럴을 통한 것이다(옵션 객체 패턴으로 불리는).:
+A common way of naming parameters in JavaScript is via object literals (the so-called options object pattern):
+
+자바스크립트에서 파라미터에 이름을 붙이는 일반적인 방법은 객체리터럴을 통한 것 이다(이는 옵션 객체 패턴으로 불려진다):
 
 ```javascript
 selectEntries({ start: 0, end: -1 });
 ```
-이 접근은 두가지 이점이 있다: 코드가 더 스스로를 설명하고 임의로 파라미터를 빼기 더 쉽다.
+Two advantages of this approach are: Code becomes more self-descriptive and it is easier to omit arbitrary parameters.
 
-ES5에서 당신은 selectEntries()를 다음 처럼 구현할 수 있다.:
+이 접근의 두가지 이점은: 코드가 스스로를 잘 설명할 수 있고, 임의로 파라미터를 빼기 더 쉽다.
+
+In ES5, you can implement selectEntries() as follows:
+
+ES5에서 selectEntries()를 다음 같이 구현할 수 있다:
 
 ```javascript
 function selectEntries(options) {
@@ -429,15 +435,21 @@ function selectEntries(options) {
     ···
 }
 ```
-ES6에서 당신은 파라미터 정의에서 해체를 사용할 수 있고 코드는 더욱 간단해 진다.:
+In ES6, you can use destructuring in parameter definitions and the code becomes simpler:
+
+ES6에서 파라미터 정의 시 해체 사용할 수 있고 코드는 더욱 간단해 진다:
 
 ```javascript
 function selectEntries({ start=0, end=-1, step=1 }) {
     ···
 }
 ```
+
+### 4.8.1 Making the parameter optional
 ### 4.8.1 선택적 파라미터 만들기
-ES5에서 파라미터 옵션을 선택적으로 만들기 위해서 당신은 코드의 A줄을 추가 해야 한다.:
+To make the parameter options optional in ES5, you’d add line A to the code:
+
+ES5에서 파라미터 options을 선택적으로 만들기 위해서 코드의 A줄을 추가 해야 한다:
 
 ```javascript
 function selectEntries(options) {
@@ -448,17 +460,24 @@ function selectEntries(options) {
     ···
 }
 ```
-es6에서는 당신은 파라미터 기본값을 {}로 지정 할 수 있다.:
+
+In ES6 you can specify {} as a parameter default value:
+
+ES에서 파라미터 기본값으로 {}을 지정 할 수 있다:
 
 ```javascript
 function selectEntries({ start=0, end=-1, step=1 } = {}) {
     ···
 }
 ```
-더 자세한 내용은: 섹션 "시뮬레이션 명명 파라미터"
 
-## 4.9 arguments에서 남은 파라미터로
-ES5에서 당신은 함수(또는 메소드) 인수를 임의의 수를 받게 한다면 당신은 반드시 특별 변수인 arguments를 사용해야 한다.:
+더 자세한 내용은: "시뮬레이션 명명 파라미터"절
+
+## 4.9 From arguments to rest parameters
+## 4.9 arguments에서 나머지 파라미터로
+In ES5, if you want a function (or method) to accept an arbitrary number of arguments, you must use the special variable arguments:
+
+ES5에서 함수(또는 메소드) 인수를 임의의 수를 받기를 원한다면 반드시 특별 변수인 arguments를 사용해야 한다:
 
 ```javascript
 function logAllArguments() {
@@ -467,7 +486,9 @@ function logAllArguments() {
     }
 }
 ```
-ES6에서 당신은 남은 파라미터(아래 예제의 args) ...연산자를 통해 선언 할 수 있다.:
+In ES6, you can declare a rest parameter (args in the example below) via the ... operator:
+
+ES6에서 나머지 파라미터(아래 예제의 args)는 ...연산자를 통해 선언 할 수 있다:
 
 ```javascript
 function logAllArguments(...args) {
@@ -476,13 +497,18 @@ function logAllArguments(...args) {
     }
 }
 ```
-만약 당신이 뒷 부분에만 흥미가 있다면 남은 파라미터는 심지어 더 좋다:
+Rest parameters are even nicer if you are only interested in trailing parameters:
+
+뒷 부분에만 흥미가 있다면 나머지 파라미터가 더 좋다:
+
 ```javascript
 function format(pattern, ...args) {
     ···
 }
 ```
-ES5에서 이 케이스를 다루면 꼴사납다:
+Handling this case in ES5 is clumsy:
+
+ES5에서 이 상황을 다루면 꼴사납다:
 
 ```javascript
 function format() {
@@ -491,24 +517,32 @@ function format() {
     ···
 }
 ```
-남은 파라미터는 코드를 읽기에 쉽게 만들어 준다: 당신은 단지 그 파라미터가 정의를 보면 함수가 변할 수 있는 수의 파라미터를 갖는지 알 수 있다.
+Rest parameters make code easier to read: You can tell that a function has a variable number of parameters just by looking at its parameter definitions.
+나머지 파라미터는 코드를 읽기 쉽게 만들어 준다: 파라미터 정의를 보는 것을 통해 함수가 가지는 파라미터 가변 수를 말할 수 있다.
 
-더 자세한 정보: 섹션 "남은 파라미터".
+더 자세한 정보: "나머지 파라미터"절.
 
+## 4.10 From apply() to the spread operator (...)
 ## 4.10 apply()에서 펼침 연산자 (...)
-ES5에서 당신은 배열을 apply()을 통해 파라미터로 변환한다. ES6은 이 목적을 위해 펼침 연산자를 갖는다.
+In ES5, you turn arrays into parameters via apply(). ES6 has the spread operator for this purpose.
 
-### 4.10.1 Math.amx();
+ES5에서 배열을 apply()을 통해 파라미터로 변환한다. ES6은 이 목적을 위해 펼침 연산자를 갖는다.
+
+### 4.10.1 Math.max();
 ES5 – apply():
 ```javascript
 > Math.max.apply(null, [-1, 5, 11, 3])
 11
-```
+``
+ES6 – spread operator:
+
 ES6 – 펼침 연산자:
+
 ```javascript
 > Math.max(...[-1, 5, 11, 3])
 11
 ```
+
 ### 4.10.2 Array.prototype.push()
 ES5 – apply():
 
@@ -517,9 +551,10 @@ var arr1 = ['a', 'b'];
 var arr2 = ['c', 'd'];
 
 arr1.push.apply(arr1, arr2);
-    // arr1 is now ['a', 'b', 'c', 'd']
+    // arr1는 ['a', 'b', 'c', 'd']
 ```
 
+ES6 – spread operator:
 ES6 – 펼침 연산자:
 
 ```javascript
@@ -527,12 +562,16 @@ const arr1 = ['a', 'b'];
 const arr2 = ['c', 'd'];
 
 arr1.push(...arr2);
-    // arr1 is now ['a', 'b', 'c', 'd']
+    // arr1는 ['a', 'b', 'c', 'd']
 ```
-더 자세한 내용: 섹션 "펼침 연산자 (...)".
 
+더 자세한 내용: "펼침 연산자 (...)"절.
+
+## 4.11 From concat() to the spread operator (...)
 ## 4.11 concat()에서 펼침 연산자 (...)로
-펼침 연산자는 그 피연산자의 내용을 배열 원소로 바꿀 수 있다. 그것은 배열 메소드 concat()의 대안이 되는 것을 의미한다..
+The spread operator can also turn the contents of its operand into Array elements. That means that it becomes an alternative to the Array method concat().
+
+펼침 연산자는 또한 피연산자의 내용을 배열 원소로 바꿀 수 있다. 이것은 배열 메소드 concat()의 대안이 되는 것을 의미한다.
 
 ES5 – concat():
 
@@ -545,6 +584,8 @@ console.log(arr1.concat(arr2, arr3));
     // [ 'a', 'b', 'c', 'd', 'e' ]
 ```
 
+ES6 – spread operator:
+
 ES6 – 펼침 연산자:
 
 ```javascript
@@ -555,11 +596,15 @@ const arr3 = ['d', 'e'];
 console.log([...arr1, ...arr2, ...arr3]);
     // [ 'a', 'b', 'c', 'd', 'e' ]
 ```
-더 자세한 내용: 섹션 "펼침 연산자 (...)".
+더 자세한 내용: "펼침 연산자 (...)" 절.
 
+## 4.12 From function expressions in object literals to method definitions
 ## 4.12 객체 리터럴에서의 함수표현식에서 메소드 정의로
-자바스크립트에서 메소드는 프로퍼티의 값이 함수인 것이다.
+In JavaScript, methods are properties whose values are functions.
 
+자바스크립트에서 메소드는 값이 함수인 프로퍼티 이다.
+
+In ES5 object literals, methods are created like other properties. The property values are provided via function expressions.
 ES5 객체 리터럴에서 메소드는 다른 프로퍼티 처럼 생성된다. 이 프로퍼티 값은 함수 표현식을 통해 제공된다.
 
 ```javascript
@@ -572,7 +617,9 @@ var obj = {
     }, // trailing comma is legal in ES5
 }
 ```
-ES6은 메소드 정의를 갖고, 메소드 생성에 대한 특별 문법을 갖는다.:
+ES6 has method definitions, special syntax for creating methods:
+
+ES6은 메소드 정의를 갖고, 메소드 생성에 대한 특별 문법을 갖는다:
 
 ```javascript
 const obj = {
@@ -584,13 +631,19 @@ const obj = {
     },
 }
 ```
-더 자세한 내용: 섹션 "메소드 정의"
+더 자세한 내용: "메소드 정의" 절.
 
+## 4.13 From constructors to classes
 ## 4.13 생성자로부터 클래스로
-ES6 클래스는 대부분 함수 생성자에 대한 문법보다 더 편리 하다.
+ES6 classes are mostly just more convenient syntax for constructor functions.
 
+ES6 클래스는 대개 함수 생성자에 대한 문법보다 더 편리 하다.
+
+### 4.13.1 Base classes
 ### 4.13.1 기본 클래스
-ES5에서 당신은 생성자 함수를 바로 구현한다.:
+In ES5, you implement constructor functions directly:
+
+ES5에서 생성자 함수를 직접 구현한다:
 
 ```javascript
 function Person(name) {
@@ -600,7 +653,10 @@ Person.prototype.describe = function () {
     return 'Person called '+this.name;
 };
 ```
-ES6에서 클래스는 생성자 함수에 대한 약간 더 편리한 문법을 제공한다(특히 메소드 정의에 대한 간결한 문법을 주목하라 - function 키워드는 필요치 않다).:
+In ES6, classes provide slightly more convenient syntax for constructor functions (note especially the compact syntax for method definitions – no keyword function needed):
+
+ES6에서 클래스는 생성자 함수에 대한 약간 더 편리한 문법을 제공한다(특히 메소드 정의에 대한 간결한 문법을 주목하라 - function 키워드는 필요치 않다):
+
 ```javascript
 class Person {
     constructor(name) {
@@ -612,8 +668,11 @@ class Person {
 }
 ```
 
+### 4.13.2 Derived classes
 ### 4.13.2 파생 클래스
-ES5에서 하위 클래스를 만드는 것은 복잡하고 그 중에서 특히 부모 생성자와 부모 프로퍼티를 참조 하는 것은 복잡하다. 여기 Person에 하위 생성자 Employee를 생성하는 인정받은 방법이 있다.:
+Subclassing is complicated in ES5, especially referring to super-constructors and super-properties. This is the canonical way of creating a sub-constructor of Person, Employee:
+
+ES5에서 하위 클래스를 만드는 것은 복잡하고 특히 부모 생성자와 부모 프로퍼티를 참조 하는 것이 복잡하다. 여기 Person에 하위 생성자 Employee를 생성하는 규범적인 방법이 있다:
 
 ```javascript
 function Employee(name, title) {
@@ -627,7 +686,9 @@ Employee.prototype.describe = function () {
            + ' (' + this.title + ')';
 };
 ```
-ES6는 extends 절을 통한 서브클래스 생성을 내장으로 지원한다.:
+ES6 has built-in support for subclassing, via the extends clause:
+
+ES6는 extends 절을 통한 서브클래스 생성을 내장으로 지원한다:
 
 ```javascript
 class Employee extends Person {
@@ -640,10 +701,13 @@ class Employee extends Person {
     }
 }
 ```
-더 자세한 내용: 챕터 "클래스".
+더 자세한 내용: "클래스"장.
 
+## 4.14 From custom error constructors to subclasses of Error
 ## 4.14 커스톰 에러 생성자로 부터 에러의 하위 클래스로
-ES5에서 익셉션, 에러에 대한 내장 생성자를 하위 클래스를 만드는것은 불가능 했다(챕터 말하는 자바스크립트의 내장객체의 하위 클래스에서 이유를 설명한다.). 아래 코드는 생성자 MyError에게 스택 트래이스처럼 중요한 기능을 주는 해결 방법을 보여준다.:
+In ES5, it is impossible to subclass the built-in constructor for exceptions, Error (the chapter “Subclassing Built-ins” in “Speaking JavaScript” explains why). The following code shows a work-around that gives the constructor MyError important features such as a stack trace:
+
+ES5에서 익셉션, 에러에 대한 내장 생성자를 하위 클래스를 만드는것은 불가능 했다(말하는 자바스크립트의 내장객체의 하위 클래스 장에서 이유를 설명한다). 아래 코드는 생성자 MyError에게 스택 트래이스처럼 중요한 기능을 전달하는 차선책을 보여준다:
 
 ```javascript
 function MyError() {
@@ -654,19 +718,27 @@ function MyError() {
 MyError.prototype = Object.create(Error.prototype);
 MyError.prototype.constructor = MyError;
 ```
+In ES6, all built-in constructors can be subclassed, which is why the following code achieves what the ES5 code can only simulate:
 
-ES6에서 모든 내장 생성자는 서브클래스를 만들수 있고, 이것은 아래의 코드가 ES5코드를 흉내 내는 것을 할 수 있는 이유이다.:
+ES6에서 모든 내장 생성자는 서브클래스를 만들수 있고, 이것은 아래의 코드가 ES5코드를 흉내 내는 것을 할 수 있는 이유이다:
 
 ```javascript
 class MyError extends Error {
 }
 ```
-더 자세한 정보: 섹션 "내장 생성자의 서브클래스 만들기"
+More information: section “Subclassing built-in constructors”.
 
+더 자세한 정보: "내장 생성자의 서브클래스 만들기"절.
+
+## 4.15 From objects to Maps
 ## 4.15 객체에서 맵으로
-이 언어에서 문자열로 아무 값을 얻는 맵(자료 구조)처럼 객체 생성을 사용하는것은 자바스크립트에서 임시 방법이 였다. 이것의 더 안전한 방법은 프로퍼티가 null인 객체 생성을 통한 것 이다. 이 때 당신은 심지어 문자열 '__proto__' 가 없는지 확인해야 한다. 왜냐하면 그 프로퍼티 키는 많은 자바스크립트 엔진에서 특별한 기능을 유발하기 때문이다.
+Using the language construct object as a map from strings to arbitrary values (a data structure) has always been a makeshift solution in JavaScript. The safest way to do so is by creating an object whose prototype is null. Then you still have to ensure that no key is ever the string '__proto__', because that property key triggers special functionality in many JavaScript engines.
 
-아래 ES5 코드는 맵과 같은 객체 dict을 사용한 함수 countWords를 포함한다.:
+문자열을 통해 아무 값을 시상하는 것(자료구조)처럼 언어 구조 객체는 자바스크립트에서 항상 임시 방법이 였다. 더 안전한 방법은 프로퍼티가 null인 객체 생성을 통한 것 이다. 이 때도 문자열 '__proto__' 가 없는지 확인해야 한다. 왜냐하면 그 프로퍼티 키는 많은 자바스크립트 엔진에서 특별한 기능을 유발하기 때문이다.
+
+The following ES5 code contains the function countWords that uses the object dict as a map:
+
+아래 ES5 코드는 맵으로써 객체 dict을 사용한 함수 countWords를 포함한다:
 
 ```javascript
 var dict = Object.create(null);
@@ -686,8 +758,9 @@ function escapeKey(key) {
     }
 }
 ```
+In ES6, you can use the built-in data structure Map and don’t have to escape keys. As a downside, incrementing values inside Maps is less convenient.
 
-ES6에서 당신은 내장 자료 구조 Mad을 사용할 수 있고 escapeKey는 없어도 된다. 단점은 맵안에서 값을 증가시키는 것은 덜 편리하다.
+ES6에서 내장 자료 구조 Map을 사용할 수 있고 이스케이프 키는 없어도 된다. 단점은 맵안에서 값을 증가시키는 것은 덜 편리하다.
 
 ```javascript
 const map = new Map();
@@ -696,15 +769,20 @@ function countWords(word) {
     map.set(word, count + 1);
 }
 ```
-맵에 대한 다른 장점은 키로 아무 문자열 뿐 아니라 아무 값이나 사용할 수 있다.
+Another benefit of Maps is that you can use arbitrary values as keys, not just strings.
+
+맵에 대한 다른 장점은 키로 문자열 뿐 아니라 아무값을 키로 사용할 수 있다.
 
 더 자세한 내용: :
+자바스크립트 말하기 "사전 패턴: 프로토타입 없는 객체는 더 나은 맵 이다."절
+"맵과 셋" 장
 
-자바스크립트 말하기에서 섹션 "사전 패턴: 프로토타입 없는 객체는 더 나은 맵 이다." 
-챕터 "맵과 셋"
-
+## 4.16 New string methods
 ## 4.16 새로운 문자열 메소드
-ECMAScript 6 표준 라이브러리는 몇개의 스트링에 관한 새로운 메소드를 제공한다.
+The ECMAScript 6 standard library provides several new methods for string
+ECMAScript 6 표준 라이브러리는 문자열에 관한 여러개의 새로운 메소드를 제공한다.
+
+From indexOf to startsWith:
 
 indexOf로 부터 startsWidth:
 
@@ -712,6 +790,8 @@ indexOf로 부터 startsWidth:
 if (str.indexOf('x') === 0) {} // ES5
 if (str.startsWith('x')) {} // ES6
 ```
+
+From indexOf to endsWith:
 
 indexOf로 부터 endsWith:
 
@@ -723,6 +803,7 @@ function endsWith(str, suffix) { // ES5
 }
 str.endsWith(suffix); // ES6
 ```
+From indexOf to includes:
 
 indexOf로 부터 includes:
 
@@ -730,20 +811,27 @@ indexOf로 부터 includes:
 if (str.indexOf('x') >= 0) {} // ES5
 if (str.includes('x')) {} // ES6
 ```
-join으로 부터 repeat (문자열을 반복의 이전 방법 더 핵(hack)이다.):
+From join to repeat (the former way of repeating a string is more of a hack):
+
+join으로 부터 repeat (문자열 반복 이전의 방법은 꼼수(hack)이다.):
 
 ```javascript
 new Array(3+1).join('#') // ES5
 '#'.repeat(3) // ES6
 ```
 
-더 자세한 정보: 챕터 "새로운 문자열 기능"
+더 자세한 정보: "새로운 문자열 기능"장
 
+## 4.17 New Array methods
 ## 4.17 새로운 배열 메소드
-ES6에서 몇 가지 새로운 배열 메소드가 있다.
+There are also several new Array methods in ES6.
 
+ES6에서 또한 여러개의 새로운 배열 메소드가 있다.
+
+###4.17.1 From Array.prototype.indexOf to Array.prototype.findIndex
 ### 4.17.1 Array.prototype.indexOf에서 Array.prototype.findIndex
-후자는 NaN을 발견하는데 사용 할 수 있지만 전자는 발견하지 못한다.:
+The latter can be used to find NaN, which the former can’t detect:
+후자는 NaN을 발견하는데 사용 할 수 있지만 전자는 발견하지 못한다:
 
 ```javascript
 const arr = ['a', NaN];
@@ -751,6 +839,7 @@ const arr = ['a', NaN];
 console.log(arr.indexOf(NaN)); // -1
 console.log(arr.findIndex(x => Number.isNaN(x))); // 1
 ```
+As an aside, Number.isNaN() provides a safe way to detect NaN (because it doesn’t coerce non-numbers to numbers):
 
 여담으로 Number.isNaN()은 NaN을 확인하는 안전한 방법을 제공한다. (왜냐하면 이것은 비 숫자를 숫자로 강제로 변환하지 않기 때문이다.):
 
@@ -761,15 +850,19 @@ true
 false
 ```
 
+### 4.17.2 From Array.prototype.slice() to Array.from()
 ### 4.17.2 Array.prototype.slice()에서 Array.from()으로
-ES5에서 후자 메소드는 유사 배열을 배열로 변경하는데 사용하였는다. ES6에서는 Array.from()을 사용한다.:
+In ES5, the former method was used to convert Array-like objects to Arrays. In ES6, you have Array.from():
+
+ES5에서 후자 메소드는 유사 배열을 배열로 변경하는데 사용하였다. ES6에서는 Array.from()을 사용한다:
 
 ```javascript
 var arr1 = Array.prototype.slice.call(arguments); // ES5
 const arr2 = Array.from(arguments); // ES6
 ```
+If a value is iterable, you can also use the spread operator (...) to convert it to an Array:
 
-만약 값이 이터러블이면 또한 펼침 연산자를 사용하여 이것은 배열로 만들 수 있다.:
+값이 이터러블이면 펼침 연산자를 또 사용하여 배열로 만들 수 있다:
 
 ```javascript
 const arr1 = [...'abc'];
@@ -778,8 +871,11 @@ const arr2 = [...new Set(['b', 'b', 'a', 'b'])];
     // ['b', 'a']
 ```
 
+### 4.17.3 From apply() to Array.prototype.fill()
 ### 4.17.3 apply()에서 Array.ptototype.fill()로
-이전은 값으로 채워진 임의 수의 배열 크기를 갖는 배열 생성에 대한 꼼수(hack)를 할 수 있게 하였다. 후자는 이것에 대한(이것은 모든 존재하는 원소를 덥어쓰고 만약 이것이 element undefinded같은 구멍을 다룬다.) 명백한 방법을 제공한다.
+The former enables a hack for creating an Array of arbitrary length that is filled with values. The latter provides a cleaner way for doing so (it overwrites all existing elements and treats each hole as if it were the element undefined).
+
+전자는 값으로 채워진 임의 수의 배열 크기를 갖는 배열 생성에 대한 꼼수(hack)를 할 수 있게 하였다. 후자는 이것에 대한 명백한 방법(모든 존재하는 원소를 덥어쓰고 원소가 undefinded 같은 구멍을 다룬다)을 제공한다.
 
 ```javascript
 // ES5: same as Array(undefined, undefined)
@@ -794,8 +890,10 @@ var arr3 = Array.apply(null, new Array(2))
 const arr3 = new Array(2).fill('x');
     // ['x', 'x']
 ```
-더 자세한 정보: 챕터 "새로운 배열 기능"
+More information: Sect. “Creating Arrays filled with values”
+더 자세한 정보: "새로운 배열 기능"장
 
+## 4.18 From CommonJS modules to ES6 modules
 ## 4.18 CommonJS 모듈에서 ES6모듈로
 심지어 ES5에서 모듈 시스템은 AMD 문법 또는 CommonJS문법 기반으로 대부분 "the revealing module pattern"같은 수기로 변경하는 방법을 가졌다.
 

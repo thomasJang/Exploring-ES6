@@ -46,7 +46,7 @@ In line A, a symbol is used as the key of the method. This unique marker makes t
 
 ### 7.1.2 Use case 2: constants representing concepts
 
-> 7.1.2 이용 사례 2: 컨셉을 나타내는 상수
+> 7.1.2 이용 사례 2: 개념을 나타내는 상수
 
 In ECMAScript 5, you may have used strings to represent concepts such as colors. In ES6, you can use symbols and be sure that they are always unique:
 
