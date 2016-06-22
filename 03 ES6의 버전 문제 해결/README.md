@@ -11,11 +11,11 @@ In principle, a new version of a language is a chance to clean it up, by removin
 
 First, you can take an “all or nothing” approach and demand that, if a code base wants to use the new version, it must be upgraded completely. Python took that approach when upgrading from Python 2 to Python 3. A problem with it is that it may not be feasible to migrate all of an existing code base at once, especially if it is large. Furthermore, the approach is not an option for the web, where you’ll always have old code and where JavaScript engines are updated automatically.
 
-첫째, "모 아니면 도(all or nothing)" 방식으로 접근할 수 있는데, 이 경우 코드 기반이 새 버전을 사용하기 원한다면, 완전히 업그레이드해야 한다. 파이썬은 파이썬 2에서 파이썬 3으로 업그레이드할 때 이렇게 접근했다. 이것의 문제점은 현실적으로 기존 코드 기반 전부를 한번에 이전하는 것(특히 규모가 크다면)이 불가능할 수 있다는 것이다. 게다가 오래된 코드가 항상 존재하고, 자바스크립트 엔진이 자동으로 업데이트되는 웹에서는 선택할 수 있는 접근법이 아니다.
+첫째, '모 아니면 도(all or nothing)' 접근법을 취할 수 있고, 코드 기반으로 새 버전을 사용하고자 한다면 완전히 업그레이드하는 것이 요구된다. 파이썬은 파이썬 2에서 파이썬 3으로 업그레이드할 때 이렇게 접근했다. 이 접근법의 문제점은 현실적으로 기존 코드 기반 전부를 한번에 이전하는 것(특히 규모가 크다면)이 불가능할 수 있다는 것이다. 나아가 오래된 코드가 항상 존재하고, 자바스크립트 엔진이 자동으로 업데이트되는 웹에서는 선택할 수 있는 접근법이 아니다.
 
 Second, you can permit a code base to contain code in multiple versions, by tagging code with versions. On the web, you could tag ECMAScript 6 code via a dedicated Internet media type. Such a media type can be associated with a file via an HTTP header:
 
-둘째, 코드 기반이 여러가지 버전의 코드를 포함하도록 허용할 수도 있는데, 코드에 버전을 명시하면 된다. 웹에서는 전용 [인터넷 미디어 타입](http://en.wikipedia.org/wiki/Internet_media_type)으로 ECMAScript 6 코드를 명시할 수 있다. 이러한 미디어 타입은 HTTP 해더를 통해 파일과 연동 시킬 수 있다.
+둘째, 코드 기반에 여러가지 버전의 코드를 포함하도록 허용할 수도 있는데, 코드에 버전을 명시하면 된다. 웹에서는 전용 [인터넷 미디어 타입](http://en.wikipedia.org/wiki/Internet_media_type)을 통해 ECMAScript 6 코드를 명시할 수 있다. 이러한 미디어 타입은 HTTP 해더를 통해 파일과 연동 시킬 수 있다.
 
 ```
 Content-Type: application/ecmascript;version=6
@@ -142,7 +142,7 @@ strict 모드는 버저닝이 왜 까다로운 일인지 잘 보여주고 있다
 ### 3.2.1 sloppy(non-strict) 모드 지원
 One JavaScript means that we can’t give up on sloppy mode: it will continue to be around (e.g. in HTML attributes). Therefore, we can’t build ECMAScript 6 on top of strict mode, we must add its features to both strict mode and non-strict mode (a.k.a. sloppy mode). Otherwise, strict mode would be a different version of the language and we’d be back to versioning. Unfortunately, two ECMAScript 6 features are difficult to add to sloppy mode: let declarations and block-level function declarations. Let’s examine why that is and how to add them, anyway.
 
-하나의 자바스크립트는 sloppy 모드를 포기 할 수 없다는 것을 의미한다. 아마도 sloppy 모드는 계속 사용될 것이다(예를 들어 HTML 속성에서). 그러므로 strict 모드에서는 ECMAScript 6를 빌드할 수 없고, 반드시 ECMAScript6 기능들을 strict 모드와 (sloppy 모드로 알려진) non-strict 모드 양쪽에 추가해야만 한다. 그렇지 않으면 strict 모드는 다른 버전의 언어가 될지도 모르고, 다시 버전닝으로 돌아가야 할 것이다. 안타깝게도, ECMAScript 6 기능 중 2가지는 sloppy 모드에 추가하기 어렵다. 이는 let 선언과 블록 수준에서의 함수 선언이다. 어쨌든 이것이 왜 어렵고, 어떻게 추가 할 수 있는지 살펴보자.
+하나의 자바스크립트라는 의미는 sloppy 모드를 포기 할 수 없다는 것이다. sloppy 모드는 계속 사용될 것이다(예를 들어 HTML 속성 내에서 사용시 등). 그러므로 strict 모드 상에서 ECMAScript 6를 구현할 수 없고, 반드시 ECMAScript6 기능들을 strict 모드와 non-strict 모드(sloppy 모드라고도 하는) 양쪽에 추가해야만 한다. 그렇지 않으면 strict 모드는 다른 버전의 언어가 될지도 모르고, 다시 버전닝으로 돌아가야 할 것이다. 안타깝게도, ECMAScript 6 기능 중 2가지는 sloppy 모드에 추가하기 어렵다. 이는 let 선언과 블록 수준에서의 함수 선언이다. 어쨌든 이것이 왜 어렵고, 어떻게 추가 할 수 있는지 살펴보자.
 
 ### 3.2.2 sloppy 모드에서의 let 선언
 `let` enables you to declare block-scoped variables. It is difficult to add to sloppy mode, because `let` is only a reserved word in strict mode. That is, the following two statements are legal ES5 sloppy code:
@@ -171,11 +171,11 @@ let {x,y} = computeCoordinates();
 
 ECMAScript 5 strict mode forbids function declarations in blocks. The specification allowed them in sloppy mode, but didn’t specify how they should behave. Hence, various implementations of JavaScript support them, but handle them differently.
 
-ECMAScript 5 strict 모드에서는 블록 내에서의 함수 선언을 금지한다. ECMAScript 5 사양은 sloppy 모드에서 이를 허용했지만, 그 함수들이 어떻게 동작해야 하는지는 명시하지 않고있다. 그런 연유로 다양한 자바스크립트 구현체들이 블록 수준 함수 선언을 지원하지만, 다루는 방식은 각기 다르다.
+ECMAScript 5 strict 모드에서는 블록 내에서의 함수 선언문을 금지한다. ECMAScript 5 사양은 sloppy 모드에서 이를 허용했지만, 그 함수들이 어떻게 동작해야 하는지는 명시하지 않고있다. 그런 연유로 다양한 자바스크립트 구현체들이 블록 수준 함수 선언을 지원하지만, 다루는 방식은 각기 다르다.
 
 ECMAScript 6 wants a function declaration in a block to be local to that block. That is OK as an extension of ES5 strict mode, but breaks some sloppy code. Therefore, ES6 provides “web legacy compatibility semantics” for browsers that lets function declarations in blocks exist at function scope.
 
-ECMAScript 6에서는 블록 내 함수 선언을 해당 블록의 로컬 스코프로 만들고자 했다. 그것은 ES5 strict 모드의 확장으로서는 괜찮았지만, 몇몇 sloppy 모드 코드들을 깨뜨렸다. 그래서 ES6에서는 "웹 레거시 호환성 의미체계(web legacy compatibility semantics)"을 브라우저에 제공하여 블록 내 함수 선언을 함수 스코프 상에 존재하도록 해주었다.
+ECMAScript 6에서는 블록 내 함수 선언문을 해당 블록의 로컬 스코프로 만들고자 했다. 그것은 ES5 strict 모드의 확장으로서는 괜찮았지만, 몇몇 sloppy 모드 코드들을 깨뜨렸다. 그래서 ES6에서는 "웹 레거시 호환성 의미체계(web legacy compatibility semantics)"을 브라우저에 제공하여 블록 내 함수 선언을 함수 스코프 상에 존재하도록 해주었다.
 
 ### 3.2.4 다른 키워드들(Other keywords)
 The identifiers yield and static are only reserved in ES5 strict mode. ECMAScript 6 uses context-specific syntax rules to make them work in sloppy mode:
@@ -191,7 +191,7 @@ The identifiers yield and static are only reserved in ES5 strict mode. ECMAScrip
 ### 3.2.5 암묵적 strict 모드(Implicit strict mode)
 The bodies of modules and classes are implicitly in strict mode in ECMAScript 6 – there is no need for the '`use strict`' marker. Given that virtually all of our code will live in modules in the future, ECMAScript 6 effectively upgrades the whole language to strict mode.
 
-ECMAScript 6에서는 모듈과 클래스의 바디에서 암묵적 strict 모드이므로 '`use stict`'를 기술 할 필요가 없다. 머지않아 사실상 모든 코드가 모듈 안에서 동작할 것을 감안하면, ECMAScript 6는 효과적으로 언어 전반을 strict 모드로 업그레이드 할 수 있을 것이다.
+ECMAScript 6의 모듈과 클래스의 본체는 암묵적 strict 모드이므로 '`use stict`'를 기술 할 필요가 없다. 머지않아 사실상 모든 코드가 모듈 안에서 동작할 것을 감안하면, ECMAScript 6는 효과적으로 언어 전반을 strict 모드로 업그레이드 할 수 있을 것이다.
 
 The bodies of other constructs (such as arrow functions and generator functions) could have been made implicitly strict, too. But given how small these constructs usually are, using them in sloppy mode would have resulted in code that is fragmented between the two modes. Classes and especially modules are large enough to make fragmentation less of an issue.
 
@@ -229,7 +229,7 @@ ECMAScript 6에는 (좀처럼 만나기 힘든) 몇 가지 사소한 주요 변�
 ### 3.4 결론(Conclusion)
 One JavaScript means making ECMAScript 6 completely backwards compatible. It is great that that succeeded. Especially appreciated is that modules (and thus most of our code) are implicitly in strict mode.
 
-하나의 자바스크립트는 ECMAScript 6를 완전히 하위 호환되도록 만드는 것을 뜻한다. 이것이 성공했다는 것은 굉장한 것이다. 특히 모듈(뿐만 아니라 대부분의 코드)이 암묵적 strict 모드인 것을 높이 평가한다.
+하나의 자바스크립트라는 의미는 완벽하게 하위 호환되는 ECMAScript 6를 만든다는 것이다. 그것이 성공했다는 것은 굉장한 것이다. 특히 모듈(뿐만 아니라 대부분의 코드)이 암묵적 strict 모드인 것은 높이 평가한다.
 
 In the short term, adding ES6 constructs to both strict mode and sloppy mode is more work when it comes to writing the language specification and to implementing it in engines. In the long term, both the spec and engines profit from the language not being forked (less bloat etc.). Programmers profit immediately from One JavaScript, because it makes it easier to get started with ECMAScript 6.
 
@@ -238,4 +238,4 @@ In the short term, adding ES6 constructs to both strict mode and sloppy mode is 
 ### 3.5 더 읽을거리(Further reading)
 [1] The original 1JS proposal (warning: out of date): “ES6 doesn’t need opt-in” by David Herman.
 
-[1] 데이비드 허먼(David Herman)이 쓴 '본래의 1JS 제안(경고: 만료됨): “ES6는 opt-in 이 필요없다.”'
+[1] 데이비드 허먼(David Herman)이 쓴 '원조 1JS 제안(경고: 만료됨): “ES6는 opt-in 이 필요없다.”'
