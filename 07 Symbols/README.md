@@ -797,12 +797,16 @@ A code realm (short: realm) is a context in which pieces of code exist. It inclu
 ```
 
 The problem is that each realm has its own local copy of Array and, because objects have individual identities, those local copies are considered different, even though they are essentially the same object. Similarly, libraries and user code are loaded once per realm and each realm has a different version of the same object.
+> 문제는
 
 In contrast, members of the primitive types boolean, number and string don’t have individual identities and multiple copies of the same value are not a problem: The copies are compared “by value” (by looking at the content, not at the identity) and are considered equal.
+> 대조적으로
 
 Symbols have individual identities and thus don’t travel across realms as smoothly as other primitive values. That is a problem for symbols such as Symbol.iterator that should work across realms: If an object is iterable in one realm, it should be iterable in others, too. If a cross-realm symbol is managed by the JavaScript engine, the engine can make sure that the same value is used in each realm. For libraries, however, we need extra support, which comes in the form of the global symbol registry: This registry is global to all realms and maps strings to symbols. For each symbol, libraries need to come up with a string that is as unique as possible. To create the symbol, they don’t use Symbol(), they ask the registry for the symbol that the string is mapped to. If the registry already has an entry for the string, the associated symbol is returned. Otherwise, entry and symbol are created first.
+> 심볼은
 
 You ask the registry for a symbol via Symbol.for() and retrieve the string associated with a symbol (its key) via Symbol.keyFor():
+
 
 ```js
 > const sym = Symbol.for('Hello everybody!');
@@ -815,33 +819,50 @@ undefined
 ```
 
 ## 7.9 FAQ: symbols
+> 7.9 FAQ: 심볼
+
 ### 7.9.1 Can I use symbols to define private properties?
+> 7.9.1 비공개 프로퍼티를 정의하기 위해 심볼을 사용해도 되는가?
+
 The original plan was for symbols to support private properties (there would have been public and private symbols). But that feature was dropped, because using “get” and “set” (two meta-object protocol operations) for managing private data does not interact well with proxies:
+> 원래의 계획은 비공개 프로퍼티를 지원하기 위한 심볼이었다(공개 심볼과 비공개 심볼이 있었다) 그러나 이 기능은 드랍되었는데, 프록시와 상호작용이 잘 안되는 비공개 데이터 관리를 위한 get과 set(two meta-object protocol operations) 사용 때문이었다: 
 
 On one hand, you want a proxy to be able to completely isolate its target (for membranes) and to intercept all MOP operations applied to its target.
+> 한편으로는 대상을 완전히 격리할 수 있고 대상에 적용된 모든 MOP operations 를 가로챌 수 있는 프록시를 원한다.
+
 On the other hand, proxies should not be able to extract private data from an object; private data should remain private.
 These two goals are at odds.
+> 다른 한편으로는 프록시는 객체에서 비공개 데이터를 추출할 수 없게끔 되어야 한다. 비공개 데이터는 비공개로 유지되어야 한다. 이 두 가지 목표는 뜻이 맞지 않는다.
 
 The chapter on classes explains your options for managing their private data.
+> 클래스 장에서 비공개 데이터 관리를 위한 옵션을 설명한다.
 
 ### 7.9.2 Are symbols primitives or objects?
-In some ways, symbols are like primitive values, in other ways, they are like objects:
+> 7.9.2 심볼은 원시인가 객체인가?
 
-Symbols are like strings (primitive values) w.r.t. what they are used for: as representations of concepts and as property keys.
-Symbols are like objects in that each symbol has its own identity.
+In some ways, symbols are like primitive values, in other ways, they are like objects:
+> 심볼은 어떤 점에서는 원시값 같고 또 다른 점에서는 객체 같다.
+
++ Symbols are like strings (primitive values) w.r.t. what they are used for: as representations of concepts and as property keys.
++ Symbols are like objects in that each symbol has its own identity.
+
 What are symbols then – primitive values or objects? In the end, they were turned into primitives, for two reasons.
 
 First, symbols are more like strings than like objects: They are a fundamental value of the language, they are immutable and they can be used as property keys. Symbols having unique identities doesn’t necessarily contradict them being like strings: UUID algorithms produce strings that are quasi-unique.
 
 Second, symbols are most often used as property keys, so it makes sense to optimize the JavaScript specification and the implementations for that use case. Then many abilities of objects are unnecessary:
 
-Objects can become prototypes of other objects.
-Wrapping an object with a proxy doesn’t change what it can be used for.
-Objects can be introspected: via instanceof, Object.keys(), etc.
++ Objects can become prototypes of other objects.
++ Wrapping an object with a proxy doesn’t change what it can be used for.
++ Objects can be introspected: via instanceof, Object.keys(), etc.
+
 Them not having these abilities makes life easier for the specification and the implementations. There are also reports from the V8 team that when handling property keys, it is simpler to treat primitives differently than objects.
 
 ### 7.9.3 Do we really need symbols? Aren’t strings enough?
+> 7.9.3 심볼이 진짜 필요한가? 문자열로 충분하지는 않은가?
+
 In contrast to strings, symbols are unique and prevent name clashes. That is nice to have for tokens such as colors, but it is essential for supporting meta-level methods such as the one whose key is Symbol.iterator. Python uses the special name __iter__ to avoid clashes. You can reserve double underscore names for programming language mechanisms, but what is a library to do? With symbols, we have an extensibility mechanism that works for everyone. As you can see later, in the section on public symbols, JavaScript itself already makes ample use of this mechanism.
+> 문자열과 대조적으로, 심볼은 고유하고 이름 충돌을 예방한다.
 
 There is one hypothetical alternative to symbols when it comes to clash-free property keys: use a naming convention. For example, strings with URLs (e.g. 'http://example.com/iterator'). But that would introduce a second category of property keys (versus “normal” property names that are usually valid identifiers and don’t contain colons, slashes, dots, etc.), which is basically what symbols are, anyway. Thus it is more elegant to explicitly turn those keys into a different kind of value.
 
@@ -850,10 +871,15 @@ No, they are not.
 
 Ruby’s symbols are basically literals for creating values. Mentioning the same symbol twice produces the same value twice:
 
+```js
 :foo == :foo
+```
+
 The JavaScript function Symbol() is a factory for symbols – each value it returns is unique:
 
+```js
 Symbol('foo') !== Symbol('foo')
+```
 
 ## 7.10 The spelling of well-known symbols: why Symbol.iterator and not Symbol.ITERATOR (etc.)?
 Well-known symbols are stored in properties whose names start with lowercase characters and are camel-cased. In a way, these properties are constants and it is customary for constants to have all-caps names (Math.PI etc.). But the reasoning for their spelling is different: Well-known symbols are used instead of normal property keys, which is why their “names” follow the rules for property keys, not the rules for constants.
@@ -862,8 +888,9 @@ Well-known symbols are stored in properties whose names start with lowercase cha
 This section gives an overview of the ECMAScript 6 API for symbols.
 
 ### 7.11.1 The function Symbol
-Symbol(description?) : symbol
-Creates a new symbol. The optional parameter description allows you to give the symbol a description. The only way to access the description is to convert the symbol to a string (via toString() or String()). The result of such a conversion is 'Symbol('+description+')'.
++ Symbol(description?) : symbol
+  Creates a new symbol. The optional parameter description allows you to give the symbol a description. The only way to access the description is to convert the symbol to a string (via toString() or String()). The result of such a conversion is 'Symbol('+description+')'.
+
 Symbol is can’t be used as a constructor – an exception is thrown if you invoke it via new.
 
 ### 7.11.2 Methods of symbols
@@ -880,40 +907,42 @@ object	Object(sym) → OK	Object.keys(sym) → OK
 ### 7.11.4 Well-known symbols
 The global object Symbol has several properties that serve as constants for so-called well-known symbols. These symbols let you configure how ES6 treats an object, by using them as property keys. This is a list of all well-known symbols:
 
-Customizing basic language operations (explained in Chap. “New OOP features besides classes”):
-Symbol.hasInstance (method)
-Lets an object C customize the behavior of x instanceof C.
-Symbol.toPrimitive (method)
-Lets an object customize how it is converted to a primitive value. This is the first step whenever something is coerced to a primitive type (via operators etc.).
-Symbol.toStringTag (string)
-Called by Object.prototype.toString() to compute the default string description of an object obj: ‘[object ‘+obj[Symbol.toStringTag]+’]’.
-Symbol.unscopables (Object)
-Lets an object hide some properties from the with statement.
-Iteration (explained in the chapter on iteration):
-Symbol.iterator (method)
-A method with this key makes an object iterable (its elements can be iterated over by language constructs such as the for-of loop and the spread operator (...)); it returns an iterator. Details: chapter “Iterables and iterators”.
-Forwarding calls from string methods: The following string methods are forwarded to methods of their parameters (usually regular expressions).
-Symbol.match is used by String.prototype.match.
-Symbol.replace is used by String.prototype.replace.
-Symbol.search is used by String.prototype.search.
-Symbol.split is used by String.prototype.split.
++ Customizing basic language operations (explained in Chap. “New OOP features besides classes”):
+ - Symbol.hasInstance (method)
+   Lets an object C customize the behavior of x instanceof C.
+ - Symbol.toPrimitive (method)
+   Lets an object customize how it is converted to a primitive value. This is the first step whenever something is coerced to a primitive type (via operators etc.).
+ - Symbol.toStringTag (string)
+   Called by Object.prototype.toString() to compute the default string description of an object obj: ‘[object ‘+obj[Symbol.toStringTag]+’]’.
+ - Symbol.unscopables (Object)
+   Lets an object hide some properties from the with statement.
++ Iteration (explained in the chapter on iteration):
+ - Symbol.iterator (method)
+   A method with this key makes an object iterable (its elements can be iterated over by language constructs such as the for-of loop and the spread operator (...)); it returns an iterator. Details: chapter “Iterables and iterators”.
++ Forwarding calls from string methods: The following string methods are forwarded to methods of their parameters (usually regular expressions).
+ - Symbol.match is used by String.prototype.match.
+ - Symbol.replace is used by String.prototype.replace.
+ - Symbol.search is used by String.prototype.search.
+ - Symbol.split is used by String.prototype.split.
+ 
 The details are explained in Sect. “String methods that delegate regular expression work to their parameters” in the chapter on strings.
 
-Miscellaneous:
-Symbol.species (method)
-Configures how built-in methods (such as Array.prototype.map()) create objects that are similar to this. The details are explained in the chapter on classes.
-Symbol.isConcatSpreadable (boolean)
-Configures whether Array.prototype.concat() adds the indexed elements of an object to its result (“spreading”) or the object as a single element (details are explained in the chapter on Arrays).
++ Miscellaneous:
+ - Symbol.species (method)
+   Configures how built-in methods (such as Array.prototype.map()) create objects that are similar to this. The details are explained in the chapter on classes.
+ - Symbol.isConcatSpreadable (boolean)
+   Configures whether Array.prototype.concat() adds the indexed elements of an object to its result (“spreading”) or the object as a single element (details are explained in the chapter on Arrays).
 
 ### 7.11.5 Global symbol registry
 If you want a symbol to be the same in all realms, you need to create it via the global symbol registry. The following method lets you do that:
 
-Symbol.for(str) : symbol
-Returns the symbol whose key is the string str in the registry. If str isn’t in the registry yet, a new symbol is created and filed in the registry under the key str.
++ Symbol.for(str) : symbol
+  Returns the symbol whose key is the string str in the registry. If str isn’t in the registry yet, a new symbol is created and filed in the registry under the key str.
+
 Another method lets you make the reverse look up and found out under which key a string is stored in the registry. This is may be useful for serializing symbols.
 
-Symbol.keyFor(sym) : string
-returns the string that is associated with the symbol sym in the registry. If sym isn’t in the registry, this method returns undefined.
++ Symbol.keyFor(sym) : string
+  returns the string that is associated with the symbol sym in the registry. If sym isn’t in the registry, this method returns undefined.
 
 [Speaking JS] Details are explained in the chapter on JSON.↩
 [Speaking JS] The details are explained in the chapter on JSON.↩
