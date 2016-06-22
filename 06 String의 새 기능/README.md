@@ -46,14 +46,14 @@ console.log('\uD83D\uDE80');
 ```
 
 More information on escapes is given in the chapter on Unicode.  
-이스케이프에 관해서는 26장에서 더 자세히 다룰 것이다.
+이스케이프에 관해서는 유니코드 장에서 더 자세히 다룰 것이다.
 
 
 ##6.3 String interpolation, multi-line string literals and raw string literals
 ##6.3 문자열 보간, 여러줄 문자열 리터럴, 원시 문자열 리터럴
 
 Template literals are described in depth in their own chapter. They provide three interesting features.  
-템플릿 리터럴은 세 가지 흥미로운 기능을 제공한다. 이에 대해서는 8장에서 자세히 살펴보겠다.
+템플릿 리터럴은 세 가지 흥미로운 기능을 제공한다. 이에 대해서는 템플릿 리터럴 장에서 자세히 살펴보겠다.
 
 #####First, template literals support string interpolation:
 #####첫째, 템플릿 리터럴은 문자열 보간(interpolation)을 지원한다.
@@ -101,7 +101,7 @@ for (const ch of 'abc') {
 ```
 
 And you can use the spread operator (...) to turn strings into Arrays:  
-또한 펼침연산자(`...`)를 이용하여 문자열을 배열로 치환할 수도 있다.
+펼침연산자(`...`)를 이용하여 문자열을 배열로 치환할 수도 있다.
 
 ```js
 const chars = [...'abc'];    // ['a', 'b', 'c']
@@ -109,7 +109,7 @@ const chars = [...'abc'];    // ['a', 'b', 'c']
 
 
 ###6.4.1 Iteration honors Unicode code points
-###6.4.1 이터레이션은 유니코드 코드포인트를 존중한다.
+###6.4.1 문자열 이터레이션은 유니코드 코드포인트를 기준으로 동작한다.
 
 The string iterator splits strings along code point boundaries, which means that the strings it returns comprise one or two JavaScript characters:  
 문자열 이터레이터는 코드포인트 경계들을 기준으로 문자열을 분리한다. 이는 반환된 각 문자열들은 자바스크립트 글자 하나 또는 두 개로 구성됨을 의미한다.
@@ -262,7 +262,7 @@ String.raw `\` === `\\`  // true`
 ```
 
   Consult the chapter on template literals for more information.  
-  자세한 정보는 8장을 참고할 것.
+  자세한 정보는 템플릿 리터럴 장을 참고할 것.
 
 
 #### Unicode and code points 유니코드와 코드포인트
