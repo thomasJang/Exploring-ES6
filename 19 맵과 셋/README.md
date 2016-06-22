@@ -5,7 +5,7 @@
 Among others, the following four data structures are new in ECMAScript 6  
 : Map, WeakMap, Set and WeakSet.  
 ES6에는 다음의 네가지 데이터 구조가 새로 추가되었다.  
-: 맵Map, 위크맵WeakMap, 셋Set and 위크셋WeakSet.  
+: 맵Map, 위크맵WeakMap, 셋Set, 위크셋WeakSet.  
 
 ### 19.1.1 Maps
 ### 19.1.1 맵
@@ -52,7 +52,7 @@ As you can see, you can initialize a Set with elements if you hand the construct
 ### 19.1.3 WeakMaps
 ### 19.1.3 위크맵
 
-A WeakMap is a Map that doesn’t prevent its keys from being garbage-collected. That means that you can associate data with objects without having to worry about memory leaks. For example:
+A WeakMap is a Map that doesn’t prevent its keys from being garbage-collected. That means that you can associate data with objects without having to worry about memory leaks. For example:  
 위크맵은 자신의 키가 가비지 컬렉션에 수집되는 것을 막지 않는 맵이다. 즉 메모리 누수에 대한 걱정 없이 객체에 프라이빗 데이터를 연결할 수 있다. 예를 들면 다음과 같다.
 
 ```js
@@ -95,7 +95,7 @@ triggerListeners(obj);
 ## 19.2 맵
 
 > JavaScript has always had a very spartan standard library. Sorely missing was a data structure for mapping values to values. The best you can get in ECMAScript 5 is a Map from strings to arbitrary values, by abusing objects. Even then there are [several pitfalls](http://speakingjs.com/es5/ch17.html#_pitfalls_using_an_object_as_a_map) that can trip you up.
-The `Map` data structure in ECMAScript 6 lets you use arbitrary values as keys and is highly welcome.
+The `Map` data structure in ECMAScript 6 lets you use arbitrary values as keys and is highly welcome.  
 자바스크립트는 늘 아주 엄격한 표준 라이브러리 규격을 갖고 있었다. 몹시 아쉬운 점은 값과 값들을 매핑하는 데이터구조가 없다는 것이었다. ECMAScript5에서 이러한 아쉬움을 해결하는 최선의 방법은 객체의 허점을 이용해 문자열에 임의의 값을 매핑하는 것이었다. 여기엔 실수를 유발하는 [몇가지 함정들](http://speakingjs.com/es5/ch17.html#_pitfalls_using_an_object_as_a_map)이 있음에도 말이다. ECMAScript 6의 `맵` 데이터구조는 임의의 값을 키로 쓸 수 있으며 이는 매우 환영할 일이다.
 
 
@@ -292,7 +292,7 @@ true
 ```
 
 Thus, you can make the previous code snippet even shorter:
-따라서, 위의 코드조각보다 더욱 짧게 만들 수도 있다.
+따라서, 위의 코드조각을 더 짧게 만들 수 있다.
 
 ```js
 for (const [key, value] of map) {
@@ -305,7 +305,7 @@ for (const [key, value] of map) {
 #### 19.2.4.3 이터러블(맵 포함)을 배열로 변환하기
 
 The spread operator (...) can turn an iterable into an Array. That lets us convert the result of Map.prototype.keys() (an iterable) into an Array:  
-펼침연산자(...)을 이용하면 이터러블을 배열로 변환할 수 있다. `Map.prototype.keys()`은 이터러블이므로, 펼침연산자를 적용하면 그 결과물을 배열로 변환할 수 있습니다.
+펼침연산자(...)를 이용하면 이터러블을 배열로 변환할 수 있다. 이에 따르면 `Map.prototype.keys()`(이터러블)결과로부터 배열을 얻을 수 있다.
 
 ```js
 > const map = new Map().set(false, 'no').set(true, 'yes');
@@ -313,8 +313,8 @@ The spread operator (...) can turn an iterable into an Array. That lets us conve
 [ false, true ]
 ```
 
-맵은 그 자체가 이터러블하므로, 마찬가지로 펼침연산자를 통해 배열로 변환할 수 있습니다.
-> Maps are also iterable, which means that the spread operator can turn Maps into Arrays:
+Maps are also iterable, which means that the spread operator can turn Maps into Arrays:  
+맵 역시 이터러블하므로, 펼침연산자를 통해 배열로 변환할 수 있다.
 
 ```js
 > const map = new Map().set(false, 'no').set(true, 'yes');
@@ -324,16 +324,18 @@ The spread operator (...) can turn an iterable into an Array. That lets us conve
 ```
 
 
-### 19.2.5 맵의 엔트리들에 대한 루프 `Looping over Map entries`
+### 19.2.5 Looping over Map entries
+### 19.2.5 맵의 엔트리들에 대한 루프
 
-맵의 `forEach` 메서드는 다음과 같은 특징을 지닙니다.
-> The Map method forEach has the following signature:
+The Map method forEach has the following signature:  
+맵의 `forEach` 메소드는 다음과 같은 특징을 지닌다.
 
 ```js
 Map.prototype.forEach((value, key, map) => void, thisArg?) : void
 ```
-첫번째 파라미터는 `Array.prototype.forEach`의 콜백과 같습니다. 첫번째 파라미터의 첫번째 요소로 '값'이 오는 것은 이 때문입니다.
->The signature of the first parameter mirrors the signature of the callback of Array.prototype.forEach, which is why the value comes first.
+
+The signature of the first parameter mirrors the signature of the callback of Array.prototype.forEach, which is why the value comes first.  
+첫번째 파라미터의 특징은 `Array.prototype.forEach`의 콜백의 특징과 같은데, 첫번째 요소로 값이 오는 것은 이 때문이다.
 
 ```js
 const map = new Map([
@@ -348,20 +350,24 @@ map.forEach((value, key) => {
 // true yes
 ```
 
-### 19.2.6 매핑 및 필터링 `Mapping and filtering Maps`
-맵에는 배열의 map()이나 filter() 역할을 수행하는 메서드가 없지만, 다음과 같은 방식으로 해결할 수 있습니다.
-> You can map() and filter() Arrays, but there are no such operations for Maps. The solution is:
 
-- 맵을 [키,밸류] 쌍의 배열로 전환합니다.
-- 배열의 맵 / 필터 메서드를 적용합니다.
-- 그 결과를 다시 맵으로 변환합니다.
+### 19.2.6 Mapping and filtering Maps  
+### 19.2.6 매핑 및 필터링
 
-> - Convert the Map into an Array of [key,value] pairs.
+You can map() and filter() Arrays, but there are no such operations for Maps. The solution is:  
+배열에서는 `map()`이나 `filter()`을 할 수 있지만, 맵에는 이러한 명령어가 없다. 해결법은 다음과 같다.
+
+- Convert the Map into an Array of [key,value] pairs.
 - Map or filter the Array.
 - Convert the result back to a Map.
 
-다음 예를 통해 동작을 시연해보겠습니다.
-> I’ll use the following Map to demonstrate how that works.
+- 맵을 [키, 값] 쌍으로 구성된 배열로 전환한다.
+- 배열에 맵 또는 필터 메소드를 적용한다.
+- 결과를 다시 맵으로 변환한다.
+
+
+I’ll use the following Map to demonstrate how that works.  
+다음의 맵으로 해결과정을 시연해보겠다.
 
 ```js
 const originalMap = new Map()
@@ -370,8 +376,8 @@ const originalMap = new Map()
 .set(3, 'c');
 ```
 
-원본맵을 매핑:
-> Mapping originalMap:
+Mapping originalMap:  
+원본맵을 매핑하기
 
 ```js
 const mappedMap = new Map( // step 3
@@ -381,8 +387,8 @@ const mappedMap = new Map( // step 3
 // Resulting Map: {2 => '_a', 4 => '_b', 6 => '_c'}
 ```
 
-원본맵을 필터링:
-> Filtering originalMap:
+Filtering originalMap:  
+원본맵을 필터링하기
 
 ```js
 const filteredMap = new Map( // step 3
@@ -392,17 +398,18 @@ const filteredMap = new Map( // step 3
 // Resulting Map: {1 => 'a', 2 => 'b'}
 ```
 
-1단계는 펼침 연산자(`...`)에 의해 수행됩니다.
-> Step 1 is performed by the spread operator (...) which I have explained previously.
+Step 1 is performed by the spread operator (...) which I have explained previously.  
+1단계는 앞서 설명한대로 펼침 연산자(`...`)에 의해 수행된다.
 
 
-### 19.2.7 맵의 결합 `Combining Maps`
+### 19.2.7 Combining Maps
+### 19.2.7 맵의 결합
 
-여러 맵을 하나로 결합하는 메서드는 없습니다. 따라서 앞의 섹션과 비슷한 접근이 필요할 것입니다.
-> There are no methods for combining Maps, which is why the approach from the previous section must be used to do so.
+There are no methods for combining Maps, which is why the approach from the previous section must be used to do so.  
+여러 맵을 하나로 결합해주는 메소드는 없으므로, 앞 절의 접근법을 따라야 할 것이다.
 
-아래의 두 맵을 결합해봅시다:
-> Let’s combine the following two Maps:
+Let’s combine the following two Maps:  
+다음 두 맵을 결합해보자.
 
 ```js
 const map1 = new Map()
@@ -416,25 +423,29 @@ const map2 = new Map()
 .set(4, 'd2');
 ```
 
-두 맵을 각각 펼침 연산자를 이용해 배열로 전환하고, 이 배열을 병합합니다. 그 다음 이 결과를 다시 맵으로 전환합니다. 이상의 동작이 첫번째 줄에서 이뤄집니다.
-> To combine map1 and map2, I turn them into Arrays via the spread operator (...) and concatenate those Arrays. Afterwards, I convert the result back to a Map. All of that is done in the first line.
+To combine map1 and map2, I turn them into Arrays via the spread operator (...) and concatenate those Arrays. Afterwards, I convert the result back to a Map. All of that is done in the first line.  
+맵1과 맵2를 결합하기 위해, 두 맵을 각각 펼침 연산자를 이용해 배열로 전환하고, 이 배열을 병합한다. 그 다음, 이 결과를 다시 맵으로 전환한다. 이상의 동작이 첫번째 줄에서 모두 이루어진다.
 
 ```js
 const combinedMap = new Map([...map1, ...map2])
-[...combinedMap] // 출력을 위한 배열 변환 `convert to Array to display`
+[...combinedMap] // convert to Array to display 출력을 위한 배열 변환
 // [[1,"a1"],[2,"b2"],[3,"c2"],[4, "d2"]]
 ```
 
+
+
+### 19.2.8 Arbitrary Maps as JSON via Arrays of pairs
 ### 19.2.8 [키, 값] 쌍으로 구성된 배열로부터 임의의 맵을 생성하여 JSON화 하기
-`Arbitrary Maps as JSON via Arrays of pairs`
 
-맵이 임의의 JSON 호환 데이터로 구성되어 있는 경우, 이를 [키, 값] 쌍으로 구성된 배열로 인코딩하여 JSON 형식으로 전환할 수 있습니다.
-> If a Map contains arbitrary (JSON-compatible) data, we can convert it to JSON by encoding it as an Array of key-value pairs (2-element Arrays). Let’s examine first how to achieve that encoding.
+If a Map contains arbitrary (JSON-compatible) data, we can convert it to JSON by encoding it as an Array of key-value pairs (2-element Arrays). Let’s examine first how to achieve that encoding.  
+맵이 임의의 JSON 호환 데이터로 구성되어 있다면, 이를 [키, 값] 쌍으로 구성된 배열로 인코딩하여 JSON 형식으로 전환할 수 있다.
 
-#### 19.2.8.1 [키, 값] 쌍으로 구성된 배열과 맵 간의 상호 전환 `Converting Maps to and from Arrays of pairs`
 
-펼침 연산자는 맵을 [키,값] 쌍으로 구성된 배열로 전환해줍니다:
-> The spread operator lets you convert a Map to an Array of pairs:
+#### 19.2.8.1 Converting Maps to and from Arrays of pairs  
+#### 19.2.8.1 [키, 값] 쌍으로 구성된 배열과 맵 간의 상호 전환
+
+The spread operator lets you convert a Map to an Array of pairs:  
+펼침 연산자는 맵을 [키,값] 쌍으로 구성된 배열로 전환해준다.
 
 ```js
 const myMap = new Map().set(true, 7).set({foo: 3}, ['abc']);
@@ -442,8 +453,8 @@ const myMap = new Map().set(true, 7).set({foo: 3}, ['abc']);
 // [ [ true, 7 ], [ { foo: 3 }, [ 'abc' ] ] ]
 ```
 
-맵 생성자는 [키,값] 쌍으로 구성된 배열을 맵으로 전환해줍니다:
-> The Map constructor lets you convert an Array of pairs to a Map:
+The Map constructor lets you convert an Array of pairs to a Map:  
+맵 생성자는 [키,값] 쌍으로 구성된 배열을 맵으로 전환해준다.
 
 ```js
 new Map([[true, 7], [{foo: 3}, ['abc']]])
@@ -451,10 +462,11 @@ new Map([[true, 7], [{foo: 3}, ['abc']]])
 ```
 
 
-#### 19.2.8.2 맵과 JSON 간의 상호 전환 `The conversion to and from JSON`
+#### 19.2.8.2 The conversion to and from JSON
+#### 19.2.8.2 맵과 JSON 간의 상호 전환
 
-JSON과 호환되는 데이터를 가진 임의의 맵을 JSON으로, 혹은 JSON을 맵으로 전환하기 위해 앞서 살펴본 내용을 활용해봅시다:
-> Let’s use this knowledge to convert any Map with JSON-compatible data to JSON and back:
+Let’s use this knowledge to convert any Map with JSON-compatible data to JSON and back:  
+위 지식을 활용하여 JSON 호환 데이터를 가진 임의의 맵을 JSON으로, 혹은 JSON을 맵으로 전환해보자.
 
 ```js
 function mapToJson(map) {
@@ -465,8 +477,8 @@ function jsonToMap(jsonStr) {
 }
 ```
 
-다음은 위 함수들을 어떻게 적용하는지를 보여줍니다:
-> The following interaction demonstrates how these functions are used:
+The following interaction demonstrates how these functions are used:  
+다음 상호작용은 위 함수들을 어떻게 활용하지를 보여준다.
 
 ```js
 const myMap = new Map().set(true, 7).set({foo: 3}, ['abc']);
@@ -479,22 +491,24 @@ jsonToMap('[[true,7],[{"foo":3},["abc"]]]')
 ```
 
 
-### 19.2.9 객체를 이용한 문자열 키로 구성된 맵의 JSON화 `String Maps as JSON via objects`
+### 19.2.9 String Maps as JSON via objects
+### 19.2.9 객체를 이용한 문자열 키로 구성된 맵의 JSON화
 
-맵에 오직 문자열 키만 존재할 경우에는 이를 객체로 인코딩하여 JSON으로 전환할 수 있습니다. 어떻게 인코딩이 이루어지는지 살펴봅시다.
-> Whenever a Map only has strings as keys, you can convert it to JSON by encoding it as an object. Let’s examine first how to achieve that encoding.
+Whenever a Map only has strings as keys, you can convert it to JSON by encoding it as an object. Let’s examine first how to achieve that encoding.  
+맵에 오직 문자열 키만 존재할 경우에는 언제나 이를 객체로 인코딩하여 JSON으로 전환할 수 있다. 우선 어떻게 인코딩이 이루어지는지 살펴보자.
 
-#### 19.2.9.1 문자열 키로 구성된 맵과 객체 간의 상호 전환 `Converting a string Map to and from an object`
+#### 19.2.9.1 Converting a string Map to and from an object
+#### 19.2.9.1 문자열 키로 구성된 맵과 객체 간의 상호 전환
 
-아래의 두 함수는 문자열 키로 구성된 맵을 객체로, 또는 객체를 문자열 키로 구성된 맵으로 전환합니다:
-> The following two function convert string Maps to and from objects:
+The following two function convert string Maps to and from objects:  
+다음 두 함수는 문자열 맵을 객체로, 또는 객체를 문자열 맵으로 전환한다.
 
 ```js
 function strMapToObj(strMap) {
     const obj = Object.create(null);
     for (const [k,v] of strMap) {
-        // 구 엔진에서 문제가 생길 수 있으므로 '__proto__' 키를 회피하지 않았습니다.
         // `We don’t escape the key '__proto__' which can cause problems on older engines`
+        // 구 엔진에서 문제가 될 수 있으므로 '__proto__'키를 건너뛰지 않았다.
         obj[k] = v;
     }
     return obj;
@@ -508,8 +522,8 @@ function objToStrMap(obj) {
 }
 ```
 
-위의 두 함수를 사용해봅시다:
-> Let’s use these two functions:
+Let’s use these two functions:  
+위의 두 함수를 사용해보자:
 
 ```js
 const myMap = new Map().set('yes', true).set('no', false);
@@ -522,10 +536,11 @@ objToStrMap({yes: true, no: false})
 ```
 
 
-#### 19.2.9.2 맵과 JSON 간의 상호 전환 `The conversion to and from JSON`
+#### 19.2.9.2 The conversion to and from JSON
+#### 19.2.9.2 맵과 JSON 간의 상호 전환
 
-제이슨과의 형변환은 위의 두 헬퍼 함수를 활용하면 됩니다.
-> With these helper functions, the conversion to JSON works as follows:
+With these helper functions, the conversion to JSON works as follows:  
+위의 두 헬퍼 함수를 활용하면 JSON과의 형변환은 다음과 같이 동작한다.
 
 ```js
 function strMapToJson(strMap) {
@@ -536,8 +551,8 @@ function jsonToStrMap(jsonStr) {
 }
 ```
 
-다음은 위 함수를 적용한 예시입니다:
-> This is an example of using these functions:
+This is an example of using these functions:  
+다음은 위 함수들을 적용한 예시이다.
 
 ```js
 const myMap = new Map().set('yes', true).set('no', false);
@@ -550,13 +565,14 @@ jsonToStrMap('{"yes":true,"no":false}');
 ```
 
 
-### 19.2.10 맵 API `Map API`
+### 19.2.10 Map API
+### 19.2.10 맵 API
 
-#### 생성자 `Constructor` :
-- `new Map(entries? : Iterable<[any,any]>)`
-
-  이터러블한 파라미터를 제공하지 않은 경우 빈 맵이 생성됩니다. [키, 값] 쌍으로 구성된 이터러블을 제공할 경우에는 이 쌍들이 맵의 엔트리로 추가되는데, 예를 들면 다음과 같습니다.
-  > If you don’t provide the parameter iterable then an empty Map is created. If you do provide an iterable over [key, value] pairs then those pairs are used to add entries to the Map. For example:
+#### Constructor
+#### 생성자
+- `new Map(entries? : Iterable<[any,any]>)`  
+  If you don’t provide the parameter iterable then an empty Map is created. If you do provide an iterable over [key, value] pairs then those pairs are used to add entries to the Map. For example:  
+  이터러블한 파라미터를 제공하지 않으면 빈 맵이 생성된다. [키, 값] 쌍으로 구성된 이터러블을 제공할 경우 이 쌍들이 맵에 엔트리들을 추가하는데, 예를 들면 다음과 같다.
 
   ```js
   const map = new Map([
@@ -566,92 +582,88 @@ jsonToStrMap('{"yes":true,"no":false}');
   ]);
   ```
 
-#### 개별 엔트리에 대한 제어 `Handling single entries` :
-- `Map.prototype.get(key)` : any
+#### Handling single entries :
+#### 개별 엔트리에 대한 제어
+- `Map.prototype.get(key)` : any  
+  Returns the value that key is mapped to in this Map. If there is no key key in this Map, undefined is returned.
+  키에 매핑된 값을 리턴한다. 맵에 해당 키가 없으면 undefined를 반환한다.
 
-  키에 매핑된 값을 리턴합니다. 맵에 해당 키가 없으면 undefined를 반환합니다.
-  > Returns the value that key is mapped to in this Map. If there is no key key in this Map, undefined is returned.
-
-- `Map.prototype.set(key, value)` : this
-
-  이미 키가 존재한다면 해당 키에 값을 매핑하고, 존재하지 않는다면 새로운 [키, 값] 엔트리를 추가합니다. 이 메서드는 this를 리턴하므로, 메서드 체이닝이 가능합니다.
-  > Maps the given key to the given value. If there is already an entry whose key is key, it is updated. Otherwise, a new entry is created. This method returns this, which means that you can chain it.
+- `Map.prototype.set(key, value)` : this  
+  Maps the given key to the given value. If there is already an entry whose key is key, it is updated. Otherwise, a new entry is created. This method returns this, which means that you can chain it.  
+  지정한 키에 지정한 값을 매핑한다. 이미 키가 존재한다면 해당 키에 값을 업데이트하고, 존재하지 않는다면 새로운 엔트리를 생성한다. 이 메소드는 this를 리턴하므로, 메소드 체이닝이 가능하다.
   
-- `Map.prototype.has(key)` : boolean
-  
-  맵에 해당 키가 존재하는지 여부를 반환합니다.
-  > Returns whether the given key exists in this Map.
+- `Map.prototype.has(key)` : boolean  
+  Returns whether the given key exists in this Map.  
+  맵에 해당 키가 존재하는지 여부를 반환한다.
   
 - `Map.prototype.delete(key)` : boolean
+  If there is an entry whose key is key, it is removed and true is returned. Otherwise, nothing happens and false is returned.
+  맵에 해당 키가 존재하면 이를 삭제하면서 true를 반환하고, 존재하지 않는다면 false를 반환한다.
 
-  맵에 해당 키가 존재하면 이를 삭제하면서 true를 반환하고, 존재하지 않는다면 false를 반환합니다.
-  > If there is an entry whose key is key, it is removed and true is returned. Otherwise, nothing happens and false is returned.
 
-#### Handling all entries `엔트리들에 대한 일괄 제어` :
-- `get Map.prototype.size` : number
+#### Handling all entries :
+#### 엔트리들에 대한 일괄 제어
 
-  맵에 몇개의 엔트리가 들어있는지를 반환합니다.
-  > Returns how many entries there are in this Map.
+- `get Map.prototype.size` : number  
+  Returns how many entries there are in this Map.  
+  맵에 몇개의 엔트리가 들어있는지를 반환한다.
 
-- `Map.prototype.clear()` : void
-  
-  맵의 모든 엔트리를 제거합니다.
-  > Removes all entries from this Map.
+- `Map.prototype.clear()` : void  
+  Removes all entries from this Map.  
+  맵의 모든 엔트리를 제거한다.
 
-#### 이터레이팅과 루프 동작 : 맵에 엔트리가 추가된 순서대로 발생합니다.
-`Iterating and looping: happens in the order in which entries were added to a Map.`
 
-- `Map.prototype.entries()` : Iterable<[any,any]>
+#### Iterating and looping: happens in the order in which entries were added to a Map.
+#### 이터레이팅과 루프 동작 : 맵에 엔트리가 추가된 순서대로 발생한다.
 
-  맵의 [키,밸류] 쌍의 각 엔트리를 반환합니다. 쌍의 배열은 언제나 길이가 2입니다.
-  > Returns an iterable with one [key,value] pair for each entry in this Map. The pairs are Arrays of length 2.
+- `Map.prototype.entries()` : Iterable<[any,any]>  
+  Returns an iterable with one [key,value] pair for each entry in this Map. The pairs are Arrays of length 2.  
+  맵의 [키,밸류] 쌍의 각 엔트리를 반환한다. 쌍은 길이가 2인 배열이다.
 
-- `Map.prototype.forEach((value, key, collection) => void, thisArg?)` : void
+- `Map.prototype.forEach((value, key, collection) => void, thisArg?)` : void  
+  The first parameter is a callback that is invoked once for each entry in this Map. If thisArg is provided, this is set to it for each invocation. Otherwise, this is set to undefined.  
+  첫번째 파라미터는 맵 내의 각 엔트리당 한 번씩 호출되는 콜백함수이다. `thisArg`를 지정한 경우, 콜백 호출시마다 `this`에 `thisArg`이 대입되고, 그렇지 않은 경우에는 undefined가 대입된다.
 
-  첫번째 파라미터는 맵 내의 각 엔트리당 한 번씩 호출되는 콜백함수입니다. `thisArg`가 존재할 경우 각 콜백시마다 `this`에는 `thisArg`이 바인딩되고, 그렇지 않은 경우에는 undefined가 바인딩됩니다.
-  > The first parameter is a callback that is invoked once for each entry in this Map. If thisArg is provided, this is set to it for each invocation. Otherwise, this is set to undefined.
+- `Map.prototype.keys()` : Iterable<any>  
+  Returns an iterable over all keys in this Map.  
+  맵 내의 모든 키에 대한 이터러블을 반환한다.
 
-- `Map.prototype.keys()` : Iterable<any>
-
-  맵 내의 모든 키들에 대한 이터러블을 반환합니다.
-  > Returns an iterable over all keys in this Map.
-
-- `Map.prototype.values()` : Iterable<any>
-
+- `Map.prototype.values()` : Iterable<any>  
+  Returns an iterable over all values in this Map.  
   맵 내의 모든 값에 대한 이터러블을 반환합니다.
-  > Returns an iterable over all values in this Map.
 
-- `Map.prototype[Symbol.iterator]()` : Iterable<[any,any]>
-
-  맵을 이터레이트하는 기본 방식(`Map.prototype.entries()` 호출)을 제공합니다. 
-  > The default way of iterating over Maps. Refers to Map.prototype.entries.
+- `Map.prototype[Symbol.iterator]()` : Iterable<[any,any]>  
+  The default way of iterating over Maps. Refers to Map.prototype.entries.
+  맵을 이터레이트하는 기본 방식(`Map.prototype.entries()` 호출)을 제공한다. 
 
 
 ## 19.3 WeakMap
+## 19.3 위크맵
 
-위크맵은 다음 몇가지 차이를 제외하고는 대체로 맵과 동일하게 동작합니다.
-> WeakMaps work mostly like Maps, with the following differences:
+WeakMaps work mostly like Maps, with the following differences:  
+위크맵은 다음 몇가지 차이를 제외하고는 대체로 맵과 동일하게 동작한다.
 
-- 위크맵의 키는 객체이다 (값은 어떤것이든 무관하다).
-  > WeakMap keys are objects (values can be arbitrary values)
+- WeakMap keys are objects (values can be arbitrary values)  
+  위크맵의 키는 객체이다(값은 어떤것이든 무관).
 
-- 위크맵의 키들은 위크맵에 약하게 연결된다. 
-  > WeakMap keys are weakly held
+- WeakMap keys are weakly held  
+  위크맵의 키들은 위크맵에 약하게 연결된다. 
 
-- 위크맵 내의 전체 내용을 한 눈에 살펴볼 수 있는 메서드는 없다.
-  > You can’t get an overview of the contents of a WeakMap
+- You can’t get an overview of the contents of a WeakMap  
+  위크맵 내의 전체 내용을 한 눈에 살펴볼 수 있는 메소드는 없다.
 
-- 위크맵은 내용은 일괄 삭제(clear)할 수 없다.
-  > You can’t clear a WeakMap
+- You can’t clear a WeakMap  
+  위크맵은 내용은 일괄 삭제(clear)할 수 없다.
 
-다음 절에서 위의 각 차이들에 대해 설명하겠다.
-> The following sections explain each of these differences.
+The following sections explain each of these differences.  
+다음 절부터는 이러한 차이들을 설명하겠다.
 
 
-### 19.3.1 위크맵의 키는 객체입니다. `WeakMap keys are objects`
+### 19.3.1 WeakMap keys are objects
+### 19.3.1 위크맵의 키는 객체입니다.
 
-위크맵에 엔트리를 추가할 때, 그 엔트리의 키는 반드시 객체여야만 합니다.
-> If you add an entry to a WeakMap then the key must be an object:
+If you add an entry to a WeakMap then the key must be an object:  
+위크맵에 엔트리를 추가할 때, 그 엔트리의 키는 반드시 객체여야 한다.
 
 ```js
 const wm = new WeakMap()
@@ -659,11 +671,18 @@ const wm = new WeakMap()
 wm.set('abc', 123); // TypeError
 wm.set({}, 123); // ok
 ```
+
+
 ### 19.3.2 WeakMap keys are weakly held
+### 19.3.2 위크맵의 키는 약하게 연결되어 있다.
 
-The keys in a WeakMap are weakly held: Normally, an object that isn’t referred to by any storage location (variable, property, etc.) can be garbage-collected. WeakMap keys do not count as storage locations in that sense. In other words: an object being a key in a WeakMap does not prevent the object being garbage-collected.
+The keys in a WeakMap are weakly held: Normally, an object that isn’t referred to by any storage location (variable, property, etc.) can be garbage-collected. WeakMap keys do not count as storage locations in that sense. In other words: an object being a key in a WeakMap does not prevent the object being garbage-collected.  
+위크맵의 키는 약하게 연결되어 있다. 보통 어떠한 저장장소(변수, 프로퍼티 등)에서도 언급되지 않는 객체는 가비지 컬렉션의 대상이 될 수 있다. 위크맵의 키는 이런 식으로 저장장소에 의존하지 않는다. 다시 말해 위크맵의 키로 할당된 객체는 가비지에 수집되는 것을 막지 않는다.
 
-Additionally, once a key is gone, its entry will also disappear (eventually, but there is no way to detect when, anyway).
+Additionally, once a key is gone, its entry will also disappear (eventually, but there is no way to detect when, anyway).  
+또한, 일단 키가 사라지면, 그 키에 할당된 엔트리 역시 사라질 것이다('언젠가'이긴 하지만, 어차피 언제 사라질지를 알아낼 방법이 없다).
+
+
 ### 19.3.3 You can’t get an overview of a WeakMap or clear it
 
 It is impossible to inspect the innards of a WeakMap, to get an overview of them. That includes not being able to iterate over keys, values or entries. Put differently: to get content out of a WeakMap, you need a key. There is no way to clear a WeakMap, either (as a work-around, you can create a completely new instance).
