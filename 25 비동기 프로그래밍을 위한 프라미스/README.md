@@ -85,23 +85,23 @@ The Promise API is about delivering results asynchronously. A Promise object (sh
 
 States:  
 
-- A Promise is always in one of three mutually exclusive states:
-  -- Before the result is ready, the Promise is pending.
-If a result is available, the Promise is fulfilled.
-If an error happened, the Promise is rejected.
-A Promise is settled if “things are done” (if it is either fulfilled or rejected).
-A Promise is settled exactly once and then remains unchanged.
+- A Promise is always in one of three mutually exclusive states:  
+   - Before the result is ready, the Promise is pending.
+   - If a result is available, the Promise is fulfilled.  
+   - If an error happened, the Promise is rejected.  
+- A Promise is settled if “things are done” (if it is either fulfilled or rejected).  
+- A Promise is settled exactly once and then remains unchanged.  
 Reacting to state changes:  
 
-Promise reactions are callbacks that you register with the Promise method then(), to be notified of a fulfillment or a rejection.
-A thenable is an object that has a Promise-style then() method. Whenever the API is only interested in being notified of settlements, it only demands thenables (e.g. the values returned from then() and catch(); or the values handed to Promise.all() and Promise.race()).
+- Promise reactions are callbacks that you register with the Promise method then(), to be notified of a fulfillment or a rejection.  
+- A thenable is an object that has a Promise-style then() method. Whenever the API is only interested in being notified of settlements, it only demands thenables (e.g. the values returned from then() and catch(); or the values handed to Promise.all() and Promise.race()).
 Changing states: There are two operations for changing the state of a Promise. After you have invoked either one of them once, further invocations have no effect.  
 
-Rejecting a Promise means that the Promise becomes rejected.
-Resolving a Promise has different effects, depending on what value you are resolving with:
-Resolving with a normal (non-thenable) value fulfills the Promise.
-Resolving a Promise P with a thenable T means that P can’t be resolved anymore and will now follow T’s state, including its fulfillment or rejection value. The appropriate P reactions will get called once T settles (or are called immediately if T is already settled).
-25.2 Introduction: Promises
+- Rejecting a Promise means that the Promise becomes rejected.  
+- Resolving a Promise has different effects, depending on what value you are resolving with:  
+  - Resolving with a normal (non-thenable) value fulfills the Promise.  
+  - Resolving a Promise P with a thenable T means that P can’t be resolved anymore and will now follow T’s state, including its fulfillment or rejection value. The appropriate P reactions will get called once T settles (or are called immediately if T is already settled).  
+## 25.2 Introduction: Promises  
 Promises are a pattern that helps with one particular kind of asynchronous programming: a function (or method) that returns its result asynchronously. One popular technique for implementing such a function in JavaScript is to have it pass the result to a callback (“callbacks as continuations”):  
 
 ```js
