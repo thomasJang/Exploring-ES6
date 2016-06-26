@@ -4,7 +4,7 @@
 
 `Destructuring is a convenient way of extracting values from data stored in (possibly nested) objects and Arrays. It can be used in locations that receive data (such as the left-hand side of an assignment). How to extract the values is specified via patterns (read on for examples).`
 
-해체는 ( 아마도 포함된 )객체와 배열에 저장된 데이터에서 값을 추출하는 편리한 방법이다. 할당문의 좌변같은 데이터를 받는 위치에서 사용될 수 있다. 값을 추출하는 방법은 패턴에 의해 규정되었다. 예제를 계속 보자.
+해체는 ( 대게 중첩된 )객체와 배열에 저장된 데이터의 값을 추출하는 편리한 방법이다. 데이터를 받는 위치( 예를 들어 할당문의 좌변 )에서 사용될 수 있다. 값을 추출하는 방법은 패턴으로 명시되어있다. ( 예제를 보자 )
 
 ## 10.1.1 `Object destructuring` 객체 해체
 
@@ -15,14 +15,14 @@ const obj = { first: 'Jane', last: 'Doe' };
 const {first: f, last: l} = obj;
 // f = 'Jane'; l = 'Doe'
 
-// {prop} 은 {prop: prop} 의 축약형이다.
+// `{prop} is short for {prop: prop}` {prop} 은 {prop: prop} 의 축약
 const {first, last} = obj;
 // first = 'Jane'; last = 'Doe'
 ```    
 
 `Destructuring helps with processing return values:`
 
-해체는 반환값의 처리를 도와준다.
+해체는 반환값 처리를 도와준다.
 
 ```javascript
 const obj = { foo: 123 };
@@ -45,7 +45,7 @@ const [x, y] = iterable;
 
 `Destructuring helps with processing return values:`
 
-해체는 반환값의 처리를 도와준다.
+해체는 반환값 처리를 도와준다.
 
 ```javascript
 const [all, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
@@ -58,15 +58,15 @@ const [all, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
 해체는 아래 위치에서 사용될 수 있다.
 
 ```javascript
-// 변수 선언:
+// `Variable declarations` 변수 선언:
 const [x] = ['a'];
 let [x] = ['a'];
 var [x] = ['a'];
 
-// 할당:
+// `Assignments` 할당:
 [x] = ['a'];
 
-// 매개변수 선언:
+// `Parameter definitions:` 파라미터 선언:
 
 function f([x]) { ··· }
 f(['a']);
@@ -98,11 +98,11 @@ for (const {name, age} of arr2) {
 // John 40
 ```
 
-## 10.2 `Background: Constructing data versus extracting data` 배경: 데이터 구축 대 데이터 추출
+## 10.2 `Background: Constructing data versus extracting data` 배경: 데이터 구성 대 데이터 추출
 
 `To fully understand what destructuring is, let’s first examine its broader context. JavaScript has operations for constructing data:`
 
-해체가 무엇인지 완전히 이해하기 위해 먼저 큰 맥락을 살펴보자. 자바스크립트는 데이터를 구축하는 행동을 가지고 있다.
+해체가 무엇인지 완전히 이해하기 위해 먼저 넓은 맥락을 살펴보자. 자바스크립트에는 데이터를 구성하는 연산자가 있다.
 
 ```javascript
 const obj = {};
@@ -112,7 +112,7 @@ obj.last = 'Doe';
 
 `And it has operations for extracting data:`
 
-그리고 값을 추출하기 위한 행동을 가지고 있다.
+그리고 데이터를 추출하는 연산자가 있다.
 
 ```javascript
 const f = obj.first;
@@ -121,11 +121,11 @@ const l = obj.last;
 
 `Note that we are using the same syntax that we have used for constructing.`
 
-구축을 위해 사용했던 것과 같은 문법을 사용한 것을 기억하라.
+데이터 구성에 사용했던 것과 같은 문법을 사용한 것을 주목하라.
 
 `There is nicer syntax for constructing – an object literal:`
 
-객체 리터럴이라는 구축을 위한 더 나은 문법이 있다.
+객체 리터럴이라는 구성을 위한 더 나은 문법이 있다.
 
 ```javascript
 const obj = { first: 'Jane', last: 'Doe' };
@@ -133,7 +133,7 @@ const obj = { first: 'Jane', last: 'Doe' };
 
 `Destructuring in ECMAScript 6 enables the same syntax for extracting data, where it is called an object pattern:`
 
-ECMA의 해체는 객체 패턴을 사용한 곳에서 데이터를 추출하기 위해 같은 문법을 가능하게 한다. 
+`ECMAScript 6`의 해체는 객체 패턴이 호출된 곳에서 데이터를 추출하기 위해 같은 문법을 가능하게 한다.
 
 ```javascript
 const { first: f, last: l } = obj;
@@ -141,7 +141,7 @@ const { first: f, last: l } = obj;
 
 `Just as the object literal lets us create multiple properties at the same time, the object pattern lets us extract multiple properties at the same time.`
 
-객체 리터럴이 한번에 여러개의 프로퍼티를 생성해 주는 것처럼, 객체 패턴은 한번에 여러 개의 프로퍼티를 추출해준다.
+객체 리터럴이 한번에 여러개의 프로퍼티를 생성하는 것처럼, 객체 패턴은 한번에 여러개의 프로퍼티를 추출해준다.
 
 `You can also destructure Arrays via patterns:`
 
