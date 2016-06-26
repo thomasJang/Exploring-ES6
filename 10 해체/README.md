@@ -155,43 +155,45 @@ const [x, y] = ['a', 'b']; // x = 'a'; y = 'b'
 
 `The following two parties are involved in destructuring:`
 
-다음 두 부분은 해체에 관련이 있다.
+다음 두 파트는 해체와 관련이 있다.
 
 - `Destructuring source: the data to be destructured. For example, the right-hand side of a destructuring assignment.`  
-  헤체 소스: 데이터는 파괴될 것이다. 예를 들어, 해체 할당의 우변이다.
+  헤체 소스: 재구성될 데이터이다. 예를 들어, 해체 할당의 우변이다.
 - `Destructuring target: the pattern used for destructuring. For example, the left-hand side of a destructuring assignment.`  
-  해체 타겟: 파괴를 위해 패턴이 사용된다. 예를 들어, 해체 할당의 좌변이다.
+  해체 타겟: 해체에 사용되는 패턴이다. 예를 들어 해체 할당의 좌변이다.
 
 `The destructuring target is either one of three patterns:`
 
 해체 타겟은 세가지 패턴 중 하나이다.
+
 - `Assignment target. For example: x`  
   할당 대상. 예를 들어 `x`  
   - `In variable declarations and parameter definitions, only references to variables are allowed. In destructuring assignment, you have more options, as I’ll explain later.`  
-    변수 선언과 파라미터 정의에서 변수의 참조만 허용된다. 해체 할당에서는 옵션이 더 있다. 뒤에 설명한다.
+    변수 선언과 파라미터 정의에서 변수에 대한 참조만 허용된다. 해체 할당에서 더 많은 옵션이 있는데 뒤에 설명한다.
 - `Object pattern. For example: { first: «pattern», last: «pattern» }`  
   객체 패턴. 예를 들어 `{ first: <<pattern>>, last: <<pattern>> }`
   - `The parts of an object pattern are properties, the property values are again patterns (recursively).`  
-    객체 패턴의 부분은 프로퍼티이다. 프로퍼티 값은 다시 패턴이다. ( 재귀 )
+    객체 패턴의 부품은 프로퍼티이고 프로퍼티의 값은 또 다시 패턴이다. ( 재귀 )
+
 - `Array pattern. For example: [ «pattern», «pattern» ]`  
   배열 패턴. 예를 들어 `[ <<pattern>>>, <<pattern>> ]`
   - `The parts of an Array pattern are elements, the elements are again patterns (recursively).`
-    배열 패턴의 부분은 원소이다.  원소는 다시 패턴이다. ( 재귀 )
+    배열 패턴의 부품은 원소이고 원소는 또 다시 패턴이다. ( 재귀 )
 
 `That means that you can nest patterns, arbitrarily deeply:`
 
-패턴을 얼마든지 깊게 포함할 수 있다.
+패턴을 엂마든지 깊게 포함할 수 있는 것이다.
 
 ```javascript
 const obj = { a: [{ foo: 123, bar: 'abc' }, {}], b: true };
 const { a: [{foo: f}] } = obj; // f = 123
 ```
 
-## 10.3.1 `Pick what you need` 필요한 것을 가려내기
+## 10.3.1 `Pick what you need` 필요한 것을 선택하라
 
 `If you destructure an object, you mention only those properties that you are interested in:`
 
-객체를 해체한다면 관심있는 프로퍼티만 기술한다.
+객체를 재구성하는 경우, 필요한 프로퍼티만 기술한다.
 
 ```javascript
 const { x: x } = { x: 7, y: 3 }; // x = 7
@@ -199,7 +201,7 @@ const { x: x } = { x: 7, y: 3 }; // x = 7
 
 `If you destructure an Array, you can choose to only extract a prefix:`
 
-배열을 해체한다면 추출할 프리픽스만 고를 수 있다.
+배열을 재구성하는 경우, 추출할 프리픽스만 선택할 수 있다.
 
 ```javascript
 const [x,y] = ['a', 'b', 'c']; // x='a'; y='b';
@@ -209,24 +211,24 @@ const [x,y] = ['a', 'b', 'c']; // x='a'; y='b';
 
 `In an assignment ( pattern = someValue ), how does the pattern access what’s inside someValue?`
 
-할당패턴 ( `pattern = someValue` ) 에서 패턴은 어떻게 `someValue` 내부에 접근하는가?
+할당( `패턴` = `어떤값` )에서 패턴은 어떻게 `어떤값`의 내부에 접근하는가?
 
 ## 10.4.1 `Object patterns coerce values to objects` 객체 패턴은 값을 객체로 강제한다
 
 `The object pattern coerces destructuring sources to objects before accessing properties. That means that it works with primitive values:`
 
-객체 패턴은 프로퍼티에 접근하기 전에 소스를 객체로 해체하는 것을 강제한다. 원시값과 작동한다.
+객체 패턴은 프로퍼티에 접근하기 전에 소스, 즉 원시값을 객체로 강제 변환한다.
 
 ```javascript
 const {length : len} = 'abc'; // len = 3
 const {toString: s} = 123; // s = Number.prototype.toString
 ```
 
-## 10.4.1.1 `Failing to object-destructure a value` 값을 객체 해체하는 것의 실패
+## 10.4.1.1 `Failing to object-destructure a value` 값을 객체 해체의 실패
 
 `The coercion to object is not performed via Object(), but via the internal operation ToObject(). Object() never fails:`
 
-객체의 강제는 `Object()`가 아닌 내부 동작인 `ToObject()`를 통해 수행된다. `Object()`는 절대 실패하지 않는다.
+객체로 강제 변환은 `Object()`가 아닌 내장 연산자 `TOObject()`를 통해 수행된다. `Object()`는 절대 실패하지 않는다.
 
 ```javascript
 > typeof Object('abc')
@@ -239,9 +241,10 @@ true
 > Object(null)
 {}
 ```
+
 `ToObject() throws a TypeError if it encounters undefined or null. Therefore, the following destructurings fail, even before destructuring accesses any properties:`
 
-이 정의는 null가 발생하면 ToObject ()는 형식 오류가 발생합니다. 따라서, 다음과 같은 구조 조정은 destructuring 어떤 속성에 접근하기도 전에 실패 :
+`ToObject()`는 `undefined`나 `null`을 만나면 `TypeError`를 발생시키므로, 해체는 임의의 프로퍼티에 접근하기 전에 실패한다.
 
 ```javascript
 const { prop: x } = undefined; // TypeError
@@ -250,11 +253,11 @@ const { prop: y } = null; // TypeError
 
 `As a consequence, you can use the empty object pattern {} to check whether a value is coercible to an object. As we have seen, only undefined and null aren’t:`
 
-결과적으로, 당신은 값이 객체에 강제 할 수 있는지 여부를 점검하려면 빈 객체 패턴을 {} 사용할 수 있습니다. 우리가 보았 듯이, 오직 정의와 null가되지 않습니다 :
+결과적으로, 값이 객체로 강제변환 될 수 있는지 빈 객체 패턴 `{}`을 사용해 체크할 수 있다. 보았듯이 `undefined`와 `null`만이 강제변환 되지 않는다.
 
 ```javascript
-({} = [true, false]); // `OK, Arrays are coercible to objects` OK, 배열은 객체에 강제 할 수 있습니다
-({} = 'abc'); // `OK, strings are coercible to objects` OK, 문자열은 객체에 강제 할 수 있습니다
+({} = [true, false]); // `OK, Arrays are coercible to objects` OK, 배열은 객체로 강제 변환 가능하다
+({} = 'abc'); // `OK, strings are coercible to objects` OK, 문자열은 객체로 강제 변환 가능하다
 
 ({} = undefined); // TypeError
 ({} = null); // TypeError
@@ -262,13 +265,13 @@ const { prop: y } = null; // TypeError
 
 `The parentheses around the expressions are necessary because statements must not begin with curly braces in JavaScript (details are explained later).`
 
-문은 자바 스크립트에서 중괄호 (자세한 내용은 나중에 설명)로 시작하지해야하기 때문에 표현의 주위에 괄호가 필요합니다.
+표현식을 둘러싼 괄호는 자바스크립트에서 문이 중괄호로 시작하지 않아야 하기 때문에 필수이다 ( 자세한 내용은 뒤에 설명한다 ).
 
-## 10.4.2 `Array patterns work with iterables` 배열 패턴을 반복 가능 객체 작동
+## 10.4.2 `Array patterns work with iterables` 배열 패턴은 이터러블과 작동한다.
 
 `Array destructuring uses an iterator to get to the elements of a source. Therefore, you can Array-destructure any value that is iterable. Let’s look at examples of iterable values.`
 
-배열 destructuring는 소스의 요소에 도착하는 반복자를 사용합니다. 따라서 반복 가능한 임의의 값을 배열-destructure 수 있습니다. 의는 반복 가능한 값의 예를 살펴 보자.
+배열 해체는 소스의 원소를 얻기위해 반복자를 사용한다. 따라서 이터러블인 임의의 값은 배열 해체할 수 있다. 이터러블 값의 예를 보자.
 
 `Strings are iterable:`
 
@@ -280,7 +283,7 @@ const [x,...y] = 'abc'; // x='a'; y=['b', 'c']
 
 `Don’t forget that the iterator over strings returns code points (“Unicode characters”, 21 bits), not code units (“JavaScript characters”, 16 bits). (For more information on Unicode, consult the chapter “Chapter 24. Unicode and JavaScript” in “Speaking JavaScript”.) For example:`
 
-문자열을 통해 반복자가 코드 포인트 ( "유니 코드 문자", 21 비트)가 아닌 코드 단위 ( "자바 스크립트 문자", 16 비트)를 반환하는 것을 잊지 마십시오. 예를 들어 (. 유니 코드에 대한 자세한 내용은 "자바 스크립트를 말하기"의 장 "제 24 장 유니 코드와 자바 스크립트"를 참조)
+문자열의 반복자는 코드 단위( 16비트 자바스크립트 문자 )가 아닌 코드 포인트( 21비트 유니코드 문자 )를 반환하는 것을 잊지 말라. ( 유니코드에 대한 자세한 내용은 `자바스크립트를 말하다`의 24장 유니코드와 자바스크립트를 참조 ) 예를 들어.
 
 ```javascript
 const [x,y,z] = 'a\uD83D\uDCA9c'; // x='a'; y='\uD83D\uDCA9'; z='c'
