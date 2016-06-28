@@ -355,9 +355,7 @@ let x;
 
 `Similarly to how JavaScript handles non-existent properties and Array elements, destructuring fails silently if the target mentions a part that doesn’t exist in the source: the interior of the part is matched against undefined. If the interior is a variable that means that the variable is set to undefined:`
 
-자바스크립트가 존재하지 않는 프로퍼티와 배열 요소를 처리하는 방법과 비슷하게, 해체는 소스에 없는 파트가 타겟에 기술되어 있으면 조용히 실패한다.
-
-대상이 소스에 존재하지 않는 부분을 언급하는 경우 마찬가지로 자바 스크립트가 존재하지 않는 특성 및 배열 요소를 처리하는 방법에, destructuring는 자동으로 실패 : 부품의 내부는 정의와 일치합니다. 내부 변수가 정의로 설정되는 것을 의미 가변 인 경우 :
+자바스크립트가 존재하지 않는 프로퍼티와 배열 요소를 처리하는 방법과 비슷하게, 해체는 소스에 없는 파트가 타겟에 기술되어 있으면 조용히 실패한다. 파트의 내부는 `undefined`와 맞춰보게 되었다. 내부가 변수라면 변수는 `undefined`로 설정된다.
 
 ```javascript
 const [x] = []; // x = undefined
@@ -366,13 +364,13 @@ const {prop:y} = {}; // y = undefined
 
 `Remember that object patterns and Array patterns throw a TypeError if they are matched against undefined.`
 
-객체 패턴을 기억하고 그들이 정의에 대해 일치하는 경우 배열 패턴은 형식 오류를 throw합니다.
+객체 패턴과 배열 패턴은 `undefined`와 맞춰보게되면 `TypeError`를 발생시키는 것을 기억하라.
 
 ## 10.5.1 `Default values` 기본값
 
 `Default values are a feature of patterns: If a part (an object property or an Array element) has no match in the source, it is matched against:`
 
-기본값은 패턴의 특징이다 : 부분 (객체 속성 또는 배열 요소)은 소스에서 일치가 없다면, 그것은 대해 일치한다 :
+파트( 객체 프로퍼티 또는 배열 요소 )가 소스에서 일치하지 않으면 기본값에 일치하는 것이 패턴의 특징이다.
 
 - `its default value (if specified)`  
   기본값 ( 지정된 경우 )
@@ -381,11 +379,11 @@ const {prop:y} = {}; // y = undefined
 
 `That is, providing a default value is optional.`
 
-즉 디폴트 값은 선택 제공한다.
+기본값을 제공하는 것은 선택적이다.
 
 `Let’s look at an example. In the following destructuring, the element at index 0 has no match on the right-hand side. Therefore, destructuring continues by matching x against 3, which leads to x being set to 3.`
 
-예제를 살펴 보자. 다음 destructuring에서 인덱스 0의 요소는 오른쪽에 일치가 없습니다. 따라서, destructuring는 3으로 설정되고 x를 리드 3에 대한 X를 일치시켜 계속됩니다.
+예제를 살펴 보자. 다음 해체에서 인덱스 0의 요소는 우변에 일치가 없다. 따라서, 해체는 x를 3에 일치시킴으로 계속된다.
 
 ```javascript
 const [x=3, y] = []; // x = 3; y = undefined
@@ -393,17 +391,17 @@ const [x=3, y] = []; // x = 3; y = undefined
 
 `You can also use default values in object patterns:`
 
-또한 객체 패턴에 기본 값을 사용할 수 있습니다 :
+객체 패턴 또한 기본 값을 사용할 수 있다.
 
 ```javascript
 const {foo: x=3, bar: y} = {}; // x = 3; y = undefined
 ```
 
-## 10.5.1.1 `undefined triggers default values` 정의되지 않은 트리거 기본값
+## 10.5.1.1 `undefined triggers default values` `undefined`는 기본값을 트리거한다
 
 `Default values are also used if a part does have a match and that match is undefined:`
 
-일부가 일치하는 항목을 가지고 그 경기가 정의되지 않은 경우 기본 값도 사용된다 :
+기본값은 파트가 일치하는 항목이 `undefined`인 경우에도 사용된다.
 
 ```javascript
 const [x=1] = [undefined]; // x = 1
@@ -412,13 +410,13 @@ const {prop: y=2} = {prop: undefined}; // y = 2
 
 `The rationale for this behavior is explained in the next chapter, in the section on parameter default values.`
 
-이 문제에 대한 이론적 근거는 매개 변수의 기본값 섹션에서 다음 장에 설명되어 있습니다.
+이 문제에 대한 이론적 근거는 파라미터 기본값을 다루는 다음 절에 설명되어있다.
 
-## 10.5.1.2 `Default values are computed on demand` 기본값은 필요에 따라 계산된다
+## 10.5.1.2 `Default values are computed on demand` 기본값은 필요에 따라 연산된다
 
 `The default values themselves are only computed when they are needed. In other words, this destructuring:`
 
-기본값은 필요할 때 자신 만 계산 값. 즉,이 destructuring :
+기본값은 필요할 때만 연산된다. 다시 말해, 이 해체는.
 
 ```javascript
 const {prop: y=someFunc()} = someValue;
@@ -426,7 +424,7 @@ const {prop: y=someFunc()} = someValue;
 
 `is equivalent to:`
 
-동일합니다 :
+이것과 동일하다.
 
 ```javascript
 let y;
@@ -439,7 +437,7 @@ if (someValue.prop === undefined) {
 
 `You can observe that if you use console.log():`
 
-`console.log()`를 사용하여 관찰할 수 있다.
+`console.log()`를 사용하여 확인할 수 있다.
 
 ```javascript
 > function log(x) { console.log(x); return 'YES' }
@@ -456,13 +454,13 @@ hello
 
 `In the second destructuring, the default value is not triggered and log() is not called.`
 
-두 번째 destructuring에서 기본 값이 트리거되지 않고 로그는 ()가 호출되지 않습니다.
+두번째 해체에서 기본값은 트리거되지 않았고 `log()`는 호출되지 않았다.
 
-## 10.5.1.3 `Default values can refer to other variables in the pattern` 기본 값은 패턴에서 다른 변수를 참조 할 수 있습니다
+## 10.5.1.3 `Default values can refer to other variables in the pattern` 기본 값은 패턴의 다른 변수를 참조 할 수 있다
 
 `A default value can refer to any variable, including another variable in the same pattern:`
 
-디폴트 값은 동일한 패턴의 다른 변수를 포함하여 모든 변수를 참조 할 수 있습니다
+기본값은 같은 패턴 내에 포함된 다른 어떤 변수든 참조할 수 있다.
 
 ```javascript
 const [x=3, y=x] = [];     // x=3; y=3
@@ -472,7 +470,7 @@ const [x=3, y=x] = [7, 2]; // x=7; y=2
 
 `However, order matters: the variables x and y are declared from left to right and produce a ReferenceError if they are accessed before their declaration:`
 
-변수 X와 Y가 왼쪽에서 오른쪽으로 선언되고 그들의 선언하기 전에 액세스되는 경우 ReferenceError가 생산 : 그러나, 물질을 순서 :
+하지만, 변수 `x`와 `y`는 좌측에서 우측으로 선언되었고 변수의 선언전에 접근하면 `ReferenceError`를 생성하는 순서 문제가 있다.
 
 ```javascript
 const [x=y, y=3] = []; // ReferenceError
@@ -482,7 +480,7 @@ const [x=y, y=3] = []; // ReferenceError
 
 `So far we have only seen default values for variables, but you can also associate them with patterns:`
 
-지금까지 우리는 변수에 대한 기본 값을 볼 수있다, 그러나 당신은 또한 패턴을 연결할 수 있습니다 :
+지금까지 변수에 대한 기본값만 살펴보았지만 패턴에도 연결지을 수 있다.
 
 ```javascript
 const [{ prop: x } = {}] = [];
@@ -490,14 +488,16 @@ const [{ prop: x } = {}] = [];
 
 `What does this mean? Recall the rule for default values:`
 
-이것은 무엇을 의미 하는가? 디폴트 값에 대한 규칙을 불러 :
+이것은 무엇을 의미 하는가? 기본값에 대한 규칙을 떠올려보자.
 
 > `If the part has no match in the source, destructuring continues with the default value […].`  
-> 일부 소스의 일치가없는 경우, destructuring 기본값 [...] 계속합니다.
+> 소스 내에 일치가없는 경우, 해체는 기본값으로 처리한다.
+
+> ???
 
 `The element at index 0 has no match, which is why destructuring continues with:`
 
-인덱스 0 요소는 destructuring이 계속 왜 일치를,이 없습니다 :
+인덱스 0번째의 요소는 해체가 계속될 일치가 없기 때문이다.
 
 ```javascript
 const { prop: x } = {}; // x = undefined
@@ -505,7 +505,7 @@ const { prop: x } = {}; // x = undefined
 
 `You can more easily see why things work this way if you replace the pattern { prop: x } with the variable pattern:`
 
-당신이 패턴을 교체하면 일이 이런 식으로 일을 왜 더 쉽게 볼 수 있습니다 {프로 : X} 변수 패턴 :
+패턴 `{ prop: x }`를 변수 패턴으로 교체하면 이런 식으로 동작하는 것을 더 쉽게 볼 수 있다.
  
 ```javascript
 const [pattern = {}] = [];
@@ -513,7 +513,7 @@ const [pattern = {}] = [];
 
 `More complex default values. Let’s further explore default values for patterns. In the following example, we assign a value to x via the default value { prop: 123 }:`
 
-더 복잡한 기본값. 의 추가 패턴에 대한 기본 값을 알아 보자. 다음 예에서, 우리는 기본값을 통해 X에 {: (123) 소품} 값을 할당 :
+패턴의 더 복잡한 기본값을 알아보자. 다음 예에서 기본값 `{ prop: 123 }`을 통해 값을 x로 할당한다.
 
 ```javascript
 const [{ prop: x } = { prop: 123 }] = [];
@@ -521,7 +521,7 @@ const [{ prop: x } = { prop: 123 }] = [];
 
 `Because the Array element at index 0 has no match on the right-hand side, destructuring continues as follows and x is set to 123.`
 
-인덱스 0의 배열 요소는 오른쪽에 일치하는이 없기 때문에 다음이고, x는 123로 설정되어, destructuring가 계속됩니다.
+인덱스 0번째의 배열 요소가 우변에 일치가 없기 때문에 해체는 다음처럼 계속되고 `x`는 123으로 설정된다.
 
 ```javascript
 const { prop: x } = { prop: 123 };  // x = 123
@@ -529,7 +529,7 @@ const { prop: x } = { prop: 123 };  // x = 123
 
 `However, x is not assigned a value in this manner if the right-hand side has an element at index 0, because then the default value isn’t triggered.`
 
-다음 기본값이 발생되지 않기 때문에 오른편은 인덱스 0의 요소를 갖는 경우, X는 이와 같이 값이 할당되지 않는다.
+하지만 우변의 인덱스 0번째에 요소가 있다면 기본값이 트리거되지 않기 때문에 `x`는 이런 방식으로 값이 할당되지 않는다.
 
 ```javascript
 const [{ prop: x } = { prop: 123 }] = [{}];
@@ -537,7 +537,7 @@ const [{ prop: x } = { prop: 123 }] = [{}];
 
 `In this case, destructuring continues with:`
 
-이 경우, destructuring은 계속 :
+이 경우, 해체는 진행된다.
 
 ```javascript
 const { prop: x } = {}; // x = undefined
@@ -545,7 +545,7 @@ const { prop: x } = {}; // x = undefined
 
 `Thus, if you want x to be 123 if either the object or the property is missing, you need to specify a default value for x itself:`
 
-당신이 원하는 경우 개체 또는 속성이없는 하나가, 당신은 그 자체 x의 디폴트 값을 지정해야하는 경우 따라서 x는 123이어야합니다 :
+따라서, 객체 또는 프로퍼티가 빠졌더라도 `x`가 123이 되길 원한다면 기본값을 지정할 필요가 있다.
 
 ```javascript
 const [{ prop: x=123 } = {}] = [{}];
@@ -553,24 +553,24 @@ const [{ prop: x=123 } = {}] = [{}];
 
 `Here, destructuring continues as follows, independently of whether the right-hand side is [{}] or [].`
 
-다음 여기서 destructuring 독립적 우측인지의 계속 [{}] 또는 [].
+이제 해체는 우변이 `[{}]` 또는 `[]`이더라도 다음과 같이 독립적으로 진행된다.
 
 ```javascript
 const { prop: x=123 } = {}; // x = 123
 ```
 
 > *:notebook: `Still confused?`  
-  아직도 혼란?
+  여전히 혼란스러운가?
 > `A later section explains destructuring from a different angle, as an algorithm. That may give you additional insight.`  
-  다음 섹션은 알고리즘으로, 다른 각도에서 destructuring 설명합니다. 그것은 당신에게 추가 통찰력을 제공 할 수 있습니다.
+  다음 절은 다른 관점인 알고리즘으로 해체를 설명한다. 추가적인 인사이트를 얻을 수 있을 것이다.
 
-## 10.6 `More object destructuring features` 이상의 오브젝트 destructuring 기능
+## 10.6 `More object destructuring features` 더 많은 객체 해체 기능
 
-## 10.6.1 `Property value shorthands` 속성 값 속기
+## 10.6.1 `Property value shorthands` 프로퍼티 값 축약
 
 `Property value shorthands are a feature of object literals: If the value of a property is provided via a variable whose name is the same as the key, you can omit the key. This works for destructuring, too:`
 
-속성 값 shorthands 객체 리터럴의 특징은 다음과 같습니다 속성 값은 이름이 키와 동일한 변수를 통해 제공되는 경우, 키를 생략 할 수 있습니다. 이도 destructuring 작동 :
+프로퍼티의 값이 이름과 키가 같은 변수를 통해 제공되는 경우, 키를 생략할 수 있는 프로퍼티 값 축약은 객체 리터럴의 특징이다. 해체에서도 동작한다.
 
 ```javascript
 const { x, y } = { x: 11, y: 8 }; // x = 11; y = 8
@@ -578,7 +578,7 @@ const { x, y } = { x: 11, y: 8 }; // x = 11; y = 8
 
 `This declaration is equivalent to:`
 
-이 선언은 동일합니다 :
+이 선언은 아래와 동일하다 :
 
 ```javascript
 const { x: x, y: y } = { x: 11, y: 8 };
@@ -586,17 +586,17 @@ const { x: x, y: y } = { x: 11, y: 8 };
 
 `You can also combine property value shorthands with default values:`
 
-또한 기본 값으로 속성 값 속기를 결합 할 수 있습니다 :
+또한 프로퍼티 값 축약을 기본값과 결합할 수 있다.
 
 ```javascript
 const { x, y = 1 } = {}; // x = undefined; y = 1
 ```
 
-## 10.6.2 `Computed property keys` 계산 된 프로퍼티 키
+## 10.6.2 `Computed property keys` 계산된 프로퍼티 키
 
 `Computed property keys are another object literal feature that also works for destructuring: You can specify the key of a property via an expression, if you put it in square brackets:`
 
-계산 된 속성 키도 destructuring 작동 다른 객체 리터럴 기능입니다 : 당신은 괄호에 넣어 당신은, 식을 통해 속성의 키를 지정할 수 있습니다 :
+계산된 프로퍼티 키는 표현식으로 프로퍼티의 키를 괄호안에 넣으면 지정할 수 있는 해체에서도 동작하는 다른 객체 리터럴 기능이다. 
 
 ```javascript
 const FOO = 'foo';
@@ -605,7 +605,7 @@ const { [FOO]: f } = { foo: 123 }; // f = 123
 
 `Computed property keys allow you to destructure properties whose keys are symbols:`
 
-계산 된 속성 키는 그 키를 상징 특성을 destructure 할 수 있습니다 :
+계산된 프로퍼티 키는 키가 심볼인 프로퍼티를 추출하게 해준다.
 
 ```javascript
 // `Create and destructure a property whose key is a symbol` 그 키 상징 인 속성을 만들고 destructure
