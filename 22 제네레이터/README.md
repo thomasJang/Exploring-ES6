@@ -681,6 +681,9 @@ Unfortunately, next() is asymmetric, but that can’t be helped: It always sends
 
 When using a generator as an observer, it is important to note that the only purpose of the first invocation of next() is to start the observer. It is only ready for input afterwards, because this first invocation advances execution to the first yield. Therefore, any input you send via the first next() is ignored:
 
+관찰자로써 제너레이터를 사용할때, 오직 첫번째 next의 호출 목적은 관찰자를 시작하는 것이라는 것을 주목하는게 중요하다. 첫 호출은 첫 yield로 전진하기 때문에, 관찰자는 나중에 입력만 준비한다.
+
+```javascript
 function* gen() {
     // (A)
     while (true) {
@@ -692,20 +695,38 @@ const obj = gen();
 obj.next('a');
 obj.next('b');
 
-// Output:
+// 출력:
 // b
+```
+
 Initially, execution is paused in line A. The first invocation of next():
 
-Feeds the argument 'a' of next() to the generator, which has no way to receive it (as there is no yield). That’s why it is ignored.
-Advances to the yield in line B and pauses execution.
-Returns yield’s operand (undefined, because it doesn’t have an operand).
+처음에는, 실행은 A줄에서 멈춰 있다. next() 첫 호출:
+
+* Feeds the argument 'a' of next() to the generator, which has no way to receive it (as there is no yield). That’s why it is ignored.
+* Advances to the yield in line B and pauses execution.
+* Returns yield’s operand (undefined, because it doesn’t have an operand).
+
+* next()의 'a' 인자값을 인자값을 받을수 있는 방법이 없는(yield가 없기 때문에) 제너레이터에게 공급한다. 이것이 무시된 이유다.
+* B줄의 yield로 전진하고, 실행을 멈춘다.
+* yield의 피 연산자를 반환(undefined, 왜냐하면 피연산자가 없기 때문에)한다.
+
+
 The second invocation of next():
 
-Feeds the argument 'b' of next() to the generator, which receives it via the yield in line B and assigns it to the variable input.
-Then execution continues until the next loop iteration, where it is paused again, in line B.
-Then next() returns with that yield’s operand (undefined).
-The following utility function fixes this issue:
+next() 두번째 호출:
 
+* Feeds the argument 'b' of next() to the generator, which receives it via the yield in line B and assigns it to the variable input.
+* Then execution continues until the next loop iteration, where it is paused again, in line B.
+* Then next() returns with that yield’s operand (undefined).
+
+* next()로 인자값 'b'를 B줄에서 yield를 통해 받고 변수 input값을 할당하는 제너레이터로 공급한다.
+* 이후 다음 반복문 순환까지 계속해서 실행되고 B줄에서 다시 멈춘다.
+* 이후 next()는 yield의 피연산자(undefined)로 반환한다.
+
+The following utility function fixes this issue:
+다음 유틸리티 함수는 이 이슈를 고친다:
+```javascript
 /**
  * Returns a function that, when called,
  * returns a generator object that is immediately
@@ -718,6 +739,7 @@ function coroutine(generatorFunction) {
         return generatorObject;
     };
 }
+```
 To see how coroutine() works, let’s compare a wrapped generator with a normal one:
 
 const wrapped = coroutine(function* () {
