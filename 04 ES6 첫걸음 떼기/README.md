@@ -895,13 +895,19 @@ More information: Sect. “Creating Arrays filled with values”
 
 ## 4.18 From CommonJS modules to ES6 modules
 ## 4.18 CommonJS 모듈에서 ES6모듈로
-심지어 ES5에서 모듈 시스템은 AMD 문법 또는 CommonJS문법 기반으로 대부분 "the revealing module pattern"같은 수기로 변경하는 방법을 가졌다.
+Even in ES5, module systems based on either AMD syntax or CommonJS syntax have mostly replaced hand-written solutions such as the revealing module pattern.
 
-ES6는 모듈을 내장해서 지원한다. 유감스럽게도 네이티브로 제공하는 자바스크립트 엔진은 없었다. 그러나 브라우져파이, 웹팩 또는 jspm 같은 툴은 당신이 모듈 생성에 대한 ES6 문법을 사용하게 해 주고 당신의 쓴 코드를 미래지향적으로 만들어 준다.
+심지어 ES5에서, AMD 문법 또는 CommonJS 문법 기반인 모듈 방식은 대개 "모델 공개 패턴"같은 손으로 쓴 방법을 교체 하고 있다.
 
-### Multiple export
+ES6 has built-in support for modules. Alas, no JavaScript engine supports them natively, yet. But tools such as browserify, webpack or jspm let you use ES6 syntax to create modules, making the code you write future-proof.
 
-CommonJS에서 당신은 어려 개체를 익스포트는 다음과 같다.:
+ES6는 내장으로 모듈을 지원한다. 유감스럽게도 아직 네이티브로 제공하는 자바스크립트 엔진은 없었다. 그러나 브라우져파이, 웹팩 또는 jspm 같은 툴은 모듈 생성에 대한 ES6 문법을 사용하게 하고, 코드를 미래지향적으로 만들어 준다.
+
+### 4.18.1 Multiple exports
+### 4.18.1 다중 익스포트
+In CommonJS, you export multiple entities as follows:
+
+CommonJS에서 어려 개체를 익스포트는 다음과 같다:
 
 ```javascript
 //------ lib.js ------
@@ -925,8 +931,9 @@ var diag = require('lib').diag;
 console.log(square(11)); // 121
 console.log(diag(4, 3)); // 5
 ```
+Alternatively, you can import the whole module as an object and access square and diag via it:
 
-그 대신에 당신은 객체로 전체 모듈을 임포트할 수 있고 그것을 통해 square나 diag에 접근할 수 있다.
+한편으로, 객체로 전체 모듈을 임포트할 수 있고, 그것을 통해 square나 diag에 접근할 수 있다.
 
 ```javascript
 //------ main2.js ------
@@ -935,7 +942,9 @@ console.log(lib.square(11)); // 121
 console.log(lib.diag(4, 3)); // 5
 ```
 
-ES6에서 다중 익스포트는 기명된 익스포트로 불리고 이것 처럼 다룬다.:
+In ES6, multiple exports are called named exports and handled like this:
+
+ES6에서, 다중 익스포트는 기명된 익스포트로 불리고 이것 처럼 다룬다:
 
 ```javascript
 //------ lib.js ------
@@ -952,8 +961,9 @@ import { square, diag } from 'lib';
 console.log(square(11)); // 121
 console.log(diag(4, 3)); // 5
 ```
+The syntax for importing modules as objects looks as follows (line A):
 
-객체 처럼 모듈 임포트하는것에 대한 문법은 아래 (줄 A) 처럼 보인다.:
+객체로 모듈 임포트 하는 문법은 다음(줄 A)에서 볼 수 있다:
 
 ```javascript
 //------ main2.js ------
@@ -961,9 +971,11 @@ import * as lib from 'lib'; // (A)
 console.log(lib.square(11)); // 121
 console.log(lib.diag(4, 3)); // 5
 ```
-
+### 4.18.2 Single exports
 ### 4.18.2 단일 익스포트
-Node.js는 CommonJS를 확장하였고 module.exports를 통해 당신을 모듈로 부터 단일 값으로 익스포트한다.:
+Node.js extends CommonJS and lets you export single values from modules, via module.exports:
+
+Node.js는 CommonJS를 확장하였고 module.exports를 통해 모듈로 부터 단일 값으로 익스포트 하게 한다:
 
 ```javascript
 //------ myFunc.js ------
@@ -973,7 +985,8 @@ module.exports = function () { ··· };
 var myFunc = require('myFunc');
 myFunc();
 ```
-ES6에서 exprot default를 통해 같은 것을 한다.:
+In ES6, the same thing is done via export default:
+ES6에서, exprot default를 통해 같은 일이 이루어진다:
 
 ```javascript
 //------ myFunc.js ------
@@ -983,7 +996,10 @@ export default function () { ··· } // no semicolon!
 import myFunc from 'myFunc';
 myFunc();
 ```
-더 자세한 정보: 챕터 "모듈".
+더 자세한 정보: "모듈"장.
 
+## 4.19 What to do next
 ## 4.19 다음에는 무엇을 할까
-이제 당신은 ES6에 대해 처음으로 맛을 보았고, 당신은 챕터를 검색하여 탐험을 계속 할 수 있다. 각 챕터는 기능이나 관련된 기능의 집합을 다루고 개요와 함께 시작된다.
+Now that you got a first taste of ES6, you can continue your exploration by browsing the chapters: Each chapter covers a feature or a set of related features and starts with an overview.
+
+이제 ES6를 처음 맛을 보았고, 계속해서 다른 장을 훑어보면서 탐험을 할 수 있다.  각 장은 기능이나 관련된 기능의 집합을 다루고 개요로 시작 된다.

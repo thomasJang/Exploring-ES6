@@ -596,38 +596,69 @@ for (const x of tree) {
 // e
 ```
 
-22.4 Generators as observers (data consumption)
+## 22.4 Generators as observers (data consumption)
+## 22.4 관찰자로서 제너레이터 (데이터 소비자)
 As consumers of data, generator objects conform to the second half of the generator interface, Observer:
 
+데이터의 소비자로서 제너레이터 객체는 다음 반절의 제너레이터 인터페이스를 따른다, 관찰자:
+```
 interface Observer {
     next(value? : any) : void;
     return(value? : any) : void;
     throw(error) : void;
 }
+```
 As an observer, a generator pauses until it receives input. There are three kinds of input, transmitted via the methods specified by the interface:
 
-next() sends normal input.
-return() terminates the generator.
-throw() signals an error.
-22.4.1 Sending values via next()
+관찰자로서, 제너레이터는 입력을 받기 전까지 멈춰 있다. 세가지 종류의 입력이 있고, 이 인터페이스에 의해 정의된 메소드를 통해서 전송 된다.
+
+* next() sends normal input.
+* return() terminates the generator.
+* throw() signals an error.
+
+* next() 일반 입력 전달.
+* reteurn() 제너레이터 종료.
+* throw() 에러 신호를 보냄.
+
+### 22.4.1 Sending values via next()
+### 22.4.1 next()를 통한 값 보내기
+
 If you use a generator as an observer, you send values to it via next() and it receives those values via yield:
 
+제너레이터를 관찰자로서 사용한다면, next()를 통해 값을 제너레이터에 보내고고, 제너레이터는 yield를 통해 값을 받는다. 
+
+```javascript
 function* dataConsumer() {
     console.log('Started');
     console.log(`1. ${yield}`); // (A)
     console.log(`2. ${yield}`);
     return 'result';
 }
+```
+
 Let’s use this generator interactively. First, we create a generator object:
 
+대화형으로 제너레이터를 사용해 보자. 우선, 제너레이터 객체는 만든다:
+
+```javascript
 > const genObj = dataConsumer();
+```
+
 We now call genObj.next(), which starts the generator. Execution continues until the first yield, which is where the generator pauses. The result of next() is the value yielded in line A (undefined, because yield doesn’t have an operand). In this section, we are not interested in what next() returns, because we only use it to send values, not to retrieve values.
 
+이제 제너레이터의 시작인 genObj.next()를 호출한다. 제너레이터가 멈추는 곳인 첫 yield 전 까지 계속 실행 된다. next()의 결과 줄 A에서 값이 산출(undefined, 왜냐하면 yield는 피 연산자가 없기 때문이다)된다. 이 절에서 오직 값을 받는게 아니라 보내기 위해 사용되기 때문에 next()가 무엇을 반환하는지에 대해 흥미가 없다. 
+
+```javascript
 > genObj.next()
 Started
 { value: undefined, done: false }
+```
+
 We call next() two more times, in order to send the value 'a' to the first yield and the value 'b' to the second yield:
 
+값 'a'를 첫 yield에 보내고 값 'b'를 두번째 yield에 보내기 위해 next()를 두번 더 호출 했다.
+
+```javascript
 > genObj.next('a')
 1. a
 { value: undefined, done: false }
@@ -635,11 +666,19 @@ We call next() two more times, in order to send the value 'a' to the first yield
 > genObj.next('b')
 2. b
 { value: 'result', done: true }
+```
+
 The result of the last next() is the value returned from dataConsumer(). done being true indicates that the generator is finished.
+
+마지막 next()결과는 dataConsumer()로 부터 전달 받은 값 이다. done이 true인 것은 제너레이터가 종료되었다는것을 나타낸다.
 
 Unfortunately, next() is asymmetric, but that can’t be helped: It always sends a value to the currently suspended yield, but returns the operand of the following yield.
 
-22.4.1.1 The first next()
+불행하게도, next()는 비대칭 이지만 도와 줄 수 없다: 항상 현재 멈춰 있는 yield에 값을 보내지만, 뒤따르는 yield의 피 연산자를 반환한다.
+
+#### 22.4.1.1 The first next()
+#### 22.4.1.1 첫번째 next()
+
 When using a generator as an observer, it is important to note that the only purpose of the first invocation of next() is to start the observer. It is only ready for input afterwards, because this first invocation advances execution to the first yield. Therefore, any input you send via the first next() is ignored:
 
 function* gen() {
