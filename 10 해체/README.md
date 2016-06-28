@@ -283,7 +283,9 @@ const [x,...y] = 'abc'; // x='a'; y=['b', 'c']
 
 `Don’t forget that the iterator over strings returns code points (“Unicode characters”, 21 bits), not code units (“JavaScript characters”, 16 bits). (For more information on Unicode, consult the chapter “Chapter 24. Unicode and JavaScript” in “Speaking JavaScript”.) For example:`
 
-문자열의 반복자는 코드 단위( 16비트 자바스크립트 문자 )가 아닌 코드 포인트( 21비트 유니코드 문자 )를 반환하는 것을 잊지 말라. ( 유니코드에 대한 자세한 내용은 `자바스크립트를 말하다`의 24장 유니코드와 자바스크립트를 참조 ) 예를 들어.
+문자열의 반복자는 코드 단위( 16비트 자바스크립트 문자 )가 아닌 코드 포인트( 21비트 유니코드 문자 )를 반환하는 것을 잊지 말라. ( 유니코드에 대한 자세한 내용은 `자바스크립트를 말하다`의 24장 유니코드와 자바스크립트를 참조 ) 
+
+예를 들어.
 
 ```javascript
 const [x,y,z] = 'a\uD83D\uDCA9c'; // x='a'; y='\uD83D\uDCA9'; z='c'
@@ -291,7 +293,7 @@ const [x,y,z] = 'a\uD83D\uDCA9c'; // x='a'; y='\uD83D\uDCA9'; z='c'
 
 `You can’t access the elements of a Set via indices, but you can do so via an iterator. Therefore, Array destructuring works for Sets:`
 
-당신은 인덱스를 통해 설정의 요소에 액세스 할 수 있지만 반복자를 통해 수행 할 수 있습니다. 따라서, 배열 destructuring는 설정 작동 :
+인덱스를 통해 `Set`의 요소에 접근할 수는 없지만 이터레이터를 통해서는 가능하다. 따라서 배열 해체는 `Set`에서도 동작한다.
 
 ```javascript
 const [x,y] = new Set(['a', 'b']); // x='a'; y='b’;
@@ -299,11 +301,11 @@ const [x,y] = new Set(['a', 'b']); // x='a'; y='b’;
 
 `The Set iterator always returns elements in the order in which they were inserted, which is why the result of the previous destructuring is always the same.`
 
-설정 반복자는 항상 이전 destructuring의 결과가 항상 동일 왜 그들이 삽입 된 순서에 요소를 반환합니다.
+`Set` 이터레이터는 항상 이전 해체의 결과와 동일하게 삽입된 순서대로 요소를 반환한다.
 
 `Infinite sequences. Destructuring also works for iterators over infinite sequences. The generator function allNaturalNumbers() returns an iterator that yields 0, 1, 2, etc.`
 
-무한 시퀀스. Destructuring는 무한 시퀀스를 통해 반복자 작동합니다. 발전기 기능 allNaturalNumbers ()는 0, 1, 2 등을 산출 반복자를 반환
+무한 시퀀스. 해체는 무한 시퀀스 상의 이터레이터에도 작동한다. 제너레이터 함수 `allNaturalNumbers`는 0, 1, 2 등의 `yield` 이터레이터를 반환한다.
 
 ```javascript
 function* allNaturalNumbers() {
@@ -315,17 +317,18 @@ function* allNaturalNumbers() {
 
 `The following destructuring extracts the first three elements of that infinite sequence.`
 
-다음 destructuring는 무한 시퀀스의 처음 세 요소를 추출한다.
+다음 해체는 무한 시퀀스의 처음 세 요소 추출한다.
 
 ```javascript
 const [x, y, z] = allNaturalNumbers(); // x=0; y=1; z=2
 ```
 
-## 10.4.2.1 `Failing to Array-destructure a value` 배열-destructure 값으로 실패
+## 10.4.2.1 `Failing to Array-destructure a value` 값을 배열 해체의 실패
 
 `A value is iterable if it has a method whose key is Symbol.iterator that returns an object. Array-destructuring throws a TypeError if the value to be destructured isn’t iterable:`
 
-그것은 누구의 키 객체를 반환 Symbol.iterator 수있는 방법이있는 경우 값은 반복 가능한 것입니다. 탈구되는 값이 반복 가능한 아닌 경우 배열 destructuring는 형식 오류가 발생합니다 :
+키가 `Symbol.iterator`이고 객체를 리턴하는 함수가 있는 값은 이터러블이다.
+배열 해체는 해체할 값이 이터러블이 아닌 경우 `TypeError`를 발생시킨다.
 
 ```javascript
 let x;
@@ -340,7 +343,7 @@ let x;
 
 `The TypeError is thrown even before accessing elements of the iterable, which means that you can use the empty Array pattern [] to check whether a value is iterable:`
 
-형식 오류 심지어 당신이 값이 반복 가능 여부를 확인하기 위해 빈 배열 패턴 []을 사용할 수 있다는 것을 의미 반복자의 요소에 액세스하기 전에 발생합니다 :
+`TypeError`는 이터러블의 요소에 접근하기도 전에 발생하므로 빈 배열 패턴 `[]`을 사용하여 값이 이터러블인지 검사할 수 있다.
 
 ```javascript
 [] = {}; // `TypeError, empty objects are not iterable` TypeError, 빈 객체는 이터러블이 아니다
@@ -348,9 +351,11 @@ let x;
 [] = null; // `TypeError, not iterable` TypeError, 이터러블이 아니다
 ```
 
-## 10.5 `If a part has no match` 일부 일치가없는 경우
+## 10.5 `If a part has no match` 일치하는 부분이 없다면
 
 `Similarly to how JavaScript handles non-existent properties and Array elements, destructuring fails silently if the target mentions a part that doesn’t exist in the source: the interior of the part is matched against undefined. If the interior is a variable that means that the variable is set to undefined:`
+
+자바스크립트가 존재하지 않는 프로퍼티와 배열 요소를 처리하는 방법과 비슷하게, 해체는 소스에 없는 파트가 타겟에 기술되어 있으면 조용히 실패한다.
 
 대상이 소스에 존재하지 않는 부분을 언급하는 경우 마찬가지로 자바 스크립트가 존재하지 않는 특성 및 배열 요소를 처리하는 방법에, destructuring는 자동으로 실패 : 부품의 내부는 정의와 일치합니다. 내부 변수가 정의로 설정되는 것을 의미 가변 인 경우 :
 
