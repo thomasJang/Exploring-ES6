@@ -102,7 +102,7 @@ const str3 = sym.toString(); // 'Symbol(desc)'
 ```
 
 Forbidding coercion prevents some errors, but also makes working with symbols more complicated.
-> 강제 변환을 방어하는 것은 몇몇 오류를 예방하지만, 심볼을 사용한 작업을 더욱 복잡하게 만들기도 한다.
+> 강제를 금하는 것은 몇몇 오류를 예방하지만, 심볼을 사용한 작업을 더욱 복잡하게 만들기도 한다.
 
 ### 7.1.4 Which operations related to property keys are aware of symbols?
 > 7.1.4 프로퍼티키에 관련된 어떤 연산자가 심볼을 인지하는가?
@@ -129,7 +129,7 @@ for-in loop
 > 7.2 새로운 원시 타입
 
 ECMAScript 6 introduces a new primitive type: symbols. They are tokens that serve as unique IDs. You create symbols via the factory function Symbol() (which is loosely similar to String returning strings if called as a function):
-> ECMAScript 6는 새로운 원시 타입을 소개한다 : 심볼. 심볼은 고유한 아이디로써 존재하는 토큰이다. 팩토리 함수인 Symbol()로 심볼을 생성한다(함수로 호출되면 문자열을 반환하는 String과 느슨하게 유사하다)
+> ECMAScript 6는 새로운 원시 타입을 소개한다 : 심볼. 심볼은 고유한 아이디로 제공되는 토큰이다. 팩토리 함수인 Symbol()로 심볼을 생성한다(함수로 호출되면 문자열을 반환하는 String과 느슨하게 유사하다)
 
 ```js
 const symbol1 = Symbol();
