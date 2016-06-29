@@ -175,7 +175,7 @@ console.log(obj[MY_KEY]); // 123
 ```
 
 Classes and object literals have a feature called computed property keys: You can specify the key of a property via an expression, by putting it in square brackets. In the following object literal, we use a computed property key to make the value of MY_KEY the key of a property.
-> 클래스와 객체 리터럴은 계산된 프로퍼티 키 *computed property keys*로 불리는 기능을 갖는다 : 표현식을 통해 프로퍼티의 키를 대괄호 안에 넣음으로써 이를 특정할 수 있다. 다음 객체리터럴에서, MY_KEY 의 값을 프로퍼티의 키로 만들기 위해 계산된 프로퍼티 키를 사용한다. 
+> 클래스와 객체 리터럴은 계산된 프로퍼티 키 *computed property keys*로 불리는 기능을 갖는다 : 표현식을 통해 프로퍼티의 키를 대괄호 안에 넣음으로써 이를 명시할 수 있다. 아래 객체 리터럴에서는, MY_KEY 의 값을 프로퍼티의 키로 만들기 위해 계산된 프로퍼티 키를 사용한다. 
 
 ```js
 const MY_KEY = Symbol();
@@ -259,10 +259,10 @@ The name Object.keys clashes with the new terminology (only string keys are list
 > Object.keys는 새로운 용어(문자열 키만 나열된다)와 충돌한다. Object.names 또는 Object.getEnumerableOwnPropertyNames 가 이제 더 나은 선택이 될 것이다.
 
 ## 7.3 Using symbols to represent concepts
-> 7.3 개념을 나타내기 위해 심볼을 사용하기
+> 7.3 개념을 나타내기 위한 심볼 사용하기
 
 In ECMAScript 5, one often represents concepts (think enum constants) via strings. For example:
-> ECMAScript 5 에서는, 문자열로 컨셉(열거 상수를 생각해보라)을 종종 표현한다. 예를 들면:
+> ECMAScript 5 에서는, 문자열로 개념(열거 상수를 생각해보라)을 종종 표현한다. 예를 들면:
 
 ```js
 var COLOR_RED    = 'Red';
@@ -311,20 +311,21 @@ function isThree(x) {
 ```
 
 We use the flexibility that switch offers us and refer to the colors via our constants (COLOR_RED etc.) instead of hard-coding them ('RED' etc.).
-> 우리은 스위치가 제공한다 유연성 (COLOR_RED 등) 하드코딩 대신에 ('RED' 등) 상수를 통해 색깔을 참조하거 뭐래~~~
+
+> 우리는 스위치가 제공하는 유연성을 사용하고 하드코딩('RED' 등) 대신에 상수(COLOR_RED 등)를 통해 색깔을 참조한다. 
 
 Interestingly, even though we do so, there can still be mix-ups. For example, someone may define a constant for a mood:
->  흥미롭게도 
+> 흥미로운점은, 우리가 그렇게 한다고해도 여전히 뒤죽박죽이 될 수 있다. 예를 들면, 누군가는 기분을 표현하는 상수를 선언할지도 모른다.
 
 ```js
 var MOOD_BLUE = 'BLUE';
 ```
 
 Now the value of BLUE is not unique anymore and MOOD_BLUE can be mistaken for it. If you use it as a parameter for getComplement(), it returns 'ORANGE' where it should throw an exception.
-> 이제 BLUE의 값은 더 이상 고유하지 않고 MOOD_BLUE는 실수가 될 수 있다. getComplement()를 위한 파라미터로 이를 사용한다면 예외를 던지는 곳에서 'ORANGE'를 반환한다. 
+> 이제 BLUE의 값은 더 이상 고유하지 않고 MOOD_BLUE는 실수가 될 수 있다. getComplement()를 위한 파라미터로 이를 사용한다면 예외를 던져야하는 곳에서 'ORANGE'를 반환한다. 
 
 Let’s use symbols to fix this example. Now we can also use the ES6 feature const, which lets us declare actual constants (you can’t change what value is bound to a constant, but the value itself may be mutable).
-> 이 예제를 고치기 위해 심볼을 사용하자. 이제 실제 상수를 선언할 수 있게 하는 ES6 기능인 const를 사용할 수 있다. (상수에 할당된 값은 변경할 수 없지만, 이 값은 스스로 변할 수도 있다) 
+> 이 예제를 고치기 위해 심볼을 사용하자. 이제 실제 상수를 선언할 수 있게 하는 ES6 기능인 const를 사용할 수 있다. (상수에 할당된 값은 변경할 수 없지만, 이 값 자체가 변할수는 있다) 
 
 ```js
 const COLOR_RED    = Symbol('Red');
@@ -336,13 +337,13 @@ const COLOR_VIOLET = Symbol('Violet');
 ```
 
 Each value returned by Symbol is unique, which is why no other value can be mistaken for BLUE now. Intriguingly, the code of getComplement() doesn’t change at all if we use symbols instead of strings, which shows how similar they are.
-> 심볼에 의해 반환된 각각의 값은 고유하고 ~~~~~~~. 아주 흥미롭게도 getComplement()의 코드는 전혀 바꾸지 않는다. 문자열 대신에 심볼을 사용한다면 ~~~~~
+> 심볼에 의해 반환된 각각의 값은 고유하고   ~~~~~~~. 아주 흥미롭게도 getComplement()의 코드는 문자열 대신에 심볼을 사용한다면 전혀 바꾸지 않는다.  ~~~~~ 모르겠다~~~~ 쉬었다보자~~~
 
 ## 7.4 Symbols as keys of properties
 > 7.4 프로퍼티의 키인 심볼
 
 Being able to create properties whose keys never clash with other keys is useful in two situations:
-> 
+> 다른 키와 절대 충돌하지 않는 프로퍼티키를 만들수 있게 되는 것은 두가지 상황에서 유용하다.
 
 + For non-public properties in inheritance hierarchies.
 + To keep meta-level properties from clashing with base-level properties.
@@ -354,17 +355,17 @@ Being able to create properties whose keys never clash with other keys is useful
 > 7.4.1 공개되지 않은 프로퍼티의 키인 심볼
 
 Whenever there are inheritance hierarchies in JavaScript (e.g. created via classes, mixins or a purely prototypal approach), you have two kinds of properties:
-자바스크립트에서 상속 계층(클래스, 믹스인, 순수한 프로토타입 접근법)은 언제든지 두 종류의 프로퍼티를 갖는다.
+> 자바스크립트에서 상속 계층(클래스, 믹스인, 순수한 프로토타입 접근법)은 언제든지 두 종류의 프로퍼티를 갖는다.
 
 + Public properties are seen by clients of the code.
 + Private properties are used internally within the pieces (e.g. classes, mixins or objects) that make up the inheritance hierarchy. (Protected properties are shared between several pieces and face the same issues as private properties.)
 
 > 공개 프로퍼티는 코드의 클라이언트에 의해 보인다.
-> 비공개 프로퍼티는 내부적으로 상속 계층을 구성하는 조각(클래스, 믹스인 또는 객체) 내에서 사용된다. 
+> 비공개 프로퍼티는 내부적으로 상속 계층을 구성하는 조각(클래스, 믹스인 또는 객체) 내에서 사용된다. (Protected 프로퍼티는 몇몇 조각들 사이에서 공유되고, 비공개 프로퍼티가 갖는 똑같은 이슈에 처한다.)
 
 For usability’s sake, public properties usually have string keys. But for private properties with string keys, accidental name clashes can become a problem. Therefore, symbols are a good choice. For example, in the following code, symbols are used for the private properties _counter and _action.
 
-> 사용 적합성을 위해 공개 프로퍼티는 일반적으로 문자열 키를 갖는다. 그러나 문자열 키인 비공개 프로퍼티를 위해 우연한 이름 충돌이 문제가 될 수 있다. 그래서 심볼이 좋은 선택이다. 예를 들어, 다음 코드에서 심볼은 _counter 와 _action 인 비공개 프로퍼티로 사용된다.
+> 사용 적합성을 위해 공개 프로퍼티는 일반적으로 문자열 키를 갖는다. 그러나 문자열 키인 비공개 프로퍼티는 불시의 이름 충돌이 문제가 될 수 있다. 그래서 심볼이 좋은 선택이다. 예를 들어, 다음 코드에서 심볼은 _counter 와 _action 인 비공개 프로퍼티로 사용된다.
 
 ```js
 const _counter = Symbol('counter');
