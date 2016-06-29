@@ -608,23 +608,23 @@ const { [FOO]: f } = { foo: 123 }; // f = 123
 계산된 프로퍼티 키는 키가 심볼인 프로퍼티를 추출하게 해준다.
 
 ```javascript
-// `Create and destructure a property whose key is a symbol` 그 키 상징 인 속성을 만들고 destructure
+// `Create and destructure a property whose key is a symbol` 키가 심볼인 프로퍼티를 생성하고 해체한다
 const KEY = Symbol();
 const obj = { [KEY]: 'abc' };
 const { [KEY]: x } = obj; // x = 'abc'
 
-// `Extract Array.prototype[Symbol.iterator]` 추출 Array.prototype으로 [Symbol.iterator]
+// `Extract Array.prototype[Symbol.iterator]` Array.prototype[Symbol.iterator] 추출
 const { [Symbol.iterator]: func } = [];
 console.log(typeof func); // function
 ```
 
-## 10.7 `More Array destructuring features` 더 많은 배열 destructuring 기능
+## 10.7 `More Array destructuring features` 더 많은 배열 해체 기능
 
 ## 10.7.1 `Elision` 생략
 
 `Elision lets you use the syntax of Array “holes” to skip elements during destructuring:`
 
-생략하면 destructuring 동안 요소를 건너 배열 "구멍"의 구문을 사용할 수 있습니다 :
+생략은 해체하는 동안에 요소를 스킵하기 위해 배열의 "holes" 문법을 사용할 수 있게 된다.
 
 ```javascript
 const [,, x, y] = ['a', 'b', 'c', 'd']; // x = 'c'; y = 'd'
@@ -634,18 +634,19 @@ const [,, x, y] = ['a', 'b', 'c', 'd']; // x = 'c'; y = 'd'
 
 `The rest operator lets you extract the remaining elements of an Array into an Array. You can only use the operator as the last part inside an Array pattern:`
 
-나머지 연산자를 사용하면 배열로 배열의 나머지 요소를 추출 할 수 있습니다. 당신은 배열 패턴 내부의 마지막 부분으로 연산자를 사용할 수 있습니다 :
+나머지 연산자를 사용하면 배열의 남겨진 요소를 배열로 추출할 수 있다. 배열 패턴의 마지막 부분에서만 연산자를 사용할 수 있다.
 
 ```javascript
 const [x, ...y] = ['a', 'b', 'c']; // x='a'; y=['b', 'c']
 ```
 
 > *:notebook: `The rest operator operator extracts data. The same syntax (...) is used by the spread operator, which contributes data to Array literals and function calls and is explained in the next chapter.`  
-  나머지 연산자 연산자는 데이터를 추출한다. 같은 구문 (...)를 배열 리터럴 및 함수 호출로 데이터를 기여하고, 다음 장에 설명되어 확산 연산자에 의해 사용된다.
+  나머지 연산자는 펼치기 연산자와 같은 문법을 사용하여 데이터를 추출한다.
+  ???
   
 `If the operator can’t find any elements, it matches its operand against the empty Array. That is, it never produces undefined or null. For example:`
 
-운전자가 임의의 요소를 찾을 수없는 경우, 빈 어레이에 대해 피연산자 일치한다. 즉, 그것은 정의되지 않은 또는 null 발생하지 않습니다. 예를 들면 :
+연산자가 아무 요소도 발견하지 못하면, 빈 배열의 피연산자와 일치한다. 즉, 절대 `undefined`나 `null`을 생성하지 않는다. 예를 들면.
 
 ```javascript
 const [x, y, ...z] = ['a']; // x='a'; y=undefined; z=[]
@@ -653,7 +654,7 @@ const [x, y, ...z] = ['a']; // x='a'; y=undefined; z=[]
 
 `The operand of the rest operator doesn’t have to be a variable, you can use patterns, too:`
 
-나머지 연산자의 피연산자는 당신도 패턴을 사용할 수있는 변수가 될 필요가 없습니다 :
+나머지 연산자의 피연산자는 패턴을 사용할 수 있는 변수가 될 필요가 없다.
 
 ```javascript
 const [x, ...[y, z]] = ['a', 'b', 'c'];
@@ -662,20 +663,20 @@ const [x, ...[y, z]] = ['a', 'b', 'c'];
 
 `The rest operator triggers the following destructuring:`
 
-나머지 연산자는 다음 destructuring 트리거 :
+나머지 연산자는 다음 해체를 트리거한다.
 
 ```javascript
 [y, z] = ['b', 'c']
 ```
 
 > *:notebook: `The spread operator (...) looks exactly like the rest operator, but it is used inside function calls and Array literals (not inside destructuring patterns).`  
-  확산 연산자 (...)를 정확히 나머지 연산자처럼 보이는,하지만 함수 호출 및 배열 리터럴 (안 내부 destructuring 패턴)의 내부에 사용됩니다.
+  펼치기 연산자 (...)는 정확히 나머지 연사자처럼 보이지만, 해체 패턴이 아닌 함수 호출과 배열 리터럴 안에서 사용된다.
 
-## 10.8 `You can assign to more than just variables` 당신은 변수보다 더에 할당 할 수있는
+## 10.8 `You can assign to more than just variables` 변수보다 더 많이 할당할 수 있다.
 
 `If you assign via destructuring, each assignment target can be everything that is allowed on the left-hand side of a normal assignment, including a reference to a property (obj.prop) and a reference to an Array element (arr[0]).`
 
-만약 destructuring 통해 할당하는 경우, 각각의 할당 대상 속성 (obj.prop)에 대한 참조를 포함하는 통상의 할당의 왼쪽에 허용되는 모든하고 배열 요소에 대한 참조가 될 수있다 (도착을 [0]) .
+해체를 통해 할당하는 경우, 각각의 할당 대상은 프로퍼티의 참조( `obj.prop` )와 배열 요소의 참조( `arr[0]` )를 포함한 일반적인 할당의 좌변에 올 수 있는 모든 것이 될 수 있다.
 
 ```javascript
 const obj = {};
@@ -689,7 +690,7 @@ console.log(arr); // [true]
 
 `You can also assign to object properties and Array elements via the rest operator (...):`
 
-또한 나머지 연산자 (...)를 통해 특성 및 배열 요소를 객체에 할당 할 수 있습니다 :
+또한 나머지 연산자( `...` )를 통해 객체 프로퍼티와 배열 요소에 할당할 수도 있다.
 
 ```javascript
 const obj = {};
@@ -699,28 +700,28 @@ const obj = {};
 
 `If you declare variables or define parameters via destructuring then you must use simple identifiers, you can’t refer to object properties and Array elements.`
 
-당신이 변수를 선언 또는 destructuring를 통해 매개 변수를 다음 간단한 식별자를 사용합니다 정의하면 특성 및 배열 요소를 객체를 참조 할 수 없습니다.
+해체를 통해 변수를 선언하거나 파라미터를 정의할 때 객체 프로퍼티와 배열 요소를 참조할 수 없으므로 간단한 식별자를 사용해야 한다.
 
 ##10.9 `Pitfalls of destructuring` 해체의 함정
 
 `There are two things to be mindful of when using destructuring:`
 
-destructuring을 사용할 때 염두하는 방법은 두 가지가 있습니다 :
+해체를 사용할 때 염두할 것 두 가지가 있다.
 
 - `You can’t start a statement with a curly brace.`  
-  당신은 중괄호로 성명을 시작할 수 없습니다.
+  중괄호로 문을 시작할 수 없다.
 - `During destructuring, you can either declare variables or assign to them, but not both.`  
-  그러나 둘, destructuring 동안, 당신은 변수를 선언 할 수 있습니다 그들에게 할당합니다.
+  해체하는 동안, 변수를 선언, 할당할 수 있지만 둘을 다 할 수는 없다.
 
 `The next two sections have the details.`
 
-다음 두 섹션에서는 세부 사항이 있습니다.
+다음 두 절에서 자세히 다룬다.
 
-## 10.9.1 `Don’t start a statement with a curly brace` 중괄호와 함께 문을 시작하지 마십시오
+## 10.9.1 `Don’t start a statement with a curly brace` 중괄호로 문을 시작하지 말라
 
 `Because code blocks begin with a curly brace, statements must not begin with one. This is unfortunate when using object destructuring in an assignment:`
 
-코드 블록은 중괄호로 시작하기 때문에, 문은 하나로 시작하지 않아야합니다. 할당에 개체 destructuring를 사용할 때 불행한 일이다 :
+불행히도 할당에서 객체 해체를 사용하는 경우, 코드 블록이 중괄호로 시작하기 때문에 문은 중괄호로 시작하지 않아야 한다.
 
 ```javascript
 { a, b } = someObject; // SyntaxError
@@ -728,7 +729,7 @@ destructuring을 사용할 때 염두하는 방법은 두 가지가 있습니다
 
 `The work-around is to put the complete expression in parentheses:`
 
-작업 주위에 괄호 안에 완전한 표현을 넣어하는 것입니다 :
+해결책은 괄호 안에 완전한 표현식을 넣는 것이다.
 
 ```javascript
 ({ a, b } = someObject); // ok
