@@ -83,10 +83,12 @@ TypeError: Cannot read property 'prefix' of undefined
 ```
 
 There are three ways to work around this problem in ECMAScript 5.
-ECMAScript 5에서 이 문제를 해결하기 위한 방법은 3가지가 있다.
+ECMAScript 5에서 이 문제를 풀기 위한 방법으로 다음 3가지가 있다.
 
-### 13.2.1 Solution 1: that = this
-You can assign this to a variable that isn’t shadowed. That’s what’s done in line A, below:
+### 13.2.1 해결책1 : `that=this` (Solution 1: `that = this`)
+You can assign `this` to a variable that isn’t shadowed. That’s what’s done in line A, below:
+
+`this`를 가려지지 않을 변수에 할당하는 방법이 있다. 그것이 아래 (A)에서 수행한 것이다.
 
 ```
 function Prefixer(prefix) {
@@ -100,7 +102,8 @@ Prefixer.prototype.prefixArray = function (arr) {
 };
 ```
 
-Now Prefixer works as expected:
+Now `Prefixer` works as expected:
+이제 `Prefixer`가 예상대로 작동한다.
 
 ```
 > var pre = new Prefixer('Hi ');
@@ -108,8 +111,12 @@ Now Prefixer works as expected:
 [ 'Hi Joe', 'Hi Alex' ]
 ```
 
-### 13.2.2 Solution 2: specifying a value for this
-A few Array methods have an extra parameter for specifying the value that this should have when invoking the callback. That’s the last parameter in line A, below.
+### 13.2.2 해결책2: `this` 값 지정(Solution 2: specifying a value for `this`)
+A few Array methods have an extra parameter for specifying the value that `this` should have when invoking the callback. That’s the last parameter in line A, below.
+
+~~
+몇몇 array 메소드들은 콜백 호출시 `this` 값을 지정하기 위해 추가 매개변수를 갖고 있다. 
+아래 (A)의 마지막 매개변수가 그것이다.
 
 ```
 function Prefixer(prefix) {
@@ -122,8 +129,10 @@ Prefixer.prototype.prefixArray = function (arr) {
 };
 ```
 
-### 13.2.3 Solution 3: bind(this)
-You can use the method bind() to convert a function whose this is determined by how it is called (via call(), a function call, a method call, etc.) to a function whose this is always the same fixed value. That’s what we are doing in line A, below.
+### 13.2.3 해결책3:`bind(this)`(Solution 3: `bind(this)`)
+You can use the method `bind()` to convert a function whose `this` is determined by how it is called (via `call()`, a function call, a method call, etc.) to a function whose `this` is always the same fixed value. That’s what we are doing in line A, below.
+
+`bind()` 메소드를 사용하여 어떻게 호출(`call()`, 함수 호출, 메소드 호출 등)되는지에 따라 `this`가 결정되는 함수를 언제나 동일한 고정값을 가지고 있는 `this`를 가진 함수로 변환할 수 있다. 아래 (A)에서 하고 있는 것이 그것이다.
 
 ```
 function Prefixer(prefix) {
@@ -136,8 +145,9 @@ Prefixer.prototype.prefixArray = function (arr) {
 };
 ```
 
-### 13.2.4 ECMAScript 6 solution: arrow functions
+### 13.2.4 ECMAScript 6 해결책: 화살표 함수 (ECMAScript 6 solution: arrow functions)
 Arrow functions are basically solution 3, with a more convenient syntax. With an arrow function, the code looks as follows.
+화살표 함수는 기본적으로 해결책3인데, 문법이 더 편리하다. 화살표 함수를 사용한 코드는 다음과 같다.
 
 ```
 function Prefixer(prefix) {
@@ -152,6 +162,7 @@ Prefixer.prototype.prefixArray = function (arr) {
 
 To fully ES6-ify the code, you’d use a class and a more compact variant of arrow functions:
 
+코드를 완전하게 ES6스럽게 하려면, 클래스와 화살표 함수의 더 간결한 변형을 사용하면 된다.
 ```
 class Prefixer {
     constructor(prefix) {
@@ -168,9 +179,17 @@ In line A we save a few characters by tweaking two parts of the arrow function:
 * If there is only one parameter and that parameter is an identifier then the parentheses can be omitted.
 * An expression following the arrow leads to that expression being returned.
 
-In the code, you can also see that the methods constructor and prefixArray are defined using new, more compact ES6 syntax that also works in object literals.
+In the code, you can also see that the methods `constructor` and `prefixArray` are defined using new, more compact ES6 syntax that also works in object literals.
 
-## 13.3 Arrow function syntax
+(A)에서 화살표 함수의 두 부분을 수정하여 몇 글자를 줄일 수 있었다.
+
+* 함수의 인자가 하나뿐이고, 그 매개변수가 식별자라면 괄호를 생략할 수 있다.
+* 화살표 다음에 오는 표현식 한 개는 반환된다.
+
+코드에서 객체 리터럴에서도 작동하는 새롭고, 더 간결한 ES6 문법으로 `constructor`메소드와 `prefixArray` 메소드를 정의하는 것 또한 볼 수 있다. 
+
+
+## 13.3 화살표 함수 문법(Arrow function syntax)
 The “fat” arrow => (as opposed to the thin arrow ->) was chosen to be compatible with CoffeeScript, whose fat arrow functions are very similar.
 
 Specifying parameters:

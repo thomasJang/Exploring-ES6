@@ -191,11 +191,11 @@ The identifiers yield and static are only reserved in ES5 strict mode. ECMAScrip
 ### 3.2.5 암묵적 strict 모드(Implicit strict mode)
 The bodies of modules and classes are implicitly in strict mode in ECMAScript 6 – there is no need for the '`use strict`' marker. Given that virtually all of our code will live in modules in the future, ECMAScript 6 effectively upgrades the whole language to strict mode.
 
-ECMAScript 6의 모듈과 클래스의 본체는 암묵적 strict 모드이므로 '`use stict`'를 기술 할 필요가 없다. 머지않아 사실상 모든 코드가 모듈 안에서 동작할 것을 감안하면, ECMAScript 6는 효과적으로 언어 전반을 strict 모드로 업그레이드 할 수 있을 것이다.
+ECMAScript 6에서 모듈과 클래스의 본체는 암묵적 strict 모드이므로 '`use stict`'를 기술 할 필요가 없다. 머지않아 사실상 모든 코드가 모듈 안에서 동작할 것을 감안하면, ECMAScript 6는 효과적으로 언어 전반을 strict 모드로 업그레이드 할 수 있을 것이다.
 
 The bodies of other constructs (such as arrow functions and generator functions) could have been made implicitly strict, too. But given how small these constructs usually are, using them in sloppy mode would have resulted in code that is fragmented between the two modes. Classes and especially modules are large enough to make fragmentation less of an issue.
 
-다른 구현체(화살표 함수나, 제네레이터 함수 등)의 바디도 역시 암묵적 strict 모드가 되어야 한다. 그러나 보통 이런 구현체들이 얼마나 작은지 고려해 보면, sloppy 모드에서 사용하는 것은 결과적으로 두 모드 사이에 파편화된 코드가 될 것이다. 클래스, 그리고 특히 모듈은 충분히 커서 파편화를 줄일 수 있다.
+다른 구현체(화살표 함수나, 제네레이터 함수 등)의 바디도 역시 암묵적 strict 모드가 되어야 한다. 그러나 보통 이런 구현체들이 얼마나 작은지 고려해 보면, sloppy 모드에서 사용하는 것은 결과적으로 두 모드 사이에 파편화된 코드가 될 것이다. 클래스와 특히 모듈은 충분히 커서 파편화를 줄일 수 있다.
 
 ### 3.2.6 수정할 수 없는 것들(Things that can’t be fixed)
 The downside of One JavaScript is that you can’t fix existing quirks, especially the following two.
