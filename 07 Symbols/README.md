@@ -36,13 +36,13 @@ const iterableObject = {
 for (const x of iterableObject) {
     console.log(x);
 }
-// Output:
+// 출력:
 // hello
 // world
 ```
 
 In line A, a symbol is used as the key of the method. This unique marker makes the object iterable and enables us to use the for-of loop.
-> A 라인에서, 심볼은 메소드의 키로써 사용된다. 이 고유한 마커는 객체를 이터러블하게 만들고 for-of 루프를 사용 가능하게 만든다.
+> (A) 라인에서, 심볼은 메소드의 키로 사용된다. 이 고유한 마커는 객체를 이터러블하게 만들고 for-of 루프 사용을 가능하게 한다.
 
 ### 7.1.2 Use case 2: constants representing concepts
 
@@ -81,10 +81,10 @@ function getComplement(color) {
 ```
 
 ### 7.1.3 Pitfall: you can’t coerce symbols to strings
-> 7.1.3 함정: 심볼을 문자열로 강제 변환 할 수 없다.
+> 7.1.3 함정: 심볼을 문자열로 강제 할 수 없다.
 
 Coercing (implicitly converting) symbols to strings throws exceptions:
-> 심볼을 문자열로 강제 변환하는 것(암묵적 변환)은 예외를 발생시킨다.
+> 심볼을 문자열로 강제하는 것(암묵적 변환)은 예외를 발생시킨다.
 
 ```js
 const sym = Symbol('desc');
