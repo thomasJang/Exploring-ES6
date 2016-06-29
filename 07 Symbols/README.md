@@ -349,6 +349,7 @@ Being able to create properties whose keys never clash with other keys is useful
 + To keep meta-level properties from clashing with base-level properties.
 
 > 상속 계층에서 공개되지 않은 프로퍼티를 위해
+
 > meta-level 프로퍼티가 base-level 프로퍼티와 충돌하는 것을 막기 위해
 
 ### 7.4.1 Symbols as keys of non-public properties
@@ -361,6 +362,7 @@ Whenever there are inheritance hierarchies in JavaScript (e.g. created via class
 + Private properties are used internally within the pieces (e.g. classes, mixins or objects) that make up the inheritance hierarchy. (Protected properties are shared between several pieces and face the same issues as private properties.)
 
 > 공개 프로퍼티는 코드의 클라이언트에 의해 보인다.
+
 > 비공개 프로퍼티는 내부적으로 상속 계층을 구성하는 조각(클래스, 믹스인 또는 객체) 내에서 사용된다. (Protected 프로퍼티는 몇몇 조각들 사이에서 공유되고, 비공개 프로퍼티가 갖는 똑같은 이슈에 처한다.)
 
 For usability’s sake, public properties usually have string keys. But for private properties with string keys, accidental name clashes can become a problem. Therefore, symbols are a good choice. For example, in the following code, symbols are used for the private properties _counter and _action.
@@ -389,7 +391,7 @@ class Countdown {
 
 Note that symbols only protect you from name clashes, not from unauthorized access, because you can find out all own property keys – including symbols – of an object via Reflect.ownKeys(). If you want protection there, as well, you can use one of the approaches listed in Sect. “Private data for classes”.
 
-심볼은 비허가된 접근이 아니라 오로지 이름 충돌만을 방어한다는 점을 알아두어야한다. Reflect.ownKeys()를 이용하면 심볼을 포함한 모든 프로퍼티 키를 찾을 수 있기 때문이다. 비허가된 접근의 방어 또한 원한다면, 5장 3절 "클래스의 비공개 데이터"에 나열된 접근법중에 하나를 사용 할 수 있다.
+> 심볼은 비허가된 접근이 아니라 오로지 이름 충돌만을 방어한다는 점을 알아두어야한다. Reflect.ownKeys()를 이용하면 심볼을 포함한 모든 프로퍼티 키를 찾을 수 있기 때문이다. 비허가된 접근의 방어 또한 원한다면, 5장 3절 "클래스의 비공개 데이터"에 나열된 접근법중에 하나를 사용 할 수 있다.
 
 ### 7.4.2 Symbols as keys of meta-level properties
 > 7.4.2 메타레벨 프로퍼티의 키로써 심볼
