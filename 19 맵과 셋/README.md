@@ -650,7 +650,7 @@ WeakMaps work mostly like Maps, with the following differences:
   위크맵의 키들은 위크맵에 약하게 연결된다. 
 
 - You can’t get an overview of the contents of a WeakMap  
-  위크맵 내의 전체 내용을 한 눈에 살펴볼 수 있는 메소드는 없다.
+  위크맵 내의 전체 내용을 살펴볼 수 있는 메소드는 없다.
 
 - You can’t clear a WeakMap  
   위크맵은 내용은 일괄 삭제(clear)할 수 없다.
@@ -677,19 +677,24 @@ wm.set({}, 123); // ok
 ### 19.3.2 위크맵의 키는 약하게 연결되어 있다.
 
 The keys in a WeakMap are weakly held: Normally, an object that isn’t referred to by any storage location (variable, property, etc.) can be garbage-collected. WeakMap keys do not count as storage locations in that sense. In other words: an object being a key in a WeakMap does not prevent the object being garbage-collected.  
-위크맵의 키는 약하게 연결되어 있다. 보통 어떠한 저장장소(변수, 프로퍼티 등)에서도 언급되지 않는 객체는 가비지 컬렉션의 대상이 될 수 있다. 위크맵의 키는 이런 식으로 저장장소에 의존하지 않는다. 다시 말해 위크맵의 키로 할당된 객체는 가비지에 수집되는 것을 막지 않는다.
+위크맵의 키는 약하게 연결되어 있다. 보통 어떠한 저장장소(변수, 프로퍼티 등)에서도 언급되지 않는 객체는 가비지 컬렉션의 대상이 될 수 있다. 이런 맥락에서 위크맵의 키는 저장장소로 간주되지 않는다. 다시 말해 위크맵의 키로 할당된 객체는 가비지에 수집되는 것을 막지 않는다.
 
 Additionally, once a key is gone, its entry will also disappear (eventually, but there is no way to detect when, anyway).  
-또한, 일단 키가 사라지면, 그 키에 할당된 엔트리 역시 사라질 것이다('언젠가'이긴 하지만, 어차피 언제 사라질지를 알아낼 방법이 없다).
+또한, 일단 키가 사라지면, 해당 엔트리 역시 사라질 것이다(결국에는. 다만 어차피 언제 사라지는지를 알아낼 방법은 없다).
 
 
 ### 19.3.3 You can’t get an overview of a WeakMap or clear it
+### 19.3.3 위크맵의 내용은 전체를 살펴보거나 일괄 삭제할 수 없다.
 
-It is impossible to inspect the innards of a WeakMap, to get an overview of them. That includes not being able to iterate over keys, values or entries. Put differently: to get content out of a WeakMap, you need a key. There is no way to clear a WeakMap, either (as a work-around, you can create a completely new instance).
+It is impossible to inspect the innards of a WeakMap, to get an overview of them. That includes not being able to iterate over keys, values or entries. Put differently: to get content out of a WeakMap, you need a key. There is no way to clear a WeakMap, either (as a work-around, you can create a completely new instance).  
+위크맵의 내용 전체를 살펴보기 위해 점검하는 것은 불가능하다. 키에 대해 이터레이트하는 것이 불가능할 뿐 아니라, 값이나 엔트리에 대해서도 마찬가지이다. 바꿔말해, 위크맵의 내용을 얻기 위해서는 키가 필요하다. 또한 위크맵의 내용을 일괄 삭제하는 것도 불가능하다(제2의 해결책으로, 완전히 새로운 인스턴스를 생성할 수는 있다).
 
-These restrictions enable a security property. Quoting Mark Miller: “The mapping from weakmap/key pair value can only be observed or affected by someone who has both the weakmap and the key. With clear(), someone with only the WeakMap would’ve been able to affect the WeakMap-and-key-to-value mapping.”
+These restrictions enable a security property. Quoting Mark Miller: “The mapping from weakmap/key pair value can only be observed or affected by someone who has both the weakmap and the key. With clear(), someone with only the WeakMap would’ve been able to affect the WeakMap-and-key-to-value mapping.”  
+이러한 제한은 프로퍼티 보안을 가능케 한다. 마크 밀러Mark Miller의 말을 인용해보면, "위크맵/키 쌍에 대한 값의 할당은 오직 위크맵과 키 모두를 가진 자에 의해서만 관찰되거나 영향을 받을 수 있다."
 
 Additionally, iteration would be difficult to implement, because you’d have to guarantee that keys remain weakly held.
+
+
 ### 19.3.4 Use cases for WeakMaps
 
 WeakMaps are useful for associating data with objects whose life cycle you can’t (or don’t want to) control. In this section, we look at two examples:
@@ -697,6 +702,7 @@ WeakMaps are useful for associating data with objects whose life cycle you can�
     Caching computed results
     Managing listeners
     Keeping private data
+
 
 #### 19.3.4.1 Caching computed results via WeakMaps
 
