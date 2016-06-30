@@ -725,12 +725,14 @@ next() 두번째 호출:
 * 이후 next()는 yield의 피연산자(undefined)로 반환한다.
 
 The following utility function fixes this issue:
-다음 유틸리티 함수는 이 이슈를 고친다:
+다음 유틸리티 함수는 이 이슈를 해결한다:
+
 ```javascript
 /**
  * Returns a function that, when called,
  * returns a generator object that is immediately
  * ready for input via `next()`
+ * 호출시, next()를 통해 입력이 즉시 준비된 제너레이터 객체 반환하는 함수를 반환한다.
  */
 function coroutine(generatorFunction) {
     return function (...args) {
@@ -742,6 +744,9 @@ function coroutine(generatorFunction) {
 ```
 To see how coroutine() works, let’s compare a wrapped generator with a normal one:
 
+coroutine()의 동작 방식을 보려면 랩핑된 제너레이터와 평범한 것을 비교해 보자:
+
+```javascript
 const wrapped = coroutine(function* () {
     console.log(`First input: ${yield}`);
     return 'DONE';
@@ -750,43 +755,84 @@ const normal = function* () {
     console.log(`First input: ${yield}`);
     return 'DONE';
 };
+```
 The wrapped generator is immediately ready for input:
 
+랩핑된 제너레이터는 입력을 위해 즉시 준비 되어 있다:
+```javascript
 > wrapped().next('hello!')
 First input: hello!
+```
+
 The normal generator needs an extra next() until it is ready for input:
 
+일반 제너레이터는 입력을 위한 준비가 필요할 때까지 별도의 next()가 필요하다.
+```javascript
 > const genObj = normal();
 > genObj.next()
 { value: undefined, done: false }
 > genObj.next('hello!')
 First input: hello!
 { value: 'DONE', done: true }
-22.4.2 yield binds loosely
+```
+
+### 22.4.2 yield binds loosely
+### 22.4.2 느슨한 yield 바인딩
+
 yield binds very loosely, so that we don’t have to put its operand in parentheses:
 
+yield는 매우 느슨하게 바인딩 되기 때문에 괄호 안에 피 연산자를 넣지 않아도 된다.
+
+```javascript
 yield a + b + c;
+```
 This is treated as:
 
+이것은 다음처럼 다뤄진다:
+
+```javascript
 yield (a + b + c);
+```
 Not as:
 
+다음 처럼이 아니라:
+```javascript
 (yield a) + b + c;
+```
+
 As a consequence, many operators bind more tightly than yield and you have to put yield in parentheses if you want to use it as an operand. For example, you get a SyntaxError if you make an unparenthesized yield an operand of plus:
 
+이 결과 때문에, 많은 연산자는 yield보다 더 단단하게 바인딩 되고, 이 연산자에서 yield를 피연산자로 사용하려면 yield를 괄호 안에 넣어야 한다. 예를 들면 괄호 없이 yield를 더하기의 피연산자로 만들면 SyntexError가 발생된다.
+
+```javascript
 console.log('Hello' + yield); // SyntaxError
 console.log('Hello' + yield 123); // SyntaxError
 
 console.log('Hello' + (yield)); // OK
 console.log('Hello' + (yield 123)); // OK
+```
 You do not need parens if yield is a direct argument in a function or method call:
 
+yield가 함수나 메소드 호출에서의 직접적인 인자값이라면 괄호가 필요하지 않다:
+
+```javascript
 foo(yield 'a', yield 'b');
+```
+
 You also don’t need parens if you use yield on the right-hand side of an assignment:
 
+yield를 할당의 오른쪽편에서 사용한다면 또한 괄호가 필요하지 않다:
+
+```javascript
 const input = yield;
-22.4.2.1 yield in the ES6 grammar
+```
+
+#### 22.4.2.1 yield in the ES6 grammar
+#### 22.4.2.1 ES6문법에서 yield
+
 The need for parens around yield can be seen in the following grammar rules in the ECMAScript 6 specification. These rules describe how expressions are parsed. I list them here from general (loose binding, lower precedence) to specific (tight binding, higher precedence). Wherever a certain kind of expression is demanded, you can also use more specific ones. The opposite is not true. The hierarchy ends with ParenthesizedExpression, which means that you can mention any expression anywhere, if you put it in parentheses.
+
+yield 주변에 괄호의 필요는 ECMAScript6 사양에서 다음 문법 규칙을 볼 수 있다. 이 규칙은 어떻게 표현식이 파씽되는지 설명한다. 여기에 제너레이터(느슨한 바인딩, 낮은 우선 순위)
 
 Expression :
     AssignmentExpression
