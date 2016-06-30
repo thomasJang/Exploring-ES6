@@ -832,47 +832,53 @@ const input = yield;
 
 The need for parens around yield can be seen in the following grammar rules in the ECMAScript 6 specification. These rules describe how expressions are parsed. I list them here from general (loose binding, lower precedence) to specific (tight binding, higher precedence). Wherever a certain kind of expression is demanded, you can also use more specific ones. The opposite is not true. The hierarchy ends with ParenthesizedExpression, which means that you can mention any expression anywhere, if you put it in parentheses.
 
-yield 주변에 괄호의 필요는 ECMAScript6 사양에서 다음 문법 규칙을 볼 수 있다. 이 규칙은 어떻게 표현식이 파씽되는지 설명한다. 여기에 제너레이터(느슨한 바인딩, 낮은 우선 순위)
+yield 주변에 괄호의 필요는 ECMAScript6 사양에서 다음 문법 규칙을 볼 수 있다. 이 규칙은 어떻게 표현식이 파씽되는지 설명한다. 여기에 일반적인 것 부터(느슨한 바인딩, 낮은 우선 순위) 특수한 것(강한 바인딩, 높은 우선순위)까지 나열한다. 표현식의 특수한 종류가 요구되는 곳이면, 더 특수한 것을 사용할 수 있다. 반대는 참이 아니다. 이 계층의 끝은 괄호이고 괄호 안에서 넣고 싶은 곳 어디던지 어떤 표현식도 사용할 수 있다. 
 
-Expression :
-    AssignmentExpression
-    Expression , AssignmentExpression
-AssignmentExpression :
-    ConditionalExpression
-    YieldExpression
-    ArrowFunction
-    LeftHandSideExpression = AssignmentExpression
-    LeftHandSideExpression AssignmentOperator AssignmentExpression
-
-···
-
-AdditiveExpression :
-    MultiplicativeExpression
-    AdditiveExpression + MultiplicativeExpression
-    AdditiveExpression - MultiplicativeExpression
-MultiplicativeExpression :
-    UnaryExpression
-    MultiplicativeExpression MultiplicativeOperator UnaryExpression
+```
+Expression : 표현식: 
+    AssignmentExpression 할당 표현식
+    Expression , AssignmentExpression 표현식, 할당 표현식
+AssignmentExpression : 할당 표현식: 
+    ConditionalExpression 조건 표현식
+    YieldExpression 일드 표현식
+    ArrowFunction 화살표함수
+    LeftHandSideExpression = AssignmentExpression 왼손 표현식 = 할당 표현식
+    LeftHandSideExpression AssignmentOperator AssignmentExpression 왼손 표현식 할당 연산자 할당 표현식
 
 ···
 
-PrimaryExpression :
+AdditiveExpression : 덧셈 표현식
+    MultiplicativeExpression 곱셈 표현식
+    AdditiveExpression + MultiplicativeExpression 덧셈표현식 + 곱셈 표현식
+    AdditiveExpression - MultiplicativeExpression 덧셈표현식 - 곱셈 표현식
+MultiplicativeExpression : 곱셈 표현식
+    UnaryExpression 단항 표현식
+    MultiplicativeExpression MultiplicativeOperator UnaryExpression 곱셈표현식 곱셈 연산자 단항 연산자
+
+···
+
+PrimaryExpression : 기본 표현식 :
     this
-    IdentifierReference
-    Literal
-    ArrayLiteral
-    ObjectLiteral
-    FunctionExpression
-    ClassExpression
-    GeneratorExpression
-    RegularExpressionLiteral
-    TemplateLiteral
-    ParenthesizedExpression
-ParenthesizedExpression :
-    ( Expression )
+    IdentifierReference 식별자
+    Literal 리터럴
+    ArrayLiteral 배열리터럴
+    ObjectLiteral 객체리터럴
+    FunctionExpression 함수표현식
+    ClassExpression 클래스표현식
+    GeneratorExpression 제너레이터 표현식
+    RegularExpressionLiteral 정규 표현식
+    TemplateLiteral 템플릿리터럴
+    ParenthesizedExpression 괄호 표현식
+ParenthesizedExpression : 괄호표현식 :
+    ( Expression ) (표현식)
+```    
 The operands of an AdditiveExpression are an AdditiveExpression and a MultiplicativeExpression. Therefore, using a (more specific) ParenthesizedExpression as an operand is OK, but using a (more general) YieldExpression isn’t.
 
-22.4.3 return() and throw()
+덧셈 표현식의 피연산자는 덧셈표현식과 곱셈 표현식이다. 따라서 피 연산자로 (더 특수한)괄호 표현식을 사용하는것은 OK이지만, (더 일반적인)일드 표현식은 그렇지 않다.
+
+### 22.4.3 return() and throw()
+### 22.4.3 return() 과 throw()
+
 Generator objects have two additional methods, return() and throw(), that are similar to next().
 
 Let’s recap how next(x) works (after the first invocation):
