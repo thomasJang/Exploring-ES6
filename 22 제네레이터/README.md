@@ -881,20 +881,43 @@ The operands of an AdditiveExpression are an AdditiveExpression and a Multiplica
 
 Generator objects have two additional methods, return() and throw(), that are similar to next().
 
+제너레이터 객체는 두개의 추가적인 메소드 return()과 throw()를 갖고, 이들은 next()와 유사하다.
+
 Let’s recap how next(x) works (after the first invocation):
 
-The generator is currently suspended at a yield operator.
-Send the value x to that yield, which means that it evaluates to x.
-Proceed to the next yield, return or throw:
-yield x leads to next() returning with { value: x, done: false }
-return x leads to next() returning with { value: x, done: true }
-throw err (not caught inside the generator) leads to next() throwing err.
+next(x) (첫 호출 이후)동작을 다시한번 보자:
+
+1. The generator is currently suspended at a yield operator.
+2. Send the value x to that yield, which means that it evaluates to x.
+3. Proceed to the next yield, return or throw:
+  * yield x leads to next() returning with { value: x, done: false }
+  * return x leads to next() returning with { value: x, done: true }
+  * throw err (not caught inside the generator) leads to next() throwing err.
+
+1. 제너레이터는 현재 yield연산자에서 멈춰 있다.
+2. 값 x를 yield에게 보낸다는것은 이것을 x로 평가한다는것을 의미한다.
+3. return 또는 throw로 다음 yield를 진행한다.
+  * yield x는 next()를 통해 { value: x, done: false }로 반환에 이르게 한다.
+  * return x는 next()를 통해 { value: x, done: true }로 반환에 이르게 한다.
+  * throw err (제너레이터 안에서 잡지 않음)는 next()를 통해 err를 던지게 한다.
+
+
 return() and throw() work similarly to next(), but they do something different in step 2:
 
-return(x) executes return x at the location of yield.
-throw(x) executes throw x at the location of yield.
-22.4.4 return() terminates the generator
+return() 와 throw() 동작 방식은 next()와 유사하나, 이것들은 2 단계에서 약간 다르다:
+
+* return(x) executes return x at the location of yield.
+* throw(x) executes throw x at the location of yield.
+
+* return(x)는 yield 위치에서 return x를 실행한다.
+* throw(x)는 yield 위치에서 throw x를 실행한다.
+
+### 22.4.4 return() terminates the generator
+### 22.4.4 return() 제너레이터 종료
+
 return() performs a return at the location of the yield that led to the last suspension of the generator. Let’s use the following generator function to see how that works.
+
+return() 
 
 function* genFunc1() {
     try {
