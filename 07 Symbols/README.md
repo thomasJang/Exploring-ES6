@@ -350,24 +350,24 @@ Being able to create properties whose keys never clash with other keys is useful
 
 > 상속 계층에서 공개되지 않은 프로퍼티를 위해
 
-> meta-level 프로퍼티가 base-level 프로퍼티와 충돌하는 것을 막기 위해
+> 메타 수준 *meta-level* 프로퍼티가 기저 수준 *base-level* 프로퍼티와 충돌하는 것을 막기 위해
 
 ### 7.4.1 Symbols as keys of non-public properties
 > 7.4.1 공개되지 않은 프로퍼티의 키인 심볼
 
 Whenever there are inheritance hierarchies in JavaScript (e.g. created via classes, mixins or a purely prototypal approach), you have two kinds of properties:
-> 자바스크립트에서 상속 계층(클래스, 믹스인, 순수한 프로토타입 접근법)은 언제든지 두 종류의 프로퍼티를 갖는다.
+> 자바스크립트에서 상속 계층(클래스, 믹스인, 순수한 프로토타입 접근법)은 언제든지, 두 종류의 프로퍼티를 갖는다.
 
 + Public properties are seen by clients of the code.
 + Private properties are used internally within the pieces (e.g. classes, mixins or objects) that make up the inheritance hierarchy. (Protected properties are shared between several pieces and face the same issues as private properties.)
 
-> 공개 프로퍼티는 코드의 클라이언트에 의해 보인다.
+> 퍼블릭 프로퍼티는 코드의 클라이언트에 의해 보인다.
 
-> 비공개 프로퍼티는 내부적으로 상속 계층을 구성하는 조각(클래스, 믹스인 또는 객체) 내에서 사용된다. (Protected 프로퍼티는 몇몇 조각들 사이에서 공유되고, 비공개 프로퍼티가 갖는 똑같은 이슈에 처한다.)
+> 프라이빗 프로퍼티는 내부적으로 상속 계층을 구성하는 요소(클래스, 믹스인 또는 객체) 내에서 사용된다. (Protected 프로퍼티는 이러한 요소들 사이에서 공유되고, 프라이빗 프로퍼티로 같은 이슈에 처한다.)
 
 For usability’s sake, public properties usually have string keys. But for private properties with string keys, accidental name clashes can become a problem. Therefore, symbols are a good choice. For example, in the following code, symbols are used for the private properties _counter and _action.
 
-> 사용 적합성을 위해 공개 프로퍼티는 일반적으로 문자열 키를 갖는다. 그러나 문자열 키인 비공개 프로퍼티는 불시의 이름 충돌이 문제가 될 수 있다. 그래서 심볼이 좋은 선택이다. 예를 들어, 다음 코드에서 심볼은 _counter 와 _action 인 비공개 프로퍼티로 사용된다.
+> 사용 적합성을 위해 퍼블릭 프로퍼티는 일반적으로 문자열 키를 갖는다. 그러나 문자열 키인 프라이빗 프로퍼티는 불시의 이름 충돌이 문제가 될 수 있다. 그래서 심볼이 좋은 선택이다. 예를 들어, 다음 코드에서 심볼은 _counter 와 _action 인 프라이빗 프로퍼티로 사용된다.
 
 ```js
 const _counter = Symbol('counter');
@@ -391,13 +391,13 @@ class Countdown {
 
 Note that symbols only protect you from name clashes, not from unauthorized access, because you can find out all own property keys – including symbols – of an object via Reflect.ownKeys(). If you want protection there, as well, you can use one of the approaches listed in Sect. “Private data for classes”.
 
-> 심볼은 비허가된 접근이 아니라 오로지 이름 충돌만을 방어한다는 점을 알아두어야한다. Reflect.ownKeys()를 이용하면 심볼을 포함한 모든 프로퍼티 키를 찾을 수 있기 때문이다. 비허가된 접근의 방어 또한 원한다면, 5장 3절 "클래스의 비공개 데이터"에 나열된 접근법중에 하나를 사용 할 수 있다.
+> 심볼은 비허가된 접근이 아니라, 이름 충돌만을 방어한다는 점을 알아두어야한다. Reflect.ownKeys()를 이용하면 심볼을 포함해서 객체의 모든 프로퍼티 키를 찾을 수 있기 때문이다. 비허가된 접근의 방어 또한 원한다면, "클래스의 프라이빗 데이터"장에 나열된 접근법중에 하나를 사용 할 수 있다.
 
 ### 7.4.2 Symbols as keys of meta-level properties
-> 7.4.2 메타레벨 프로퍼티의 키로써 심볼
+> 7.4.2 메타 수준 프로퍼티의 키인 심볼
 
 Symbols having unique identities makes them ideal as keys of public properties that exist on a different level than “normal” property keys, because meta-level keys and normal keys must not clash. One example of meta-level properties are methods that objects can implement to customize how they are treated by a library. Using symbol keys protects the library from mistaking normal methods as customization methods.
-> 고유한 정체성을 갖는 심볼은 "보통" 프로퍼티 키보다 다른 레벨의 공개 프로퍼티의 키로써 적절하게 만든다. 메타레벨 키와 보통 키는 충돌하면 안되기 때문이다. 메타레벨 프로퍼티의 한가지 예는 객체가 라이브러리로 취급되는 메서드이다. 후.....~~~~~~
+> 고유한 정체성을 갖는 심볼은 "보통" 프로퍼티 키보다 다른 레벨의 퍼블릭 프로퍼티의 키로 적절하게 만든다. 메타레벨 키와 보통 키는 충돌하면 안되기 때문이다. 메타 수준 프로퍼티의 한가지 예는 객체가 라이브러리로 취급되는 메서드이다. 후.....~~~~~~
 심볼키를 사용하는 것은 라이브러리를 일반적인 메서드를 실수 보호한다 ~~~
 
 Iterability in ECMAScript 6 is one such customization. An object is iterable if it has a method whose key is the symbol (stored in) Symbol.iterator. In the following code, obj is iterable.
@@ -441,11 +441,15 @@ for (const x of obj) {
 > 7.4.3 자바스크립트 표준 라이브러리에서 이름 충돌의 예
 
 In case you think that name clashes don’t matter, here are three examples of where name clashes caused problems in the evolution of the JavaScript standard library:
-> 이름 충돌이 문제되지 않을 때를 대비하여, 
+> 이름 충돌이 문제되지 않을수도 있다고 생각할까봐 자바스크립트 표준 라이브러리의 발전에서 이름 충돌이 문제를 야기시켰던 세가지 예제가 있다.
 
 + When the new method Array.prototype.values() was created, it broke existing code where with was used with an Array and shadowed a variable values in an outer scope (bug report 1, bug report 2). Therefore, a mechanism was introduced to hide properties from with (Symbol.unscopables).
 + String.prototype.contains clashed with a method added by MooTools and had to be renamed to String.prototype.includes (bug report).
 + The ES2016 method Array.prototype.contains also clashed with a method added by MooTools and had to be renamed to Array.prototype.includes (bug report).
+
+> 새로운 메서드인 Array.prototype.values()가 만들어졌을 때, 기존 코드를 망가뜨렸다 
+
+> String.prototype.contains는 충동했다
 
 In contrast, adding iterability to an object via the property key Symbol.iterator can’t cause problems, because that key doesn’t clash with anything.
 > 대조적으로, 프로퍼티키인 Symbol.iterator로 객체에 이터러빌리티를 추가하는 것으로는 문제를 발생시킬 수 없다. 키가 다른 것과 충돌하지 않기 때문이다.
@@ -600,6 +604,7 @@ String(sym)
 
 If the parameter of String() is a symbol then it handles the conversion to string itself and returns the string Symbol() wrapped around the description that was provided when creating the symbol. If no description was given, the empty string is used:
 
+> String()의 파라미터는 심볼이고 이 심볼은 문자열로 변환을 다룬다 
 
 ```js
 String(Symbol())
