@@ -474,6 +474,7 @@ function* bar() {
 }
 ```
 Calling foo() returns an object, but does not actually execute foo(). That’s why ECMAScript 6 has the operator yield* for making recursive generator calls:
+
 foo() 호출은 객체를 반환하지만, 실제로 foo()를 실행하지 않는다. 이것이 ECMAScript 6이 재귀 함수 호출을 위해 연산자 yield*를 가진 이유다.  
 
 ```javascript
@@ -491,6 +492,7 @@ const arr = [...bar()];
 ```
 
 Internally, yield* works roughly as follows:
+
 내부적으로 yield*는 대략 다음처럼 동작한다:
 
 ```javascript
@@ -503,7 +505,8 @@ function* bar() {
 }
 ```
 The operand of yield* does not have to be a generator object, it can be any iterable:
-yield*의 피연산자는 제너럴객체가 아니여도 되고, 어떠한 이터러블도 될 수 있다.
+
+yield*의 피연산자는 제너럴객체외에도 되고, 어떠한 이터러블도 될 수 있다:
 
 ```javascript
 function* bla() {
@@ -725,6 +728,7 @@ next() 두번째 호출:
 * 이후 next()는 yield의 피연산자(undefined)로 반환한다.
 
 The following utility function fixes this issue:
+
 다음 유틸리티 함수는 이 이슈를 해결한다:
 
 ```javascript
@@ -917,8 +921,9 @@ return() 와 throw() 동작 방식은 next()와 유사하나, 이것들은 2 단
 
 return() performs a return at the location of the yield that led to the last suspension of the generator. Let’s use the following generator function to see how that works.
 
-return() 
+return()는 제너레이터의 마지막 멈춤으로 이끄는 yield의 지역에서 반환한다. 어떻게 동작하는지 보기 위해 다음 제너레이터 함수를 사용해 보자.
 
+```javascript
 function* genFunc1() {
     try {
         console.log('Started');
@@ -927,8 +932,12 @@ function* genFunc1() {
         console.log('Exiting');
     }
 }
+```
 In the following interaction, we first use next() to start the generator and to proceed until the yield in line A. Then we return from that location via return().
 
+다음 상호작용에서, 제너레이션 시작과  A줄 yield까지 실행을 위해 처음에 next()를 사용한다. 이후 return()을 통해 해당 위치에서 반환 된다.
+
+```javascript
 > const genObj1 = genFunc1();
 > genObj1.next()
 Started
@@ -936,9 +945,16 @@ Started
 > genObj1.return('Result')
 Exiting
 { value: 'Result', done: true }
-22.4.4.1 Preventing termination
+```
+
+
+#### 22.4.4.1 Preventing termination
+#### 22.4.4.1 종료 막기
 You can prevent return() from terminating the generator if you yield inside the finally clause (using a return statement in that clause is also possible):
 
+yield가 finally절 안에 있으면(finally 절에서 return문을 사용한은것은 또한 가능하다), 제너레이터의 종료에서 return()을 방지 할 수 있다.
+
+```javascript
 function* genFunc2() {
     try {
         console.log('Started');
@@ -947,8 +963,13 @@ function* genFunc2() {
         yield 'Not done, yet!';
     }
 }
+```
+
 This time, return() does not exit the generator function. Accordingly, the property done of the object it returns is false.
 
+이때, return()는 제너레이터 함수를 빠져 나오지 않는다. 따라서 반환될 때 객체의 done 프로퍼티는 false이다.
+
+```javascript
 > const genObj2 = genFunc2();
 
 > genObj2.next()
@@ -957,22 +978,46 @@ Started
 
 > genObj2.return('Result')
 { value: 'Not done, yet!', done: false }
+```
+
 You can invoke next() one more time. Similarly to non-generator functions, the return value of the generator function is the value that was queued prior to entering the finally clause.
 
+next()를 한번 더 호출 할 수 있다. 비제너레이터 함수와 유사하고, 제너레이터 함수의 반환값은 finally 절에 들어가기 전에 대기된 값 이다.
+
+```javascript
 > genObj2.next()
 { value: 'Result', done: true }
-22.4.4.2 Returning from a newborn generator
+```
+
+### 22.4.4.2 Returning from a newborn generator
+### 22.4.4.2 새로 만들어진 제너레이터에서 반환
+
 Returning a value from a newborn generator (that hasn’t started yet) is allowed:
 
+새로 만들어진 제너레이터(즉, 아직 시작되지 않은)에서 값을 반환하는 것은 허용된다:
+
+```javascript
 > function* genFunc() {}
 > genFunc().return('yes')
 { value: 'yes', done: true }
+```
+
 Further reading
+
+더 읽어보기
+
 return() is also used to close iterators. The chapter on iteration has a detailed section on that.
 
-22.4.5 throw() signals an error
+return()는 또한 이터레이터를 종료하는데 사용된다. 이터레이션 장은 자세한 절을 가지고 있다.
+
+### 22.4.5 throw() signals an error
+### 22.4.5 throw() 에러 신호를 보낸다
+
 throw() throws an exception at the location of the yield that led to the last suspension of the generator. Let’s examine how that works via the following generator function.
 
+throw()는 제너레이터의 마지막 멈춤을 이끄는 yield에서 익셉션을 던진다. 다음 제너레이터 함수를 통해 어떻게 동작하는지 살펴보자.
+
+```javascript
 function* genFunc1() {
     try {
         console.log('Started');
@@ -981,8 +1026,13 @@ function* genFunc1() {
         console.log('Caught: ' + error);
     }
 }
+```
+
 In the following interaction, we first use next() to start the generator and proceed until the yield in line A. Then we throw an exception from that location.
 
+다음 상호작용에서, 제너레이터를 시작하고 A줄 yield까지 실행하기 위해 처음에 next()를 사용한다. 이후 해당 장소로 부터 익셉션을 던진다.
+
+```javascript
 > const genObj1 = genFunc1();
 
 > genObj1.next()
@@ -992,7 +1042,11 @@ Started
 > genObj1.throw(new Error('Problem!'))
 Caught: Error: Problem!
 { value: undefined, done: true }
+```
+
 The result of throw() (shown in the last line) stems from us leaving the function with an implicit return.
+
+throw()의 결과(마지막 줄에서 보이는) 
 
 22.4.5.1 Throwing from a newborn generator
 Throwing an exception in a newborn generator (that hasn’t started yet) is allowed:
