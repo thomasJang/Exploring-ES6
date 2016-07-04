@@ -1066,10 +1066,14 @@ Error: Problem!
 
 The fact that generators-as-observers pause while they wait for input makes them perfect for on-demand processing of data that is received asynchronously. The pattern for setting up a chain of generators for processing is as follows:
 
-관찰자로써 제너레이터는 입력을 기다리는 동안 멈추있는 사실은  
+관찰자로써 제너레이터는 입력을 기다리는 동안 멈추있다는 사실은 비동기로 받는 데이터 처리를 필요에 따라 완벽하게 해준다. 처리에 대한 제너레이터 체인을 설정하는 패턴은 다음과 같다:   
 
-Each member of the chain of generators (except the last one) has a parameter target. It receives data via yield and sends data via target.next().
-The last member of the chain of generators has no parameter target and only receives data.
+* Each member of the chain of generators (except the last one) has a parameter target. It receives data via yield and sends data via target.next().
+* The last member of the chain of generators has no parameter target and only receives data.
+
+* 각 제너레이터 체인의 제너레이터(마지막을 제외하고)는 target 인자값을 갖는다. target은 yield를 통해 데이터를 받고 target.next()를 통해 데이터를 내보낸다. 
+* 제너레이터 체인의 마지막 제너레이터는 target 인자가 없고 오직 데이터만 수신한다.
+
 The whole chain is prefixed by a non-generator function that makes an asynchronous request and pushes the results into the chain of generators via next().
 
 As an example, let’s chain generators to process a file that is read asynchronously.
