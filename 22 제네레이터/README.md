@@ -1046,16 +1046,27 @@ Caught: Error: Problem!
 
 The result of throw() (shown in the last line) stems from us leaving the function with an implicit return.
 
-throw()의 결과(마지막 줄에서 보이는) 
+ 함축적인 return를 이용하여 함수를 나가서 throw()의 결과(마지막 줄에서 보이는)가 발생한다.
 
-22.4.5.1 Throwing from a newborn generator
+### 22.4.5.1 Throwing from a newborn generator
+### 22.4.5.1 새로 만들어진 제너레이터로 부터 던지기
+
 Throwing an exception in a newborn generator (that hasn’t started yet) is allowed:
 
+세로 만들어진 제너레이터(아직 시작전)에서 익셉션을 발생시키는것은 허용된다:
+
+```javascript
 > function* genFunc() {}
 > genFunc().throw(new Error('Problem!'))
 Error: Problem!
-22.4.6 Example: processing asynchronously pushed data
+```
+
+### 22.4.6 Example: processing asynchronously pushed data
+### 22.4.6 예제: 비동기적인 푸시 데이터 처리
+
 The fact that generators-as-observers pause while they wait for input makes them perfect for on-demand processing of data that is received asynchronously. The pattern for setting up a chain of generators for processing is as follows:
+
+관찰자로써 제너레이터는 입력을 기다리는 동안 멈추있는 사실은  
 
 Each member of the chain of generators (except the last one) has a parameter target. It receives data via yield and sends data via target.next().
 The last member of the chain of generators has no parameter target and only receives data.
