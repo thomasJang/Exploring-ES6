@@ -1076,19 +1076,36 @@ The fact that generators-as-observers pause while they wait for input makes them
 
 The whole chain is prefixed by a non-generator function that makes an asynchronous request and pushes the results into the chain of generators via next().
 
+전체 체인은 비동기 요청과 결과를 next()를 통해 제너레이터 체인으로 넣는 비 제너레이터 함수를 앞에 둔다.
+
 As an example, let’s chain generators to process a file that is read asynchronously.
+
+예로서, 비동기로 읽은 파일을 처리하는 체인 제너레이터를 보자.
 
 The code of this example is in the file generator-examples/node/readlines.js. It must be executed via babel-node.
 
+에제의 코드는 generator-examples/node/readlines.js 파일에 있다. 이것은 반드시 babel-node를 통해 실행되어야 한다.
+
 The following code sets up the chain: it contains the generators splitLines, numberLines and printLines. Data is pushed into the chain via the non-generator function readFile.
 
+다음 코드는 체인을 설정한다: splitLienes, numberLines, printLines 제너레이터를 포함한다. 데이터는 readFile인 비 제너레이터를 통해 체인 안으로 넣어진다.
+
+```javascript
 readFile(fileName, splitLines(numberLines(printLines())));
+```
 I’ll explain what these functions do when I show their code.
+
+이 코드들이 보여질때 마다 함수에 대해서 설명하겠다.
 
 As previously explained, if generators receive input via yield, the first invocation of next() on the generator object doesn’t do anything. That’s why I use the previously shown helper function coroutine() to create coroutines here. It executes the first next() for us.
 
+이전 설명과 같이, 제너레이터가 yield를 통해 입력을 받는다면, 제너레이터 객체의 첫 next() 호출은 아무것도 하지 않는다. 이전에 보여준 코루틴을 생성을 위한 헬퍼 함수인 coroutine()을 사용한 이유다. 이것은 첫 next()를 실행한다.
+
 readFile() is the non-generator function that starts everything:
 
+readFile()는 모든것을 시작하는 비 제너레이터 함수다:
+
+```javascript
 import {createReadStream} from 'fs';
 
 /**
@@ -1109,8 +1126,13 @@ function readFile(fileName, target) {
         target.return();
     });
 }
+```
+
 The chain of generators starts with splitLines:
 
+제너레이터 체인은 splitLines으로 시작한다:
+
+```javascript
 /**
  * Turns a sequence of text chunks into a sequence of lines
  * (where lines are separated by newlines)
@@ -1137,7 +1159,11 @@ const splitLines = coroutine(function* (target) {
         target.return();
     }
 });
+```
+
 Note an important pattern:
+
+중요한 패턴을 주목해라:
 
 readFile uses the generator object method return() to signal the end of the sequence of chunks that it sends.
 readFile sends that signal while splitLines is waiting for input via yield, inside an infinite loop. return() breaks from that loop.
