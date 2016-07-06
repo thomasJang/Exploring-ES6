@@ -1165,11 +1165,17 @@ Note an important pattern:
 
 중요한 패턴을 주목해라:
 
-readFile uses the generator object method return() to signal the end of the sequence of chunks that it sends.
-readFile sends that signal while splitLines is waiting for input via yield, inside an infinite loop. return() breaks from that loop.
-splitLines uses a finally clause to handle the end-of-sequence.
-The next generator is numberLines:
+* readFile uses the generator object method return() to signal the end of the sequence of chunks that it sends.
+* readFile sends that signal while splitLines is waiting for input via yield, inside an infinite loop. return() breaks from that loop.
+* splitLines uses a finally clause to handle the end-of-sequence.
 
+* readFile는 보내는 청크 순서열의 마지막 신호를 위해서 제너레이터 객체 메소드 return()을 사용한다.
+* readFile는 splitLines이 무한 루프 안에서 yield를 통해 입력을 기다리는 동안 신호를 보낸다. return()는 이 루프를 빠져 나온다. 
+* splitLines는 순서열의 마지막을 다루기 위해 파이날절을 사용한다.
+
+The next generator is numberLines:
+다음 제너레이터는 numberLines이다:
+```javascript
 //**
  * Prefixes numbers to a sequence of lines
  */
@@ -1184,8 +1190,12 @@ const numberLines = coroutine(function* (target) {
         target.return();
     }
 });
+```
 The last generator is printLines:
 
+마지막 제너레이터 printLines이다:
+
+```javascript
 /**
  * Receives a sequence of lines (without newlines)
  * and logs them (adding newlines).
@@ -1196,12 +1206,22 @@ const printLines = coroutine(function* () {
         console.log(line);
     }
 });
+```
+
 The neat thing about this code is that everything happens lazily (on demand): lines are split, numbered and printed as they arrive; we don’t have to wait for all of the text before we can start printing.
 
-22.4.7 yield*: the full story
+이 코드의 좋은 점은 모든것이 레이지로 일어난다는 것(필요시마다)이다: 도착 할 각 줄은 분해되고 넘버링되고 출력된다; 프린팅을 시작하기 전에 텍스트 전부를 기다리지 않아도 된다.
+
+### 22.4.7 yield*: the full story
+### 22.4.7 yield*: 전체 이야기
+
 As a rough rule of thumb, yield* performs (the equivalent of) a function call from one generator (the caller) to another generator (the callee).
 
+대략적인 경험으로써, yield*는 하나의 제너레이터(호출자)로부터 다른 제너레이터(호출 대상)로의 함수 호출을 수행한다.
+
 So far, we have only seen one aspect of yield: it propagates yielded values from the callee to the caller. Now that we are interested in generators receiving input, another aspect becomes relevant: yield* also forwards input received by the caller to the callee. In a way, the callee becomes the active generator and can be controlled via the caller’s generator object.
+
+지금까진, yield의 한가지 측면만 보았다: 이것은 일드된 값을 호출 대상으로 부터 호출자로 전파한다. 
 
 22.4.7.1 Example: yield* forwards next()
 The following generator function caller() invokes the generator function callee() via yield*.
