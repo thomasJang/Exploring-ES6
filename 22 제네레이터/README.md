@@ -1221,9 +1221,10 @@ As a rough rule of thumb, yield* performs (the equivalent of) a function call fr
 
 So far, we have only seen one aspect of yield: it propagates yielded values from the callee to the caller. Now that we are interested in generators receiving input, another aspect becomes relevant: yield* also forwards input received by the caller to the callee. In a way, the callee becomes the active generator and can be controlled via the caller’s generator object.
 
-지금까진, yield의 한가지 측면만 보았다: 이것은 일드된 값을 호출 대상으로 부터 호출자로 전파한다. 
+지금까진, yield의 한가지 측면만 보았다: 이것은 일드된 값을 호출 대상으로 부터 호출자로 전파한다. 이제부터 입력을 받는 제너레이터와 다른 측면이 연관되는 것이 흥미를 갖게 된다: 또한 yield*는 호출자에게 받는 입력을 호출대상으로 전달한다. 이 방법, 호출 대상은 능동적 제너레이터가 되고 호출자의 제너레이터 객체를 통해 제어 받을 수 있다.
 
-22.4.7.1 Example: yield* forwards next()
+#### 22.4.7.1 Example: yield* forwards next()
+#### 22.4.7.1 예제: yield* 
 The following generator function caller() invokes the generator function callee() via yield*.
 
 function* callee() {
