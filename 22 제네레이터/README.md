@@ -1224,9 +1224,13 @@ So far, we have only seen one aspect of yield: it propagates yielded values from
 지금까진, yield의 한가지 측면만 보았다: 이것은 일드된 값을 호출 대상으로 부터 호출자로 전파한다. 이제부터 입력을 받는 제너레이터와 다른 측면이 연관되는 것이 흥미를 갖게 된다: 또한 yield*는 호출자에게 받는 입력을 호출대상으로 전달한다. 이 방법, 호출 대상은 능동적 제너레이터가 되고 호출자의 제너레이터 객체를 통해 제어 받을 수 있다.
 
 #### 22.4.7.1 Example: yield* forwards next()
-#### 22.4.7.1 예제: yield* 
+#### 22.4.7.1 예제: yield*는 next()를 전달
+
 The following generator function caller() invokes the generator function callee() via yield*.
 
+다음 제너레이터함수 caller()는 *yield를 통해 제너레이터 함수 callee()를 호출한다. 
+
+```javascript
 function* callee() {
     console.log('callee: ' + (yield));
 }
@@ -1235,8 +1239,12 @@ function* caller() {
         yield* callee();
     }
 }
+```
 callee logs values received via next(), which allows us to check whether it receives the value 'a' and 'b' that we send to caller.
 
+callee 로그 값은 next()를 통해 받고, 이것은 제너레이터가 caller가 보내서 받은 값 'a', 'b'를 확인할 수 있게 한다.
+
+```javascript
 > const callerObj = caller();
 
 > callerObj.next() // start
@@ -1249,16 +1257,31 @@ callee: a
 > callerObj.next('b')
 callee: b
 { value: undefined, done: false }
+```
+
 throw() and return() are forwarded in a similar manner.
 
-22.4.7.2 The semantics of yield* expressed in JavaScript
+throw()와 return()는 같은 방법으로 전달된다.
+
+#### 22.4.7.2 The semantics of yield* expressed in JavaScript
+#### 22.4.7.2 자바스크립에서 yield* 표현의 의미
+
 I’ll explain the complete semantics of yield* by showing how you’d implemented it in JavaScript.
+
+자바스크립트에서 yield* 구현 방법을 보여줌으로써 yield*의 완전한 의미를 설명하겠다.
 
 The following statement:
 
+다음 문에서:
+
+```javascript
 let yieldStarResult = yield* calleeFunc();
+```
 is roughly equivalent to:
 
+대략적으로 동급이다:
+
+```javascript
 let yieldStarResult;
 
 const calleeObj = calleeFunc();
@@ -1284,12 +1307,21 @@ while (true) {
         }
     }
 }
+```
+
 To keep things simple, several things are missing in this code:
 
-The operand of yield* can be any iterable value.
-return() and throw() are optional iterator methods. We should only call them if they exist.
-If an exception is received and throw() does not exist, but return() does then return() is called (before throwing an exception) to give calleeObject the opportunity to clean up.
-calleeObj can refuse to close, by returning an object whose property done is false. Then the caller also has to refuse to close and yield* must continue to iterate.
+간단하게 유지 하기 위해 코드에서 몇몇인 것들은 누락했다:
+
+* The operand of yield* can be any iterable value.
+* return() and throw() are optional iterator methods. We should only call them if they exist.
+* If an exception is received and throw() does not exist, but return() does then return() is called (before throwing an exception) to give calleeObject the opportunity to clean up.
+* calleeObj can refuse to close, by returning an object whose property done is false. Then the caller also has to refuse to close and yield* must continue to iterate.
+ 
+* yield*의 피 연산자는 아무 이터러불값이다.
+* return()과 throw()는 선택적 이터레이터 메소드이다. 나가길 원한다면 오직 그들을 호출해야 한다.
+* 익셉션을 받고 throw()가 존재하지 않으면,  return()
+
 22.5 Generators as coroutines (cooperative multitasking)
 We have seen generators being used as either sources or sinks of data. For many applications, it’s good practice to strictly separate these two roles, because it keeps things simpler. This section describes the full generator interface (which combines both roles) and one use case where both roles are needed: cooperative multitasking, where tasks must be able to both send and receive information.
 
