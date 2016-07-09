@@ -1320,7 +1320,9 @@ To keep things simple, several things are missing in this code:
  
 * yield*의 피 연산자는 아무 이터러불값이다.
 * return()과 throw()는 선택적 이터레이터 메소드이다. 나가길 원한다면 오직 그들을 호출해야 한다.
-* 익셉션을 받고 throw()가 존재하지 않으면,  return()
+* 익셉션을 받고 throw()가 존재하지 않으면,  but return() does then return()은 (익셉션을 던지기 전에) calleeObject에게 정리 할수 있는 기회를 주기 위해서 호출된다.
+* calleeObj는 done 프로퍼티가 false인 객체를 반환함으로써, 종료를 거부 할 수 있다. 그 이후 호출자는 종료를 거부 해야 하고, yield*는 계속적으로 순환해야 한다.
+
 
 22.5 Generators as coroutines (cooperative multitasking)
 We have seen generators being used as either sources or sinks of data. For many applications, it’s good practice to strictly separate these two roles, because it keeps things simpler. This section describes the full generator interface (which combines both roles) and one use case where both roles are needed: cooperative multitasking, where tasks must be able to both send and receive information.
