@@ -1324,12 +1324,21 @@ To keep things simple, several things are missing in this code:
 * calleeObj는 done 프로퍼티가 false인 객체를 반환함으로써, 종료를 거부 할 수 있다. 그 이후 호출자는 종료를 거부 해야 하고, yield*는 계속적으로 순환해야 한다.
 
 
-22.5 Generators as coroutines (cooperative multitasking)
+## 22.5 Generators as coroutines (cooperative multitasking)
+## 22.5 코루틴으로써 제너레이터 (협력형 멀티 테스킹)
+
 We have seen generators being used as either sources or sinks of data. For many applications, it’s good practice to strictly separate these two roles, because it keeps things simpler. This section describes the full generator interface (which combines both roles) and one use case where both roles are needed: cooperative multitasking, where tasks must be able to both send and receive information.
 
-22.5.1 The full generator interface
+데이터 생성자와 소비자로써 사용된 제너레이터를 보았다. 많은 애플리케이션을 위해, 엄격하게 두 형태로 나누는것은 좋은 실행 방법이다. 왜냐하면 이것은 간단하게 유지시켜준다. 이 절에서는 모든 제너레이터 인터페이스(두 형태를 결합한)를 설명하고 둘다 필요한 형태를 사용한다: 테스크가 정보를 보내고 받는게 가능한 협력형 멀티 테스킹
+
+### 22.5.1 The full generator interface
+### 22.5.1 전체 제너레이터 인터페이스
+
 The full interface of generator objects, Generator, handles both output and input:
 
+제너레이터 객체의 전체 인터페이스, 제너레이터, 출력과 입력을 다룬다:
+
+```
 interface Generator {
     next(value? : any) : IteratorResult;
     throw(value? : any) : IteratorResult;
@@ -1339,10 +1348,16 @@ interface IteratorResult {
     value : any;
     done : boolean;
 }
+```
 This interface is described in the spec in the section “Properties of Generator Prototype”.
+
+이 인터페이스는 "제너레이터 프로토타입의 프로퍼티"절에 사양에서 설명한다. 
 
 The interface Generator combines two interfaces that we have seen previously: Iterator for output and Observer for input.
 
+제너레이터 인터페이스는 이전에 봤던 출력을 위한 이터레이터와 입력을 위한 관찰자 두 가지를 결합한다. 
+
+```
 interface Iterator { // data producer
     next() : IteratorResult;
     return?(value? : any) : IteratorResult;
@@ -1353,13 +1368,22 @@ interface Observer { // data consumer
     return(value? : any) : void;
     throw(error) : void;
 }
-22.5.2 Cooperative multitasking
+```
+### 22.5.2 Cooperative multitasking
+### 22.5.2 협력형 멀티테스킹
+
 Cooperative multitasking is an application of generators where we need them to handle both output and input. Before we get into how that works, let’s first review the current state of parallelism in JavaScript.
+
+협력형 멀티테스킹은 입력과 출력을 둘다 다루기 위해 필요한 제너레이터의 애플리케이션이다. 이전에 어떻게 작동하는지 보았고, 자바스크립트에서 병렬처리의 현재 상태를 처음으로 검토해 보자.
 
 JavaScript runs in a single process. There are two ways in which this limitation is being abolished:
 
-Multiprocessing: Web Workers let you run JavaScript in multiple processes. Shared access to data is one of the biggest pitfalls of multiprocessing. Web Workers avoid it by not sharing any data. That is, if you want a Web Worker to have a piece of data, you must send it a copy or transfer your data to it (after which you can’t access it anymore).
-Cooperative multitasking: There are various patterns and libraries that experiment with cooperative multitasking. Multiple tasks are run, but only one at a time. Each task must explicitly suspend itself, giving it full control over when a task switch happens. In these experiments, data is often shared between tasks. But due to explicit suspension, there are few risks.
+자바스크립트는 하나의 프로세서로 동작한다. 이제한을 없애는 방법은 두가지다:
+
+* Multiprocessing: Web Workers let you run JavaScript in multiple processes. Shared access to data is one of the biggest pitfalls of multiprocessing. Web Workers avoid it by not sharing any data. That is, if you want a Web Worker to have a piece of data, you must send it a copy or transfer your data to it (after which you can’t access it anymore).
+* Cooperative multitasking: There are various patterns and libraries that experiment with cooperative multitasking. Multiple tasks are run, but only one at a time. Each task must explicitly suspend itself, giving it full control over when a task switch happens. In these experiments, data is often shared between tasks. But due to explicit suspension, there are few risks.
+
+
 Two use cases benefit from cooperative multitasking, because they involve control flows that are mostly sequential, anyway, with occasional pauses:
 
 Streams: A task sequentially processes a stream of data and pauses if there is no data available.
