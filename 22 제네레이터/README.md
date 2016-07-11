@@ -1383,6 +1383,8 @@ JavaScript runs in a single process. There are two ways in which this limitation
 * Multiprocessing: Web Workers let you run JavaScript in multiple processes. Shared access to data is one of the biggest pitfalls of multiprocessing. Web Workers avoid it by not sharing any data. That is, if you want a Web Worker to have a piece of data, you must send it a copy or transfer your data to it (after which you can’t access it anymore).
 * Cooperative multitasking: There are various patterns and libraries that experiment with cooperative multitasking. Multiple tasks are run, but only one at a time. Each task must explicitly suspend itself, giving it full control over when a task switch happens. In these experiments, data is often shared between tasks. But due to explicit suspension, there are few risks.
 
+* 멀티프로세싱: 웹워커는 자바스크립트를 멀티프로세스로 동작하게 한다. 공유된 데이터 접근은 멀티프로세싱의 가장 큰 위험이다. 웹워커는 어느 데이타도 공유하지 않음으로써 이 문제를 피해야 한다. 따라서 웹워커가 작은 데이타를 갖기 원한다면, 반드시 복사하거나 변형(이후 데이터를 더이상 접근 못하게)해서 보내야 한다.
+* 협력형 멀티테스킹: 다양한 패턴과 
 
 Two use cases benefit from cooperative multitasking, because they involve control flows that are mostly sequential, anyway, with occasional pauses:
 
