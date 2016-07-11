@@ -1384,16 +1384,26 @@ JavaScript runs in a single process. There are two ways in which this limitation
 * Cooperative multitasking: There are various patterns and libraries that experiment with cooperative multitasking. Multiple tasks are run, but only one at a time. Each task must explicitly suspend itself, giving it full control over when a task switch happens. In these experiments, data is often shared between tasks. But due to explicit suspension, there are few risks.
 
 * 멀티프로세싱: 웹워커는 자바스크립트를 멀티프로세스로 동작하게 한다. 공유된 데이터 접근은 멀티프로세싱의 가장 큰 위험이다. 웹워커는 어느 데이타도 공유하지 않음으로써 이 문제를 피해야 한다. 따라서 웹워커가 작은 데이타를 갖기 원한다면, 반드시 복사하거나 변형(이후 데이터를 더이상 접근 못하게)해서 보내야 한다.
-* 협력형 멀티테스킹: 다양한 패턴과 
+* 협력형 멀티테스킹: 협력형 멀티테스킹을 실험한 다양한 패턴과 라이브러리가 있다. 멀티 태스크는 한때에 하나만 동작한다. 각각의 태스크는 명시적으로 스스로 멈추고, 테스크가 교환될 때 전체 제어가 주어진다. 실험적으로 데이터는 테스크사이에서 종종 공유된다. 그러나 명시적으로 멈추기 때문에 적은 위험을 가지고 있다.
 
 Two use cases benefit from cooperative multitasking, because they involve control flows that are mostly sequential, anyway, with occasional pauses:
 
-Streams: A task sequentially processes a stream of data and pauses if there is no data available.
-For binary streams, WHATWG is currently working on a standard proposal that is based on callbacks and Promises.
-For streams of data, Communicating Sequential Processes (CSP) are an interesting solution. A generator-based CSP library is covered later in this chapter.
-Asynchronous computations: A task blocks (pauses) until it receives the result of a long- running computation.
-In JavaScript, Promises have become a popular way of handling asynchronous computations. Support for them is included in ES6. The next section explains how generators can make using Promises simpler.
-22.5.2.1 Simplifying asynchronous computations via generators
+협력형 멀티테스크는 대부분은 순서열의 컨트롤 플로어를 포함하고, 어쨌든, 가끔 일시정지하기 때문에 두가징 경우에 이점이 있다: 
+
+* Streams: A task sequentially processes a stream of data and pauses if there is no data available.
+  * For binary streams, WHATWG is currently working on a standard proposal that is based on callbacks and Promises.
+  * For streams of data, Communicating Sequential Processes (CSP) are an interesting solution. A generator-based CSP library is covered later in this chapter.
+* Asynchronous computations: A task blocks (pauses) until it receives the result of a long- running computation.
+  * In JavaScript, Promises have become a popular way of handling asynchronous computations. Support for them is included in ES6. The next section explains how generators can make using Promises simpler.
+
+* 스트림: 태스크는 순차적으로 데이터 스트림을 처리 하고 가능한 데이터가 없는 경우 멈춘다.
+  * 바이너리 스트림을 위한, WHATWGs는 콜백과 프로미스 기반의 표준제안으로 현재 동작된다.
+  * 데이터 스트림을 위한, 커뮤니케이션 시퀀셜 프로세싱(CSP)는 흥미로운 해결방안이다. 제너레이터 기반 CSP 라이브러리는 이 장의 마지막에 다룬다. 
+* 비동기 계산: 테스크는 긴 시간 계산 결과를 받기 까지 멈춘다.
+  * 자바스크립트에서, 프로미스는 비동기 계산을 다루는 인기있는 방법이 되었다. 이것에 대한 지원은 ES6에 포함된다. 다음 절에서 어떻게 제너레이터를 프로미스를 사용하여 유사하게 만들 수 있는지 설명한다.  
+
+#### 22.5.2.1 Simplifying asynchronous computations via generators
+#### 22.5.2.1 
 Several Promise-based libraries simplify asynchronous code via generators. Generators are ideal as clients of Promises, because they can be suspended until a result arrives.
 
 The following example demonstrates what that looks like if one uses the library co by T.J. Holowaychuk. We need two libraries (if we run Node.js code via babel-node):
