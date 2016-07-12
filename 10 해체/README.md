@@ -751,23 +751,23 @@ const obj = {};
 const { a, b } = someObject; // OK
 ```
 
-## 10.9.2 `You can’t mix declaring and assigning to existing variables` 당신은 선언하고 기존의 변수에 할당 혼합 할 수 없습니다
+## 10.9.2 `You can’t mix declaring and assigning to existing variables` 기존 변수에 선언과 할당을 섞어 사용할 수 없다.
 
 `Within a destructuring variable declaration, every variable in the source is declared. In the following example, we are trying to declare the variable b and refer to the existing variable f, which doesn’t work.`
 
-destructuring 변수 선언 내에서 소스의 모든 변수는 선언된다. 다음 예에서, 우리는 변수 B를 선언하고 작동하지 않는 기존의 변수 F를 참조하려고합니다.
+변수 선언을 해체할 때, 소스의 모든 변수는 선언되었다. 다음 예제는 변수 `b`를 선언하고 동작하지 않는 기존 변수 `f`를 참조하려고 하고있다.
 
 ```javascript
 let f;
 ···
 let { foo: f, bar: b } = someObject;
-    // During parsing (before running the code):
-    // SyntaxError: Duplicate declaration, f
+    // `During parsing (before running the code):` 코드를 실행하기 전 파싱하는 동안에
+    // `SyntaxError: Duplicate declaration, f` SyntaxError: 중복된 선언
 ```
 
 `The fix is to use a destructuring assignment and to declare b beforehand:`
 
-수정은 destructuring 할당을 사용하고 사전에 b를 선언하는 것입니다 :
+해결책은 해체 할당을 사용하고 `b`를 이전에 선언하는 것이다.
 
 ```javascript
 let f;
@@ -776,15 +776,15 @@ let b;
 ({ foo: f, bar: b }) = someObject;
 ```
 
-## 10.10 `Examples of destructuring` destructuring의 예
+## 10.10 `Examples of destructuring` 해체의 예
 
 `Let’s start with a few smaller examples.`
 
-의 몇 가지 작은 예제와 함께 시작하자.
+몇 가지 작은 예제를 살펴보자.
 
 `The for-of loop supports destructuring:`
 
-는 대한-의 루프는 destructuring을 지원합니다
+`for-of` 루프는 해체를 지원한다.
 
 ```javascript
 const map = new Map().set(false, 'no').set(true, 'yes');
@@ -795,7 +795,7 @@ for (const [key, value] of map) {
 
 `You can use destructuring to swap values. That is something that engines could optimize, so that no Array would be created.`
 
-당신은 값을 교환하는 destructuring를 사용할 수 있습니다. 즉, 어떤 배열이 만들어지지 될 수 있도��� 엔지니어, 최적화 할 수있는 일이다.
+값을 교환하기 위해 해체를 사용할 수 있다. 엔진이 최적화 하기 때문에 배열이 생성되지 않는다.
 
 ```javascript
 [a, b] = [b, a];
@@ -803,18 +803,18 @@ for (const [key, value] of map) {
 
 `You can use destructuring to split an Array:`
 
-당신은 배열을 분할 destructuring을 사용할 수 있습니다 :
+배열을 분할하기 위해 해체를 사용할 수 있다.
 
 ```javascript
 const [first, ...rest] = ['a', 'b', 'c'];
     // first = 'a'; rest = ['b', 'c']
 ```
 
-## 10.10.1 `Destructuring returned Arrays` 반환 된 배열을 Destructuring
+## 10.10.1 `Destructuring returned Arrays` 반환된 배열을 해체
 
 `Some built-in JavaScript operations return Arrays. Destructuring helps with processing them:`
 
-일부는 내장 된 자바 스크립트 작업은 배열을 반환합니다. Destructuring 그들을 처리에 도움이 
+일부 내장 자바스크립트 연산자는 배열을 반환합니다. 해체는 반환값을 처리하는데 도움이 됩니다.
 
 ```javascript
 const [all, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
@@ -822,7 +822,7 @@ const [all, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
 
 `If you are only interested in the groups (and not in the complete match, all), you can use elision to skip the array element at index 0:`
 
-만 그룹��� 관심이 있다면 (전체 경기에서가 아니라, 모든), 당신은 인덱스 0에서 배열 요소를 건너 암시를 사용할 수 있습니다 :
+전체 `match`가 아닌 매칭된 그룹만 얻고 싶다면 배열의 인덱스 0에 있는 요소를 스킵하기 위해 `elision`을 사용할 수 있다.
 
 ```javascript
 const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
@@ -830,7 +830,7 @@ const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
 
 `exec() returns null if the regular expression doesn’t match. Unfortunately, you can’t handle null via default values, which is why you must use the Or operator (||) in this case:`
 
-정규 표현식이 일치하지 않는 경우 간부 인 ()는 null를 돌려줍니다. 불행하게도, 당신은 당신이이 경우에 또는 연산자 (||)를 사용해야합니다 이유입니다, 기본값을 통해 널 (null) 처리 할 수 없습니다 :
+`exec()`는 정규 표현식에 일치하는 부분이 없으면 `null`을 반환한다. 안타깝게도 `null`을 기본 값으로 처리할 수는 없다. 이런 경우에는 `or` 연산자( `||` )를 사용해야만 한다.
 
 ```javascript
 const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec(someStr) || [];
@@ -838,7 +838,7 @@ const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec(someStr) || [];
 
 `Array.prototype.split() returns an Array. Therefore, destructuring is useful if you are interested in the elements, not the Array:`
 
-Array.prototype.split는 () 배열을 반환합니다. 당신이 요소가 아닌 배열에 관심이 있다면 따라서, destructuring 유용합니다 :
+`Array.prototype.split()`는 배열을 반환한다. 따라서 배열이 아닌 요소만을 원할때 해체는 유용하다.
 
 ```javascript
 const cells = 'Jane\tDoe\tCTO'
@@ -846,11 +846,11 @@ const [firstName, lastName, title] = cells.split('\t');
 console.log(firstName, lastName, title);
 ```
 
-## 10.10.2 `Destructuring returned objects` 반환 된 개체를 Destructuring
+## 10.10.2 `Destructuring returned objects` 반환된 객체를 해체
 
 `Destructuring is also useful for extracting data from objects that are returned by functions or methods. For example, the iterator method next() returns an object with two properties, done and value. The following code logs all elements of Array arr via the iterator iter. Destructuring is used in line A.`
 
-Destructuring은 함수 나 메소드에 의해 반환되는 객체에서 데이터를 추출하는 데 유용합니다. 예를 들어, 다음 반복자 방법은 () 수행과 가치, 두 가지 속성을 가진 개체를 반환합니다. 다음 코드는 도착 반복자 ITER를 통해 배열의 모든 요소를 기록합니다. Destructuring 라인 A에 사용된다
+해체는 또한 함수 또는 메소드로부터 반환된 객체의 데이터를 추출하는데 유용하다. 예를 들어, 이터레이터 메소드 `next()`는 `done`과 값, 두개의 프로퍼티를 가진 객체를 반환한다. 다음 코드는 이터레이터 `iter`를 통해 배열 `arr`의 모든 요소를 출력한다. 해체는 `(A)`라인에서 사용되었다.
 
 ```javascript
 const arr = ['a', 'b'];
@@ -862,11 +862,11 @@ while (true) {
 }
 ```
 
-## 10.10.3 `Array-destructuring iterable values` 반복 가능한 값을 배열 destructuring
+## 10.10.3 `Array-destructuring iterable values` 이터러블 값을 배열 해체
 
 `Array-destructuring works with any iterable value. That is occasionally useful:`
 
-배열 destructuring는 반복 가능한 값으로 작동합니다. 즉, 가끔 유용하다 :
+배열 해체는 모든 이터러블 값에 작동하며 종종 유용하다.
 
 ```javascript
 const [x,y] = new Set().add('a').add('b');
@@ -876,11 +876,11 @@ const [a,b] = 'foo';
     // a = 'f'; b = 'o'
 ```
 
-## 10.10.4 `Multiple return values` 여러 반환 값
+## 10.10.4 `Multiple return values` 여러 반환값
 
 `To see the usefulness of multiple return values, let’s implement a function findElement(a, p) that searches for the first element in the Array a for which the function p returns true. The question is: what should that function return? Sometimes one is interested in the element itself, sometimes in its index, sometimes in both. The following implementation returns both.`
 
-여러 반환 값의 유용성을 확인하려면,의 함수 (P)가 true를 반환하는 배열 A의 첫 번째 요소 검색 기능 findElement의 (a, p)를 구현할 수 있습니다. 질문 : 그 함수가 무엇을 반환해야? 때로는 하나는 때때로 모두에서, 때로는 인덱스에서 요소 자체에 관심이있다. 다음 구현은 모두 반환합니다.
+여러 반환값의 유용함 확인하기 위해, 배열의 첫번째 요소를 찾는 `findElement(a, p)` 함수를 구현해보자. 문제는 이 함수는 무엇을 반환할 것인가? 때로는 요소 자체가 필요할 때도 있고, 요소의 인덱스나 또는 둘 다 필요할 것이다. 아래 구현은 둘 다 반환한다.
 
 ```javascript
 function findElement(array, predicate) {
