@@ -1403,21 +1403,37 @@ Two use cases benefit from cooperative multitasking, because they involve contro
   * 자바스크립트에서, 프로미스는 비동기 계산을 다루는 인기있는 방법이 되었다. 이것에 대한 지원은 ES6에 포함된다. 다음 절에서 어떻게 제너레이터를 프로미스를 사용하여 유사하게 만들 수 있는지 설명한다.  
 
 #### 22.5.2.1 Simplifying asynchronous computations via generators
-#### 22.5.2.1 
+#### 22.5.2.1 제너레이터를 통한 비동기 계산 간략화
+
 Several Promise-based libraries simplify asynchronous code via generators. Generators are ideal as clients of Promises, because they can be suspended until a result arrives.
+
+몇몇의 프로미스 기반 라이브러리는 제너레이터를 통해 비동기 코드를 간략화 한다. 제너레이터는 결과가 도착하기 전까지 멈추기 때문에 프로미스의 클라이언트로써 이상적이다.
 
 The following example demonstrates what that looks like if one uses the library co by T.J. Holowaychuk. We need two libraries (if we run Node.js code via babel-node):
 
+다음 예제는 T.J. Holowaychuk에 의해 만들어진 co 라이브러리를 사용하는 경우를 보여 준다. 두개의 라이브러리가 필요하다 (바벨-노드를 사용하여 Node.js에서 코드를 돌리는 경우):
+
+```javascript
 import fetch from 'isomorphic-fetch';
 const co = require('co');
+```
+
 co is the actual library for cooperative multitasking, isomorphic-fetch is a polyfill for the new Promise-based fetch API (a replacement of XMLHttpRequest; read “That’s so fetch!” by Jake Archibald for more information). fetch makes it easy to write a function getFile that returns the text of a file at a url via a Promise:
 
+co는 협력형 멀티태스킹을 위한 실제 라이브러리이고, isomorphic-fetch는 새로운 프로미스 기반 패치 API를 위한 폴리필(XMLHttpRequest의 치환물; 더 자세한 정보는 Jake Archibald의 "That's so fetch!"를 읽어라)이다. 패치는 프로미스를 통한 url에 있는 파일의 텍스트를 반환하는 함수 getFile을 쉽게 쓰게 한다.
+
+```javascript
 function getFile(url) {
     return fetch(url)
         .then(request => request.text());
 }
+```
+
 We now have all the ingredients to use co. The following task reads the texts of two files, parses the JSON inside them and logs the result.
 
+이제 co 사용을 위한 모든 재료를 가졌다. 다음 태스크는 두파일의 텍스트를 읽고, 텍스트에 있는 JSON를 파싱하고 결과를 기록한다.
+
+```javascript
 co(function* () {
     try {
         const [croftStr, bondStr] = yield Promise.all([  // (A)
@@ -1433,6 +1449,8 @@ co(function* () {
         console.log('Failure to read: ' + e);
     }
 });
+```
+
 Note how nicely synchronous this code looks, even though it makes an asynchronous call in line A. A generator-as-task makes an async call by yielding a Promise to the scheduler function co. The yielding pauses the generator. Once the Promise returns a result, the scheduler resumes the generator by passing it the result via next(). A simple version of co looks as follows.
 
 function co(genFunc) {
