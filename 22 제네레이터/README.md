@@ -1165,11 +1165,17 @@ Note an important pattern:
 
 중요한 패턴을 주목해라:
 
-readFile uses the generator object method return() to signal the end of the sequence of chunks that it sends.
-readFile sends that signal while splitLines is waiting for input via yield, inside an infinite loop. return() breaks from that loop.
-splitLines uses a finally clause to handle the end-of-sequence.
-The next generator is numberLines:
+* readFile uses the generator object method return() to signal the end of the sequence of chunks that it sends.
+* readFile sends that signal while splitLines is waiting for input via yield, inside an infinite loop. return() breaks from that loop.
+* splitLines uses a finally clause to handle the end-of-sequence.
 
+* readFile는 보내는 청크 순서열의 마지막 신호를 위해서 제너레이터 객체 메소드 return()을 사용한다.
+* readFile는 splitLines이 무한 루프 안에서 yield를 통해 입력을 기다리는 동안 신호를 보낸다. return()는 이 루프를 빠져 나온다. 
+* splitLines는 순서열의 마지막을 다루기 위해 파이날절을 사용한다.
+
+The next generator is numberLines:
+다음 제너레이터는 numberLines이다:
+```javascript
 //**
  * Prefixes numbers to a sequence of lines
  */
@@ -1184,8 +1190,12 @@ const numberLines = coroutine(function* (target) {
         target.return();
     }
 });
+```
 The last generator is printLines:
 
+마지막 제너레이터 printLines이다:
+
+```javascript
 /**
  * Receives a sequence of lines (without newlines)
  * and logs them (adding newlines).
@@ -1196,16 +1206,31 @@ const printLines = coroutine(function* () {
         console.log(line);
     }
 });
+```
+
 The neat thing about this code is that everything happens lazily (on demand): lines are split, numbered and printed as they arrive; we don’t have to wait for all of the text before we can start printing.
 
-22.4.7 yield*: the full story
+이 코드의 좋은 점은 모든것이 레이지로 일어난다는 것(필요시마다)이다: 도착 할 각 줄은 분해되고 넘버링되고 출력된다; 프린팅을 시작하기 전에 텍스트 전부를 기다리지 않아도 된다.
+
+### 22.4.7 yield*: the full story
+### 22.4.7 yield*: 전체 이야기
+
 As a rough rule of thumb, yield* performs (the equivalent of) a function call from one generator (the caller) to another generator (the callee).
+
+대략적인 경험으로써, yield*는 하나의 제너레이터(호출자)로부터 다른 제너레이터(호출 대상)로의 함수 호출을 수행한다.
 
 So far, we have only seen one aspect of yield: it propagates yielded values from the callee to the caller. Now that we are interested in generators receiving input, another aspect becomes relevant: yield* also forwards input received by the caller to the callee. In a way, the callee becomes the active generator and can be controlled via the caller’s generator object.
 
-22.4.7.1 Example: yield* forwards next()
+지금까진, yield의 한가지 측면만 보았다: 이것은 일드된 값을 호출 대상으로 부터 호출자로 전파한다. 이제부터 입력을 받는 제너레이터와 다른 측면이 연관되는 것이 흥미를 갖게 된다: 또한 yield*는 호출자에게 받는 입력을 호출대상으로 전달한다. 이 방법, 호출 대상은 능동적 제너레이터가 되고 호출자의 제너레이터 객체를 통해 제어 받을 수 있다.
+
+#### 22.4.7.1 Example: yield* forwards next()
+#### 22.4.7.1 예제: yield*는 next()를 전달
+
 The following generator function caller() invokes the generator function callee() via yield*.
 
+다음 제너레이터함수 caller()는 *yield를 통해 제너레이터 함수 callee()를 호출한다. 
+
+```javascript
 function* callee() {
     console.log('callee: ' + (yield));
 }
@@ -1214,8 +1239,12 @@ function* caller() {
         yield* callee();
     }
 }
+```
 callee logs values received via next(), which allows us to check whether it receives the value 'a' and 'b' that we send to caller.
 
+callee 로그 값은 next()를 통해 받고, 이것은 제너레이터가 caller가 보내서 받은 값 'a', 'b'를 확인할 수 있게 한다.
+
+```javascript
 > const callerObj = caller();
 
 > callerObj.next() // start
@@ -1228,16 +1257,31 @@ callee: a
 > callerObj.next('b')
 callee: b
 { value: undefined, done: false }
+```
+
 throw() and return() are forwarded in a similar manner.
 
-22.4.7.2 The semantics of yield* expressed in JavaScript
+throw()와 return()는 같은 방법으로 전달된다.
+
+#### 22.4.7.2 The semantics of yield* expressed in JavaScript
+#### 22.4.7.2 자바스크립에서 yield* 표현의 의미
+
 I’ll explain the complete semantics of yield* by showing how you’d implemented it in JavaScript.
+
+자바스크립트에서 yield* 구현 방법을 보여줌으로써 yield*의 완전한 의미를 설명하겠다.
 
 The following statement:
 
+다음 문에서:
+
+```javascript
 let yieldStarResult = yield* calleeFunc();
+```
 is roughly equivalent to:
 
+대략적으로 동급이다:
+
+```javascript
 let yieldStarResult;
 
 const calleeObj = calleeFunc();
@@ -1263,18 +1307,38 @@ while (true) {
         }
     }
 }
+```
+
 To keep things simple, several things are missing in this code:
 
-The operand of yield* can be any iterable value.
-return() and throw() are optional iterator methods. We should only call them if they exist.
-If an exception is received and throw() does not exist, but return() does then return() is called (before throwing an exception) to give calleeObject the opportunity to clean up.
-calleeObj can refuse to close, by returning an object whose property done is false. Then the caller also has to refuse to close and yield* must continue to iterate.
-22.5 Generators as coroutines (cooperative multitasking)
+간단하게 유지 하기 위해 코드에서 몇몇인 것들은 누락했다:
+
+* The operand of yield* can be any iterable value.
+* return() and throw() are optional iterator methods. We should only call them if they exist.
+* If an exception is received and throw() does not exist, but return() does then return() is called (before throwing an exception) to give calleeObject the opportunity to clean up.
+* calleeObj can refuse to close, by returning an object whose property done is false. Then the caller also has to refuse to close and yield* must continue to iterate.
+ 
+* yield*의 피 연산자는 아무 이터러불값이다.
+* return()과 throw()는 선택적 이터레이터 메소드이다. 나가길 원한다면 오직 그들을 호출해야 한다.
+* 익셉션을 받고 throw()가 존재하지 않으면,  but return() does then return()은 (익셉션을 던지기 전에) calleeObject에게 정리 할수 있는 기회를 주기 위해서 호출된다.
+* calleeObj는 done 프로퍼티가 false인 객체를 반환함으로써, 종료를 거부 할 수 있다. 그 이후 호출자는 종료를 거부 해야 하고, yield*는 계속적으로 순환해야 한다.
+
+
+## 22.5 Generators as coroutines (cooperative multitasking)
+## 22.5 코루틴으로써 제너레이터 (협력형 멀티 테스킹)
+
 We have seen generators being used as either sources or sinks of data. For many applications, it’s good practice to strictly separate these two roles, because it keeps things simpler. This section describes the full generator interface (which combines both roles) and one use case where both roles are needed: cooperative multitasking, where tasks must be able to both send and receive information.
 
-22.5.1 The full generator interface
+데이터 생성자와 소비자로써 사용된 제너레이터를 보았다. 많은 애플리케이션을 위해, 엄격하게 두 형태로 나누는것은 좋은 실행 방법이다. 왜냐하면 이것은 간단하게 유지시켜준다. 이 절에서는 모든 제너레이터 인터페이스(두 형태를 결합한)를 설명하고 둘다 필요한 형태를 사용한다: 테스크가 정보를 보내고 받는게 가능한 협력형 멀티 테스킹
+
+### 22.5.1 The full generator interface
+### 22.5.1 전체 제너레이터 인터페이스
+
 The full interface of generator objects, Generator, handles both output and input:
 
+제너레이터 객체의 전체 인터페이스, 제너레이터, 출력과 입력을 다룬다:
+
+```
 interface Generator {
     next(value? : any) : IteratorResult;
     throw(value? : any) : IteratorResult;
@@ -1284,10 +1348,16 @@ interface IteratorResult {
     value : any;
     done : boolean;
 }
+```
 This interface is described in the spec in the section “Properties of Generator Prototype”.
+
+이 인터페이스는 "제너레이터 프로토타입의 프로퍼티"절에 사양에서 설명한다. 
 
 The interface Generator combines two interfaces that we have seen previously: Iterator for output and Observer for input.
 
+제너레이터 인터페이스는 이전에 봤던 출력을 위한 이터레이터와 입력을 위한 관찰자 두 가지를 결합한다. 
+
+```
 interface Iterator { // data producer
     next() : IteratorResult;
     return?(value? : any) : IteratorResult;
@@ -1298,35 +1368,72 @@ interface Observer { // data consumer
     return(value? : any) : void;
     throw(error) : void;
 }
-22.5.2 Cooperative multitasking
+```
+### 22.5.2 Cooperative multitasking
+### 22.5.2 협력형 멀티테스킹
+
 Cooperative multitasking is an application of generators where we need them to handle both output and input. Before we get into how that works, let’s first review the current state of parallelism in JavaScript.
+
+협력형 멀티테스킹은 입력과 출력을 둘다 다루기 위해 필요한 제너레이터의 애플리케이션이다. 이전에 어떻게 작동하는지 보았고, 자바스크립트에서 병렬처리의 현재 상태를 처음으로 검토해 보자.
 
 JavaScript runs in a single process. There are two ways in which this limitation is being abolished:
 
-Multiprocessing: Web Workers let you run JavaScript in multiple processes. Shared access to data is one of the biggest pitfalls of multiprocessing. Web Workers avoid it by not sharing any data. That is, if you want a Web Worker to have a piece of data, you must send it a copy or transfer your data to it (after which you can’t access it anymore).
-Cooperative multitasking: There are various patterns and libraries that experiment with cooperative multitasking. Multiple tasks are run, but only one at a time. Each task must explicitly suspend itself, giving it full control over when a task switch happens. In these experiments, data is often shared between tasks. But due to explicit suspension, there are few risks.
+자바스크립트는 하나의 프로세서로 동작한다. 이제한을 없애는 방법은 두가지다:
+
+* Multiprocessing: Web Workers let you run JavaScript in multiple processes. Shared access to data is one of the biggest pitfalls of multiprocessing. Web Workers avoid it by not sharing any data. That is, if you want a Web Worker to have a piece of data, you must send it a copy or transfer your data to it (after which you can’t access it anymore).
+* Cooperative multitasking: There are various patterns and libraries that experiment with cooperative multitasking. Multiple tasks are run, but only one at a time. Each task must explicitly suspend itself, giving it full control over when a task switch happens. In these experiments, data is often shared between tasks. But due to explicit suspension, there are few risks.
+
+* 멀티프로세싱: 웹워커는 자바스크립트를 멀티프로세스로 동작하게 한다. 공유된 데이터 접근은 멀티프로세싱의 가장 큰 위험이다. 웹워커는 어느 데이타도 공유하지 않음으로써 이 문제를 피해야 한다. 따라서 웹워커가 작은 데이타를 갖기 원한다면, 반드시 복사하거나 변형(이후 데이터를 더이상 접근 못하게)해서 보내야 한다.
+* 협력형 멀티테스킹: 협력형 멀티테스킹을 실험한 다양한 패턴과 라이브러리가 있다. 멀티 태스크는 한때에 하나만 동작한다. 각각의 태스크는 명시적으로 스스로 멈추고, 테스크가 교환될 때 전체 제어가 주어진다. 실험적으로 데이터는 테스크사이에서 종종 공유된다. 그러나 명시적으로 멈추기 때문에 적은 위험을 가지고 있다.
+
 Two use cases benefit from cooperative multitasking, because they involve control flows that are mostly sequential, anyway, with occasional pauses:
 
-Streams: A task sequentially processes a stream of data and pauses if there is no data available.
-For binary streams, WHATWG is currently working on a standard proposal that is based on callbacks and Promises.
-For streams of data, Communicating Sequential Processes (CSP) are an interesting solution. A generator-based CSP library is covered later in this chapter.
-Asynchronous computations: A task blocks (pauses) until it receives the result of a long- running computation.
-In JavaScript, Promises have become a popular way of handling asynchronous computations. Support for them is included in ES6. The next section explains how generators can make using Promises simpler.
-22.5.2.1 Simplifying asynchronous computations via generators
+협력형 멀티테스크는 대부분은 순서열의 컨트롤 플로어를 포함하고, 어쨌든, 가끔 일시정지하기 때문에 두가징 경우에 이점이 있다: 
+
+* Streams: A task sequentially processes a stream of data and pauses if there is no data available.
+  * For binary streams, WHATWG is currently working on a standard proposal that is based on callbacks and Promises.
+  * For streams of data, Communicating Sequential Processes (CSP) are an interesting solution. A generator-based CSP library is covered later in this chapter.
+* Asynchronous computations: A task blocks (pauses) until it receives the result of a long- running computation.
+  * In JavaScript, Promises have become a popular way of handling asynchronous computations. Support for them is included in ES6. The next section explains how generators can make using Promises simpler.
+
+* 스트림: 태스크는 순차적으로 데이터 스트림을 처리 하고 가능한 데이터가 없는 경우 멈춘다.
+  * 바이너리 스트림을 위한, WHATWGs는 콜백과 프로미스 기반의 표준제안으로 현재 동작된다.
+  * 데이터 스트림을 위한, 커뮤니케이션 시퀀셜 프로세싱(CSP)는 흥미로운 해결방안이다. 제너레이터 기반 CSP 라이브러리는 이 장의 마지막에 다룬다. 
+* 비동기 계산: 테스크는 긴 시간 계산 결과를 받기 까지 멈춘다.
+  * 자바스크립트에서, 프로미스는 비동기 계산을 다루는 인기있는 방법이 되었다. 이것에 대한 지원은 ES6에 포함된다. 다음 절에서 어떻게 제너레이터를 프로미스를 사용하여 유사하게 만들 수 있는지 설명한다.  
+
+#### 22.5.2.1 Simplifying asynchronous computations via generators
+#### 22.5.2.1 제너레이터를 통한 비동기 계산 간략화
+
 Several Promise-based libraries simplify asynchronous code via generators. Generators are ideal as clients of Promises, because they can be suspended until a result arrives.
+
+몇몇의 프로미스 기반 라이브러리는 제너레이터를 통해 비동기 코드를 간략화 한다. 제너레이터는 결과가 도착하기 전까지 멈추기 때문에 프로미스의 클라이언트로써 이상적이다.
 
 The following example demonstrates what that looks like if one uses the library co by T.J. Holowaychuk. We need two libraries (if we run Node.js code via babel-node):
 
+다음 예제는 T.J. Holowaychuk에 의해 만들어진 co 라이브러리를 사용하는 경우를 보여 준다. 두개의 라이브러리가 필요하다 (바벨-노드를 사용하여 Node.js에서 코드를 돌리는 경우):
+
+```javascript
 import fetch from 'isomorphic-fetch';
 const co = require('co');
+```
+
 co is the actual library for cooperative multitasking, isomorphic-fetch is a polyfill for the new Promise-based fetch API (a replacement of XMLHttpRequest; read “That’s so fetch!” by Jake Archibald for more information). fetch makes it easy to write a function getFile that returns the text of a file at a url via a Promise:
 
+co는 협력형 멀티태스킹을 위한 실제 라이브러리이고, isomorphic-fetch는 새로운 프로미스 기반 패치 API를 위한 폴리필(XMLHttpRequest의 치환물; 더 자세한 정보는 Jake Archibald의 "That's so fetch!"를 읽어라)이다. 패치는 프로미스를 통한 url에 있는 파일의 텍스트를 반환하는 함수 getFile을 쉽게 쓰게 한다.
+
+```javascript
 function getFile(url) {
     return fetch(url)
         .then(request => request.text());
 }
+```
+
 We now have all the ingredients to use co. The following task reads the texts of two files, parses the JSON inside them and logs the result.
 
+이제 co 사용을 위한 모든 재료를 가졌다. 다음 태스크는 두파일의 텍스트를 읽고, 텍스트에 있는 JSON를 파싱하고 결과를 기록한다.
+
+```javascript
 co(function* () {
     try {
         const [croftStr, bondStr] = yield Promise.all([  // (A)
@@ -1342,6 +1449,8 @@ co(function* () {
         console.log('Failure to read: ' + e);
     }
 });
+```
+
 Note how nicely synchronous this code looks, even though it makes an asynchronous call in line A. A generator-as-task makes an async call by yielding a Promise to the scheduler function co. The yielding pauses the generator. Once the Promise returns a result, the scheduler resumes the generator by passing it the result via next(). A simple version of co looks as follows.
 
 function co(genFunc) {

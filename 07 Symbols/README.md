@@ -15,7 +15,7 @@ Symbols are a new primitive type in ECMAScript 6.
 
 Symbols are mainly used as unique property keys – a symbol never clashes with any other property key (symbol or string). For example, you can make an object iterable (usable via the for-of loop and other language mechanisms), by using the symbol stored in Symbol.iterator as the key of a method (more information on iterables is given in the chapter on iteration):
 
-> 심볼은 고유 프로퍼티 키로 주로 사용된다 - 심볼은 다른 어떤 프로퍼티키와 절대 충돌하지 않는다(심볼 또는 문자열). 객체 이터러블(for-of 루프와 다른 언어 메카니즘을 통해 이용 가능한)을 만드는 것을 예로 들 수 있는데, 객체 이터러블은 메소드의 키인 Symbol.iterator 안에 저장된 심볼을 사용해서 만들어진다. (이터러블에 관한 더 많은 정보는 이터레이션 장에 기재되어 있다) : 
+> 심볼은 고유 프로퍼티 키로 주로 사용된다 - 심볼은 다른 어떤 프로퍼티 키와 절대 충돌하지 않는다(심볼 또는 문자열). 객체 이터러블(for-of 루프와 다른 언어 메카니즘을 통해 이용 가능한)을 만드는 것을 예로 들 수 있는데, 객체 이터러블은 메소드의 키인 Symbol.iterator 안에 저장된 심볼을 사용해서 만들어진다. (이터러블에 관한 더 많은 정보는 이터레이션 장에 기재되어 있다) : 
 
 ```js
 const iterableObject = {
@@ -50,7 +50,7 @@ In line A, a symbol is used as the key of the method. This unique marker makes t
 
 In ECMAScript 5, you may have used strings to represent concepts such as colors. In ES6, you can use symbols and be sure that they are always unique:
 
-> ECMAScript 5에서는 색깔같은 개념을 나타내기 위해서 문자열을 사용해왔을 것이다. ES6 에서는 심볼을 사용할 수있고 이 심볼은 항상 고유 하다는 것을 확신 할 수 있다.
+> ECMAScript 5에서는 색깔같은 개념을 나타내기 위해서 문자열을 사용해왔을 것이다. ES6 에서는 심볼을 사용할 수있고 이 심볼은 항상 고유 하다고 확신 할 수 있다.
 
 ```js
 const COLOR_RED    = Symbol('Red');
@@ -105,7 +105,7 @@ Forbidding coercion prevents some errors, but also makes working with symbols mo
 > 강제를 금하는 것은 몇몇 오류를 예방하지만, 심볼을 사용한 작업을 더욱 복잡하게 만들기도 한다.
 
 ### 7.1.4 Which operations related to property keys are aware of symbols?
-> 7.1.4 프로퍼티키에 관련된 어떤 연산자가 심볼을 인지하는가?
+> 7.1.4 프로퍼티 키에 관련된 어떤 연산자가 심볼을 인지하는가?
 
 The following operations are aware of symbols as property keys:
 > 다음 연산자들은 프로퍼티 키로써의 심볼을 인지한다.
@@ -117,7 +117,7 @@ Object.assign()
 ```
 
 The following operations ignore symbols as property keys:
-> 다음 연산자들은 프로퍼티키로써의 심볼을 무시한다.
+> 아래 동작들은 프로퍼티 키인 심볼을 무시한다.
 
 ```js
 Object.keys()
@@ -129,14 +129,14 @@ for-in loop
 > 7.2 새로운 원시 타입
 
 ECMAScript 6 introduces a new primitive type: symbols. They are tokens that serve as unique IDs. You create symbols via the factory function Symbol() (which is loosely similar to String returning strings if called as a function):
-> ECMAScript 6는 새로운 원시 타입을 소개한다 : 심볼. 심볼은 고유한 아이디로 제공되는 토큰이다. 팩토리 함수인 Symbol()로 심볼을 생성한다(함수로 호출되면 문자열을 반환하는 String과 느슨하게 유사하다)
+> ECMAScript 6는 심볼이라는 새로운 원시 타입을 소개한다 : 심볼은 고유한 아이디로 제공되는 토큰이다. 팩토리 함수인 Symbol()로 심볼을 생성한다(함수로 호출되면 문자열을 반환하는 String과 느슨하게 비슷하다)
 
 ```js
 const symbol1 = Symbol();
 ```
 
 Symbol() has an optional string-valued parameter that lets you give the newly created Symbol a description. That description is used when the symbol is converted to a string (via toString() or String()):
-> Symbol()은 문자열로 평가되는 파라미터를 갖는다. 이 파라미터는 선택적이며 새롭게 생성된 심볼에게 설명을 부여한다. 이 설명은 심볼이 문자열로 변환 될 때 사용된다(toString() 또는 String()을 통해)
+> Symbol()은 문자열로 평가되는 선택적 파라미터를 갖는데, 이 파라미터는 새롭게 생성된 심볼에 설명을 부여한다. 이 설명은 심볼이 문자열로 변환 될 때 사용된다(toString() 또는 String()을 통해)
 
 ```js
 const symbol2 = Symbol('symbol2');
@@ -161,10 +161,10 @@ typeof Symbol()
 ```
 
 ### 7.2.1 Symbols as property keys
-> 7.2.1 프로퍼티키로써의 심볼
+> 7.2.1 프로퍼티 키인 심볼
 
 Symbols can be used as property keys:
-> 심볼은 프로퍼티키로 사용될 수 있다.
+> 심볼은 프로퍼티 키로 사용될 수 있다.
 
 ```js
 const MY_KEY = Symbol();
@@ -199,20 +199,21 @@ console.log(obj[FOO]()); // bar
 ```
 
 ### 7.2.2 Enumerating own property keys
-> 7.2.2 프로퍼티키 열거하기 
+> 7.2.2 프로퍼티 키 열거하기 
 
 Given that there is now a new kind of value that can become the key of a property, the following terminology is used for ECMAScript 6:
+> 프로퍼티 키가 될 수 있는 새로운 종류의 값이 있다는것을 비춰볼 때, 다음의 용어가 ECMAScript 6에서 사용된다.
 
 + Property keys are either strings or symbols.
 + String-valued property keys are called property names.
 + Symbol-valued property keys are called property symbols.
 
-> 프로퍼티키는 문자열 또는 심볼이다.
-> 문자열로 평가되는 프로퍼티키는 프로퍼티 이름이라 칭한다.
-> 심볼로 평가되는 프로퍼티키는 프로퍼티 심볼이라 칭한다.
+> 프로퍼티 키는 문자열 또는 심볼이다.
+> 문자열로 평가되는 프로퍼티 키는 프로퍼티 이름이라 칭한다.
+> 심볼로 평가되는 프로퍼티 키는 프로퍼티 심볼이라 칭한다.
 
 Let’s examine the API for enumerating own property keys by first creating an object.
-> 프로퍼티키를 나열하기 위해 객체를 먼저 만들어야하는 API를 알아보자
+> 프로퍼티 키를 나열하기 위해 객체를 먼저 만들어야하는 API를 알아보자
 
 ```js
 const obj = {
@@ -248,7 +249,7 @@ Reflect.ownKeys(obj)
 ```
 
 Object.keys() only considers enumerable property keys that are strings:
-> Object.keys()는 오로지 문자열로 열거 가능한 프로퍼티키만 고려한다 :
+> Object.keys()는 오로지 문자열로 열거 가능한 프로퍼티 키만 고려한다 :
 
 ```js
 Object.keys(obj)
@@ -343,7 +344,7 @@ Each value returned by Symbol is unique, which is why no other value can be mist
 > 7.4 프로퍼티의 키인 심볼
 
 Being able to create properties whose keys never clash with other keys is useful in two situations:
-> 다른 키와 절대 충돌하지 않는 프로퍼티키를 만들수 있게 되는 것은 두가지 상황에서 유용하다.
+> 다른 키와 절대 충돌하지 않는 프로퍼티 키를 만들수 있게 되는 것은 두가지 상황에서 유용하다.
 
 + For non-public properties in inheritance hierarchies.
 + To keep meta-level properties from clashing with base-level properties.
@@ -452,7 +453,7 @@ In case you think that name clashes don’t matter, here are three examples of w
 > String.prototype.contains는 충동했다
 
 In contrast, adding iterability to an object via the property key Symbol.iterator can’t cause problems, because that key doesn’t clash with anything.
-> 대조적으로, 프로퍼티키인 Symbol.iterator로 객체에 이터러빌리티를 추가하는 것으로는 문제를 발생시킬 수 없다. 키가 다른 것과 충돌하지 않기 때문이다.
+> 대조적으로, 프로퍼티 키인 Symbol.iterator로 객체에 이터러빌리티를 추가하는 것으로는 문제를 발생시킬 수 없다. 키가 다른 것과 충돌하지 않기 때문이다.
 
 These examples demonstrate what it means to be a web language: backward compatibility is crucial, which is why compromises are occasionally necessary when evolving the language. As a side benefit, evolving old JavaScript code bases is simpler, too, because new ECMAScript versions never (well, hardly ever) break them.
 > 이러한 예제들은 웹 언어라는게 어떤 의미인지 증명한다 : 하위 호환성은 중대하며 언어가 서서히 진화할 때 타협이 가끔 필요한 이유이다. 부수적인 이점으로, 오래된 자바스크립트 코드 기반을 발전시키는 것은 더욱 간단하다. 새로운 ECMAScript 버전은 절대(거의) 기존 코드를 망가뜨리지 않기 때문이다.
@@ -517,7 +518,7 @@ param = param || 0;
 ```
 
 #### 7.5.2.2 Accidentally turning symbols into property keys
-> 7.5.2.2 심볼이 프로퍼티키로 우연히 변하는 것
+> 7.5.2.2 심볼이 프로퍼티 키로 우연히 변하는 것
 
 Symbols are special property keys, which is why you want to avoid accidentally converting them to strings, which are a different kind of property keys. This could happen if you use the addition operator to compute the name of a property:
 > 심볼은 특별한 프로퍼티 키다. 
