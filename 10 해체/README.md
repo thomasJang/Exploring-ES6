@@ -895,7 +895,7 @@ function findElement(array, predicate) {
 
 `In line A, the Array method entries() returns an iterable over [index,element] pairs. We destructure one pair per iteration. In line B, we use property value shorthands to return the object { element: element, index: index }.`
 
-A 라인으로, 배열 방법 항목은 () [인덱스 요소] 쌍을 통해 반복 가능한을 반환합니다. 우리는 반복 당 한 쌍의 destructure. {지수 : 요소, 인덱스 요소} 라인 B에서, 우리는 개체를 반환하는 속성 값 shorthands을 사용합니다.
+`(A)`라인에서, 배열 메소드 `entries`는 인덱스, 요소 쌍의 이터러블을 반환하고 반복마다 하나의 쌍을 해체한다. `(B)` 라인에서는 `{ 요소: 요소, 인덱스: 인덱스 }` 형태의 객체를 리턴하기 위해 프로퍼티 값 축약을 사용한다.
 
 `Let’s use findElement(). In the following example, several ECMAScript 6 features allow us to write more concise code: The callback is an arrow function, the return value is destructured via an object pattern with property value shorthands.`
 
