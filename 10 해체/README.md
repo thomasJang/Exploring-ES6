@@ -383,7 +383,7 @@ const {prop:y} = {}; // y = undefined
 
 `Let’s look at an example. In the following destructuring, the element at index 0 has no match on the right-hand side. Therefore, destructuring continues by matching x against 3, which leads to x being set to 3.`
 
-예제를 살펴 보자. 다음 해체에서 인덱스 0의 요소는 우변에 일치가 없다. 따라서, 해체는 x를 3에 일치시킴으로 계속된다.
+예제를 살펴 보자. 다음 해체에서 인덱스 0의 요소는 우변에 일치가 없다. 따라���, 해체는 x를 3에 일치시킴으로 계속된다.
 
 ```javascript
 const [x=3, y] = []; // x = 3; y = undefined
@@ -737,7 +737,7 @@ const obj = {};
 
 `The following syntax does not work:`
 
-다음 구문은 작동하지 않습니다
+다음 구문은 작동하지 않는다.
 
 ```javascript
 ({ a, b }) = someObject; // SyntaxError
@@ -745,7 +745,7 @@ const obj = {};
 
 `With let, var and const, curly braces never cause problems:`
 
-하자, VAR 및 const를 통한 중괄호 적 문제가 발생할 수 :
+`let`, `var`와 `const`를 사용할 때, 중괄호는 문제가 되지 않는다.
 
 ```javascript
 const { a, b } = someObject; // OK
@@ -795,7 +795,7 @@ for (const [key, value] of map) {
 
 `You can use destructuring to swap values. That is something that engines could optimize, so that no Array would be created.`
 
-당신은 값을 교환하는 destructuring를 사용할 수 있습니다. 즉, 어떤 배열이 만들어지지 될 수 있도록 엔지니어, 최적화 할 수있는 일이다.
+당신은 값을 교환하는 destructuring를 사용할 수 있습니다. 즉, 어떤 배열이 만들어지지 될 수 있도��� 엔지니어, 최적화 할 수있는 일이다.
 
 ```javascript
 [a, b] = [b, a];
@@ -822,7 +822,7 @@ const [all, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
 
 `If you are only interested in the groups (and not in the complete match, all), you can use elision to skip the array element at index 0:`
 
-만 그룹에 관심이 있다면 (전체 경기에서가 아니라, 모든), 당신은 인덱스 0에서 배열 요소를 건너 암시를 사용할 수 있습니다 :
+만 그룹��� 관심이 있다면 (전체 경기에서가 아니라, 모든), 당신은 인덱스 0에서 배열 요소를 건너 암시를 사용할 수 있습니다 :
 
 ```javascript
 const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
