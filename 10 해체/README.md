@@ -899,7 +899,7 @@ function findElement(array, predicate) {
 
 `Let’s use findElement(). In the following example, several ECMAScript 6 features allow us to write more concise code: The callback is an arrow function, the return value is destructured via an object pattern with property value shorthands.`
 
-이제 findElement를 사용하자 (). 다음 예에서, 여러 가지의 ECMAScript 6 기능은 우리가 더 간결한 코드를 작성할 수 : 콜백은 화살표 함수, 반환 값은 속성 값 shorthands와 객체 패턴을 통해 탈구된다.
+`findElement()`를 사용해 보자. 다음 예에서 여러가지 `ECMAScript 6` 기능은 더 간결한 코드를 작성하게 한다. 콜백은 프로퍼티 값 축약과 객체 패턴을 통해 해체된 반환값을 가진 화살표 함수이다.
 
 ```javascript
 const arr = [7, 8, 6];
@@ -909,7 +909,7 @@ const {element, index} = findElement(arr, x => x % 2 === 0);
 
 `Due to index and element also referring to property keys, the order in which we mention them doesn’t matter:`
 
-때문에 인덱스 요소는 속성 키를 참조로, 우리는 그들에게 중요하지 않습니다 언급되는 순서 :
+또한 인덱스와 요소 또한 프로퍼티 키를 참조할 때, 기술한 순서는 중요하지 않습니다.
 
 ```javascript
 const {index, element} = findElement(···);
@@ -917,7 +917,7 @@ const {index, element} = findElement(···);
 
 `We have successfully handled the case of needing both index and element. What if we are only interested in one of them? It turns out that, thanks to ECMAScript 6, our implementation can take care of that, too. And the syntactic overhead compared to functions with single return values is minimal.`
 
-우리는 성공적으로 인덱스와 요소 모두를 필요로하는 경우를 처리했다. 우리가 그들 중 하나에만 관심이있는 경우? 그것은 ECMAScript를 6 덕분에, 우리의 구현도 그 돌볼 수 있다는 것을 밝혀졌습니다. 그리고 하나의 반환 값과 기능에 비해 구문 오버 헤드가 최소화됩니다.
+성공적으로 인덱스와 요소 모두를 필요로하는 경우를 처리했다. `ECMAScript 6` 덕분에 둘 중 하나만 필요한 경우에 위의 구현으로 처리가 가능하고 단일 리턴값을 가진 함수와 비교하여 구문 오버헤드가 최소화된다. 
 
 ```javascript
 const a = [7, 8, 6];
@@ -931,13 +931,13 @@ const {index} = findElement(a, x => x % 2 === 0);
 
 `Each time, we only extract the value of the one property that we need.`
 
-때마다, 우리는 우리가 필요로하는 하나의 속성 값을 추출합니다.
+매번, 필요한 하나의 프로퍼티 값을 추출한다.
 
-## 10.11 `The destructuring algorithm` destructuring 알고리즘
+## 10.11 `The destructuring algorithm` 해체 알고리즘
 
 `This section looks at destructuring from a different angle: as a recursive pattern matching algorithm.`
 
-이 섹션에서는 다른 각도에서 destructuring 본다 : 재귀 패턴 매칭 알고리즘으로.
+이 절에서는 해체를 재귀 패턴 매칭 알고리즘이라는 다른 각도로 살펴본다.
 
 > *:notebook: `This different angle should especially help with understanding default values. If you feel you don’t fully understand them yet, read on.`  
   이것은 다른 각도 특히 이해 기본값으로 도움이 될 것이다. 당신은 당신이 완전히 아직 이해가 안 느끼는 경우에 읽어 보시기 바랍니다.
