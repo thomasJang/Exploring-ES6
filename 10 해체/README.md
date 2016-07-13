@@ -940,11 +940,11 @@ const {index} = findElement(a, x => x % 2 === 0);
 이 절에서는 해체를 재귀 패턴 매칭 알고리즘이라는 다른 각도로 살펴본다.
 
 > *:notebook: `This different angle should especially help with understanding default values. If you feel you don’t fully understand them yet, read on.`  
-  이것은 다른 각도 특히 이해 기본값으로 도움이 될 것이다. 당신은 당신이 완전히 아직 이해가 안 느끼는 경우에 읽어 보시기 바랍니다.
+  다른 각도로 살펴보는 것은 결국 기본값을 이해하는 것에 도움이 될 것이다. 아직 완전히 이해가 되지 않았다면, 읽어보기 바란다.
 
 `At the end, I’ll use the algorithm to explain the difference between the following two function declarations.`
 
-마지막에, I는 다음과 같은 두 함수 선언의 차이를 설명하기위한 알고리즘을 사용한다.
+마지막에 다음 두 함수 선언의 차이를 설명하기위한 알고리즘을 사용할 것이다.
 
 ```javascript
 function move({x=0, y=0} = {})         { ··· }
@@ -955,7 +955,7 @@ function move({x, y} = { x: 0, y: 0 }) { ··· }
 
 `A destructuring assignment looks like this:`
 
-destructuring 할당은 다음과 같습니다 :
+해체 할당은 다음과 같다.
 
 `«pattern» = «value»`
 
