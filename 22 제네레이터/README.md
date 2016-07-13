@@ -1453,6 +1453,9 @@ co(function* () {
 
 Note how nicely synchronous this code looks, even though it makes an asynchronous call in line A. A generator-as-task makes an async call by yielding a Promise to the scheduler function co. The yielding pauses the generator. Once the Promise returns a result, the scheduler resumes the generator by passing it the result via next(). A simple version of co looks as follows.
 
+심지어 A줄에서 비동기 호출을 만들었는데도 불구하고 어떻게 잘된 동기 코드처럼 보이는지 주목해라. 태스크로써 제너레이터는 프로미스를 스케줄로 함수 co로 줌을 통해 비동기 호출을 만든다. 이 줌은 제너레이터를 일시 정지 한다. 프로미스가 결과를 반환할때, 스케줄러는 next()를 통해 제너레이터에게 결과를 전달함으로써 제너레이터를 재개한다. co의 간단한 버전은 다음과 같다.
+
+```javascript
 function co(genFunc) {
     const genObj = genFunc();
     step(genObj.next());
@@ -1470,6 +1473,8 @@ function co(genFunc) {
         }
     }
 }
+```
+
 I have ignored that next() (line A) and throw() (line B) may throw exceptions (whenever an exception escapes the body of the generator function).
 
 22.5.3 The limitations of cooperative multitasking via generators
