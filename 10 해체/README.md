@@ -1008,18 +1008,28 @@ while doing so:` 그렇게 하는 동안 // 설명에서는
 
 ## 10.11.1.2 `Variable` 변수
 - `(1) x ← value (including undefined and null)`  
-  (1) `x` ← 값 ( `undefined`와 `null`을 포함한 )
+  (1) `x` ← 값 ( `undefined`와 `null`을 포함한 )  
+  `x = value`
+  x = value
 
 ## 10.11.1.3 `Object pattern` 객체패턴
 
-- (2a) {«properties»} ← undefined  
+- `(2a) {«properties»} ← undefined`  
+  (2a) {«properties»} ← undefined  
+  `throw new TypeError();`  
+  throw new TypeError();
+- `(2b) {«properties»} ← null`  
+  (2b) {«properties»} ← null  
   `throw new TypeError();`
-- (2b) {«properties»} ← null  
-  `throw new TypeError();`
-- (2c) {key: «pattern», «properties»} ← obj  
+  throw new TypeError();
+- `(2c) {key: «pattern», «properties»} ← obj`  
+  (2c) {key: «pattern», «properties»} ← obj
   `«pattern» ← obj.key`  
-  `{«properties»} ← obj`  
-- (2d) {key: «pattern» = default_value, «properties»} ← obj  
+  «pattern» ← obj.key
+  `{«properties»} ← obj`
+  {«properties»} ← obj
+- `(2d) {key: «pattern» = default_value, «properties»} ← obj`  
+  (2d) {key: «pattern» = default_value, «properties»} ← obj
   ```javascript
   const tmp = obj.key;
   if (tmp !== undefined) {
@@ -1028,22 +1038,32 @@ while doing so:` 그렇게 하는 동안 // 설명에서는
       «pattern» ← default_value
   }
   ```
-  {«properties»} ← obj  
-- (2e) {} ← obj
-  `// No properties left, nothing to do` // 좌변의 빈 프로퍼티, 아무것도 안함`
+  `{«properties»} ← obj`  
+  {«properties»} ← obj
+- `(2e) {} ← obj`
+  (2e) {} ← obj
+  `// No properties left, nothing to do` 
+  // 아무 프로퍼티도 남지 않으므로 아무것도 안함
 
 ## 10.11.1.4 `Array pattern` 배열 패턴
 
 `Array pattern and iterable. The algorithm for Array destructuring starts with an Array pattern and an iterable:`
 
-배열 패턴과 반복 가능. 배열 destructuring에 대한 알고리즘은 배열 패턴과 반복 가능한 시작 :
+배열 패턴과 이터러블. 배열 해체의 알고리즘은 배열 패턴과 이터러블으로 시작한다.
 
-- (3a) [«elements»] ← non_iterable  
-  assert(!isIterable(non_iterable))  
+- `(3a) [«elements»] ← non_iterable`  
+  (3a) [«elements»] ← non_iterable
+  `assert(!isIterable(non_iterable))`  
+  assert(!isIterable(non_iterable))
   `throw new TypeError();`
-- (3b) [«elements»] ← iterable  
-  assert(isIterable(iterable))  
+  throw new TypeError();
+- `(3b) [«elements»] ← iterable`  
+  (3b) [«elements»] ← iterable
+  `assert(isIterable(iterable))`  
+  assert(isIterable(iterable))
   `const iterator = iterable[Symbol.iterator]();`  
+  const iterator = iterable[Symbol.iterator]();
+  `«elements» ← iterator`
   «elements» ← iterator
 
 `Helper function:`
@@ -1060,12 +1080,16 @@ function isIterable(value) {
 
 `Array elements and iterator. The algorithm continues with the elements of the pattern (left-hand side of the arrow) and the iterator that was obtained from the iterable (right-hand side of the arrow).`
 
-배열 요소와 반복자. 이 알고리즘은 패턴 (화살표 왼쪽)의 요소와 반복 가능한 (화살표 오른쪽)로부터 얻은 반복자를 계속합니다.
+배열 요소와 이터레이터. 알고리즘은 패턴( 화살표의 좌변 )의 요소와 이터러블에서 얻어온 이터레이터( 화살표의 우변 )와 계속된다.
 
-- (3c) «pattern», «elements» ← iterator  
-  «pattern» ← getNext(iterator) // undefined after last item  
+- `(3c) «pattern», «elements» ← iterator`  
+  (3c) «pattern», «elements» ← iterator
+  `«pattern» ← getNext(iterator) // undefined after last item`  
+  «pattern» ← getNext(iterator) // undefined after last item
+  `«elements» ← iterator`  
   «elements» ← iterator
-- (3d) «pattern» = default_value, «elements» ← iterator  
+- `(3d) «pattern» = default_value, «elements» ← iterator`  
+  (3d) «pattern» = default_value, «elements» ← iterator
   ```javascript
   const tmp = getNext(iterator);  // undefined after last item
   if (tmp !== undefined) {
@@ -1075,10 +1099,15 @@ function isIterable(value) {
   }
   ```
   `«elements» ← iterator`
-- (3e) , «elements» ← iterator (hole, elision)  
+  «elements» ← iterator
+- `(3e) , «elements» ← iterator (hole, elision)`  
+  (3e) , «elements» ← iterator (hole, elision)
   `getNext(iterator); // skip`  
+  getNext(iterator); // skip
   `«elements» ← iterator`
-- (3f) ...«pattern» ← iterator (always last part!)  
+  «elements» ← iterator
+- `(3f) ...«pattern» ← iterator (always last part!)`  
+  (3f) ...«pattern» ← iterator (always last part!)
   ```javascript
   const tmp = [];
   for (const elem of iterator) {
@@ -1086,8 +1115,11 @@ function isIterable(value) {
   }
   ```
   `«pattern» ← tmp`
-- (3g) ← iterator  
-  `// No elements left, nothing to do`
+  «pattern» ← tmp
+- `(3g) ← iterator`  
+  (3g) ← iterator
+  `// No elements left, nothing to do`  
+  // 아무 요소도 남지 않으므로 아무일도 하지 않는다.
 
 `Helper function:`
 
@@ -1101,6 +1133,8 @@ function getNext(iterator) {
 ## 10.11.2 `Applying the algorithm` 알고리즘 적용
 
 `The following function definition has named parameters, a technique that is sometimes called options object and explained in the chapter on parameter handling. The parameters use destructuring and default values in such a way that x and y can be omitted. But the object with the parameter can be omitted, too, as you can see in the last line of the code below. This feature is enabled via the = {} in the head of the function definition.`
+
+다음 함수 정의에는 파라미터라는 것이 있습니다. 종종 옵션 객체라고 불리기도 하는데 `파라미터 다루기` 장에서 다룹니다. 
 
 다음 함수 정의는 매개 변수, 때로는 옵션 개체를 호출하고 매개 변수 처리에 관한 장에서 설명하는 기술을 임명했다. 파라미터 x 및 y는 생략 할 수있는 방법으로 destructuring 값과 디폴트 값을 사용한다. 아래의 코드의 마지막 줄에서 볼 수 있지만 매개 변수를 사용하여 객체도 생략 할 수 있습니다. 이 기능은 함수 정의의 머리에 = {}를 통해 사용할 수 있습니다.
 
