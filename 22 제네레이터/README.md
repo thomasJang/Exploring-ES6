@@ -1477,10 +1477,18 @@ function co(genFunc) {
 
 I have ignored that next() (line A) and throw() (line B) may throw exceptions (whenever an exception escapes the body of the generator function).
 
-22.5.3 The limitations of cooperative multitasking via generators
+next() (줄A)와 throw() (줄B)가 익셉션을 던질 수 있는 것을(언제나 익셉션은 제너레이터 함수의 바디를 탈출한다.) 무시했다.
+
+### 22.5.3 The limitations of cooperative multitasking via generators
+### 22.5.3 제너레이터를 통한 협력형 멀티테스킹의 한계
+
 Coroutines are cooperatively multitasked tasks that have no limitations: Inside a coroutine, any function can suspend the whole coroutine (the function activation itself, the activation of the function’s caller, the caller’s caller, etc.).
 
+코루틴은 제한 없는 협력적인 멀티 테스킹 이다: 코루틴 안에서, 어떤 함수는 코루틴 동안(함수가 활성화, 함수 호출의 활성화 호출의 호출 등)에 멈출 수 있다.
+
 In contrast, you can only suspend a generator from directly within a generator and only the current function activation is suspended. Due to these limitations, generators are occasionally called shallow coroutines [3].
+
+반대로, 단지 직접적인 제너레이터로 부터 제너레이터를 멈출 수 있고,
 
 22.5.3.1 The benefits of the limitations of generators
 The limitations of generators have two main benefits:
