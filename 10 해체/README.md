@@ -961,26 +961,31 @@ function move({x, y} = { x: 0, y: 0 }) { ··· }
 
 `We want to use pattern to extract data from value. I’ll now describe an algorithm for doing so, which is known in functional programming as pattern matching (short: matching). The algorithm specifies the operator ← (“match against”) for destructuring assignment that matches a pattern against a value and assigns to variables while doing so:`
 
-우리는 값에서 데이터를 추출하는 패턴을 사용하고 싶습니다. (: 일치하는 짧은) 지금은 패턴 매칭과 같은 함수형 프로그래밍에 알려진 그렇게하는 알고리즘을 설명 할 것이다. 이 알고리즘은 값에 대해 패턴과 일치하고 이렇게하면서 변수에 할당 할당을 destructuring에 대한 연산자 ← ( "에 대한 일치")을 지정합니다 :
+> The algorithm specifies the operator ← (“match against”) 알고리즘은 연산자 ← ( ~에 일치 )를 사용한다.
+for destructuring assignment 해체할당을 위해
+that matches a pattern against a value and assigns to variables 값과 변수에 할당에 대한 패턴과 일치 하는 // 패턴이 값과 변수 할당에 일치하는 해체 할당을 위해
+while doing so:` 그렇게 하는 동안 // 설명에서는 
+
+값에서 데이터를 추출하기 위해 패턴을 사용하려한다. 지금은 그러기위한 함수형 프로그래밍에서 패턴 매칭( 매칭 )으로 알려진 알고리즘을 설명할 것이다. 설명중에 알고리즘은 패턴이 값과 변수 할당에 일치하는 해체 할당을 연산자 ← ( ~에 일치 )로 명시한다.
 
 `«pattern» ← «value»`
 
 `The algorithm is specified via recursive rules that take apart both operands of the ← operator. The declarative notation may take some getting used to, but it makes the specification of the algorithm more concise. Each rule has two parts:`
 
-알고리즘은 떨어져 ← 연산자의 두 피연산자을 재귀 규칙을 통해 지정됩니다. 선언적 표기 일부가 익숙해 취할 수 있지만, 더 간결한 알고리즘의 명세를 만든다. 각 규칙은 두 부분으로 구성되어 있습니다 :
+알고리즘은 ← 의 연산자와 피 연산자 부분 둘다 적용되는 재귀 규칙을 통해 명시된다. 선언적 표기가 익숙할 수도 있지만, 더 간결한 알고리즘의 명세를 만든다. 각 규칙은 두 부분으로 구성되어 있다.
 
 - `The head specifies which operands are handled by the rule.`  
-  헤드는 피연산자 규칙에 의해 처리되는 지정합니다.
-- `The body specifies what to do next.`
-  바디는 다음에 무엇을 지정합니다.
+  헤드는 규칙에 의해 처리되는 피연산자를 지정한다.
+- `The body specifies what to do next.`  
+  바디는 다음 할 것을 지정한다.
 
 `I only show the algorithm for destructuring assignment. Destructuring variable declarations and destructuring parameter definitions work similarly.`
 
-난 단지 지정을 destructuring에 대한 알고리즘을 보여줍니다. 변수 선언을 Destructuring 및 destructuring 매개 변수 정의는 유사하게 작동합니다.
+해체 할당의 알고리즘만 본다. 변수 선언 해체와 파라미터 정의 해체도 비슷하게 작동한다.
 
 `I don’t cover advanced features (computed property keys; property value shorthands; object properties and array elements as assignment targets), either. Only the basics.`
 
-하나, 나는 고급 기능 (개체 속성 및 할당 대상으로 배열 요소; 속성 값 약식 계산 된 속성 키)을 포함하지 않습니다. 만 기본.
+기본을 벗어나는 고급 기능들( 계산된 프로퍼티 키, 프로퍼티 값 축약, 할당 타겟으로서의 객체 프로퍼티와 배열 요소 )을 포함하지 않는다.
 
 ``
 
@@ -988,22 +993,22 @@ function move({x, y} = { x: 0, y: 0 }) { ··· }
 
 `A pattern is either:`
 
-패턴 중 하나입니다 :
+패턴은 다음 중 하나이다.
 
 - `A variable: x`  
-  변수 : X
+  변수 `x`
 - `An object pattern: {«properties»}`  
-  객체 패턴 : `{«properties»}`
+  객체 패턴 `{«properties»}`
 - `An Array pattern: [«elements»]`  
   배열 패턴 : `[«elements»]`
 
 `Each of the following sections describes one of these three cases.`
 
-다음의 각 섹션에서는이 세 가지 사례 중 하나에 대해 설명합니다.
+다음 각 절은 이 세 가지를 하나씩 살펴본다.
 
 ## 10.11.1.2 `Variable` 변수
-- (1) x ← value (including undefined and null)  
-  x = value
+- `(1) x ← value (including undefined and null)`  
+  (1) `x` ← 값 ( `undefined`와 `null`을 포함한 )
 
 ## 10.11.1.3 `Object pattern` 객체패턴
 
