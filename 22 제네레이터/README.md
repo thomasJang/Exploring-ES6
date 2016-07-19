@@ -1488,18 +1488,31 @@ Coroutines are cooperatively multitasked tasks that have no limitations: Inside 
 
 In contrast, you can only suspend a generator from directly within a generator and only the current function activation is suspended. Due to these limitations, generators are occasionally called shallow coroutines [3].
 
-반대로, 단지 직접적인 제너레이터로 부터 제너레이터를 멈출 수 있고,
+반대로, 오로지 직접적으로 안에 있는 제너레이터로부터 제너레이터를 멈출 수 있고, 오로지 현재 함수 활성화를 멈춘다. 이 제한 때문에, 제너레이터는 때때로 쉐도우 코루틴으로 불린다[3].
 
-22.5.3.1 The benefits of the limitations of generators
+#### 22.5.3.1 The benefits of the limitations of generators
+#### 22.5.3.1 제너레이터의 제한의 이점
+
 The limitations of generators have two main benefits:
 
-Generators are compatible with event loops, which provide simple cooperative multitasking in browsers. I’ll explain the details momentarily.
-Generators are relatively easy to implement, because only a single function activation needs to be suspended and because browsers can continue to use event loops.
+제너레이터 제한은 두개의 주요 이점이 있다:
+
+* Generators are compatible with event loops, which provide simple cooperative multitasking in browsers. I’ll explain the details momentarily.
+* Generators are relatively easy to implement, because only a single function activation needs to be suspended and because browsers can continue to use event loops.
+* 제너레이터는 이벤트 루프와 호환되고, 이는 브라우져에서 간단하게 협력형 멀티테스킹을 제공한다. 곧 자세하게 설명하겠다.
+* 오직 하나의 함수만 활성이 중단될 필요가 있고, 브라우져에서 이벤트 루프를 계속 사용 할 수 있기 때문에 제너레이터는 비교적 구현이 쉽다.
+
 JavaScript already has a very simple style of cooperative multitasking: the event loop, which schedules the execution of tasks in a queue. Each task is started by calling a function and finished once that function is finished. Events, setTimeout() and other mechanisms add tasks to the queue.
+
+자바스크립트는 이미 협력형 멀티테스킹의 아주 간단한 스타일을 갖는다: 이벤트 루프, 이것은 큐에 있는 테스크의 실행을 스케줄링 한다. 각 태스크는 함수 호출에 의해 실행되고, 함수가 종료 될때 한번 종료된다. 이벤트, setTimeout()과 다른 장치들은 태스크를 큐에 추가 한다.
 
 This explanation of the event loop is a simplification that is good enough for now. If you are interested in details, consult the chapter on asynchronous programming.
 
+이벤트 루프에의 설명은 지금을 위해 충분히 단순화 하였다. 자세한 내용에 흥미를 느낀다면, 비동기 프로그래밍 장을 봐라.
+
 This style of multitasking makes one important guarantee: run to completion; every function can rely on not being interrupted by another task until it is finished. Functions become transactions and can perform complete algorithms without anyone seeing the data they operate on in an itermediate state. Concurrent access to shared data makes multitasking complicated and is not allowed by JavaScript’s concurrency model. That’s why run to completion is a good thing.
+
+멀티 테스킹의 스타일은 하나의 중요한 보증을 만든다.
 
 Alas, coroutines prevent run to completion, because any function could suspend its caller. For example, the following algorithm consists of multiple steps:
 
