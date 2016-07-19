@@ -1134,9 +1134,7 @@ function getNext(iterator) {
 
 `The following function definition has named parameters, a technique that is sometimes called options object and explained in the chapter on parameter handling. The parameters use destructuring and default values in such a way that x and y can be omitted. But the object with the parameter can be omitted, too, as you can see in the last line of the code below. This feature is enabled via the = {} in the head of the function definition.`
 
-다음 함수 정의에는 파라미터라는 것이 있습니다. 종종 옵션 객체라고 불리기도 하는데 `파라미터 다루기` 장에서 다룹니다. 
-
-다음 함수 정의는 매개 변수, 때로는 옵션 개체를 호출하고 매개 변수 처리에 관한 장에서 설명하는 기술을 임명했다. 파라미터 x 및 y는 생략 할 수있는 방법으로 destructuring 값과 디폴트 값을 사용한다. 아래의 코드의 마지막 줄에서 볼 수 있지만 매개 변수를 사용하여 객체도 생략 할 수 있습니다. 이 기능은 함수 정의의 머리에 = {}를 통해 사용할 수 있습니다.
+다음 함수 정의에는 종종 옵션 객체라고 불리는 테크닉인 파라미터라는 것이 있으며, `파라미터 다루기` 장에서 다룬다. 파라미터가 해체와 기본값을 사용할 경우 `x`와 `y`는 생략될 수 있다. 하지만 코드의 마지막 줄에서 볼 수 있듯이 파라미터의 객체 역시 생략될 수 있다. 이 기능은 함수 정의의 헤드에 `= {}`를 통해 사용할 수 있다.
 
 ```javascript
 function move1({x=0, y=0} = {}) {
@@ -1150,7 +1148,7 @@ move1(); // [0, 0]
 
 `But why would you define the parameters as in the previous code snippet? Why not as follows – which is also completely legal ES6 code?`
 
-그런데 왜 당신은 이전 코드에서와 같이 매개 변수를 정의 할 것인가? 또한 완전히 법적 ES6 코드이다 - 왜 다음과 같은?
+하지만 왜 이전 코드에서와 같이 매개변수를 정의할 것인가? 왜 다음과 같은 온전한 `ES6` 코드로 정의하지 않는가?
 
 ```javascript
 function move2({x, y} = { x: 0, y: 0 }) {
@@ -1158,15 +1156,15 @@ function move2({x, y} = { x: 0, y: 0 }) {
 }
 ```
 
+`move1()`가 적절한 이유를 확인하기 위해 두 예제에서 함수를 둘 다 사용해보자. 그 전에, 파라미터 전달이 매칭을 통해 어떻게 설명되는지를 먼저 보자.
+
 `To see why move1() is correct, let’s use both functions for two examples. Before we do that, let’s see how the passing of parameters can be explained via matching.`
 
-이동 한 ()가 정확한 이유를 확인하기 위해,이 두 가지 예 모두 기능을 사용할 수 있습니다. 우리가 그렇게하기 전에, 매개 변수의 통과가 일치를 통해 설명 할 수있는 방법을 살펴 보자.
-
-## 10.11.2.1 `Background: passing parameters via matching` 배경 : 일치를 통해 매개 변수를 전달
+## 10.11.2.1 `Background: passing parameters via matching` 배경 : 매칭을 통한 파라미터 전달
 
 `For function calls, formal parameters (inside function definitions) are matched against actual parameters (inside function calls). As an example, take the following function definition and the following function call.`
 
-함수 호출의 경우, (함수 정의 내부) 형식 매개 변수 (함수 호출 내부) 실제 매개 변수에 일치합니다. 예를 들어, 다음 함수를 정의하고, 다음 함수 호출을 수행.
+함수 호출의 경우, 정식 파라미터( 함수 정의 안에 정의된 )는 실제 파라미터( 함수 호출 내부의 )와 일치된다. 예를 들어, 다음 함수 선언과 함수 호출을 보자.
 
 ```javascript
 function func(a=0, b=0) { ··· }
@@ -1175,7 +1173,7 @@ func(1, 2);
 
 `The parameters a and b are set up similarly to the following destructuring.`
 
-매개 변수 a와 b는 다음 destructuring 유사하게 설정됩니다.
+파라미터 `a`와 `b`는 해체와 유사하게 설정된다.
 
 `[a=0, b=0] ← [1, 2]`
 
@@ -1183,23 +1181,27 @@ func(1, 2);
 
 `Let’s examine how destructuring works for move2().`
 
-이제 destructuring가) (Move2와 작동 방법을 살펴 보자.
+`move2`의 해체 작동 방법을 살펴보자.
 
 `Example 1. move2() leads to this destructuring:`
 
-예 1 Move2와 ()이 destructuring로 연결 :
+예제 1. `move2()`가 해체로 연결.
 
 `[{x, y} = { x: 0, y: 0 }] ← []`
 
+[{x, y} = { x: 0, y: 0 }] ← []
+
 `The only Array element on the left-hand side does not have a match on the right-hand side, which is why {x,y} is matched against the default value and not against data from the right-hand side (rules 3b, 3d):`
 
-왼쪽의 전용 어레이 소자 {X, Y}이 규칙도 3b (그리고 우측의 데이터에 대해 디폴트 값과 일치하는 이유는 오른쪽에서 매치를 없다 3 차원) :
+좌변의 배열 요소는 우변과 일치하지 않기 때문에 `{x, y}`는 기본값과 일치하게 되고 우변의 데이터와 일치되지 않는다. ( 3b, 3d )
 
 `{x, y} ← { x: 0, y: 0 }`
 
+{x, y} ← { x: 0, y: 0 }
+
 `The left-hand side contains property value shorthands, it is an abbreviation for:`
 
-왼쪽은의 약어이며, 속성 값 shorthands이 포함되어 있습니다
+왼쪽은의 축약이며, 속성 값 shorthands이 포함되어 있습니다
 
 `{x: x, y: y} ← { x: 0, y: 0 }`
 
