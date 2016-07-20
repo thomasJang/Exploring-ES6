@@ -46,6 +46,7 @@ A Set is a collection of unique elements.
 const arr = [5, 1, 5, 7, 7, 5];
 const unique = [...new Set(arr)];   // [ 5, 1, 7 ]
 ```
+
 As you can see, you can initialize a Set with elements if you hand the constructor an iterable (`arr` in the example) over those elements.  
 위처럼 이터러블한 객체(위 예제의 `arr`)를 생성자에 넘겨주면 그 요소들로 구성된 셋을 생성할 수 있다.
 
@@ -690,23 +691,33 @@ It is impossible to inspect the innards of a WeakMap, to get an overview of them
 위크맵의 내용 전체를 살펴보기 위해 점검하는 것은 불가능하다. 키에 대해 이터레이트하는 것이 불가능할 뿐 아니라, 값이나 엔트리에 대해서도 마찬가지이다. 바꿔말해, 위크맵의 내용을 얻기 위해서는 키가 필요하다. 또한 위크맵의 내용을 일괄 삭제하는 것도 불가능하다(제2의 해결책으로, 완전히 새로운 인스턴스를 생성할 수는 있다).
 
 These restrictions enable a security property. Quoting Mark Miller: “The mapping from weakmap/key pair value can only be observed or affected by someone who has both the weakmap and the key. With clear(), someone with only the WeakMap would’ve been able to affect the WeakMap-and-key-to-value mapping.”  
-이러한 제한은 프로퍼티 보안을 가능케 한다. 마크 밀러Mark Miller의 말을 인용해보면, "위크맵/키 쌍에 대한 값의 할당은 오직 위크맵과 키 모두를 가진 자에 의해서만 관찰되거나 영향을 받을 수 있다."
+이러한 제한은 보안 프로퍼티를 가능케 한다. 마크 밀러Mark Miller의 말을 인용하면, "위크맵의 키와 값 쌍에 대한 매핑은 오직 해당 위크맵과 키 모두를 알고 있는 경우에만 관찰하거나 영향을 미칠 수 있다. 위크맵만을 아는 경우에는 clear()로만 위크맵의 키 값 쌍의 매핑에 영향을 줄 수 있다."
 
-Additionally, iteration would be difficult to implement, because you’d have to guarantee that keys remain weakly held.
+Additionally, iteration would be difficult to implement, because you’d have to guarantee that keys remain weakly held.  
+뿐만 아니라 이터레이션을 수행하는 것도 어려울 수 있는데, 각 키들이 약하게 연결된 상태를 유지할 것이 보장되어야 하기 때문이다.
 
 
 ### 19.3.4 Use cases for WeakMaps
+### 19.3.4 위크맵 사용례
 
-WeakMaps are useful for associating data with objects whose life cycle you can’t (or don’t want to) control. In this section, we look at two examples:
+WeakMaps are useful for associating data with objects whose life cycle you can’t (or don’t want to) control. In this section, we look at two examples:  
+위크맵은 데이터와 생명주기를 컨트롤할 수 없는(혹은 원치 않는) 객체를 연결할 때 유용하다. 본 절에서는 다음 세 예제를 살펴보겠다.
 
-    Caching computed results
-    Managing listeners
-    Keeping private data
+>Caching computed results
+Managing listeners
+Keeping private data
+
+>계산결과 캐싱
+리스너 관리
+프라이빗 데이터 보존
 
 
 #### 19.3.4.1 Caching computed results via WeakMaps
+#### 19.3.4.1 위크맵을 통한 계산결과 캐싱하기
 
-With WeakMaps, you can associate previously computed results with objects, without having to worry about memory management. The following function countOwnKeys is an example: it caches previous results in the WeakMap cache.
+With WeakMaps, you can associate previously computed results with objects, without having to worry about memory management. The following function countOwnKeys is an example: it caches previous results in the WeakMap cache.  
+위크맵을 이용하면, 메모리 관리에 대한 걱정 없이 앞서 계산된 결과와 객체를 연결할 수 있다. 다음 `countOwnKeys`함수가 한 예이다. 이 함수는 이전의 결과를 위크맵 캐시 안에 임시저장한다.
+
 ```js
 const cache = new WeakMap();
 function countOwnKeys(obj) {
@@ -721,7 +732,10 @@ function countOwnKeys(obj) {
     }
 }
 ```
-If we use this function with an object obj, you can see that the result is only computed for the first invocation, while a cached value is used for the second invocation:
+
+If we use this function with an object obj, you can see that the result is only computed for the first invocation, while a cached value is used for the second invocation:  
+이 함수를 `obj` 객체에 적용하면, 결과값이 첫 번째 호출에서만 계산되고, 두 번째 호출에서는 캐시된 값이 사용되는 것을 관찰할 수 있다.
+
 ```js
 > const obj = { foo: 1, bar: 2};
 > countOwnKeys(obj)
@@ -731,11 +745,17 @@ Computed
 Cached
 2
 ```
-#### 19.3.4.2 Managing listeners
 
-Let’s say we want to register listeners for objects without changing the objects. That way, we can even register listeners for immutable objects.
+
+#### 19.3.4.2 Managing listeners
+#### 19.3.4.2 리스너 관리하기
+
+Let’s say we want to register listeners for objects without changing the objects. That way, we can even register listeners for immutable objects.  
+객체를 변경하지 않은 채 해당 객체에 대한 리스너를 등록하길 원한다고 해보자. 이 방식으로 불변객체에도 리스너를 등록할 수 있다.
 
 This is how to do that:
+아래는 그 방법이다.
+
 ```js
 const _objToListeners = new WeakMap();
 
@@ -755,7 +775,10 @@ function triggerListeners(obj) {
     }
 }
 ```
-This is how you use these functions:
+
+This is how you use these functions:  
+다음은 위 함수들의 사용법이다.
+
 ```js
 const obj = {};
 addListener(obj, () => console.log('hello'));
@@ -766,10 +789,16 @@ triggerListeners(obj);
 // hello
 // world
 ```
-The advantage of using a WeakMap here is that, once an object is garbage-collected, its listeners will be garbage-collected, too. In other words: there won’t be any memory leaks.
-#### 19.3.4.3 Keeping private data via WeakMaps
 
-In the following code, the WeakMaps _counter and _action are used to store the data of virtual properties of instances of Countdown:
+The advantage of using a WeakMap here is that, once an object is garbage-collected, its listeners will be garbage-collected, too. In other words: there won’t be any memory leaks.  
+위크맵을 이용하는 장점은 바로, 일단 객체가 가비지 컬렉팅되면 그 객체의 리스너 역시 함께 가비지 컬렉팅된다는 점이다. 다시 말해, 리스너에 대한 어떠한 메모리 누수도 없을 것이다.
+
+#### 19.3.4.3 Keeping private data via WeakMaps
+#### 19.3.4.3 위크맵을 통해 프라이빗 데이터 보존하기
+
+In the following code, the WeakMaps _counter and _action are used to store the data of virtual properties of instances of Countdown:  
+다음 코드에서 위크맵인 `_counter`와 `_action`는 `Countdown`의 인스턴스인 가상 프로퍼티의 값을 저장하는 데에 이용된다.
+
 ```js
 const _counter = new WeakMap();
 const _action = new WeakMap();
@@ -789,10 +818,15 @@ class Countdown {
     }
 }
 ```
-More information on this technique is given in the chapter on classes.
+
+More information on this technique is given in the chapter on classes.  
+이 기법에 대한 더 자세한 정보는 클래스 장에서 다룰 것이다.
+
 ### 19.3.5 WeakMap API
 
-The constructor and the four methods of WeakMap work the same as their Map equivalents:
+The constructor and the four methods of WeakMap work the same as their Map equivalents:  
+위크맵의 생성자와 네 가지 메소드는 맵의 생성자 및 각 메소드들과 같다.
+
 ```js
 new WeakMap(entries? : Iterable<[any,any]>)
 
@@ -801,17 +835,28 @@ WeakMap.prototype.set(key, value) : this
 WeakMap.prototype.has(key) : boolean
 WeakMap.prototype.delete(key) : boolean
 ```
+
+
 ## 19.4 Set
 
-ECMAScript 5 doesn’t have a Set data structure, either. There are two possible work-arounds:
+ECMAScript 5 doesn’t have a Set data structure, either. There are two possible work-arounds:  
+ECMAScript 5에는 Set 자료구조 역시 없다. 대신 제2의 해결책 두가지가 있다.
 
-    Use the keys of an object to store the elements of a set of strings.
-    Store (arbitrary) set elements in an Array: Check whether it contains an element via indexOf(), remove elements via filter(), etc. This is not a very fast solution, but it’s easy to implement. One issue to be aware of is that indexOf() can’t find the value NaN.
+> Use the keys of an object to store the elements of a set of strings.  
+Store (arbitrary) set elements in an Array: Check whether it contains an element via indexOf(), remove elements via filter(), etc. This is not a very fast solution, but it’s easy to implement. One issue to be aware of is that indexOf() can’t find the value NaN.  
+문자열 집합으로 구성된 요소들을 저장하기 위해 객체의 키를 이용한다.  
+(임의의) 요소 집합을 배열에 저장한다. indexOf()를 통해 각 요소가 들어있는지 여부를 확인하고, filter()를 통해 요소를 삭제하는 등이다. 이는 아주 빠른 해결책은 아니지만, 시행하기가 쉽다. 한 가지 주의할 점은 indexOf()는 NaN값을 찾지 못한다는 것이다.
 
 ECMAScript 6 has the data structure Set which works for arbitrary values, is fast and handles NaN correctly.
-### 19.4.1 Basic operations
+ECMAScript 6에는 임의의 값에 대해 잘 동작하고, 빠르며, NaN을 정확히 처리하는 Set 자료구조가 있다.
 
-Managing single elements:
+
+### 19.4.1 Basic operations
+### 19.4.1 기본 조작
+
+Managing single elements:  
+단일 요소 관리
+
 ```js
 > const set = new Set();
 > set.add('red')
@@ -823,7 +868,10 @@ true
 > set.has('red')
 false
 ```
-Determining the size of a Set and clearing it:
+
+Determining the size of a Set and clearing it:  
+Set의 크기 알아내기 및 비우기
+
 ```js
 > const set = new Set();
 > set.add('red')
@@ -835,34 +883,58 @@ Determining the size of a Set and clearing it:
 > set.size
 0
 ```
-### 19.4.2 Setting up a Set
 
-You can set up a Set via an iterable over the elements that make up the Set. For example, via an Array:
+
+### 19.4.2 Setting up a Set
+### 19.4.2 Set 세팅하기
+
+You can set up a Set via an iterable over the elements that make up the Set. For example, via an Array:  
+Set을 구성할 요소들의 이터러블을 통해 Set을 세팅할 수 있다. 예를 들어 배열로 세팅 가능하다.
+
 ```js
 const set = new Set(['red', 'green', 'blue']);
 ```
-Alternatively, the add method is chainable:
+
+Alternatively, the add method is chainable:  
+대안으로, add 메소드는 체이닝이 가능하다.
+
 ```js
 const set = new Set().add('red').add('green').add('blue');
 ```
+
+
 #### 19.4.2.1 Pitfall: new Set() has at most one argument
+#### 19.4.2.1 위험 : new Set()는 최대 한 인자만을 받을 수 있다.
 
-The Set constructor has zero or one arguments:
 
-    Zero arguments: an empty Set is created.
-    One argument: the argument needs to be iterable; the iterated items define the elements of the Set.
+The Set constructor has zero or one arguments:  
+Set 생성자는 0개 혹은 1개의 인자를 받는다.
 
-Further arguments are ignored, which may lead to unexpected results:
+Zero arguments: an empty Set is created.  
+인자 0개 : 비어있는 Set이 생성된다.
+
+One argument: the argument needs to be iterable; the iterated items define the elements of the Set.  
+인자 1개 : 해당 인자는 이터러블해야 한다. 이터레이트된 항목들은 Set의 요소들로 정의된다.
+
+Further arguments are ignored, which may lead to unexpected results:  
+이후의 인자들은 무시되어, 예상과 다른 결과를 야기하게 된다.
+
 ```js
 > Array.from(new Set(['foo', 'bar']))
 [ 'foo', 'bar' ]
 > Array.from(new Set('foo', 'bar'))
 [ 'f', 'o' ]
 ```
-For the second Set, only 'foo' is used (which is iterable) to define the Set.
-### 19.4.3 Comparing Set elements
 
-As with Maps, elements are compared similarly to ===, with the exception of NaN being like any other value.
+For the second Set, only 'foo' is used (which is iterable) to define the Set.  
+위의 두번째 Set에서, 오직 'foo'(이터러블)만이 Set을 정의하는 데에 활용된다.
+
+### 19.4.3 Comparing Set elements
+### 19.4.3 Set 요소들의 비교
+
+As with Maps, elements are compared similarly to ===, with the exception of NaN being like any other value.  
+맵과 마찬가지로, 요소들은 ===와 비슷하게 비교되는데, 예외적으로 NaN은 다른 여느 값처럼 취급된다.
+
 ```js
 > const set = new Set([NaN]);
 > set.size
@@ -870,7 +942,10 @@ As with Maps, elements are compared similarly to ===, with the exception of NaN 
 > set.has(NaN)
 true
 ```
-Adding an element a second time has no effect:
+
+Adding an element a second time has no effect:    
+두번째 인자에 추가한 요소는 아무런 영향을 끼치지 않는다.
+
 ```js
 > const set = new Set();
 
@@ -882,7 +957,10 @@ Adding an element a second time has no effect:
 > set.size
 1
 ```
+
 Similarly to ===, two different objects are never considered equal (which can’t currently be customized, as explained later, in the FAQ, later):
+===와 비슷하게, 서로 다른 두 객체는 절대 동등한 것으로 간주되지 않는다(이 부분은 지금으로서는 커스터마이즈할 수 없는데, 이에 대해서는 FAQ에서 설명하겠다).
+
 ```js
 > const set = new Set();
 
@@ -894,9 +972,14 @@ Similarly to ===, two different objects are never considered equal (which can’
 > set.size
 2
 ```
-### 19.4.4 Iterating
 
-Sets are iterable and the for-of loop works as you’d expect:
+
+### 19.4.4 Iterating
+### 19.4.4 이터레이팅
+
+Sets are iterable and the for-of loop works as you’d expect:  
+Set은 이터러블하여 for-of 루프에 대해 기대하는 대로 동작한다.
+
 ```js
 const set = new Set(['red', 'green', 'blue']);
 for (const x of set) {
@@ -907,56 +990,93 @@ for (const x of set) {
 // green
 // blue
 ```
-As you can see, Sets preserve iteration order. That is, elements are always iterated over in the order in which they were inserted.
 
-The previously explained spread operator (...) works with iterables and thus lets you convert a Set to an Array:
+As you can see, Sets preserve iteration order. That is, elements are always iterated over in the order in which they were inserted.  
+보다시피, Set은 이터레이션 순서를 지킨다. 즉, 요소들은 언제나 그들이 삽입된 순서대로 이터레이트된다.
+
+The previously explained spread operator (...) works with iterables and thus lets you convert a Set to an Array:  
+앞서 설명했던 해체 연산자(...)는 이터러블에 대해 잘 동작하므로, Set을 배열로 치환할 수 있다.
+
 ```js
 const set = new Set(['red', 'green', 'blue']);
 const arr = [...set]; // ['red', 'green', 'blue']
 ```
+
 We now have a concise way to convert an Array to a Set and back, which has the effect of eliminating duplicates from the Array:
+이제 배열을 Set으로 전환하고 다시 배열로 전환하는, 동시에 배열에서 중복된 요소를 제거하는 효과를 지닌 간결한 방법이 생겼다.
+
 ```js
 const arr = [3, 5, 2, 2, 5, 5];
 const unique = [...new Set(arr)]; // [3, 5, 2]
 ```
+
+
 ### 19.4.5 Mapping and filtering
+### 19.4.5 매핑과 필터링
 
-In contrast to Arrays, Sets don’t have the methods map() and filter(). A work-around is to convert them to Arrays and back.
+In contrast to Arrays, Sets don’t have the methods map() and filter(). A work-around is to convert them to Arrays and back.  
+배열과 달리, Set에는 map()과 filter() 메서드가 없다. 대체안은 배열로 전환하고 다시 되돌리는 것이다.
 
-Mapping:
+Mapping:  
+매핑
+
 ```js
 const set = new Set([1, 2, 3]);
 set = new Set([...set].map(x => x * 2));
 // Resulting Set: {2, 4, 6}
+
 ```
+
 Filtering:
+필터링
+
 ```js
 const set = new Set([1, 2, 3, 4, 5]);
 set = new Set([...set].filter(x => (x % 2) == 0));
 // Resulting Set: {2, 4}
 ```
-### 19.4.6 Union, intersection, difference
 
-ECMAScript 6 Sets have no methods for computing the union (e.g. addAll), intersection (e.g. retainAll) or difference (e.g. removeAll). This section explains how to work around that limitation.
+
+### 19.4.6 Union, intersection, difference
+### 19.4.6 합집합, 교집합, 차집합
+
+ECMAScript 6 Sets have no methods for computing the union (e.g. addAll), intersection (e.g. retainAll) or difference (e.g. removeAll). This section explains how to work around that limitation.  
+ECMAScript 6의 Set에는 합집합(예: addAll), 교집합(예: retainAll), 차집합(예: removeAll)과 같은 연산을 수행하는 메소드가 없다. 이번 절에서는 이같은 한계를 우회하는 방법을 설명한다.
+
 #### 19.4.6.1 Union
+#### 19.4.6.1 합집합
 
 Union (a ∪ b): create a Set that contains the elements of both Set a and Set b.
+합집합 (a ∪ b): Set a와 Set b의 요소들을 모두 포함하는 Set을 생성.
+
 ```js
 const a = new Set([1,2,3]);
 const b = new Set([4,3,2]);
 const union = new Set([...a, ...b]);
     // {1,2,3,4}
 ```
-The pattern is always the same:
 
-    Convert one or both Sets to Arrays.
-    Perform the operation.
-    Convert the result back to a Set.
+The pattern is always the same:  
+다음 패턴은 늘 같다.
 
-The spread operator (...) inserts the elements of something iterable (such as a Set) into an Array. Therefore, [...a, ...b] means that a and b are converted to Arrays and concatenated. It is equivalent to [...a].concat([...b]).
+1) Convert one or both Sets to Arrays.
+2) Perform the operation.
+3) Convert the result back to a Set.
+
+1) 하나 또는 두 Set 모두를 배열로 변환한다.
+2) 연산을 수행한다.
+3) 연산 결과를 다시 Set으로 변환한다.
+
+The spread operator (...) inserts the elements of something iterable (such as a Set) into an Array. Therefore, [...a, ...b] means that a and b are converted to Arrays and concatenated. It is equivalent to [...a].concat([...b]).  
+펼침 연산자(...)는 이터러블(Set 등)의 요소들을 배열 내에 삽입한다. 따라서, [...a, ...b]는 a와 b가 배열로 전환되고 연결됨을 의미한다. 이는 [...a].concat([...b])와 동등하다.
+
+
 #### 19.4.6.2 Intersection
+#### 19.4.6.2 교집합
 
-Intersection (a ∩ b): create a Set that contains those elements of Set a that are also in Set b.
+Intersection (a ∩ b): create a Set that contains those elements of Set a that are also in Set b.  
+교집합 (a ∩ b):
+
 ```js
 const a = new Set([1,2,3]);
 const b = new Set([4,3,2]);
