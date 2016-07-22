@@ -1512,29 +1512,52 @@ This explanation of the event loop is a simplification that is good enough for n
 
 This style of multitasking makes one important guarantee: run to completion; every function can rely on not being interrupted by another task until it is finished. Functions become transactions and can perform complete algorithms without anyone seeing the data they operate on in an itermediate state. Concurrent access to shared data makes multitasking complicated and is not allowed by JavaScript’s concurrency model. That’s why run to completion is a good thing.
 
-멀티 테스킹의 스타일은 하나의 중요한 보증을 만든다.
+멀티 테스킹의 스타일은 하나의 중요한 보장을 만든다: 완료 될때까지 실행; 모든 함수는 그것이 끝나기 전까지 다른 테스킹에 의한 방해를 받지 않는다는것을 믿을 수 있다. 함수는 트랙젝션이 되고, 연산중인 중간 상태에 있는 데이터를 보는 사람 없이 알고리즘을 완전하게 수행할 수 있다. 데이터를 공유하기 위한 병렬 접근은 멀티테스킹을 어렵게 만들고, 자바스크립트 병렬 모델에서 허용되지 않는다. 이것이 완료될때까지 실행하는게 좋은 것인 이유다. 
 
 Alas, coroutines prevent run to completion, because any function could suspend its caller. For example, the following algorithm consists of multiple steps:
 
+유감스럽게도, 어떤 함수가 그 호출자를 멈출수 있기 때문에, 코루틴은 완전하게 실행하는것을 막는다. 예를 들면 다음 알고리즘은 여러단계로 구성된다:
+
+```javascript
 step1(sharedData);
 step2(sharedData);
 lastStep(sharedData);
+```
 If step2 was to suspend the algorithm, other tasks could run before the last step of the algorithm is performed. Those tasks could contain other parts of the application which would see sharedData in an unfinished state. Generators preserve run to completion, they only suspend themselves and return to their caller.
+
+step2 알고리즘이 중단한 다면, 알고리즘의 마지막 단계가 수행되기 전에 다른 테스크는 실행될 수 있다. 이 테스크들은 비 완료 상태에서의 sharedData를 볼 수 있는 애플리케이션의 다른 부분을 포함한다. 제너레이터는 동작의 완료를 보장하고, 그들은 오로지 자신과 그들의 호출자의 return으로 중단된다.
 
 co and similar libraries give you most of the power of coroutines, without their disadvantages:
 
-They provide schedulers for tasks defined via generators.
-Tasks “are” generators and can thus be fully suspended.
-A recursive (generator) function call is only suspendable if it is done via yield*. That gives callers control over suspension.
-22.6 Examples of generators
+co와 비슷한 라이브러리들은 아래 단점 없이 코루틴의  힘의 대부분을 준다:
+
+* They provide schedulers for tasks defined via generators.
+* Tasks “are” generators and can thus be fully suspended.
+* A recursive (generator) function call is only suspendable if it is done via yield*. That gives callers control over suspension.
+* 이 라이브러리들은 제너레이트를 통해 정의된 테스크를 위한 스케줄러를 제공한다.
+* 테스크들은 제너레이터 "이고" 그렇기 때문에 완전하게 중단할 수 있다.
+* 재귀 (제너레이터) 함수 호출은 오직 yield*를 통해 제너레이터가 완료될때 중단할 수 있다. 이는 호출자가 중단을 제어할수 있게 한다.
+
+## 22.6 Examples of generators
+## 22.6 제너레이터 예제
+
 This section gives several examples of what generators can be used for.
+
+이 절은 무엇에 대해서 제너레이터가 사용할수 있는지 몇몇 예제를 보여준다.
 
 The following GitHub repository contains the example code: generator-examples
 
-22.6.1 Implementing iterables via generators
-In the chapter on iteration, I implemented several iterables “by hand”. In this section, I use generators, instead.
+다음 깃헙 레파지토리는 예제코드를 포함한다: 제너레이터 예제들
 
-22.6.1.1 The iterable combinator take()
+### 22.6.1 Implementing iterables via generators
+### 22.6.1 제너레이터를 통한 이터러블 구현
+
+In the chapter on iteration, I implemented several iterables “by hand”. In this section, I use generators, instead.
+이터레이션 장에서 "손으로 몇몇 이터러블을 구현했다. 이 절에서는 대신에 제너레이터를 사용한다.
+
+#### 22.6.1.1 The iterable combinator take()
+#### 22.6.1.1 이터러블 결합자 take()
+
 take() converts a (potentially infinite) sequence of iterated values into a sequence of length n:
 
 function* take(n, iterable) {
