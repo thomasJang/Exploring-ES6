@@ -1560,6 +1560,9 @@ In the chapter on iteration, I implemented several iterables “by hand”. In t
 
 take() converts a (potentially infinite) sequence of iterated values into a sequence of length n:
 
+take()는 (잠재적인 무한)반복값의 순서열을 n 크기를 가진 순서열로 변환한다:
+
+```javascript
 function* take(n, iterable) {
     for (const x of iterable) {
         if (n <= 0) return;
@@ -1567,8 +1570,12 @@ function* take(n, iterable) {
         yield x;
     }
 }
+```
 The following is an example of using it:
 
+다음은 사용에 대한 예제이다:
+
+```javascript
 const arr = ['a', 'b', 'c', 'd'];
 for (const x of take(2, arr)) {
     console.log(x);
@@ -1576,8 +1583,13 @@ for (const x of take(2, arr)) {
 // Output:
 // a
 // b
+```
+
 An implementation of take() without generators is more complicated:
 
+제너레이터 없이 take()의 구현은 더욱 복잡하다:
+
+```javascript
 function take(n, iterable) {
     const iter = iterable[Symbol.iterator]();
     return {
@@ -1604,18 +1616,31 @@ function maybeCloseIterator(iterator) {
         iterator.return();
     }
 }
+```
+
 Note that the iterable combinator zip() does not profit much from being implemented via a generator, because multiple iterables are involved and for-of can’t be used.
 
-22.6.1.2 Infinite iterables
+이터러블 결합자 zip()은 제너레이터를 통해 구현된것은 많은 이득이 있지 않다. 왜냐하면 다중 이터러블이 포함되어 있고 for-of를 사용할 수 없기 때문이다.
+
+#### 22.6.1.2 Infinite iterables
+#### 22.6.1.2 무한 이터러블
+
 naturalNumbers() returns an iterable over all natural numbers:
 
+naturalNumber()는 모든 자연수를 포함하는 이러터블을 반환한다:
+
+```javascript
 function* naturalNumbers() {
     for (const n=0;; n++) {
         yield n;
     }
 }
+```
 This function is often used in conjunction with a combinator:
 
+이 함수는 종종 결합자와 연결되어 사용된다.
+
+```javascript
 for (const x of take(3, naturalNumbers())) {
     console.log(x);
 }
@@ -1623,8 +1648,13 @@ for (const x of take(3, naturalNumbers())) {
 // 0
 // 1
 // 2
+```
+
 Here is the non-generator implementation, so you can compare:
 
+여기 비제너레이터 구현이 있고 비교 해 볼 수 있다:
+
+```javascript
 function naturalNumbers() {
     let n = 0;
     return {
@@ -1636,8 +1666,14 @@ function naturalNumbers() {
         }
     }
 }
-22.6.1.3 Array-inspired iterable combinators: map, filter
+```
+
+#### 22.6.1.3 Array-inspired iterable combinators: map, filter
+#### 22.6.1.3 배열에서 가져온 이터러블 결합자: map, filter
+
 Arrays can be transformed via the methods map and filter. Those methods can be generalized to have iterables as input and iterables as output.
+
+배열은 map, filter 메소드를 통해 변경될 수 있따. 이 메소드는 입력으로써의 이터러블과 출력으로써의 이터러블을 갖기 위해 만들어 졌다.
 
 22.6.1.3.1 A generalized map()
 This is the generalized version of map:
