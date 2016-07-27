@@ -79,7 +79,7 @@ You use this class just like an ES5 constructor function:
 ```
 
 In fact, the result of a class definition is a function:
-> 사실, 클래스 정의의 결과는 함수다.
+> 사실, 클래스 선언의 결과는 함수다.
 
 ```js
 > typeof Point
@@ -291,8 +291,10 @@ setter: 123
 ```
 
 #### 15.2.2.4 Computed method names
+> 계산된 메소드명
 
 You can define the name of a method via an expression, if you put it in square brackets. For example, the following ways of defining Foo are all equivalent.
+> 대괄호에 표현식을 넣어 메소드를 선언할 수 있다. 예를들어 아래의 Foo를 선언하는 방법은 모두 동등하다
 
 ```js
 class Foo() {
@@ -310,6 +312,8 @@ class Foo() {
 ```
 
 Several special methods in ECMAScript 6 have keys that are symbols. Computed method names allow you to define such methods. For example, if an object has a method whose key is Symbol.iterator, it is iterable. That means that its contents can be iterated over by the for-of loop and other language mechanisms.
+
+> ECMAScript 6의 몇몇 특별한 메소드는 심볼키를 갖는다.
 
 ```js
 class IterableClass {
