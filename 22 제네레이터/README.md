@@ -1746,14 +1746,28 @@ The neat thing is that everything is computed lazily (incrementally and on deman
 모든 신선한 것들은 게으르게 계산된다 (점진적이고 요구에 따라서): 첫 문자가 도착하자 마자 계산은 시작한다. 예를 들자면 첫 단어를 얻기 위해서 모든 문자를 얻기를 기다릴 필요가 없다.
 
 #### 22.6.2.1 Lazy pull (generators as iterators)
+#### 22.6.2.1 레이지 폴 (제너레이터를 이터레이터로 사용)
+
 Lazy pull with generators works as follows. The three generators implementing steps 1–3 are chained as follows:
 
+제너레이터의 레이지 폴 다음 처럼 작동 한다. 1-3단계를 구현한 3개의 제너레이터는 다음처럼 체이닝 되어있다.
+
+```javascript
 addNumbers(extractNumbers(tokenize(CHARS)))
+```
+
 Each of the chain members pulls data from a source and yields a sequence of items. Processing starts with tokenize whose source is the string CHARS.
 
-22.6.2.1.1 Step 1 – tokenizing
+체인의 각 제너레이터는 소스로 부터 데이터를 가져오고 아이템의 순서열을 준다. 처리는 CHARS문자열을 가지는 소스를 토크나이즈로 시작한다.
+
+##### 22.6.2.1.1 Step 1 – tokenizing
+##### 22.6.2.1.1 단계 1 - 토크나이징
+
 The following trick makes the code a bit simpler: the end-of-sequence iterator result (whose property done is false) is converted into the sentinel value END_OF_SEQUENCE.
 
+다음 트릭은 코드를 더 간단하게 만든다: 이터레이터 순서열의 마지막의 결과(done 프로퍼티가 false인)를 표시 값인 END_OF_SEQUENCE로 바꾼다.
+
+```javascript
 /**
  * Returns an iterable that transforms the input sequence
  * of characters into an output sequence of words.
@@ -1782,7 +1796,11 @@ function getNextItem(iterator) {
 function isWordChar(ch) {
     return typeof ch === 'string' && /^[A-Za-z0-9]$/.test(ch);
 }
+```
+
 How is this generator lazy? When you ask it for a token via next(), it pulls its iterator (lines A and B) as often as needed to produce as token and then yields that token (line C). Then it pauses until it is again asked for a token. That means that tokenization starts as soon as the first characters are available, which is convenient for streams.
+
+어떻게 이 제너레이터가 게으를까? next()를 통해 토큰을 요청할때, 이터레이터(줄 A와 B)를 끌어 당긴다
 
 Let’s try out tokenization. Note that the spaces and the dot are non-words. They are ignored, but they separate words. We use the fact that strings are iterables over characters (Unicode code points). The result of tokenize() is an iterable over words, which we turn into an array via the spread operator (...).
 
