@@ -1675,21 +1675,36 @@ Arrays can be transformed via the methods map and filter. Those methods can be g
 
 배열은 map, filter 메소드를 통해 변경될 수 있따. 이 메소드는 입력으로써의 이터러블과 출력으로써의 이터러블을 갖기 위해 만들어 졌다.
 
-22.6.1.3.1 A generalized map()
+##### 22.6.1.3.1 A generalized map()
+##### 22.6.1.3.1 일반적인 map()
+
 This is the generalized version of map:
 
+이것은 map의 일반 버전이다:
+
+```javascript
 function* map(iterable, mapFunc) {
     for (const x of iterable) {
         yield mapFunc(x);
     }
 }
+```
 map() works with infinite iterables:
 
+map()은 무한 이터러블과 함께 동작한다:
+
+```javascript
 > [...take(4, map(naturalNumbers(), x => x * x))]
 [ 0, 1, 4, 9 ]
-22.6.1.3.2 A generalized filter()
+```
+##### 22.6.1.3.2 A generalized filter()
+##### 22.6.1.3.2 일반적인 filter()
+
 This is the generalized version of filter:
 
+이것은 필터의 일반적인 버전이다:
+
+```javascript
 function* filter(iterable, filterFunc) {
     for (const x of iterable) {
         if (filterFunc(x)) {
@@ -1697,20 +1712,40 @@ function* filter(iterable, filterFunc) {
         }
     }
 }
+```
 filter() works with infinite iterables:
 
+filter()는 무한 이터러블과 함께 동작한다:
+
+```javascript
 > [...take(4, filter(naturalNumbers(), x => (x % 2) === 0))]
 [ 0, 2, 4, 6 ]
-22.6.2 Generators for lazy evaluation
+```
+
+### 22.6.2 Generators for lazy evaluation
+### 22.6.2 게으른 평가를 위한 제너레이터
+
 The next two examples show how generators can be used to process a stream of characters.
 
+다음 두 예제는 제너레이터가 문자스트림을 처리하는데 사용될 수 있는 방법을 보여준다.
+
 The input is a stream of characters.
-Step 1 – tokenizing (characters → words): The characters are grouped into words, strings that match the regular expression /^[A-Za-z0-9]$/. Non-word characters are ignored, but they separate words. The input of this step is a stream of characters, the output a stream of words.
-Step 2 – extracting numbers (words → numbers): only keep words that match the regular expression /^[0-9]+$/ and convert them to numbers.
-Step 3 – adding numbers (numbers → numbers): for every number received, return the total received so far.
+
+입력은 문자 스트림이다.
+
+* Step 1 – tokenizing (characters → words): The characters are grouped into words, strings that match the regular expression /^[A-Za-z0-9]$/. Non-word characters are ignored, but they separate words. The input of this step is a stream of characters, the output a stream of words.
+* Step 2 – extracting numbers (words → numbers): only keep words that match the regular expression /^[0-9]+$/ and convert them to numbers.
+* Step 3 – adding numbers (numbers → numbers): for every number received, return the total received so far.
+
 The neat thing is that everything is computed lazily (incrementally and on demand): computation starts as soon as the first character arrives. For example, we don’t have to wait until we have all characters to get the first word.
 
-22.6.2.1 Lazy pull (generators as iterators)
+* 단계 1 - 토크나이징 (문자 -> 단어): 문자들은 정규 표현식 /^[A-Za-z0-9]$/에 매칭된 문자열 단어로 묶는다. 비 단어는 무시하지만 그들은 단어를 분리한다. 이 단계의 입력은 문자 스트림이고, 출력은 단어들의 스트림이다.  
+* 단계 2 - 숫자 추출 (단어 -> 숫자): 오직 정규표현식 /^[0-9]+$/에 매칭된 단어를 얻고 그들을 숫자로 변환한다.
+* 단계 3 - 숫자 더하기 (숫자 -> 숫자): 모든 수신된 수를 총 합으로 반환한다. 
+
+모든 신선한 것들은 게으르게 계산된다 (점진적이고 요구에 따라서): 첫 문자가 도착하자 마자 계산은 시작한다. 예를 들자면 첫 단어를 얻기 위해서 모든 문자를 얻기를 기다릴 필요가 없다.
+
+#### 22.6.2.1 Lazy pull (generators as iterators)
 Lazy pull with generators works as follows. The three generators implementing steps 1–3 are chained as follows:
 
 addNumbers(extractNumbers(tokenize(CHARS)))
