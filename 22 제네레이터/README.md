@@ -1800,15 +1800,25 @@ function isWordChar(ch) {
 
 How is this generator lazy? When you ask it for a token via next(), it pulls its iterator (lines A and B) as often as needed to produce as token and then yields that token (line C). Then it pauses until it is again asked for a token. That means that tokenization starts as soon as the first characters are available, which is convenient for streams.
 
-어떻게 이 제너레이터가 게으를까? next()를 통해 토큰을 요청할때, 이터레이터(줄 A와 B)를 끌어 당긴다
+어떻게 이 제너레이터가 게으를까? next()를 통해 토큰을 요청할때, 토큰을 생성하는데 필요한 만큼 이터레이터(줄 A와 B)를 끌어와 (줄 C)의 토큰을 생성합니다. 그후 이것은 토큰을 다시 요청되기 전까지 멈춰있다. 토크화는 첫 문자가 가능 할때 바로 시작되고 스트림에 편리하다는것을 의미 합니다.
 
 Let’s try out tokenization. Note that the spaces and the dot are non-words. They are ignored, but they separate words. We use the fact that strings are iterables over characters (Unicode code points). The result of tokenize() is an iterable over words, which we turn into an array via the spread operator (...).
 
+토큰화를 시도해 봅시다. 빈칸과 점은 비단어라는것을 명심해라. 이것들은 무시되지만 단어를 구분한다. 문자열은 모든 문자(유니코드 포인트)를 이터러블 한다는 사실을 이용한다. 이 tokenize()결과는 모든단어의 이터러블이고, 이것은 (...) 펼침 연산자를 통해 배열로 변환된다.
+
+```javascript
 > [...tokenize('2 apples and 5 oranges.')]
 [ '2', 'apples', 'and', '5', 'oranges' ]
-22.6.2.1.2 Step 2 – extracting numbers
+```
+
+#### 22.6.2.1.2 Step 2 – extracting numbers
+#### 22.6.2.1.2 단계2 - 수 추출
+
 This step is relatively simple, we only yield words that contain nothing but digits, after converting them to numbers via Number().
 
+이 단계를 비교적 간단하고, Number()를 통해 숫자를 수로 변화한 후, 숫자만을 포함한 단어를 얻는다.
+
+```javascript
 /**
  * Returns an iterable that filters the input sequence
  * of words and only yields those that are numbers.
@@ -1820,7 +1830,11 @@ function* extractNumbers(words) {
         }
     }
 }
+```
+
 You can again see the laziness: If you ask for a number via next(), you get one (via yield) as soon as one is encountered in words.
+
+다시 게으름을 볼 수 있다: next()를 통해 수를 요청하면, 곧바로 (yield를 통해) 하나를 얻는다.
 
 Let’s extract the numbers from an Array of words:
 
