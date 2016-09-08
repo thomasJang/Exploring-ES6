@@ -1834,15 +1834,25 @@ function* extractNumbers(words) {
 
 You can again see the laziness: If you ask for a number via next(), you get one (via yield) as soon as one is encountered in words.
 
-다시 게으름을 볼 수 있다: next()를 통해 수를 요청하면, 곧바로 (yield를 통해) 하나를 얻는다.
+다시 게으른 것을 볼 수 있다: next()를 통해 수를 요청하면, 단어에서 숫자를 만나자 마자 (yield를 통해) 얻을 수 있다.
 
 Let’s extract the numbers from an Array of words:
 
+단어 배열로 부터 수를 추출해 보자.
+
+```javascript
 > [...extractNumbers(['hello', '123', 'world', '45'])]
 [ 123, 45 ]
+```
+
 Note that strings are converted to numbers.
 
-22.6.2.1.3 Step 3 – adding numbers
+문자열이 숫자로 변환되는것을 주목하라.
+
+##### 22.6.2.1.3 Step 3 – adding numbers
+##### 22.6.2.1.3 단계3 - 수 더하기
+
+```javascript
 /**
  * Returns an iterable that contains, for each number in
  * `numbers`, the total sum of numbers encountered so far.
@@ -1855,13 +1865,25 @@ function* addNumbers(numbers) {
         yield result;
     }
 }
+```
+
 Let’s try a simple example:
 
+간단한 예를 보자
+
+```javascript
 > [...addNumbers([5, -2, 12])]
 [ 5, 3, 15 ]
-22.6.2.1.4 Pulling the output
+```
+
+##### 22.6.2.1.4 Pulling the output
+##### 22.6.2.1.4 출력 끌어 당기기
+
 On its own, the chain of generator doesn’t produce output. We need to actively pull the output via the spread operator:
 
+그 자체로, 제너레이터 사슬은 출력을 생산하지 않는다. 펼침 연산자를 통해 적극적으로 출력을 끌어 당기는 것이 필요하다:
+
+```javascript
 const CHARS = '2 apples and 5 oranges.';
 const CHAIN = addNumbers(extractNumbers(tokenize(CHARS)));
 console.log([...CHAIN]);
@@ -1905,7 +1927,11 @@ RS)))), '-> ');
 // e
 // s
 // .
+```
+
 The output shows that addNumbers produces a result as soon as the characters '2' and ' ' are received.
+
+이 출력은 '2'와 ' '문자를 받자 마자 addNumber가 결과를 만드는것을 보여준다. 
 
 22.6.2.2 Lazy push (generators as observables)
 Not much work is needed to convert the previous pull-based algorithm into a push-based one. The steps are the same. But instead of finishing via pulling, we start via pushing.
