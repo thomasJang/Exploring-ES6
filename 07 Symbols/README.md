@@ -909,7 +909,7 @@ Symbol('foo') !== Symbol('foo')
 > 왜 웰노운 심볼의 철자가 ? Symbol.ITERATOR(등등)가 아니고 Symbol.iterator 입니까?
 
 Well-known symbols are stored in properties whose names start with lowercase characters and are camel-cased. In a way, these properties are constants and it is customary for constants to have all-caps names (Math.PI etc.). But the reasoning for their spelling is different: Well-known symbols are used instead of normal property keys, which is why their “names” follow the rules for property keys, not the rules for constants.
-> 웰노운 심볼은 이름이 소문자로 시작하는 카멜케이스 속성명을 사용합니다. 
+> 웰노운 심볼은 소문자로 시작하는 카멜케이스 속성명을 사용합니다. 
 어떤면에서 이러한 속성은 상수이며 상수는 대문자로 된 이름 (Math.PI 등)을 갖는 것이 일반적입니다. 
 그러나 철자에 대한 추론은 다릅니다. 일반 속성 키 대신 웰노운 심볼 사용되므로 "이름"이 상수 규칙이 아닌 속성 키 규칙을 따르는 것입니다.
 
