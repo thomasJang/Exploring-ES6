@@ -482,7 +482,7 @@ The following table shows what happens if you explicitly or implicitly convert s
 > 7.5.1 함정: 문자열로 강제 변환
 
 Coercion to string being forbidden can easily trip you up:
-
+> 심볼이 문자열로 변환이 안되는 것은 쉽게 확인해 볼 수 있다.
 
 ```js
 const sym = Symbol();
@@ -503,13 +503,13 @@ console.log(`A symbol: ${String(sym)}`); // OK
 > 7.5.2 강제 변환 규칙을 받아들이기
 
 Coercion (implicit conversion) is often forbidden for symbols. This section explains why.
-강제(명시적 변환)는 심볼에 종종 금지된다. 이번절에서 그 이유를 설명한다.
+> 강제(명시적 변환)는 심볼에 종종 금지된다. 이번절에서 그 이유를 설명한다.
 
 #### 7.5.2.1 Truthiness checks are allowed
 > Truthiness 체크는 허용된다.
 
 Coercion to boolean is always allowed, mainly to enable truthiness checks in if statements and other locations:
-
+> Boolean에 대한 강제 변환은 항상 허용되며 주로 명령문 및 기타 위치에서 True 체크가 가능하게 합니다
 
 ```js
 if (value) { ··· }
@@ -549,7 +549,7 @@ That’s why the addition operator throws an error in this case.
 > 7.5.3.1 불리언으로 강제 변환
 
 To explicitly convert a symbol to boolean, you call Boolean(), which returns true for symbols:
-심볼을 불리언으로 명시적 변환을 하기 위해서는 Boolean()을 호출하면 된다. 이는 심볼에 true를 반환한다:
+> 심볼을 불리언으로 명시적 변환을 하기 위해서는 Boolean()을 호출하면 된다. 이는 심볼에 true를 반환한다:
 
 ```js
 const sym = Symbol('hello');
@@ -613,6 +613,7 @@ String(Symbol())
 ```
 
 The toString() method returns the same string as String(), but neither of these two operations calls the other one, they both call the same internal operation SymbolDescriptiveString().
+> toString() 메서드는 String()과 같은 문자열을 반환합니다. 그러나 이 두 작업 중 어느 것도 다른 것을 호출하지 않습니다. 둘 다 동일한 내부 작업 SymbolDescriptiveString()을 호출합니다.
 
 ```js
 Symbol('hello').toString()
@@ -716,6 +717,7 @@ TypeError: Symbol is not a constructor
 ```
 
 There is still a way to create wrapper objects, instances of Symbol: Object, called as a function, converts all values to objects, including symbols.
+> 래퍼 객체를 생성하는 방법은 여전히 존재합니다. 예를 들어, 함수로 불리는 Symbol : Object의 인스턴스는 모든 값을 Symbol을 포함한 객체로 변환합니다.
 
 ```js
 > const sym = Symbol();
@@ -852,8 +854,10 @@ The chapter on classes explains your options for managing their private data.
 In some ways, symbols are like primitive values, in other ways, they are like objects:
 > 심볼은 어떤 점에서는 원시값 같고 또 다른 점에서는 객체 같다.
 
-+ Symbols are like strings (primitive values) w.r.t. what they are used for: as representations of concepts and as property keys.
++ Symbols are like strings (primitive values) w.r.t. what they are used for: as representations of concepts and as property keys. 
+    > 심볼은 문자열(원시 값)과 같습니다. 개념의 표현 및 속성 키로 사용됩니다.
 + Symbols are like objects in that each symbol has its own identity.
+    > 심볼은 각 기호가 고유 한 ID를 가지고 있다는 점에서 객체와 같습니다.
 
 What are symbols then – primitive values or objects? In the end, they were turned into primitives, for two reasons.
 
