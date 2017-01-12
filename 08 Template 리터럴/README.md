@@ -239,13 +239,12 @@ t7.module(function(t7) {
 
 Instead, t7.js uses a registry which is filled via t7.assign(). That requires extra configuration, but the template literals look nicer, especially if there is both an opening and a closing tag.
 
-대신, t7.js는 t7.assign()을 통해 등록된 레지스트리를 사용한다. 이것은 여분의 설정을 요구하지만, 템플릿 리터럴은 보기 좋고, 특히 시작과 닫는 태그가 그렇다.
+> 대신, t7.js는 t7.assign()을 통해 등록된 레지스트리를 사용한다. 이것은 여분의 설정을 요구하지만, 템플릿 리터럴은 보기 좋고, 특히 시작과 닫는 태그가 그렇다.
 
 ### 8.3.8 Facebook GraphQL
-### 8.3.8 페이스북 GraphQL
+> ### 8.3.8 페이스북 GraphQL
 Facebook Relay is a “JavaScript framework for building data-driven React applications”. One of its parts is the query language GraphQL whose queries can be created via templates tagged with Relay.QL. For example (borrowed from the Relay homepage):
-
-페이스북 Relay는 "데이터 주도 React 어플리케이션 구축을 위한 자바스크립트 프레임웍" 이다. 그 부분 중 하나는 템플릿 태그(Relay.QL)를 통해 생성될 수 있는 GraphQL 질의어 이다. 예를 들면:
+> 페이스북 Relay는 "데이터 주도 React 어플리케이션 구축을 위한 자바스크립트 프레임웍" 이다. 그 부분 중 하나는 템플릿 태그(Relay.QL)를 통해 생성될 수 있는 GraphQL 질의어 이다. 예를 들면:
 
 ```javascript
  class TeaStore extends React.Component {
@@ -271,12 +270,10 @@ TeaStore = Relay.createContainer(TeaStore, {
 ```
 
 The query is created in method fragments (line A) and attached to the React component TeaStore. Its results of the query are put into this.props.store.
+> 이 쿼리는 fragments 메소드를 통해 생성(A줄) 되고 리액트 컴포넌트인 TeaStore에 붙착된다. 그 쿼리의 결과는 this.props.store에 넣는다.
 
 This is the data that the query operates on:
-
-이 쿼리는 fragments 메소드를 통해 생성(A줄) 되고 리액트 컴포넌트인 TeaStore에 붙착된다. 그 쿼리의 결과는 this.props.store에 넣는다.
-
-여기 쿼리 수행 결과 데이터가 있다:
+> 여기 쿼리 수행 결과 데이터가 있다:
 ```javascript
 const STORE = {
   teas: [
@@ -287,48 +284,50 @@ const STORE = {
 ```
 
 ### 8.3.9 Text localization (L10N)
-### 8.3.9 텍스트 지역화 (L10N)
+> ### 8.3.9 텍스트 지역화 (L10N)
 
 This section describes a simple approach to text localization that supports different languages and different locales (how to format numbers, time, etc.). Given the following message.
-
-이 색션은 다른 언어와 지역을 지원하는 문자열 지역화에 대한 간단한 접근법을 설명한다. (숫자, 시간등 형식을 지정하는 방법) 주어진 메세지를 보면
+> 이 색션은 다른 언어와 지역을 지원하는 문자열 지역화에 대한 간단한 접근법을 설명한다. (숫자, 시간등 형식을 지정하는 방법) 주어진 메세지를 보면
 ```javascript
 alert(msg`Welcome to ${siteName}, you are visitor
           number ${visitorNumber}:d!`);
 ```
 The tag function msg would work as follows.
+> 태그 함수 msg는 아래와 같이 동작할 것이다.
 
 First, The literal parts are concatenated to form a string that can be used to look up a translation in a table. An example for a lookup string is:
+> 첫째 리터럴 부분은 표에서 번역을 찾기 위해 사용될 수 있는 문자열을 형성하기 위에 연결된다. 문자열을 찾는 예를 보자
 
-태그 함수 msg는 아래와 같이 동작할 것이다.
-첫째 리터럴 부분은 표에서 번역을 찾기 위해 사용될 수 있는 문자열을 형성하기 위에 연결된다. 문자열을 찾는 예를 보자
 ```
 'Welcome to {0}, you are visitor number {1}!'
 ```
+
 An example for a translation to German is:
-독일어로 번역을 예를 들면:
+> 독일어로 번역을 예를 들면:
+
 ```
 'Besucher Nr. {1}, willkommen bei {0}!'
 ```
 The English “translation” would be the same as the lookup string.
-영어 "번역" 검색 문자열과 동일 하다.
+> 영어 "번역" 검색 문자열과 동일 하다.
 
 Second, the result from the lookup is used to display the substitutions. Because a lookup result includes indices, it can rearrange the order of the substitutions. That has been done in German, where the visitor number comes before the site name. How the substitutions are formatted can be influenced via annotations such as :d. This annotation means that a locale-specific decimal separator should be used for visitorNumber. Thus, a possible English result is:
-둘째, 검색 결과는 치환을 표현하는데 사용된다. 왜냐하면 검색 결과는 치환의 순서를 재배열 할 수 있는 색인을 포함하기 때문이다. 독일어로 하면 방문자 수가 싸이트 이름 보다 앞에 온다. 그 치환물들은 형성하는 방법은 :d와 같은 주석을 통해 영향을 미칠 수 있다. 그 주석은 visitorNumber를 위해 사용 되어진 지역 특화 수 구분자를 의미 하는 것 이다. 따라서 가능한 영어 결과는
+> 둘째, 검색 결과는 치환을 표현하는데 사용된다. 왜냐하면 검색 결과는 치환의 순서를 재배열 할 수 있는 색인을 포함하기 때문이다. 독일어로 하면 방문자 수가 싸이트 이름 보다 앞에 온다. 그 치환물들은 형성하는 방법은 :d와 같은 주석을 통해 영향을 미칠 수 있다. 그 주석은 visitorNumber를 위해 사용 되어진 지역 특화 수 구분자를 의미 하는 것 이다. 따라서 가능한 영어 결과는
+
 ```
 Welcome to ACME Corp., you are visitor number 1,300!
 ```
 In German, we have results such as:
-독일어 결과는:
+> 독일어 결과는:
 ```
 Besucher Nr. 1.300, willkommen bei ACME Corp.!
 ```
 
 ### 8.3.10 Text templating via untagged template literals
-### 8.3.10 비태그드 템플릿 리터럴을 통한 문자열 템플링
+> ### 8.3.10 비태그드 템플릿 리터럴을 통한 문자열 템플링
 
 Let’s say we want to create HTML that display the following data in a table:
-이제 우리는 테이블에서 다음 데이터를 표시하는 HTML 만들려고 가정해 보자.
+> 이제 우리는 테이블에서 다음 데이터를 표시하는 HTML 만들려고 가정해 보자.
 
 ```javascript
 const data = [
@@ -340,9 +339,10 @@ const data = [
     { first: 'Lars', last: '<Croft>' },
 ];
 ```
-As explained previously, template literals are not templates. They are code that is executed immediately, not text with holes that you can apply to data. The latter description gives us a hint how we can turn a template literal into an actual template – it sounds like the description of a function (data in, text out). Let’s implement a template tmpl as a function from data to strings:
 
-이전 설명에 따르면 템플릿 리터럴은 템플릿이 아니다. 이것은 즉시 실행 코드이고,  당신이 데이터를 넣을 수 있는 빈칸이 있는 문자열는 아니다. 이 뒷부분의 설명은 우리에서 어떻게 우리가 템플릿 리터럴을 실제 템플릿으로 변할 수 있는 방법에 대한 힌트를 준다. 이것은 마치 함수의 모양처럼 보인다(data in text out). 자 함수 처럼 데이터를 문자열로 바꾸는 템플릿 tmpl을 구현해 보자.
+As explained previously, template literals are not templates. They are code that is executed immediately, not text with holes that you can apply to data. The latter description gives us a hint how we can turn a template literal into an actual template – it sounds like the description of a function (data in, text out). Let’s implement a template tmpl as a function from data to strings:
+> 이전 설명에 따르면 템플릿 리터럴은 템플릿이 아니다. 이것은 즉시 실행 코드이고,  당신이 데이터를 넣을 수 있는 빈칸이 있는 문자열는 아니다. 이 뒷부분의 설명은 우리에서 어떻게 우리가 템플릿 리터럴을 실제 템플릿으로 변할 수 있는 방법에 대한 힌트를 준다. 이것은 마치 함수의 모양처럼 보인다(data in text out). 자 함수 처럼 데이터를 문자열로 바꾸는 템플릿 tmpl을 구현해 보자.
+
 ```javascript
 const tmpl = addrs => `
     <table>
@@ -365,28 +365,30 @@ console.log(tmpl(data));
 // </table>
 ```
 The outer template literal provides the bracketing <table> and </table>. Inside, we are embedding JavaScript code that produces a string by joining an Array of strings. The Array is created by mapping each address to two table rows. Note that the plain text pieces <Jane> and <Croft are not properly escaped. How to do that via a tagged template is explained in the next section.
-
-바깥쪽 템플릿 리터럴은 <table> </table> 묶음을 제공한다. 내부, 우리는 문자열 배열의 결합을 통해 문자열을 생성하는 자바스크립트 코드를 포함하고 있다. 이 배열은 두 개의 테이블 행을 각 주소를 맴핑을 통해 생성하게 된다. 일반 문자열 조각들 <Jane>과 <Croft>는 적절히 익스케이프 되지 않음을 주의하라. 다음 섹션에서 태그드 템플릿을 통한 방법을 설명한다.
+> 바깥쪽 템플릿 리터럴은 <table> </table> 묶음을 제공한다. 내부, 우리는 문자열 배열의 결합을 통해 문자열을 생성하는 자바스크립트 코드를 포함하고 있다. 이 배열은 두 개의 테이블 행을 각 주소를 맴핑을 통해 생성하게 된다. 일반 문자열 조각들 <Jane>과 <Croft>는 적절히 익스케이프 되지 않음을 주의하라. 다음 섹션에서 태그드 템플릿을 통한 방법을 설명한다.
 
 #### 8.3.10.1 Should I use this technique in production code?
-#### 8.3.10.1 내가 회사 코드에서 이 기술을 사용해야 합니까?
-This is a useful quick solution for smaller templating tasks. For larger task, you may want more powerful solutions such as the templating engine Handlebars.js or the JSX syntax used in React.
+> #### 8.3.10.1 내가 회사 코드에서 이 기술을 사용해야 합니까?
 
-이것은 작은 템플릿 작업을 하기 유용하고 빠른 해답 이다. 큰 작업을 위해서는 아마도 당신은 더 강력한 해답인 Handlbars.js나 리액트에서 사용된 JSX 문법를 원할지 모른다.
+This is a useful quick solution for smaller templating tasks. For larger task, you may want more powerful solutions such as the templating engine Handlebars.js or the JSX syntax used in React.
+> 이것은 작은 템플릿 작업을 하기 유용하고 빠른 해답 이다. 큰 작업을 위해서는 아마도 당신은 더 강력한 해답인 Handlbars.js나 리액트에서 사용된 JSX 문법를 원할지 모른다.
 
 Acknowledgement: This approach to text templating is based on an idea by Claus Reinke.
-감사: 문자열 템플릿에 대한 접근은 Claus Reinke의 아이디어에 기반한다.
+> 감사: 문자열 템플릿에 대한 접근은 Claus Reinke의 아이디어에 기반한다.
 
 ### 8.3.11 A tag function for HTML templating
-### 8.3.11 HTML 템플링을 위한 태그 함수
+> ### 8.3.11 HTML 템플링을 위한 태그 함수
+
 Compared to using untagged templates for HTML templating, like we did in the previous section, tagged templates bring two advantages:
-우리가 이전 섹션에 있는 HTML 템플릿에서 비 태그 템플릿을 사용한 것과 비교해 본다면, 태그 템플릿은 두 가지 이점이 있다.:
+> 우리가 이전 섹션에 있는 HTML 템플릿에서 비 태그 템플릿을 사용한 것과 비교해 본다면, 태그 템플릿은 두 가지 이점이 있다.:
 * They can escape characters for us if we prefix ${} with a dollar sign. That is needed for the names, which contain characters that need to be escaped (<Jane>).
-* 만약 우리가 ${} 앞에 달러문자를 붙인다면, 우리는 문자열을 이스케이프 할 수 있게 할 수 있다. 이것은 이스케이프 처리가 필요한 문자를 포함된 (<Jane>) 이름에 필요 하다.
+> 만약 우리가 ${} 앞에 달러문자를 붙인다면, 우리는 문자열을 이스케이프 할 수 있게 할 수 있다. 이것은 이스케이프 처리가 필요한 문자를 포함된 (<Jane>) 이름에 필요 하다.
 * They can automatically join() Arrays for us, so that we don’t have to call that method ourselves.
-* 그것은 우리를 위해 자동으로 배열을 join() 할 수 있게 할 수 있고, 따라서 우리는 우리 스스로 그 메소드를 호출할 필요가 없다.
+> 그것은 우리를 위해 자동으로 배열을 join() 할 수 있게 할 수 있고, 따라서 우리는 우리 스스로 그 메소드를 호출할 필요가 없다.
+
 Then the code for the template looks as follows. The name of the tag function is html:
-다음과 같은 템플릿 코드가 보인다. 태그 함수의 이름은 html이다.:
+> 다음과 같은 템플릿 코드가 보인다. 태그 함수의 이름은 html이다.:
+
 ```javascript
 const tmpl = addrs => html`
     <table>
@@ -412,36 +414,34 @@ console.log(tmpl(data));
 //
 // </table>
 ```
-Note that the angle brackets around Jane and Croft are escaped, whereas those around tr and td aren’t.
 
-꺽쇠안에 있는 Jane과 Croft는 익스케이프 되었고, 반면에 그것들을 둘러싸고 있는 tr과 td는 이스케이프 되지 않았음을 주목하라.
+Note that the angle brackets around Jane and Croft are escaped, whereas those around tr and td aren’t.
+> 꺽쇠안에 있는 Jane과 Croft는 익스케이프 되었고, 반면에 그것들을 둘러싸고 있는 tr과 td는 이스케이프 되지 않았음을 주목하라.
 
 The syntax $${} is used for text that should be HTML-escaped. It is not in any way special; it’s just the normal text $ followed by the substitution ${}. Therefore, the tag function has to check the text preceding a substitution in order to determine whether to escape or not.
+> $${} 문법은 반드시 이스케이스가 필요한 HTML 문자열을 위해 사용된다. 이것은 특별한 방법이 아니다. 이것은 단지 평범한 문자열 $뒤에 치환자${}가 따라오는 것 이다. 따라서, 태그 함수는 이스케이브 여부를 결정하기 위해 치환 이전에 문자열을 확인한다.
 
-$${} 문법은 반드시 이스케이스가 필요한 HTML 문자열을 위해 사용된다. 이것은 특별한 방법이 아니다. 이것은 단지 평범한 문자열 $뒤에 치환자${}가 따라오는 것 이다. 따라서, 태그 함수는 이스케이브 여부를 결정하기 위해 치환 이전에 문자열을 확인한다.
 An implementation of html is shown later.
-html의 구현은 뒤에 보여진다.
+> html의 구현은 뒤에 보여진다.
 
 ## 8.4 Implementing tag functions
-## 8.4 태그 함수 구현
-The following is a tagged template literal:
+> ## 8.4 태그 함수 구현
 
-아래 태그드 함수 리터럴:
+The following is a tagged template literal:
+> 아래 태그드 함수 리터럴:
 
 ```javascript
 tagFunction`lit1\n${subst1} lit2 ${subst2}`
 ```
 
 This is a simplified version of the function call triggered by this literal:
-
-이것은 이 문자열을 통해 실행되는 함수 호출의 간략화 된 버전이다.:
+> 이것은 이 문자열을 통해 실행되는 함수 호출의 간략화 된 버전이다.:
 
 ```javascript
 tagFunction(['lit1\n',  ' lit2 ', ''], subst1, subst2)
 ```
 The exact function call looks more like this:
-
-정확한 함수 호출은 아래와 비슷하다.
+> 정확한 함수 호출은 아래와 비슷하다.
 
 ```javascript
 // Globally: add template object to per-realm template map
@@ -463,25 +463,22 @@ tagFunction(__templateMap__[716], subst1, subst2)
 ```
 
 There are two kinds of input that the tag function receives:
-
-태그 함수가 받는 입력은 두가지다.
+> 태그 함수가 받는 입력은 두가지다.
 
 * Template strings: are delivered via the template object in the first parameter. They are the static parts that don’t change (e.g. ' lit2 '). You get both “cooked” template strings (with escapes such as \n interpreted) and “raw” template strings (with uninterpreted escapes).
-* 템플릿 문자열: 템플릿 객체를 통해 전달 되는 첫번째 인자 이다. 이 객체는 변경불가한 스태틱 부분이다(예 'lit2'). "cooked" 템플릿 문자열(\n 해석을 통한 이스케이프)과 "raw" 템플릿 문자열(해석 하지 않은 이스케이프)을 얻는다.
+    > 템플릿 문자열: 템플릿 객체를 통해 전달 되는 첫번째 인자 이다. 이 객체는 변경불가한 스태틱 부분이다(예 'lit2'). "cooked" 템플릿 문자열(\n 해석을 통한 이스케이프)과 "raw" 템플릿 문자열(해석 하지 않은 이스케이프)을 얻는다.
+
 * Substitutions: are delivered via trailing parameters. They are embedded inside template literals via ${} (e.g. subst1). Substitutions are dynamic, they can change with each invocation.
-* 치환물: 다음 인자값으로 전달된다. 치환물들은 ${}(예 subst1)을 통해 템플릿 리터럴에 끼워진다. 치환물은 동적이고 그것들은 호출 시 변경 될 수 있다.
+    > 치환물: 다음 인자값으로 전달된다. 치환물들은 ${}(예 subst1)을 통해 템플릿 리터럴에 끼워진다. 치환물은 동적이고 그것들은 호출 시 변경 될 수 있다.
 
 The number of template strings is always one plus the number of substitutions. If a substitution is first in a literal, it is prefixed by an empty template string. If a substitution is last, it is suffixed by an empty template string (as in the previous example).
-
-템플릿 문자열의 수는 항상 치환물 더하기 일 이다. 만약 치환물이 리터럴의 제일 처음에 있으면, 빈 템플릿 문자열을 앞에 추가 한다. 만약 치환물이 마지막에 있다면 빈 템플릿 문자열을 뒤에 추가 한다.(위의 예제 처럼)
+> 템플릿 문자열의 수는 항상 치환물 더하기 일 이다. 만약 치환물이 리터럴의 제일 처음에 있으면, 빈 템플릿 문자열을 앞에 추가 한다. 만약 치환물이 마지막에 있다면 빈 템플릿 문자열을 뒤에 추가 한다.(위의 예제 처럼)
 
 The idea behind the template object is that the same tagged template might be executed multiple times (e.g. in a loop or a function). The template object enables the tag function to cache data from previous invocations: It can put data it derived from input source #1 into the object, to avoid recomputing it needlessly. Caching happens per realm (think frame in a browser). That is, there is one template object per call site and realm.
-
-템플릿 객체의 기본 개념은 동일한 태그드 템플릿은 어려번 수행될 수 있다(예를 들면 루프나 함수안에서). 그 템플릿 객체는 태그 함수가 이전 호출으로 부터 데이터를 캐쉬하는것을 가능하게 한다. 이것은 불필요한 재계산을 피하기 위해서 인풋소스 #1로 전달 받은 데이터를 객체로 변환한다. 캐싱은 영역(내 생각에는 브라우저 프래임) 별로 발생한다. 즉, 사이트와 영역 호출 당 하나의 템플릿 객체가 있다.
+> 템플릿 객체의 기본 개념은 동일한 태그드 템플릿은 어려번 수행될 수 있다(예를 들면 루프나 함수안에서). 그 템플릿 객체는 태그 함수가 이전 호출으로 부터 데이터를 캐쉬하는것을 가능하게 한다. 이것은 불필요한 재계산을 피하기 위해서 인풋소스 #1로 전달 받은 데이터를 객체로 변환한다. 캐싱은 영역(내 생각에는 브라우저 프래임) 별로 발생한다. 즉, 사이트와 영역 호출 당 하나의 템플릿 객체가 있다.
 
 The following is a first example of a tag function, a reimplementation of String.raw:
-
-다음은 String.raw를 재구현한 첫번째 예이다.:
+> 다음은 String.raw를 재구현한 첫번째 예이다.:
 
 ```javascript
 function raw(strs, ...substs) {
@@ -496,23 +493,22 @@ function raw(strs, ...substs) {
 
 Tagged template literals in the spec
 A section on tagged template literals explains how they are interpreted as function calls. A separate section explains how a template literal is turned into a list of arguments: the template object and the substitutions.
-
-스펙에서의 태그드 템플릿 리터럴
+> 스펙에서의 태그드 템플릿 리터럴
 태그드 템플릿 리터럴 섹션은 어떻게 그들이 함수 호출로 해석되는 지를 설명한다. 별도 섹션은 어떻게 템플릿 리터럴이  템플릿 객체와 치환물 인 인자들의 리스트로 변환되는지 설명한다.
 
 ### 8.4.1 Escaping in tagged template literals: cooked versus raw
-### 8.4.1 태그트 템플릿 리터럴 안의 이스케이핑: cooked 대 raw
-In tagged template literals, there are more rules for escaping, because template strings (the text fragments inside the backticks, excluding substitutions) are available in two interpretations: cooked and raw. The rules are:
+> ### 8.4.1 태그트 템플릿 리터럴 안의 이스케이핑: cooked 대 raw
 
-태그드 템플릿 리터럴 안에서 이스케이핑에 대한 더 많은 규칙이 있다. 왜냐하면 템플릿 문자열(역따옴표 안의 치환물을 제외한 문서 조각)은 두개의 cooked와 raw해석이 가능하기 때문이다.:
+In tagged template literals, there are more rules for escaping, because template strings (the text fragments inside the backticks, excluding substitutions) are available in two interpretations: cooked and raw. The rules are:
+> 태그드 템플릿 리터럴 안에서 이스케이핑에 대한 더 많은 규칙이 있다. 왜냐하면 템플릿 문자열(역따옴표 안의 치환물을 제외한 문서 조각)은 두개의 cooked와 raw해석이 가능하기 때문이다.:
+
 * In both cooked and raw interpretation, a backslash (\) in front of a dollar sign ($) prevents ${ from being interpreted as starting a substitution.
-* cooked와 raw 해석 시 둘 다 달럴 기호($) 앞의 백 슬래시는 ${로 부터 시작되는 치환물로 해석 되지 않게 한다. 
+    > cooked와 raw 해석 시 둘 다 달럴 기호($) 앞의 백 슬래시는 ${로 부터 시작되는 치환물로 해석 되지 않게 한다. 
 * However, every single backslash is mentioned in the raw interpretation, even the ones that escape substitutions.
-* 하지만 raw 해석에는 하나의 백슬래시는 심지어 이스케이프 치환물 일때도 나타난다.
+    > 하지만 raw 해석에는 하나의 백슬래시는 심지어 이스케이프 치환물 일때도 나타난다.
 
 The tag function describe allows us to explore what that means.
-
-태그 함수인 describe는 우리에게 이게 무슨 의미인지 알려준다.
+> 태그 함수인 describe는 우리에게 이게 무슨 의미인지 알려준다.
 
 ```javascript
 function describe(tmplObj, ...substs) {
@@ -529,8 +525,9 @@ function intersperse(tmplStrs, substs) {
     return result;
 }
 ```
+
 Let’s use this tag function (I am not showing the result undefined of these function calls):
-이제 이 태크 함수를 사용해보자(나는 이 함수 호출의 결과 중 undefined는 보여주지 않았다.)
+> 이제 이 태크 함수를 사용해보자(나는 이 함수 호출의 결과 중 undefined는 보여주지 않았다.)
 
 ```
  > describe`${3+3}`
@@ -551,21 +548,18 @@ Raw:    \\\${3+3}
 ```
 
 As you can see, whenever the cooked interpretation has a substitution then so does the raw interpretation. However, all backslashes from the literal appear in the raw interpretation; if a backslash precedes the characters ${ then it prevented a substitution.
-
-눈으로 본 것 같이 cooked 해석이 치환물을 가지면 raw 해석 또한 치환물을 갖지만, raw 해석에서는 리터럴에 있는 모든 백슬래쉬가 나타난다. 만약 백슬래쉬가 ${에 앞선다면 그것은 치환을 막는다.
+> 눈으로 본 것 같이 cooked 해석이 치환물을 가지면 raw 해석 또한 치환물을 갖지만, raw 해석에서는 리터럴에 있는 모든 백슬래쉬가 나타난다. 만약 백슬래쉬가 ${에 앞선다면 그것은 치환을 막는다.
 
 Other occurrences of the backslash are interpreted similarly:
-
-백슬래시의 다른 것들은 아래처럼 해석된다.:
+> 백슬래시의 다른 것들은 아래처럼 해석된다.:
 
 * In cooked mode, the backslash is handled like in string literals.
-* cooked 모드일때 백슬래시는 문자열 리터럴 처럼 다뤄진다.
+    > cooked 모드일때 백슬래시는 문자열 리터럴 처럼 다뤄진다.
 * In raw mode, the backslash is used verbatim. 
-* raw 모드일때 백슬래시는 그대로 사용된다.
+    > raw 모드일때 백슬래시는 그대로 사용된다.
 
 For example:
-
-예를 들면
+> 예를 들면
 ```
 > `\n`
 '\n'
@@ -573,22 +567,20 @@ For example:
 '\\n'
 ```
 The only time the backslash ever has an effect in raw mode is when it appears in front of a substitution (which it escapes).
-
-raw모드에서 백슬래시가 효과가 있을 때 는 이것이 치환물 앞에 있을 때 이다.
+> raw모드에서 백슬래시가 효과가 있을 때 는 이것이 치환물 앞에 있을 때 이다.
 
 Escaping in tagged template literals in the spec
-
-스펙에서 태그드 릴터럴 이스케이핑
+> 스펙에서 태그드 릴터럴 이스케이핑
 
 In the grammar for template literals, you can see that, within a template literal, there must be no open curly brace ({) after a dollar sign ($). However, an escaped dollar sign (\$) can be followed by an open curly brace. The rules for interpreting the characters of a template literal are explained in a separate section.
-
-템플릿 문법에 안에서, 템플릿 리터럴 안에서 달러 문자($) 뒤에 반드시 열린 중괄호({)가 없어야한다는 것을 볼 수 있다. 그러나 이스케이프된 $문자(\$)에 열린 괄호가 따라올 수 있다. 템플릿 리터럴의 문자들 해석 규칙은 분리된 센셕에서 설명하고 있다.
+> 템플릿 문법에 안에서, 템플릿 리터럴 안에서 달러 문자($) 뒤에 반드시 열린 중괄호({)가 없어야한다는 것을 볼 수 있다. 그러나 이스케이프된 $문자(\$)에 열린 괄호가 따라올 수 있다. 템플릿 리터럴의 문자들 해석 규칙은 분리된 센셕에서 설명하고 있다.
 
 ### 8.4.2 Example: implementing a tag function for HTML templating
-### 8.4.2 예제: HTML 템플릿 태그 함수 구현
-I previously demonstrated the tag function html for HTML templating:
+> ### 8.4.2 예제: HTML 템플릿 태그 함수 구현
 
-나는 이전에 HTML템플링을 위한 태그 함수 html을 보였다.
+I previously demonstrated the tag function html for HTML templating:
+> 나는 이전에 HTML템플링을 위한 태그 함수 html을 보였다.
+
 ```javascript
 const tmpl = addrs => html`
     <table>
@@ -615,12 +607,10 @@ console.log(tmpl(data));
 // </table>
 ```
 The syntax $${} is used for text that should be HTML-escaped. It is not in any way special; it’s just the normal text $ followed by the substitution ${}. Therefore, the tag function has to check the text preceding a substitution in order to determine whether to escape or not.
-
-이 $${} 문법은 HTML 이스케이프가 필요한 텍스트를 위해 사용된다. 이것은 특별한 방법이 아니다. 이것은 단지 치환물 ${} 앞에 있는 평범한 $를 문자 이다. 따라서, 이 태그 함수는 이스케이프 되는지 안되는지를 결정하기 위해서 치환물 앞에 텍스트 확인한다.
+> 이 $${} 문법은 HTML 이스케이프가 필요한 텍스트를 위해 사용된다. 이것은 특별한 방법이 아니다. 이것은 단지 치환물 ${} 앞에 있는 평범한 $를 문자 이다. 따라서, 이 태그 함수는 이스케이프 되는지 안되는지를 결정하기 위해서 치환물 앞에 텍스트 확인한다.
 
 This is an implementation of html:
-
-html 구현은 이것이다.
+> html 구현은 이것이다.
 
 ```javascript
 function html(templateObject, ...substs) {
@@ -659,19 +649,18 @@ function html(templateObject, ...substs) {
     return result;
 }
 ```
-Each substitution is always surrounded by template strings. If the tagged template literal ends with a substitution, the last template string is an empty string. Accordingly, the following expression is always true:
 
-각 치환물은 항상 템플릿 문자열들에 의해 감싸여 있다. 만약 태그드 템플릿 리터럴에서 치환물로 끝나면 마지막에 템플릿 문자열은 빈 문자열을 추가 한다. 따라서 아래의 표현은 항상 참이다:
+Each substitution is always surrounded by template strings. If the tagged template literal ends with a substitution, the last template string is an empty string. Accordingly, the following expression is always true:
+> 각 치환물은 항상 템플릿 문자열들에 의해 감싸여 있다. 만약 태그드 템플릿 리터럴에서 치환물로 끝나면 마지막에 템플릿 문자열은 빈 문자열을 추가 한다. 따라서 아래의 표현은 항상 참이다:
 ```javascript
 templateObject.length === substs.length + 1
 ```
-That’s why we need to append the last template string in line A.
 
-이것이 바로 우리는 A줄에 마지막 템플릿 문자열을 붙이는 이유이다.
+That’s why we need to append the last template string in line A.
+> 이것이 바로 우리는 A줄에 마지막 템플릿 문자열을 붙이는 이유이다.
 
 The following is a simple implementation of htmlEscape().
-
-아래는 간단한 htmlEscape() 구현이다.
+> 아래는 간단한 htmlEscape() 구현이다.
 
 ```javascript
 function htmlEscape(str) {
@@ -684,21 +673,23 @@ function htmlEscape(str) {
 }
 ```
 #### 8.4.2.1 More ideas
-#### 8.4.2.1 더 많은 아이디어
-There are more things you can do with this approach to templating:
+> #### 8.4.2.1 더 많은 아이디어
 
-이 템플링 방법을 통해서 할 수 있는게 더 있다.
+There are more things you can do with this approach to templating:
+> 이 템플링 방법을 통해서 할 수 있는게 더 있다.
 
 * This approach isn’t limited to HTML, it would work just as well for other kinds of text. Obviously, escaping would have to be adapted.
-* 이 방법은 HTML에 제한된 것이 아니고, 이것은 다른 종류의 텍스트에도 잘 동작한다. 물론 이스케이프가 적용되여야 할 것이다.
+    > 이 방법은 HTML에 제한된 것이 아니고, 이것은 다른 종류의 텍스트에도 잘 동작한다. 물론 이스케이프가 적용되여야 할 것이다.
 * if-then-else inside the template can be done via the ternary operator (cond?then:else) or via the logical Or operator (||):
-* 템플릿 안의  if-then-else(cond? then:else)는 삼항연산자 또는 로직적으로 Or0 연산자를(||) 통해 할 수 있다.
+    > 템플릿 안의  if-then-else(cond? then:else)는 삼항연산자 또는 로직적으로 Or0 연산자를(||) 통해 할 수 있다.
+
 ```javascript
 $${addr.first ? addr.first : '(No first name)'}
 $${addr.first || '(No first name)'}
 ```
+
 * Some of the leading whitespace in each line can be trimmed if the first non-whitespace character in the first line defines where the first column is.
-* 만약 첫 줄 처음에 공백이 아닌 문자열로 정의하는 경우 각 행의 맨 앞의 공백을 제거 할 수 있다. 
+    > 만약 첫 줄 처음에 공백이 아닌 문자열로 정의하는 경우 각 행의 맨 앞의 공백을 제거 할 수 있다. 
 Destructuring(풀어쓰기는) 사용될 수 있다.
 
 ```javascript
@@ -707,27 +698,27 @@ ${addrs.map(({first,last}) => html`
       <tr><td>$${last}</td></tr>
   `)}
 ```
-### 8.4.3 Example: assembling regular expressions
-### 8.4.3 예제: 정규표현식과의 결합
-There are two ways of creating regular expression instances.
 
-정규표현식 객체를 만드는 두가지 방법이 있다.
+### 8.4.3 Example: assembling regular expressions
+> ### 8.4.3 예제: 정규표현식과의 결합
+
+There are two ways of creating regular expression instances.
+> 정규표현식 객체를 만드는 두가지 방법이 있다.
+
 * Statically (at compile time), via a regular expression literal: /^abc$/i
-* 정적으로(컴파일 시에), 정규표현식 리터럴을 통해: /^abc$/i
+    > 정적으로(컴파일 시에), 정규표현식 리터럴을 통해: /^abc$/i
 * Dynamically (at runtime), via the RegExp constructor: new RegExp('^abc$', 'i')
-* 동적으로(런타입 시에), RegExp 생성자를 통해: new RegExp(‘^abc$’,i)
+    > 동적으로(런타입 시에), RegExp 생성자를 통해: new RegExp(‘^abc$’,i)
 
 If you use the latter, it is because you have to wait until runtime so that all necessary ingredients are available. You are creating the regular expression by concatenating three kinds of pieces:
-
-만약 동적으로 사용한다면 필요한 모든 재료가 사용 가능 하도록 런타임 때 까지 기다릴 필요가 있기 때문이다. 당신은 세가지 종류의 조각을 연결하여 정규표현식을 생성한다.:
+> 만약 동적으로 사용한다면 필요한 모든 재료가 사용 가능 하도록 런타임 때 까지 기다릴 필요가 있기 때문이다. 당신은 세가지 종류의 조각을 연결하여 정규표현식을 생성한다.:
 
 * Static text
+    > 스태틱 문자열
 * Dynamic regular expressions
+    > 동적 정규 표현식 
 * Dynamic text
-
-* 스태틱 문자열
-* 동적 정규 표현식
-* 동적 문자열
+    > 동적 문자열
 
 #3 특수 문자들 (점, 대괄호 등) 반드시 이스케이프 해야 한다. 반면에 #1과 #2 는 원래 그대로 사용되어야 한다. 정규표현식 태그 함수 regex는 이런 작업을 도울 수 있다.
 ```javascript
@@ -736,8 +727,7 @@ const decimalPoint = '.'; // locale-specific! E.g. ',' in Germany
 const NUMBER = regex`${INTEGER}(${decimalPoint}${INTEGER})?`;
 ```
 regex looks like this:
-
-regex 아래 처럼 작성된다.:
+> regex 아래 처럼 작성된다.:
 ```javascript
 function regex(tmplObj, ...substs) {
     // Static text: verbatim
@@ -760,35 +750,34 @@ function quoteText(text) {
 }
 ```
 ## 8.5 FAQ: template literals and tagged template literals
-## 8.5 FAQ: 템플릿 리터럴과 태그드 템플릿 리터럴
+> ## 8.5 FAQ: 템플릿 리터럴과 태그드 템플릿 리터럴
 ### 8.5.1 Where do template literals and tagged template literals come from?
-### 8.5.1 어디서 템플릿 리터럴과 태그드 리터럴은 유래되었는가?
-Template literals and tagged template literals were borrowed from the language E, which calls this feature quasi literals.
+> ### 8.5.1 어디서 템플릿 리터럴과 태그드 리터럴은 유래되었는가?
 
-템플릿 리터럴과 태그드 템플릿 리터럴은 E언어로 부터 차용되었다. 이 기능은 quasi literals이라 부른다.
+Template literals and tagged template literals were borrowed from the language E, which calls this feature quasi literals.
+> 템플릿 리터럴과 태그드 템플릿 리터럴은 E언어로 부터 차용되었다. 이 기능은 quasi literals이라 부른다.
 
 ### 8.5.2 What is the difference between macros and tagged template literals?
-### 8.5.2 매크로와 태그드 템플릿 리터럴은 무엇이 다른가?
-Macros allow you to implement constructs that have custom syntax. Providing macros for a language whose syntax is as complex as JavaScript’s is difficult and ongoing research (see Mozilla’s sweet.js).
+> ### 8.5.2 매크로와 태그드 템플릿 리터럴은 무엇이 다른가?
 
-매크로는 사용자 정의 구문의 구조를 구현할수 있게 한다. 자바스크립트 같은 복잡한 언어에서 매크로를 제공하는 것은 어렵고 지속적으로 연구 중이다. (모질라의 sweet.js)
+Macros allow you to implement constructs that have custom syntax. Providing macros for a language whose syntax is as complex as JavaScript’s is difficult and ongoing research (see Mozilla’s sweet.js).
+> 매크로는 사용자 정의 구문의 구조를 구현할수 있게 한다. 자바스크립트 같은 복잡한 언어에서 매크로를 제공하는 것은 어렵고 지속적으로 연구 중이다. (모질라의 sweet.js)
 
 While macros are much more powerful for implementing sub-languages than tagged templates, they depend on the tokenization of the language. Therefore, tagged templates are complementary, because they specialize on text content.
-
-매크로는 태그드 템플릿 보다 하위 언어 구현할 때 더욱 강력하지만 그것은 언어 토크 의존 한다. 따라서 태그드 템플릿은 문자열 콘텐츠 전문이기 때문에 보완적이다. 
+> 매크로는 태그드 템플릿 보다 하위 언어 구현할 때 더욱 강력하지만 그것은 언어 토크 의존 한다. 따라서 태그드 템플릿은 문자열 콘텐츠 전문이기 때문에 보완적이다. 
 
 ### 8.5.3 Can I load a template literal from an external source?
-### 8.5.3 외부소스로 부터 템플릿 리터럴을 가져오는게 가능한가?
-What if I want to load a template literal such as \`Hello ${name}!\` from an external source (e.g., a file)?
+> ### 8.5.3 외부소스로 부터 템플릿 리터럴을 가져오는게 가능한가?
 
-만일 \`Hello ${name}\`과 같은 템플릿 리터럴을 외부 소스로 부터 로드하는것을 원한다면?
+What if I want to load a template literal such as \`Hello ${name}!\` from an external source (e.g., a file)?
+> 만일 \`Hello ${name}\`과 같은 템플릿 리터럴을 외부 소스로 부터 로드하는것을 원한다면?
 
 Note that you are abusing this mechanism if you do so. Given that a template literal can contain arbitrary expressions and is a literal, loading it from somewhere else is similar to loading an expression or a string literal – you have to use eval() or something similar.
-그렇게 하는 것은 이 메가니즘을 악용 하고 있는 것 이라고 명심해라. 템플릿 리터럴이 임의의 표현식을 포함 하고 리터럴 일 수도 있다는 것을 고려하면 다른 곳에서 로딩하는 것과 표현식과 문자열 리터럴을 로딩하는 것과 유사하다.- eval()이나 다른 유사한것을 사용해야 한다.
+> 그렇게 하는 것은 이 메카니즘을 악용 하고 있는 것 이라고 명심해라. 템플릿 리터럴이 임의의 표현식을 포함 하고 리터럴 일 수도 있다는 것을 고려하면 다른 곳에서 로딩하는 것과 표현식과 문자열 리터럴을 로딩하는 것과 유사하다.- eval()이나 다른 유사한것을 사용해야 한다.
 
 Coming back to the example, this is how you’d do it:
+> 예제로 돌아가면 다음은 할 수 있는 방법이다.
 
-예제로 돌아가면 다음은 할 수 있는 방법이다.
 ```javascript
 const str = '`Hello ${name}!`'; // external source
 
@@ -797,9 +786,9 @@ const func = new Function('name', str);
 const name = 'Jane';
 const result = func(name);
 ```
-Every variable that isn’t declared inside the template literal has to become a parameter of the function func that we are creating. Alternatively, you could load a whole function and eval it1:
 
-생성 시에 템플릿 리터럴 안에 선언되지 않은 모든 변수는 함수func의 인자가 되어야 한다. 대안적으로 함수 전체를 로드하고 그것을 eval 할 수 있다.
+Every variable that isn’t declared inside the template literal has to become a parameter of the function func that we are creating. Alternatively, you could load a whole function and eval it1:
+> 생성 시에 템플릿 리터럴 안에 선언되지 않은 모든 변수는 함수func의 인자가 되어야 한다. 대안적으로 함수 전체를 로드하고 그것을 eval 할 수 있다.
 ```javascript
 const str = '(name) => `Hello ${name}!`'; // external source
 
@@ -810,21 +799,21 @@ const result = func(name);
 ```
 
 ### 8.5.4 Why are backticks the delimiters for template literals?
-### 8.5.4 왜 템플릿 리터럴의 구분자가 역따옴표인가?
-The backtick was one of the few ASCII characters that were still unused. The syntax ${} for interpolation is the de-facto standard (Unix shells, etc.).
+> ### 8.5.4 왜 템플릿 리터럴의 구분자가 역따옴표인가?
 
-역따옴표는 아스키 문자들 중에 여전히 적게 사용하는 문자이다. 이 보간을 위한 문법 ${}은 사실상의 표준이다. (Unix shell, etc.)
+The backtick was one of the few ASCII characters that were still unused. The syntax ${} for interpolation is the de-facto standard (Unix shells, etc.).
+> 역따옴표는 아스키 문자들 중에 여전히 적게 사용하는 문자이다. 이 보간을 위한 문법 ${}은 사실상의 표준이다. (Unix shell, etc.)
 
 ### 8.5.5 Weren’t template literals once called template strings?
 ### 8.5.5 한때 템플릿 리터럴은 템플릿 문자열로 불렸나요?
 The template literal terminology changed relatively late during the creation of the ES6 spec. The following are the old terms:
+> 이 템플릿 리터럴 용어는 ES6스펙의 생성 동안에 비교적 늦게 변경 되고 있다. 다음은 오래된 용어들이다.
 
-이 템플릿 리터럴 용어는 ES6스펙의 생성 동안에 비교적 늦게 변경 되고 있다. 다음은 오래된 용어들이다.
 * Template string (literal): the old name for template literal.
+    > 템플릿 문자열: 템플릿 리터럴의 오래된 이름
 * Tagged template string (literal): the old name for tagged template literal.
+    > 태그 템플릿 스트링: 태그드 템플릿 리터럴의 오래된 이름.
 * Template handler: the old name for tag function.
+    > 템플릿 핸들러: 태그 함수의 오래된 이름
 * Literal section: the old name for template string (the term substitution remains the same).
-* 템플릿 문자열: 템플릿 리터럴의 오래된 이름
-* 태그 템플릿 스트링: 태그드 템플릿 리터럴의 오래된 이름.
-* 템플릿 핸들러: 태그 함수의 오래된 이름
-* 리터럴 섹션: 템플릿 스트링의 오래된 이름(이 용어는 치환물과 동일하게 유지)
+    > 리터럴 섹션: 템플릿 스트링의 오래된 이름(이 용어는 치환물과 동일하게 유지)
