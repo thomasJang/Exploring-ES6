@@ -860,16 +860,23 @@ In some ways, symbols are like primitive values, in other ways, they are like ob
     > 심볼은 각 기호가 고유 한 ID를 가지고 있다는 점에서 객체와 같습니다.
 
 What are symbols then – primitive values or objects? In the end, they were turned into primitives, for two reasons.
+> 심볼은 원시값 또는 객체중 어떤 것일까요? 결국, 심볼은 두 가지 이유로 원시값이 되었습니다.
 
 First, symbols are more like strings than like objects: They are a fundamental value of the language, they are immutable and they can be used as property keys. Symbols having unique identities doesn’t necessarily contradict them being like strings: UUID algorithms produce strings that are quasi-unique.
+> 첫째, 심볼은 객체보다 문자열과 더 유사합니다:  그것들은 언어의 근본적인 가치이며 불변이며 속성 키로 사용될 수 있습니다. 심볼은 문자열처럼 고유하지 않은 ID를 갖지 않습니다. (UUID 알고리즘은 유사 고유 문자열을 생성합니다.)
 
 Second, symbols are most often used as property keys, so it makes sense to optimize the JavaScript specification and the implementations for that use case. Then many abilities of objects are unnecessary:
+> 둘째, 심볼은 속성 키로 사용되는 경우가 많으므로 자바 스크립트 사양 및 해당 유스 케이스의 구현을 최적화하는 것이 좋습니다. 그러므로 객체일 필요는 없습니다
 
 + Objects can become prototypes of other objects.
+> 객체는 다른 객체의 프로토 타입이 될 수 있습니다.
 + Wrapping an object with a proxy doesn’t change what it can be used for.
+> 프록시로 객체를 래핑해도 사용할 수있는 객체는 변경되지 않습니다.
 + Objects can be introspected: via instanceof, Object.keys(), etc.
+>
 
 Them not having these abilities makes life easier for the specification and the implementations. There are also reports from the V8 team that when handling property keys, it is simpler to treat primitives differently than objects.
+> 이러한 능력을 갖지 않으면 사양 및 구현이 더 쉬워집니다. V8 팀의 보고서에 따르면 속성 키를 처리 할 때 객체와 다르게 원시값을 처리하는 것이 더 간단합니다.
 
 ### 7.9.3 Do we really need symbols? Aren’t strings enough?
 > 7.9.3 심볼이 진짜 필요한가? 문자열로 충분하지는 않은가?
@@ -879,26 +886,36 @@ In contrast to strings, symbols are unique and prevent name clashes. That is nic
 
 There is one hypothetical alternative to symbols when it comes to clash-free property keys: use a naming convention. For example, strings with URLs (e.g. 'http://example.com/iterator'). But that would introduce a second category of property keys (versus “normal” property names that are usually valid identifiers and don’t contain colons, slashes, dots, etc.), which is basically what symbols are, anyway. Thus it is more elegant to explicitly turn those keys into a different kind of value.
 
+
 ### 7.9.4 Are JavaScript’s symbols like Ruby’s symbols?
 No, they are not.
+> 아니요, 그렇지 않습니다.
 
 Ruby’s symbols are basically literals for creating values. Mentioning the same symbol twice produces the same value twice:
+> 루비의 심볼은 기본적으로 값을 만드는 데 사용되는 리터럴입니다. 동일한 심볼을 두 번 언급하면 동일한 값이 두 번 생성됩니다.
 
 ```js
 :foo == :foo
 ```
 
 The JavaScript function Symbol() is a factory for symbols – each value it returns is unique:
+> JavaScript 함수 인 Symbol()은 심볼의 팩토리입니다. 반환하는 각 값은 고유합니다.
 
 ```js
 Symbol('foo') !== Symbol('foo')
 ```
 
 ## 7.10 The spelling of well-known symbols: why Symbol.iterator and not Symbol.ITERATOR (etc.)?
+> 왜 웰노운 심볼의 철자가 ? Symbol.ITERATOR(등등)가 아니고 Symbol.iterator 입니까?
+
 Well-known symbols are stored in properties whose names start with lowercase characters and are camel-cased. In a way, these properties are constants and it is customary for constants to have all-caps names (Math.PI etc.). But the reasoning for their spelling is different: Well-known symbols are used instead of normal property keys, which is why their “names” follow the rules for property keys, not the rules for constants.
+> 웰노운 심볼은 이름이 소문자로 시작하는 카멜케이스 속성명을 사용합니다. 
+어떤면에서 이러한 속성은 상수이며 상수는 대문자로 된 이름 (Math.PI 등)을 갖는 것이 일반적입니다. 
+그러나 철자에 대한 추론은 다릅니다. 일반 속성 키 대신 웰노운 심볼 사용되므로 "이름"이 상수 규칙이 아닌 속성 키 규칙을 따르는 것입니다.
 
 ## 7.11 The symbol API
 This section gives an overview of the ECMAScript 6 API for symbols.
+> 이 절에서는 기호에 대한 ECMAScript 6 API의 개요를 제공합니다.
 
 ### 7.11.1 The function Symbol
 + Symbol(description?) : symbol
