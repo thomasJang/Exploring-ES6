@@ -2,19 +2,18 @@
 --http://exploringjs.com/es6/ch_oop-besides-classes.html
 
 # 14. New OOP features besides classes
-# 14. Class 외의 새로운 OOP 특성
+> # 14. Class 외의 새로운 OOP 특성
 
 Classes (which are explained in the next chapter) are the major new OOP feature in ECMAScript 6. However, it also includes new features for object literals and new utility methods in Object. This chapter describes them.
-
-ECMAScript 6에서 클래스는 새로운 OOP의 주요한 부분이다. 그러나 ECMAScript 6는 객체 리터럴의 새로운 특성과 객체의 새로운 utility method 역시 포함하고 있다.
+> ECMAScript 6에서 클래스는 새로운 OOP의 주요한 부분이다. 그러나 ECMAScript 6는 객체 리터럴의 새로운 특성과 객체의 새로운 utility method 역시 포함하고 있다.
 
 ## 14.1 Overview
-## 14.1 개요
+> ## 14.1 개요
 ### 14.1.1 New object literal features
-### 14.1.1 새로운 객체 리터럴 특성
+> ### 14.1.1 새로운 객체 리터럴 특성
 
 Method definitions:  
-메소드 정의 :  
+> 메소드 정의 :  
 ```js
 const obj = {
     myMethod(x, y) {
@@ -23,7 +22,7 @@ const obj = {
 };
 ```
 Property value shorthands:  
-프로퍼티 값 축약:  
+> 프로퍼티 값 축약:  
 ```js
 const first = 'Jane';
 const last = 'Doe';
@@ -33,7 +32,7 @@ const obj = { first, last };
 const obj = { first: first, last: last };
 ```
 Computed property keys:  
-계산된 프로퍼티 키:  
+> 계산된 프로퍼티 키:  
 ```js
 const propKey = 'foo';
 const obj = {
@@ -42,7 +41,7 @@ const obj = {
 };
 ```
 This new syntax can also be used for method definitions:  
-이 새로운 문법은 매소드 정의에도 사용할 수 있다:  
+> 이 새로운 문법은 메소드 정의에도 사용할 수 있다:  
 ```js
 const obj = {
     ['h'+'ello']() {
@@ -52,13 +51,13 @@ const obj = {
 console.log(obj.hello()); // hi
 ```
 The main use case for computed property keys is to make it easy to use symbols as property keys.  
-계산된 프로퍼티 키의 주요 사용처는 프로퍼티 키로써 Symbol을 사용하기 쉽게 해준다.  
+> 계산된 프로퍼티 키의 주요 사용처는 프로퍼티 키로써 Symbol을 사용하기 쉽게 해준다.  
 
 ### 14.1.2 New methods in Object
-### 14.1.2 객체의 새로운 매소드
+> ### 14.1.2 객체의 새로운 매소드
 
 The most important new method of Object is assign(). Traditionally, this functionality was called extend() in the JavaScript world. In contrast to how this classic operation works, Object.assign() only considers own (non-inherited) properties.  
-객체의 가장 중요한 메소드는 assign()이다. 기존에는 자바스크립트 세계에서 이 기능은 extend()로 불렸다. 기존에 어떻게 동작했었는지와는 별개로 Object.assign()은 고유의 속성(상속받지 않은)으로만 고려된다.  
+> 객체의 가장 중요한 메소드는 assign()이다. 기존에는 자바스크립트 세계에서 이 기능은 extend()로 불렸다. 기존에 어떻게 동작했었는지와는 별개로 Object.assign()은 고유의 속성(상속받지 않은)으로만 고려된다.  
 
 ```js
 const obj = { foo: 123 };
@@ -67,12 +66,12 @@ console.log(JSON.stringify(obj));
     // {"foo":123,"bar":true}
 ```
 ## 14.2 New features of object literals
-## 14.2 객체 리터럴의 새로운 특징
+> ## 14.2 객체 리터럴의 새로운 특징
 ### 14.2.1 Method definitions
-### 14.2.1 메소드 정의
+> ### 14.2.1 메소드 정의
 
 In ECMAScript 5, methods are properties whose values are functions:  
-ECMAScript 5에서의 매소드는 그 값이 함수인 프로퍼티이다:  
+> ECMAScript 5에서의 매소드는 그 값이 함수인 프로퍼티이다:  
 ```js
 var obj = {
     myMethod: function (x, y) {
@@ -81,7 +80,7 @@ var obj = {
 };
 ```
 In ECMAScript 6, methods are still function-valued properties, but there is now a more compact way of defining them:  
-ECMAScript 6에서의 매소드는 여전히 함수-값 프로퍼티이지만, 이제 더 간단한 방법으로 정의할 수 있다:  
+> ECMAScript 6에서의 매소드는 여전히 함수-값 프로퍼티이지만, 이제 더 간단한 방법으로 정의할 수 있다:  
 ```js
 const obj = {
     myMethod(x, y) {
@@ -90,7 +89,7 @@ const obj = {
 };
 ```
 Getters and setters continue to work as they did in ECMAScript 5 (note how syntactically similar they are to method definitions):  
-게터와 세터는 ECMAScript 5에서 동작했던 대로 여전히 동작한다.(구문상 메소드 정의와 매우 유사함을 기억하자):  
+> 게터와 세터는 ECMAScript 5에서 동작했던 대로 여전히 동작한다.(구문상 메소드 정의와 매우 유사함을 기억하자):  
 ```js
 const obj = {
     get foo() {
@@ -99,12 +98,12 @@ const obj = {
     },
     set bar(value) {
         console.log('SET bar to '+value);
-        // return value is ignored //리턴값이 무시된다.
+        // return value is ignored // 리턴값이 무시된다.
     }
 };
 ```
 Let’s use obj:  
-obj를 이용해보자:  
+> obj를 이용해보자:  
 ```js
 > obj.foo
 GET foo
@@ -114,7 +113,7 @@ SET bar to true
 true
 ```
 There is also a way to concisely define properties whose values are generator functions:  
-값이 제너레이터 함수인 프로퍼티는 쉽게 정의할 수 있다.  
+> 값이 제너레이터 함수인 프로퍼티는 쉽게 정의할 수 있다.  
 ```js
 const obj = {
     * myGeneratorMethod() {
@@ -123,7 +122,7 @@ const obj = {
 };
 ```
 This code is equivalent to:
-이 코드는 아래의 코드와 같다:
+> 이 코드는 아래의 코드와 같다:
 ```js
 const obj = {
     myGeneratorMethod: function* () {
@@ -132,10 +131,10 @@ const obj = {
 };
 ```
 ### 14.2.2 Property value shorthands
-### 14.2.2 프로퍼티 값 축약
+> ### 14.2.2 프로퍼티 값 축약
 
 Property value shorthands let you abbreviate the definition of a property in an object literal: If the name of the variable that specifies the property value is also the property key then you can omit the key. This looks as follows.  
-프로퍼티 값 축약은 객체 리터럴에서 프로퍼티 정의를 간략하게 할 수 있다. 프로퍼티 값을 지정하는 변수 명도 프로퍼티 키의 경우에는 키를 생략 할 수 있다. 이는 아래와 같다.
+> 프로퍼티 값 축약은 객체 리터럴에서 프로퍼티 정의를 간략하게 할 수 있다. 프로퍼티 값을 지정하는 변수 명도 프로퍼티 키의 경우에는 키를 생략 할 수 있다. 이는 아래와 같다.
 
 ```js
 const x = 4;
@@ -143,14 +142,13 @@ const y = 1;
 const obj = { x, y };
 ```
 The last line is equivalent to:  
-마지막 줄은  
+> 마지막 줄은 다음과 같다.  
 ```js
 const obj = { x: x, y: y };
 ```
-과 같다:  
 
 Property value shorthands work well together with destructuring:  
-프로퍼티 값의 축약은 해체와 함께 잘 동작한다.  
+> 프로퍼티 값의 축약은 해체와 함께 잘 동작한다.  
 ```js
 const obj = { x: 4, y: 1 };
 const {x,y} = obj;
@@ -158,22 +156,21 @@ console.log(x); // 4
 console.log(y); // 1
 ```
 One use case for property value shorthands are multiple return values (which are explained in the chapter on destructuring).  
-프로퍼티 값 축약의 다른 사용 예는 다중 값 리턴이다. (이는 해체destructuring 장에 설명되어 있다.)  
+> 프로퍼티 값 축약의 다른 사용 예는 다중 값 리턴이다. (이는 해체destructuring 장에 설명되어 있다.)  
 
 ### 14.2.3 Computed property keys
-### 14.2.3 계산된 프로퍼티 키
+> ### 14.2.3 계산된 프로퍼티 키
 
 Remember that there are two ways of specifying a key when you set a property.  
-프로퍼티를 설정할 때 키를 지정하는 데에는 두 가지 방법이 있음을 기억하자.  
+> 프로퍼티를 설정할 때 키를 지정하는 데에는 두 가지 방법이 있음을 기억하자.  
 
-```js
-    Via a fixed name: obj.foo = true;
-    프로퍼티 이름을 고정: obj.foo = true;
-    Via an expression: obj['b'+'ar'] = 123;
-    표현식을 이용 : obj['b'+'ar'] = 123;
-```
+1. Via a fixed name: obj.foo = true;
+    > 프로퍼티 이름을 고정: obj.foo = true;
+2. Via an expression: obj['b'+'ar'] = 123;
+    > 표현식을 이용 : obj['b'+'ar'] = 123;
+
 In object literals, you only have option #1 in ECMAScript 5. ECMAScript 6 additionally provides option #2:  
-객체 리터럴에서, ECMAScript 5는 #1 한가지 방법 밖에 없었다. ECMAScript 6에는 #2 의 방법을 추가적으로 제공한디:   
+> 객체 리터럴에서, ECMAScript 5는 #1 한가지 방법 밖에 없었다. ECMAScript 6에는 #2 의 방법을 추가적으로 제공한디:   
 
 ```js
 const propKey = 'foo';
@@ -183,7 +180,7 @@ const obj = {
 };
 ```
 This new syntax can also be used for method definitions:  
-이 새로운 문법은 매소드 정의에도 이용할 수 있다:  
+> 이 새로운 문법은 매소드 정의에도 이용할 수 있다:  
 ```js
 const obj = {
     ['h'+'ello']() {
@@ -195,7 +192,7 @@ console.log(obj.hello()); // hi
 
 The main use case for computed property keys are symbols: you can define a public symbol and use it as a special property key that is always unique. One prominent example is the symbol stored in Symbol.iterator. If an object has a method with that key, it becomes iterable: The method must return an iterator, which is used by constructs such as the for-of loop to iterate over the object. The following code demonstrates how that works.  
 
-계산된 속성키의 주된 사용처는 심볼Symbol이다: 퍼블릭public symbol을 정의할 수 있고 이를 항상 유일한 특별한 프로퍼티 키로 이용할 수 있다. 한 가지 명확한 예는 symbol은 Symbol.iterator에 저장된다는 것이다. 객체가 키인 메소드를 가지고 있을 때 이는 이터러블 할 것이다: 이 메소드는 이터레이터iterator를 반환할 것이고 이것은 for-of 루프와 같은 구문에 객체의 반복에 이용된다.
+> 계산된 속성키의 주된 사용처는 심볼Symbol이다: 퍼블릭public symbol을 정의할 수 있고 이를 항상 유일한 특별한 프로퍼티 키로 이용할 수 있다. 한 가지 명확한 예는 symbol은 Symbol.iterator에 저장된다는 것이다. 객체가 키인 메소드를 가지고 있을 때 이는 이터러블 할 것이다: 이 메소드는 이터레이터iterator를 반환할 것이고 이것은 for-of 루프와 같은 구문에 객체의 반복에 이용된다.
 아래의 코드는 어떻게 동작하는지를 보여준다.   
 ```js
 const obj = {
@@ -212,14 +209,15 @@ for (const x of obj) {
 // world
 ```
 Line A starts a generator method definition with a computed key (the symbol stored in Symbol.iterator).  
-A 라인은 계산된 키값으로 정의된 제너레이터 메소드로 시작한다.(Symbol.iterator에 저장된 symbol)  
+> A 라인은 계산된 키값으로 정의된 제너레이터 메소드로 시작한다.(Symbol.iterator에 저장된 symbol)  
 
 ## 14.3 New methods of Object
-## 14.3 객체의 새로운 매소드
+> ## 14.3 객체의 새로운 매소드
 ### 14.3.1 Object.assign(target, source_1, source_2, ···)
+> ### 14.3.1 Object.assign(target, source_1, source_2, ···)
 
 This method merges the sources into the target: It modifies target, first copies all enumerable own (non-inherited) properties of source_1 into it, then all own properties of source_2, etc. At the end, it returns the target.  
-이 메소드는 소스를 타겟으로 병합한다: 이 메소드는 타겟을 수정하여, source_1의 모든 열거가능한enumerable 고유 속성(상속받지 않은non-inherited)을 복사하여 타겟에 넣은 다음, source_2도 넣는다. 마지막에는 타겟을 리턴한다.   
+> 이 메소드는 소스를 타겟으로 병합한다: 이 메소드는 타겟을 수정하여, source_1의 모든 열거가능한enumerable 고유 속성(상속받지 않은non-inherited)을 복사하여 타겟에 넣은 다음, source_2도 넣는다. 마지막에는 타겟을 리턴한다.   
 
 ```js
 const obj = { foo: 123 };
@@ -228,22 +226,20 @@ console.log(JSON.stringify(obj));
     // {"foo":123,"bar":true}
 ```
 Let’s look more closely at how Object.assign() works:  
-Object.assign()이 어떻게 동작하는지 좀더 자세히 보자:  
+> Object.assign()이 어떻게 동작하는지 좀더 자세히 보자:  
 
-```js
-    Both kinds of property keys: Object.assign() is aware of both strings and symbols as property keys.
-    Only enumerable own properties: Object.assign() ignores inherited properties and properties that are not enumerable.
-    Reading a value from a source: normal “get” operation (const value = source[propKey]). That means that if the source has a getter whose key is propKey then it will be invoked. All properties created by Object.assign() are data properties, it won’t transfer getters to the target.
-    Writing a value to the target: normal “set” operation (target[propKey] = value). That means that if the target has a setter whose key is propKey then it will be invoked with value.  
-    두 종류의 객체 키 : Object.assign()은 string과 symbol 모두를 프로퍼티 키로 인식한다.  
-    열거가능한 고유 프로퍼티만 : Object.assign()은 상속받은 프로퍼티와 열거가 불가능한 프로퍼티는 무시한다.  
-    소스로부터 값을 읽기 : 일반적인 "get"(const value = source[propKey]) 연산. 이는 게터getter를 가진 소스인 경우 키 값이 propKey인 라면 호출될 것임을 의미한다.  
-    Object.asasgin()으로 생성된 모든 프로퍼티는 데이터 프로퍼티이고, 이는 타겟으로 getter를 복사하지 않는다.  
-    타겟에 값 쓰기 : 일반적인 "set" 연산(target[propKey] = value). 이는 만약 타겟이 세터setter를 프로퍼티 키로 가지고 있다면 호출 될 것임을 의미한다.  
-```
+- Both kinds of property keys: Object.assign() is aware of both strings and symbols as property keys.
+    > 두 종류의 객체 키 : Object.assign()은 string과 symbol 모두를 프로퍼티 키로 인식한다.
+- Only enumerable own properties: Object.assign() ignores inherited properties and properties that are not enumerable.
+    > 열거가능한 고유 프로퍼티만 : Object.assign()은 상속받은 프로퍼티와 열거가 불가능한 프로퍼티는 무시한다. 
+- Reading a value from a source: normal “get” operation (const value = source[propKey]). That means that if the source has a getter whose key is propKey then it will be invoked. All properties created by Object.assign() are data properties, it won’t transfer getters to the target.
+    > 소스로부터 값을 읽기 : 일반적인 "get"(const value = source[propKey]) 연산. 이는 게터getter를 가진 소스인 경우 키 값이 propKey인 라면 호출될 것임을 의미한다.  
+      Object.asasgin()으로 생성된 모든 프로퍼티는 데이터 프로퍼티이고, 이는 타겟으로 getter를 복사하지 않는다.
+- Writing a value to the target: normal “set” operation (target[propKey] = value). That means that if the target has a setter whose key is propKey then it will be invoked with value.  
+    > 타겟에 값 쓰기 : 일반적인 "set" 연산(target[propKey] = value). 이는 만약 타겟이 세터setter를 프로퍼티 키로 가지고 있다면 호출 될 것임을 의미한다.
 
 This is how you’d copy all properties (not just enumerable ones), while correctly transferring getters and setters, without invoking setters on the target:  
-이것은 모든 프로퍼티(열거 가능한 것 뿐 아니라)를 getter와 setter를 올바르게 이동하는 동안 타겟의 setter를 호출하지 않고 어떻게 카피할 수 있는가이다.
+> 이것은 모든 프로퍼티(열거 가능한 것 뿐 아니라)를 getter와 setter를 올바르게 이동하는 동안 타겟의 setter를 호출하지 않고 어떻게 카피할 수 있는가이다.
 
 ```js
 function copyAllProperties(target, ...sources) {
@@ -257,26 +253,26 @@ function copyAllProperties(target, ...sources) {
 }
 ```
 #### 14.3.1.1 Caveat: Object.assign() doesn’t work well for moving methods
-#### 14.3.1.1 경고: Object.assign()은 메소드 이동에는 제대로 동작하지 않는다.
+> #### 14.3.1.1 경고: Object.assign()은 메소드 이동에는 제대로 동작하지 않는다.
 
 On one hand, you can’t move a method that uses super: Such a method has an internal property [[HomeObject]] that ties it to the object it was created in. If you move it via Object.assign(), it will continue to refer to the super-properties of the original object. Details are explained in a section in the chapter on classes.  
-한편으로, super를 이용하는 메소드를 이동할 수 없다: 내부적인 프로퍼티 [[HomeObject]]를 가진 매소드는 그것을 생성시킨 객체에 묶여있다. 만약 Object.assign()으로 이동시키려 하면
+> 한편으로, super를 이용하는 메소드를 이동할 수 없다: 내부적인 프로퍼티 [[HomeObject]]를 가진 매소드는 그것을 생성시킨 객체에 묶여있다. 만약 Object.assign()으로 이동시키려 하면
 원래 객체의 상위-프로퍼티로 계속 간주될 것이다. 자세한 내용은 Class 장에 설명되어 있다.  
 
 On the other hand, enumerability is wrong if you move methods created by an object literal into the prototype of a class. The former methods are all enumerable (otherwise Object.assign() wouldn’t see them, anyway), but the prototype only has non-enumerable methods by default.  
-다른 한편으로, 객체 리터럴에 의해 생성된 매소드를 클래스의 프로토 타입 안으로 이동시키려고 하면 열거가능성이 잘못된다. 앞의 메소드는 모두 열거가능하지만(반면 Object.assign()은 어쨌든 메소드를 볼 것이다. ), 프로토타입은 기본적으로 열거불가능한 메소드만 가질 수 있다.  
+> 다른 한편으로, 객체 리터럴에 의해 생성된 매소드를 클래스의 프로토 타입 안으로 이동시키려고 하면 열거가능성이 잘못된다. 앞의 메소드는 모두 열거가능하지만(반면 Object.assign()은 어쨌든 메소드를 볼 것이다. ), 프로토타입은 기본적으로 열거불가능한 메소드만 가질 수 있다.  
 
 #### 14.3.1.2 Use cases for Object.assign()
-#### 14.3.1.2 Object.assign()의 사용 예
+> #### 14.3.1.2 Object.assign()의 사용 예
 
 Let’s look at a few use cases.  
-몇 가지 사용 예를 보자.  
+> 몇 가지 사용 예를 보자.  
 
 ##### 14.3.1.2.1 Adding properties to this
-##### 14.3.1.2.1 this에 프로퍼티 추가
+> ##### 14.3.1.2.1 this에 프로퍼티 추가
 
 You can use Object.assign() to add properties to this in a constructor:  
-생성자의 this에 Object.assign()을 이용하여 프로퍼티를 추가할 수 있다.  
+> 생성자의 this에 Object.assign()을 이용하여 프로퍼티를 추가할 수 있다.  
 ```js
 class Point {
     constructor(x, y) {
@@ -286,10 +282,10 @@ class Point {
 ```
 
 ##### 14.3.1.2.2 Providing default values for object properties
-##### 14.3.1.2.2 객체 프로퍼티에 기본값 제공
+> ##### 14.3.1.2.2 객체 프로퍼티에 기본값 제공
 
 Object.assign() is also useful for filling in defaults for missing properties. In the following example, we have an object DEFAULTS with default values for properties and an object options with data.  
-Object.assign()은 누락된 프로퍼티의 기본값을 채우는데 유용하다. 아래의 예제에는 속성의 기본값을 가진 DEFAULTS라는 객체와 data를 가진 options 라는 객체가 있다.  
+> Object.assign()은 누락된 프로퍼티의 기본값을 채우는데 유용하다. 아래의 예제에는 속성의 기본값을 가진 DEFAULTS라는 객체와 data를 가진 options 라는 객체가 있다.  
 
 ```js
 const DEFAULTS = {
@@ -302,13 +298,13 @@ function processContent(options) {
 }
 ```
 In line A, we created a fresh object, copied the defaults into it and then copied options into it, overriding the defaults. Object.assign() returns the result of these operations, which we assign to options.  
-A 라인에서 새로운 객체를 생성했고, defaults를 복사하여 그 객체에 넣고 options를 복사하여 넣어 defaults를 재정의 하였다. Object.assign()은 이 작업의 결과를 반환하는데, 이는 options에 할당한 것이다.
+> A 라인에서 새로운 객체를 생성했고, defaults를 복사하여 그 객체에 넣고 options를 복사하여 넣어 defaults를 재정의 하였다. Object.assign()은 이 작업의 결과를 반환하는데, 이는 options에 할당한 것이다.
 
 ##### 14.3.1.2.3 Adding methods to objects
-##### 14.3.1.2.3 객체에 매소드 추가하기
+> ##### 14.3.1.2.3 객체에 매소드 추가하기
 
 Another use case is adding methods to objects:  
-또 다른 사용 예는 객체에 메소드를 추가하는 것이다 :  
+> 또 다른 사용 예는 객체에 메소드를 추가하는 것이다 :  
 ```js
 Object.assign(SomeClass.prototype, {
     someMethod(arg1, arg2) {
@@ -320,7 +316,7 @@ Object.assign(SomeClass.prototype, {
 });
 ```
 You could also manually assign functions, but then you don’t have the nice method definition syntax and need to mention SomeClass.prototype each time:  
-수동으로 기능을 할당할 수는 있지만, 괜찮은 매소드 정의 문법도 없는데다 매번 SomeClass.prototype을 적어주어야 한다.  
+> 수동으로 기능을 할당할 수는 있지만, 괜찮은 매소드 정의 문법도 없는데다 매번 SomeClass.prototype을 적어주어야 한다.  
 ```js
 SomeClass.prototype.someMethod = function (arg1, arg2) {
     ···
@@ -331,20 +327,21 @@ SomeClass.prototype.anotherMethod = function () {
 ```
 
 ##### 14.3.1.2.4 Cloning objects
-##### 14.3.1.2.4 객체 복제
+> ##### 14.3.1.2.4 객체 복제
 
 One last use case for Object.assign() is a quick way of cloning objects:  
-Object.assign()의 마지막 사용 예시로는 빠른 객체복제 방법이다:  
+> Object.assign()의 마지막 사용 예시로는 빠른 객체복제 방법이다:  
 ```js
 function clone(orig) {
     return Object.assign({}, orig);
 }
 ```
 This way of cloning is also somewhat dirty, because it doesn’t preserve the property attributes of orig. If that is what you need, you have to use property descriptors.  
-이 방식으로 복제하는 것은 오리지널의 속성 특성을 보존하지 않기 때문에 좀 지저분하다. 이렇게 할 필요가 있다면 프로퍼티 디스크립터 descriptor를 이용해야 한다.  
+> 이 방식으로 복제하는 것은 오리지널의 속성 특성을 보존하지 않기 때문에 좀 지저분하다. 이렇게 할 필요가 있다면 프로퍼티 디스크립터 descriptor를 이용해야 한다.  
 
 If you want the clone to have the same prototype as the original, you can use Object.getPrototypeOf() and Object.create():  
-원래 것과 동일한 프로토타입을 가진 복제를 만들려면, Object.getPrototypeOf()과 Object.create()를 이용하면 된다:  
+> 원래 것과 동일한 프로토타입을 가진 복제를 만들려면, Object.getPrototypeOf()과 Object.create()를 이용하면 된다:
+  
 ```js
 function clone(orig) {
     const origProto = Object.getPrototypeOf(orig);
@@ -355,36 +352,38 @@ function clone(orig) {
 ### 14.3.2 Object.getOwnPropertySymbols(obj)
 
 Object.getOwnPropertySymbols(obj) retrieves all own (non-inherited) symbol-valued property keys of obj. It complements Object.getOwnPropertyNames(), which retrieves all string-valued own property keys. Consult a later section for more details on traversing properties.  
-Object.getOwnPropertySymbols(obj)는 모든 고유의 symbol값의 프로퍼티 객체 키 값을 끌어낸다. 이는 객체의 모든 문자값의 프로퍼티키를 끌어내는 Object.getOwnPropertyNames()를 보완한다. 통과 속성에 대한 자세한 내용은 다음 섹션을 참고하면 된다.  
+> Object.getOwnPropertySymbols(obj)는 모든 고유의 symbol값의 프로퍼티 객체 키 값을 끌어낸다. 이는 객체의 모든 문자값의 프로퍼티키를 끌어내는 Object.getOwnPropertyNames()를 보완한다. 통과 속성에 대한 자세한 내용은 다음 섹션을 참고하면 된다.  
 
 ### 14.3.3 Object.is(value1, value2)
 
 The strict equals operator (===) treats two values differently than one might expect.  
-일치 연산자(===)는 기대와는 다르게 두 개의 값을 다룬다.  
+> 일치 연산자(===)는 기대와는 다르게 두 개의 값을 다룬다.  
 
 First, NaN is not equal to itself.  
-첫재로 Nan은 Nan과 동등하지 않다.  
+> 첫재로 NaN은 NaN과 동등하지 않다.  
+
 ```js
 > NaN === NaN
 false
 ```
+
 That is unfortunate, because it often prevents us from detecting NaN:  
-이는 안타깝게도 NaN 탐지하는 것을 종종 방해하기 때문이다.  
+> 그것은 불행입니다, 자주 NaN을 탐지하는 것을 방해하기 때문입니다.  
 ```js
 > [0,NaN,2].indexOf(NaN)
 -1
 ```
 Second, JavaScript has two zeros, but strict equals treats them as if they were the same value:  
-두번째로, JavaScript 는 두 가지 제로가 있는데, 일치 연산자는 이 둘을 같은 값으로 다룬다:  
+> 두번째로, JavaScript 는 두 가지 제로가 있는데, 일치 연산자는 이 둘을 같은 값으로 다룬다:  
 ```js
 > -0 === +0
 true
 ```
 Doing this is normally a good thing.  
-이렇게 하는것이 일반적으로 좋은 것이다.  
+> 이렇게 하는것이 일반적으로 좋은 것이다.  
 
 Object.is() provides a way of comparing values that is a bit more precise than ===. It works as follows:  
-Object.is() 는 === 보다 조금 더 정교한 값의 비교를 제공한다. 이는 아래와 같이 작동한다:  
+> Object.is() 는 === 보다 조금 더 정교한 값의 비교를 제공한다. 이는 아래와 같이 작동한다:  
 
 ```js
 > Object.is(NaN, NaN)
@@ -393,13 +392,13 @@ true
 false
 ```
 Everything else is compared as with ===.  
-이 외의 대부분은 === 랑 똑같이 비교한다.  
+> 이 외의 대부분은 === 랑 똑같이 비교한다.  
 
 #### 14.3.3.1 Using Object.is() to find Array elements
-#### 14.3.3.1 배열 요소 검색을 위한 Object.is()의 사용
+> #### 14.3.3.1 배열 요소 검색을 위한 Object.is()의 사용
 
 If we combine Object.is() with the new ES6 Array method findIndex(), we can find NaN in Arrays:  
-Object.is()와 ES6의 새로운 배열 메소드인 findIndex()와 결합하여 이용하면, NaN을 배열에서 찾을 수 있다:  
+> Object.is()와 ES6의 새로운 배열 메소드인 findIndex()와 결합하여 이용하면, NaN을 배열에서 찾을 수 있다:  
 
 ```js
 function myIndexOf(arr, elem) {
@@ -410,7 +409,7 @@ myIndexOf([0,NaN,2], NaN); // 1
 ```
 
 In contrast, indexOf() does not handle NaN well:  
-이와는 대조적으로, indexOf()는 NaN을 제대로 처리하지 못한다:  
+> 이와는 대조적으로, indexOf()는 NaN을 제대로 처리하지 못한다:  
 ```js
 > [0,NaN,2].indexOf(NaN)
 -1
@@ -419,97 +418,97 @@ In contrast, indexOf() does not handle NaN well:
 ### 14.3.4 Object.setPrototypeOf(obj, proto)
 
 This method sets the prototype of obj to proto. The non-standard way of doing so in ECMAScript 5, that is supported by many engines, is via assigning to the special property __proto__. The recommended way of setting the prototype remains the same as in ECMAScript 5: during the creation of an object, via Object.create(). That will always be faster than first creating an object and then setting its prototype. Obviously, it doesn’t work if you want to change the prototype of an existing object.  
-
-이 메서드는 객체의 프로토타입을 proto로 지정한다. ECMAScript 5에서 이렇게 하기 위한 비표준적인 방법은, 많은 엔진에서 지원되는데, __proto__ 라는 특별한 프로퍼티에 할당함으로 써 가능하다. 프로토타입을 지정을 위한 가장 좋은 방법은 ECMAScript 5와 동일하게 남아있다 : 객체 생성시에 Object.create()를 이용하는 것이다. 이는 객체의 첫 생성이나 프로토 타입을 지정하는 것보다 언제나 더 빠를 것이다. 하지만 이미 존재하는 객체의 프로토 타입을 변경하길 원한다면, 그렇게 작동하지는 않을 것이다.  
+> 이 메서드는 객체의 프로토타입을 proto로 지정한다. ECMAScript 5에서 이렇게 하기 위한 비표준적인 방법은, 많은 엔진에서 지원되는데, __proto__ 라는 특별한 프로퍼티에 할당함으로 써 가능하다. 프로토타입을 지정을 위한 가장 좋은 방법은 ECMAScript 5와 동일하게 남아있다 : 객체 생성시에 Object.create()를 이용하는 것이다. 이는 객체의 첫 생성이나 프로토 타입을 지정하는 것보다 언제나 더 빠를 것이다. 하지만 이미 존재하는 객체의 프로토 타입을 변경하길 원한다면, 그렇게 작동하지는 않을 것이다.  
 
 ## 14.4 Traversing properties in ES6
-## 14.4 ES6에서의 속성 고찰
+> ## 14.4 ES6에서의 속성 고찰
 ### 14.4.1 Five operations that traverse properties
-### 14.4.1 속성을 고찰시켜주는 5가지 연산
+> ### 14.4.1 속성을 고찰시켜주는 5가지 연산
 
 In ECMAScript 6, the key of a property can be either a string or a symbol. The following are five operations that traverse the property keys of an object obj:  
-ECMAScript 6에서, 프로퍼티의 키값은 문자열이나 혹은 심볼 둘다 될 수 있다. 아래의 다섯가지 연산은 객체 obj의 속성 키값을 이동시켜준다.  
-```js
-    Object.keys(obj) : Array<string>
-    retrieves all string keys of all enumerable own (non-inherited) properties.  
-    모든 열거 가능한(상속되지 않은) 프로퍼티의 문자열 키값을 반환.  
-    Object.getOwnPropertyNames(obj) : Array<string>  
-    retrieves all string keys of all own properties.  
-    모든 프로퍼티의 문자열 키값을 반환.  
-    Object.getOwnPropertySymbols(obj) : Array<symbol>  
-    retrieves all symbol keys of all own properties.  
-    모든 프로퍼티의 심볼 키 값을 반환.  
-    Reflect.ownKeys(obj) : Array<string|symbol>
-    retrieves all keys of all own properties.  
-    모든 프로퍼티의 모든 키값을 반환.  
-    for (const key in obj)
-    retrieves all string keys of all enumerable properties (inherited and own).  
-    열거 가능한 프로퍼티(상속 받은것 포함)의 모든 문자열 키값을 반환.  
-```
+> ECMAScript 6에서, 프로퍼티의 키값은 문자열이나 혹은 심볼 둘다 될 수 있다. 아래의 다섯가지 연산은 객체 obj의 속성 키값을 이동시켜준다.  
+
+- Object.keys(obj) : Array<string>  
+retrieves all string keys of all enumerable own (non-inherited) properties.
+    > 모든 열거 가능한(상속되지 않은) 프로퍼티의 문자열 키값을 반환.  
+- Object.getOwnPropertyNames(obj) : Array<string>    
+retrieves all string keys of all own properties.  
+    > 모든 프로퍼티의 문자열 키값을 반환.  
+- Object.getOwnPropertySymbols(obj) : Array<symbol>  
+retrieves all symbol keys of all own properties.  
+    > 모든 프로퍼티의 심볼 키 값을 반환.  
+- Reflect.ownKeys(obj) : Array<string|symbol>  
+retrieves all keys of all own properties.  
+    > 모든 프로퍼티의 모든 키값을 반환.  
+- for (const key in obj) 
+retrieves all string keys of all enumerable properties (inherited and own).  
+    > 열거 가능한 프로퍼티(상속 받은것 포함)의 모든 문자열 키값을 반환.  
+
 ### 14.4.2 Traversal order of properties
-### 14.4.2 프로퍼티의 traversal 순서
+> ### 14.4.2 프로퍼티의 traversal 순서
 
 ES6 defines two traversal orders for properties.  
-ES6에는 두가지 프로퍼티 값 탐색 순서가 있다.
+> ES6에는 두가지 프로퍼티 값 탐색 순서가 있다.
 
-Own Property Keys:  
-고유의 속성 키:
+*Own Property Keys:*  
+> *고유의 속성 키:*
 
-    Retrieves the keys of all own properties of an object, in the following order:  
-    객체의 모든 고유 프로퍼티의 키는 다음의 순서로 반환한다. :  
-        First, the string keys that are integer indices (what these are is explained in the next section), in ascending numeric order.
-        Then all other string keys, in the order in which they were added to the object.
-        Lastly, all symbol keys, in the order in which they were added to the object.  
-        먼저, 정수 인덱스(이에 대해서는 다음 장에서 설명한다.)의 문자열 키 - 숫자 오름차순으로 정렬.  
-        그리고 나서 그 외 모든 문자열 키 - 객체에 추가된 순서대로.  
-        마지막으로 모든 심볼 키 - 객체에 추가된 순서대로.  
+- Retrieves the keys of all own properties of an object, in the following order:  
+    > 객체의 모든 고유 프로퍼티의 키는 다음의 순서로 반환한다. :
+      
+    - First, the string keys that are integer indices (what these are is explained in the next section), in ascending numeric order.
+        > 먼저, 정수 인덱스(이에 대해서는 다음 장에서 설명한다.)의 문자열 키 - 숫자 오름차순으로 정렬.
+    - Then all other string keys, in the order in which they were added to the object.
+        > 그리고 나서 그 외 모든 문자열 키 - 객체에 추가된 순서대로.  
+    - Lastly, all symbol keys, in the order in which they were added to the object.  
+        > 마지막으로 모든 심볼 키 - 객체에 추가된 순서대로.  
 
-    Used by: Object.assign(), Object.defineProperties(), Object.getOwnPropertyNames(), Object.getOwnPropertySymbols(), Reflect.ownKeys()  
-    이용 :Object.assign(), Object.defineProperties(), Object.getOwnPropertyNames(), Object.getOwnPropertySymbols(), Reflect.ownKeys()  
+- Used by: Object.assign(), Object.defineProperties(), Object.getOwnPropertyNames(), Object.getOwnPropertySymbols(), Reflect.ownKeys()  
+    > 이용 :Object.assign(), Object.defineProperties(), Object.getOwnPropertyNames(), Object.getOwnPropertySymbols(), Reflect.ownKeys()  
 
-Enumerable Own Names:  
-열거 가능한 고유 명:  
+*Enumerable Own Names:*  
+> *열거 가능한 고유 명:*  
 
-    Retrieves the string keys of all enumerable own properties of an object. The order is not defined by ES6, but it must be the same order in which for-in traverses properties.  
-    Used by: JSON.parse(), JSON.stringify(), Object.keys()  
-    객체의 모든 열거 가능한 고유 프로퍼티의 문자열 키를 반환. 이 순서는 ES6에서 정의된 순서는 아니지만 for-in에서 프로퍼티를 .  
-    이용: JSON.parse(), JSON.stringify(), Object.keys()  
-
+- Retrieves the string keys of all enumerable own properties of an object. The order is not defined by ES6, but it must be the same order in which for-in traverses properties.
+    > 객체의 모든 열거 가능한 고유 프로퍼티의 문자열 키를 반환. 이 순서는 ES6에서 정의된 순서는 아니지만 for-in에서 프로퍼티를 .
+- Used by: JSON.parse(), JSON.stringify(), Object.keys()  
+    > 이용: JSON.parse(), JSON.stringify(), Object.keys()    
+    
 The order in which for-in traverses properties is not defined. Quoting Allen Wirfs-Brock:  
-for-in에서 프로퍼티가 통과하는 순서는 정의되지 않았다. Allen Wirfs-Brock를 인용하면 :
+> for-in에서 프로퍼티가 통과하는 순서는 정의되지 않았다. Allen Wirfs-Brock를 인용하면 :
 
-    Historically, the for-in order was not defined and there has been variation among browser implementations in the order they produce (and other specifics). ES5 added Object.keys and the requirement that it should order the keys identically to for-in. During development of both ES5 and ES6, the possibility of defining a specific for-in order was considered but not adopted because of web legacy compatibility concerns and uncertainty about the willingness of browsers to make changes in the ordering they currently produce.  
-    역사적으로, for-in 순서는 정의되지 않았고 구현된 브라우저 간에 편차가 있다. ES5는 Object.keys를 추가했고 Object.keys의 요구사항은 키가 for-in에서 동일하게 정렬되어야 한다는 것이다.
-    ES5와 ES6을 개발하는 동안, for-in의 정렬 사양을 정의하기 위한 가능성이 고려되었으나 web 환경의 호환성 문제와 현재 생산된 브라우저가 정렬 방식을 변경하려는 의지의 불확실성 때문에 채택되지 않았다.  
+> Historically, the for-in order was not defined and there has been variation among browser implementations in the order they produce (and other specifics). ES5 added Object.keys and the requirement that it should order the keys identically to for-in. During development of both ES5 and ES6, the possibility of defining a specific for-in order was considered but not adopted because of web legacy compatibility concerns and uncertainty about the willingness of browsers to make changes in the ordering they currently produce.  
+>> 역사적으로, for-in 순서는 정의되지 않았고 구현된 브라우저 간에 편차가 있다. ES5는 Object.keys를 추가했고 Object.keys의 요구사항은 키가 for-in에서 동일하게 정렬되어야 한다는 것이다.
+ES5와 ES6을 개발하는 동안, for-in의 정렬 사양을 정의하기 위한 가능성이 고려되었으나 web 환경의 호환성 문제와 현재 생산된 브라우저가 정렬 방식을 변경하려는 의지의 불확실성 때문에 채택되지 않았다.  
 
 #### 14.4.2.1 Integer indices  
-#### 14.4.2.1 정수 색인  
+> #### 14.4.2.1 정수 색인  
 
 Many engines treat integer indices specially, even though they are still strings (at least as far as the ES6 spec is concerned). Therefore, it makes sense to treat them as a separate category of keys.
-많은 엔진이 아직은 문자열이지만, 정수의 색인을 분명하게 다루고 있다.(최소한 ES6 스펙에서는 고려됨). 그렇기때문에 이들을 키의 별도 항목으로 관리되어야 한다.
+> 많은 엔진이 아직은 문자열이지만, 정수의 색인을 분명하게 다루고 있다.(최소한 ES6 스펙에서는 고려됨). 그렇기때문에 이들을 키의 별도 항목으로 관리되어야 한다.
 
 Roughly, an integer index is a string that, if converted to a 53-bit non-negative integer and back is the same value. Therefore:  
-대체적으로, 정수 색인은 문자열이다, 53-bit의 음수가 아닌 정수로 전환했다가 다시 전환하면 이는 같은 값이다. 따라서 :  
+> 대체적으로, 정수 색인은 문자열이다, 53-bit의 음수가 아닌 정수로 전환했다가 다시 전환하면 이는 같은 값이다. 따라서 :  
 
-    '10' and '2' are integer indices.
-    '02' is not an integer index. Converting it to an integer and back results in the different string '2'.
-    '3.141' is not an integer index, because 3.141 is not an integer.  
-    '10'과 '2'는 정수 색인이다.
-    '02' 는 정수 색인이 아니다. 이를 정수로 변환 했다가 돌아오면 그 결과는 '2'라는 다른 문자이다.
-    '3.141'은 정수 색인이 아니다, 왜냐면 3.141이 정수가 아니기 때문이다.  
+- '10' and '2' are integer indices.
+    > '10'과 '2'는 정수 색인이다.
+- '02' is not an integer index. Converting it to an integer and back results in the different string '2'.
+    > '02' 는 정수 색인이 아니다. 이를 정수로 변환 했다가 돌아오면 그 결과는 '2'라는 다른 문자이다.
+- '3.141' is not an integer index, because 3.141 is not an integer.  
+    > '3.141'은 정수 색인이 아니다, 왜냐면 3.141이 정수가 아니기 때문이다.  
 
 In ES6, instances of String and Typed Arrays have integer indices. The indices of normal Arrays are a subset of integer indices: they have a smaller range of 32 bits. For more information on Array indices, consult “Array Indices in Detail” in “Speaking JavaScript”.  
-ES6에서 String과 Typed Arrays의 인스턴스는 정수 색인을 가지고 있다. 일반 배열의 색인은 정수 색인의 집합이다 : 32bit보다 작은 범위를 가진다. 배열 색인의 보다 많은 정보는 "자바스크립트를 말하다(Speaking JavaScript)"의
+> ES6에서 String과 Typed Arrays의 인스턴스는 정수 색인을 가지고 있다. 일반 배열의 색인은 정수 색인의 집합이다 : 32bit보다 작은 범위를 가진다. 배열 색인의 보다 많은 정보는 "자바스크립트를 말하다(Speaking JavaScript)"의
 "Array Indices in Detail"에 설명되어 있다.  
 
 Integer indices have a 53-bit range, because thats the largest range of integers that JavaScript can handle. For details, see Sect. “Safe integers”.  
-정수 색인은 53 bit의 범위를 가진다, 때문에 JavaScript를 다루는 가장 큰 정수 범위가 된다. 자세한 내용은 "Safe integers" 섹션을 보면 된다.  
+> 정수 색인은 53 bit의 범위를 가진다, 때문에 JavaScript를 다루는 가장 큰 정수 범위가 된다. 자세한 내용은 "Safe integers" 섹션을 보면 된다.  
 
 #### 14.4.2.2 Example
-#### 14.4.2.2 예  
+> #### 14.4.2.2 예  
 
 The following code demonstrates the traversal order “Own Property Keys”:  
-아래의 코드는 "고유 속성 키값"의 탐색 순서를 보여준다.:  
+> 아래의 코드는 "고유 속성 키값"의 탐색 순서를 보여준다.:  
 ```js
 const obj = {
     [Symbol('first')]: true,
@@ -526,74 +525,73 @@ Reflect.ownKeys(obj);
 Explanation:  
 설명 :  
 
-    '2' and '10' are integer indices, come first and are sorted numerically (not in the order in which they were added).
-    '02' and '01' are normal string keys, come next and appear in the order in which they were added to obj.
-    Symbol('first') and Symbol('second') are symbols and come last, in the order in which they were added to obj.  
-    '2'와 '10'은 정수 색인이고 제일 처음에 숫자로 정렬된다.(추가된 순서로 정렬되는게 아니라)
-    '02'와 '01'은 일반 문자 키로, obj에 추가된 순서로 그 다음에 나타난다.
-    Symbol('first')와 Symbol('second')는 심볼로서 가장 마지막에 그들이 추가된 순서에 맞춰 나타난다.  
+- '2' and '10' are integer indices, come first and are sorted numerically (not in the order in which they were added).
+    > '2'와 '10'은 정수 색인이고 제일 처음에 숫자로 정렬된다.(추가된 순서로 정렬되는게 아니라)
+- '02' and '01' are normal string keys, come next and appear in the order in which they were added to obj.
+    > '02'와 '01'은 일반 문자 키로, obj에 추가된 순서로 그 다음에 나타난다.
+- Symbol('first') and Symbol('second') are symbols and come last, in the order in which they were added to obj.  
+    > Symbol('first')와 Symbol('second')는 심볼로서 가장 마지막에 그들이 추가된 순서에 맞춰 나타난다.
 
 #### 14.4.2.3 Why does the spec standardize in which order property keys are returned?  
-#### 14.4.2.3 왜 속성 키값의 반환 스펙을 표준화하려고 하는가?  
+> #### 14.4.2.3 왜 속성 키값의 반환 스펙을 표준화하려고 하는가?  
 
 Answer by Tab Atkins Jr.:  
-Tab Atkins Jr.에 따르면:  
+> Tab Atkins Jr.에 따르면:  
 
-    Because, for objects at least, all implementations used approximately the same order (matching the current spec), and lots of code was inadvertently written that depended on that ordering, and would break if you enumerated it in a different order. Since browsers have to implement this particular ordering to be web-compatible, it was specced as a requirement.  
-    왜냐하면, 적어도 객체에 있어서는, 모든 구현이 대략 비슷한 정렬을 사용하였고, 이를 따라 많은 코드들이 잘못 짜여져 있어, 이를 다른 순서로 열거하게 되면 중단되어 버리기 때문이다.
-    브라우저가 이 웹 호환되는 특정 순서를 구현해야 했으므로, 이 스펙이 필요한 것이다.  
--------------------------
-    There was some discussion about breaking from this in Maps/Sets, but doing so would require us to specify an order that is impossible for code to depend on; in other words, we’d have to mandate that the ordering be random, not just unspecified. This was deemed too much effort, and creation-order is reasonable valuable (see OrderedDict in Python, for example), so it was decided to have Maps and Sets match Objects.
-    Map/Set에서의 이 중단에 대한 논의가 조금 있었으나, 특정 순서를 이를 임의의 순서로
--------------------------
+> Because, for objects at least, all implementations used approximately the same order (matching the current spec), and lots of code was inadvertently written that depended on that ordering, and would break if you enumerated it in a different order. Since browsers have to implement this particular ordering to be web-compatible, it was specced as a requirement.  
+>> 왜냐하면, 적어도 객체에 있어서는, 모든 구현이 대략 비슷한 정렬을 사용하였고, 이를 따라 많은 코드들이 잘못 짜여져 있어, 이를 다른 순서로 열거하게 되면 중단되어 버리기 때문이다.
+브라우저가 이 웹 호환되는 특정 순서를 구현해야 했으므로, 이 스펙이 필요한 것이다.  
+
+> There was some discussion about breaking from this in Maps/Sets, but doing so would require us to specify an order that is impossible for code to depend on; in other words, we’d have to mandate that the ordering be random, not just unspecified. This was deemed too much effort, and creation-order is reasonable valuable (see OrderedDict in Python, for example), so it was decided to have Maps and Sets match Objects.
+>> Maps / Sets에서 이것을 깨뜨리는 것에 대한 토론이있었습니다. 그렇게하면 코드에 의존되지 않는 순서를 지정해야합니다. 즉, 우리는 순서가 불특정 한 것이 아니라 무작위적인 것이라고 해야합니다. 이것은 너무 많은 노력으로 필요하고 생성 순서별 정렬은 합리적인 가치가 있습니다 (예를 들어 Python의 OrderedDict 참조). 그래서 Maps와 Sets가 Objects와 일치하도록 결정되었습니다.
 
 #### 14.4.2.4 The order of properties in the spec
-#### 14.4.2.4 스펙에서의 속성의 순서
+> #### 14.4.2.4 스펙에서의 속성의 순서
 
 The following parts of the spec are relevant for this section:
-아래의 스펙 부분은 이 섹션과 관련이 있다:
+> 아래의 스펙 부분은 이 섹션과 관련이 있다:
 
-    The section on Array exotic objects has a note on what Array indices are.
-    The internal method [[OwnPropertyKeys]] is used by Reflect.ownKeys() and others.
-    The operation EnumerableOwnNames is used by Object.keys() and others.
-    The internal method [[Enumerate]] is used by for-in.
-    배열 외부 객체의 섹션에서 배열 색인에 대한 노트가 있다.
-    내부 매서드인 [[OwnPropertyKeys]]는 Reflect.ownKeys()와 다른데에서 이용된다.
-    EnumerableOwnNames 연산은 Object.keys()와 다른 곳에서 이용된다.
-    [[Enumerate]] 은 for-in에서 이용된다.
+- The section on Array exotic objects has a note on what Array indices are.
+    > 배열 외부 객체의 섹션에서 배열 색인에 대한 노트가 있다.
+- The internal method [[OwnPropertyKeys]] is used by Reflect.ownKeys() and others.
+    > 내부 매서드인 [[OwnPropertyKeys]]는 Reflect.ownKeys()와 다른데에서 이용된다. 
+- The operation EnumerableOwnNames is used by Object.keys() and others.
+    > EnumerableOwnNames 연산은 Object.keys()와 다른 곳에서 이용된다.
+- The internal method [[Enumerate]] is used by for-in.
+    > [[Enumerate]] 은 for-in에서 이용된다.
 
 ## 14.5 Assigning versus defining properties
-## 14.5 속성의 할당과 정의
+> ## 14.5 속성의 할당과 정의
 
 This section provides background knowledge that is needed in later sections.
-이 섹션에서는 뒤 섹션에서 필요한 배경 지식을 제공한다.
+> 이 섹션에서는 뒤 섹션에서 필요한 배경 지식을 제공한다.
 
 There are two similar ways of adding a property prop to an object obj:
-속성 prop을 객체 obj에 추가하는 두 가지 유사한 방법이 있다:
-```js
-    Assigning: obj.prop = 123
-    할당: obj.prop = 123
-    Defining: Object.defineProperty(obj, 'prop', 123)
-    정의: Object.defineProperty(obj, 'prop', 123)
-```
-There are three cases in which assigning does not create an own property prop, even if it doesn’t exist, yet:
-비록 존재하지 않더라도, 할당 시 고유 속성 prop을 생성하지 않는 세 가지 경우가 있다.
+> 속성 prop을 객체 obj에 추가하는 두 가지 유사한 방법이 있다:
 
-    A read-only property prop exists in the prototype chain. Then the assignment causes a TypeError in strict mode.
-    A setter for prop exists in the prototype chain. Then that setter is called.
-    A getter for prop without a setter exists in the prototype chain. Then a TypeError is thrown in strict mode. This case is similar to the first one.
-    프로토타입 체인에 일기 전용 속성 prop이 존재한다. 그러면 strict 모드에서 할당은 TypeError가 발생시킨다.
-    프로토 타입 체인에 prop에 setter가 존재한다. 그러면 setter가 호출된다.
-    프로토 타입 체인에 setter를 제외한 getter가 존재한다. 그러면 strict 모드에서 TypeError를 던진다. 이는 첫번째 케이스와 유사하다.
+- Assigning: obj.prop = 123
+    > 할당: obj.prop = 123
+- Defining: Object.defineProperty(obj, 'prop', 123)
+    > 정의: Object.defineProperty(obj, 'prop', 123)
+
+There are three cases in which assigning does not create an own property prop, even if it doesn’t exist, yet:
+> 비록 존재하지 않더라도, 할당 시 고유 속성 prop을 생성하지 않는 세 가지 경우가 있다.
+
+- A read-only property prop exists in the prototype chain. Then the assignment causes a TypeError in strict mode.
+    > 프로토타입 체인에 일기 전용 속성 prop이 존재한다. 그러면 strict 모드에서 할당은 TypeError가 발생시킨다.
+- A setter for prop exists in the prototype chain. Then that setter is called.
+    > 프로토 타입 체인에 prop에 setter가 존재한다. 그러면 setter가 호출된다.
+- A getter for prop without a setter exists in the prototype chain. Then a TypeError is thrown in strict mode. This case is similar to the first one.
+    > 프로토 타입 체인에 setter를 제외한 getter가 존재한다. 그러면 strict 모드에서 TypeError를 던진다. 이는 첫번째 케이스와 유사하다.
 
 None of these cases prevent Object.defineProperty() from creating an own property. The next section looks at case #3 in more detail.
-이 케이스 중 그 어떤 것도 고유의 속성 생성에서 오는 Object.defineProperty()를 방지하지 못한다. 다음 섹션에서 #3 유형을 좀더 자세히 보겠다.
+> 이 케이스 중 그 어떤 것도 고유의 속성 생성에서 오는 Object.defineProperty()를 방지하지 못한다. 다음 섹션에서 #3 유형을 좀더 자세히 보겠다.
 
 ### 14.5.1 Overriding inherited read-only properties
-### 14.5.1 상속된 일기 전용 속성 재정의
+> ### 14.5.1 상속된 일기 전용 속성 재정의
 
 If an object obj inherits a property prop that is read-only then you can’t assign to that property:
-객체 obj가 속성 prop을 상속받으면 이는 읽기 전용이고 다른 속성을 할당할 수 없다:
+> 객체 obj가 속성 prop을 상속받으면 이는 읽기 전용이고 다른 속성을 할당할 수 없다:
 ```js
 const proto = Object.defineProperty({}, 'prop', {
     writable: false,
@@ -605,7 +603,7 @@ obj.prop = 456;
     // TypeError: Cannot assign to read-only property //TypeError 일기전용 속성에 할당할 수 없습니다.
 ```
 This is similar to how an inherited property works that has a getter, but no setter. It is in line with viewing assignment as changing the value of an inherited property. It does so non-destructively: the original is not modified, but overridden by a newly created own property. Therefore, an inherited read-only property and an inherited setter-less property both prevent changes via assignment. You can, however, force the creation of an own property by defining a property:
-상속받은 속성이 getter는 있지만 setter는 없이 동작하는 것과 유사하다. 할당으로 상속받은 속성 값을 변경하려는 점에서 일치한다. 이는 비파괴적이다 : 원본은 수정되지 않지만 새로 생성된 고유 속성은 재정의 된다는 것. 그러므로 상속받은 읽기전용 속성과 상속받은 setter가 없는 속성은 할당을 통해 변경되지 않는다. 하지만 속성 정의를 통해 생성된 고유 속성에는 이를 강제할 수 있다.
+> 상속받은 속성이 getter는 있지만 setter는 없이 동작하는 것과 유사하다. 할당으로 상속받은 속성 값을 변경하려는 점에서 일치한다. 이는 비파괴적이다 : 원본은 수정되지 않지만 새로 생성된 고유 속성은 재정의 된다는 것. 그러므로 상속받은 읽기전용 속성과 상속받은 setter가 없는 속성은 할당을 통해 변경되지 않는다. 하지만 속성 정의를 통해 생성된 고유 속성에는 이를 강제할 수 있다.
 
 ```js
 const proto = Object.defineProperty({}, 'prop', {
@@ -618,63 +616,67 @@ Object.defineProperty(obj, 'prop', {value: 456});
 console.log(obj.prop); // 456
 ```
 
-## 14.6 __proto__ in ECMAScript 6
-## 14.6 ECMAScript 6의 __proto__
+## 14.6 `__proto__` in ECMAScript 6
+> ## 14.6 ECMAScript 6의 `__proto__`
 
-The property __proto__ (pronounced “dunder proto”) has existed for a while in most JavaScript engines. This section explains how it worked prior to ECMAScript 6 and what changes with ECMAScript 6.
-__proto__ 속성(던더 프로토라고 발음) 은 대부분의 JavaScript 엔진에 존재해왔다. 이 섹션에서는 __proto__ 가 ECMAScript 6 이전에 어떻게 동작했었는지, 그리고 ECMAScript 6에서는 무엇이 변경되었는지를 설명할 것이다.
+The property `__proto__` (pronounced “dunder proto”) has existed for a while in most JavaScript engines. This section explains how it worked prior to ECMAScript 6 and what changes with ECMAScript 6.
+> `__proto__` 속성(던더 프로토라고 발음) 은 대부분의 JavaScript 엔진에 존재해왔다. 이 섹션에서는 `__proto__` 가 ECMAScript 6 이전에 어떻게 동작했었는지, 그리고 ECMAScript 6에서는 무엇이 변경되었는지를 설명할 것이다.
 
 For this section, it helps if you know what prototype chains are. Consult Sect. “Layer 2: The Prototype Relationship Between Objects” in “Speaking JavaScript”, if necessary.
-이 섹션을 위해 프로토 타입 체인에 대해 아는것이 도움이 된다. "자바스크립트를 말하다(Speaking JavaScript)"의 "Layer 2: The Prototype Relationship Between Objects(객체 프로토타입 관계)"를 참고하라.
+> 이 섹션을 위해 프로토 타입 체인에 대해 아는것이 도움이 된다. "자바스크립트를 말하다(Speaking JavaScript)"의 "Layer 2: The Prototype Relationship Between Objects(객체 프로토타입 관계)"를 참고하라.
 
-### 14.6.1 __proto__ prior to ECMAScript 6
-### 14.6.1 ECMAScript 6 이전의 __proto__
+### 14.6.1 `__proto__` prior to ECMAScript 6
+> ### 14.6.1 ECMAScript 6 이전의 `__proto__`
 #### 14.6.1.1 Prototypes
-#### 14.6.1.1 프로토타입
+> #### 14.6.1.1 프로토타입
 
 Each object in JavaScript starts a chain of one or more objects, a so-called prototype chain. Each object points to its successor, its prototype via the internal property [[Prototype]] (which is null if there is no successor). That property is called internal, because it only exists in the language specification and cannot be directly accessed from JavaScript. In ECMAScript 5, the standard way of getting the prototype p of an object obj is:
-JavaScript 의 각 객체는 프로토타입 체인이라는 하나 이상의 객체 체인으로부터 시작한다. 각 객체는 내부 속성인 [[Prototype]]로 상속받은 객체를 가리킨다(만약 상속객체가 없다면 null이다). 이 속성은 언어 스펙에만 존재하며, JavaScript에서 직접적으로 접근할 수 없기 때문에 내부적으로만 호출된다.
+> JavaScript 의 각 객체는 프로토타입 체인이라는 하나 이상의 객체 체인으로부터 시작한다. 
+각 객체는 내부 속성인 [[Prototype]]로 상속받은 객체를 가리킨다(만약 상속객체가 없다면 null이다). 이 속성은 언어 스펙에만 존재하며, 
+JavaScript에서 직접적으로 접근할 수 없기 때문에 내부적으로만 호출된다.
 
 ```js
 var p = Object.getPrototypeOf(obj);
 ```
 There is no standard way to change the prototype of an existing object, but you can create a new object obj that has the given prototype p:
-존재하는 객체의 프로토타입을 변경할 수 있는 표준적인 방법은 없지만, 새로운 객체 obj를 생성하여 프로토타입 p를 부여할 수 있다.
+> 존재하는 객체의 프로토타입을 변경할 수 있는 표준적인 방법은 없지만, 새로운 객체 obj를 생성하여 프로토타입 p를 부여할 수 있다.
 ```js
 var obj = Object.create(p);
 ```
 
-#### 14.6.1.2 __proto__
+#### 14.6.1.2 `__proto__`
 
-A long time ago, Firefox got the non-standard property __proto__. Other browsers eventually copied that feature, due to its popularity.
-오래전 파이어폭스는 비표준 __proto__ 를 도입했다. 다른 브라우저도 그 인기 때문에 결국 이 기능을 따라했다.
+A long time ago, Firefox got the non-standard property `__proto__`. Other browsers eventually copied that feature, due to its popularity.
+> 오래전 파이어폭스는 비표준 `__proto__` 를 도입했다. 다른 브라우저도 그 인기 때문에 결국 이 기능을 따라했다.
 
-Prior to ECMAScript 6, __proto__ worked in obscure ways:
-ECMAScript 6이전에, __proto__ 는 애매하게 동작했다.
+Prior to ECMAScript 6, `__proto__` worked in obscure ways:
+> ECMAScript 6이전에, `__proto__` 는 애매하게 동작했다.
 
-    You could use it to get or set the prototype of any object:
-    이것을 아무 객체의 프로토타입에 get 또는 set해줄 수 있었다.
-```js
+- You could use it to get or set the prototype of any object:
+    > 이것을 아무 객체의 프로토타입에 get 또는 set해줄 수 있었다.
+    ```js
       var obj = {};
       var p = {};
-
+    
       console.log(obj.__proto__ === p); // false
       obj.__proto__ = p;
       console.log(obj.__proto__ === p); // true
-```
-    However, it was never an actual property:
-    하지만 실제 속성은 아니었다
-```js
+    ```
+- However, it was never an actual property:
+    > 하지만 실제 속성은 아니었다
+    ```js
       > var obj = {};
-      > '__proto__' in obj
+      > `__proto__` in obj
       false
-```
+    ```
 
-#### 14.6.1.3 Subclassing Array via __proto__
-#### 14.6.1.3 __proto__ 로 배열 상속한 클래스 만들기
+#### 14.6.1.3 Subclassing Array via `__proto__`
+#### 14.6.1.3 `__proto__` 로 배열 상속한 클래스 만들기
 
-The main reason why __proto__ became popular was because it enabled the only way to create a subclass MyArray of Array in ES5: Array instances were exotic objects that couldn’t be created by ordinary constructors. Therefore, the following trick was used:
-__proto__ 의 인기는 ES5에서 배열을 상속받은 MyArray를 생성할 유일한 방법이었기 때문이다. 배열의 인스턴스는 일반적인 생성자로는 생성할 수 없는 이례적인 객체이다. 따라서 아래의 트릭을 이용했다:
+The main reason why `__proto__` became popular was because it enabled the only way to create a subclass MyArray of Array in ES5: Array instances were exotic objects that couldn’t be created by ordinary constructors. Therefore, the following trick was used:
+> `__proto__` 의 인기는 ES5에서 배열을 상속받은 MyArray를 생성할 유일한 방법이었기 때문이다. 
+배열의 인스턴스는 일반적인 생성자로는 생성할 수 없는 이례적인 객체이다. 따라서 아래의 트릭을 이용했다:
+
 ```js
 function MyArray() {
     var instance = new Array(); // exotic object //이례적인 객체
@@ -685,47 +687,53 @@ MyArray.prototype = Object.create(Array.prototype);
 MyArray.prototype.customMethod = function (···) { ··· };
 ```
 Subclassing in ES6 works differently than in ES5 and supports subclassing builtins out of the box.
-ES6에서의 하위클래스 생성은 ES5와는 다르게 동작하고 외부로부터의 하위클래스 생성이 내장되어 지원한다.
+> ES6에서의 하위클래스 생성은 ES5와는 다르게 동작하고 외부로부터의 하위클래스 생성이 내장되어 지원한다.
 
-#### 14.6.1.4 Why __proto__ is problematic in ES5
-#### 14.6.1.4 왜 ES5에서 __proto__ 가 문제가 되었나
+#### 14.6.1.4 Why `__proto__` is problematic in ES5
+> #### 14.6.1.4 왜 ES5에서 `__proto__` 가 문제가 되었나
 
-The main problem is that __proto__ mixes two levels: the object level (normal properties, holding data) and the meta level.
-__proto__ 의 주된 문제점은 두 레벨을 섞어버린다는 것이다:  객체 레벨(데이터를 가진 일반 속성)과, 메타 레벨
+The main problem is that `__proto__` mixes two levels: the object level (normal properties, holding data) and the meta level.
+> `__proto__` 의 주된 문제점은 두 레벨을 섞어버린다는 것이다:  객체 레벨(데이터를 가진 일반 속성)과, 메타 레벨
 
-If you accidentally use __proto__ as a normal property (object level!), to store data, you get into trouble, because the two levels clash. The situation is compounded by the fact that you have to abuse objects as maps in ES5, because it has no built-in data structure for that purpose. Maps should be able to hold arbitrary keys, but you can’t use the key '__proto__' with objects-as-maps.
-데이터를 저장을 위한 일반 속성으로써 __proto__ 를 이용하게 되면 두 레벨의 충돌 떄문에 문제가 생길것이다. ES5에서는 이를 위한 데이터 구조가 내장되지 않아 객체를 맵으로 속여야 하고, 이 때문에 문제가 발생한다. 맵은 임의의 키를 가지고 있겠지만 맵으로 속인 객체와 키' __proto__ '를 함께 사용할 수 없다.
+If you accidentally use `__proto__` as a normal property (object level!), to store data, you get into trouble, because the two levels clash. The situation is compounded by the fact that you have to abuse objects as maps in ES5, because it has no built-in data structure for that purpose. Maps should be able to hold arbitrary keys, but you can’t use the key `__proto__` with objects-as-maps.
+> 데이터를 저장을 위한 일반 속성으로써 `__proto__` 를 이용하게 되면 두 레벨의 충돌 떄문에 문제가 생길것이다. 
+ES5에서는 이를 위한 데이터 구조가 내장되지 않아 객체를 맵으로 속여야 하고, 이 때문에 문제가 발생한다. 
+맵은 임의의 키를 가지고 있겠지만 맵으로 속인 객체와 키' __proto__ '를 함께 사용할 수 없다.
 
-In theory, one could fix the problem by using a symbol instead of the special name __proto__, but keeping meta-operations completely separate (as done via Object.getPrototypeOf()) is the best approach.
-이론적으로 __proto__ 대신 심볼을 이용하면 문제를 해결할 수 있지만, 메타 연산을 완벽하게 분리하는 것이 가장 좋은 방법이다(Object.getPrototypeOf()를 이용해서 하듯).
+In theory, one could fix the problem by using a symbol instead of the special name `__proto__`, but keeping meta-operations completely separate (as done via Object.getPrototypeOf()) is the best approach.
+> 이론적으로 `__proto__` 대신 심볼을 이용하면 문제를 해결할 수 있지만, 
+메타 연산을 완벽하게 분리하는 것이 가장 좋은 방법이다(Object.getPrototypeOf()를 이용해서 하듯).
 
-### 14.6.2 The two kinds of __proto__ in ECMAScript 6
-### 14.6.2 ECMAScript 6에서 __proto__ 두 종류
+### 14.6.2 The two kinds of `__proto__` in ECMAScript 6
+> ### 14.6.2 ECMAScript 6에서 `__proto__` 두 종류
 
-Because __proto__ was so widely supported, it was decided that its behavior should be standardized for ECMAScript 6. However, due to its problematic nature, it was added as a deprecated feature. These features reside in Annex B in the ECMAScript specification, which is described as follows:
-__proto__ 가 폭넓게 지원되기 때문에, ECMAScript 6에서 표준화를 하기로 결정되었다. 하지만 태생적인 문제때문에 디프리케이트(사용되지 않음) 속성으로 추가되었다.
+Because `__proto__` was so widely supported, it was decided that its behavior should be standardized for ECMAScript 6. However, due to its problematic nature, it was added as a deprecated feature. These features reside in Annex B in the ECMAScript specification, which is described as follows:
+> `__proto__` 가 폭넓게 지원되기 때문에, ECMAScript 6에서 표준화를 하기로 결정되었다. 하지만 태생적인 문제때문에 디프리케이트(사용되지 않음) 속성으로 추가되었다.
 이 특성은 ECMAScript 스펙 부속서 B에 존재하며 아래와 같이 설명되어 있다.
 
-    The ECMAScript language syntax and semantics defined in this annex are required when the ECMAScript host is a web browser. The content of this annex is normative but optional if the ECMAScript host is not a web browser.
-    이 부속서에서 ECMAScript 언어 구문과 의미는 ECMAScript 호스트가 웹 브라우저일 때 요구된다. 이 부속서의 내용은 표준화 되어있지만, ECMAScript 호스트가 웹 브라우저가 아닌 경우에는 선택사항이다.
+The ECMAScript language syntax and semantics defined in this annex are required when the ECMAScript host is a web browser. The content of this annex is normative but optional if the ECMAScript host is not a web browser.
+> 이 부속서에서 ECMAScript 언어 구문과 의미는 ECMAScript 호스트가 웹 브라우저일 때 요구된다. 
+이 부속서의 내용은 표준화 되어있지만, ECMAScript 호스트가 웹 브라우저가 아닌 경우에는 선택사항이다.
 
 JavaScript has several undesirable features that are required by a significant amount of code on the web. Therefore, web browsers must implement them, but other JavaScript engines don’t have to.
-JavaScript는 몇 가지 바람직하지 않은 특성은 웹상에서 상당량의 코드를 필요로 하게 한다. 이 때문에 웹 브라우저는 반드시 이를 구현해야 하고, 다른 자바스크립트 엔진은 그럴 필요 가 없다.
+> JavaScript는 몇 가지 바람직하지 않은 특성은 웹상에서 상당량의 코드를 필요로 하게 한다. 
+이 때문에 웹 브라우저는 반드시 이를 구현해야 하고, 다른 자바스크립트 엔진은 그럴 필요 가 없다.
 
-In order to explain the magic behind __proto__, two mechanisms were introduced in ES6:
-__proto__ 의 마법같은 면을 소개하기 위해 ES6에서 두 종류의 매커니즘이 제안 되었다.:
+In order to explain the magic behind `__proto__`, two mechanisms were introduced in ES6:
+> `__proto__` 의 마법같은 면을 소개하기 위해 ES6에서 두 종류의 매커니즘이 제안 되었다.:
 
-    A getter and a setter implemented via Object.prototype.__proto__.
-    In an object literal, you can consider the property key '__proto__' a special operator for specifying the prototype of the created objects.
-    getter와 setter는 Object.prototype.__proto__ 를 구현한다.
-    객체 리터럴에서 생성된 객체의 프로토 타입을 구분짓기 위해 속성키 '__proto__'를 특별 연산자로 이용해도 된다.
+- A getter and a setter implemented via `Object.prototype.__proto__`.
+    > getter와 setter는 `Object.prototype.__proto__` 를 구현한다.
+- In an object literal, you can consider the property key `__proto__` a special operator for specifying the prototype of the created objects.
+    > 객체 리터럴에서 생성된 객체의 프로토 타입을 구분짓기 위해 속성키 `__proto__`를 특별 연산자로 이용해도 된다.
 
-#### 14.6.2.1 Object.prototype.__proto__
+#### 14.6.2.1 `Object.prototype.__proto__`
 
-ECMAScript 6 enables getting and setting the property __proto__ via a getter and a setter stored in Object.prototype. If you were to implement them manually, this is roughly what it would look like:
-ECMAScript 6 는 Object.prototype에 내장된 getter와 setter를 이용해 __proto__ 를 지정하거나 이용할 수 있다. 만약 정석대로 구현했다면 대략 아래와 같을 것이다 :
+ECMAScript 6 enables getting and setting the property `__proto__` via a getter and a setter stored in Object.prototype. If you were to implement them manually, this is roughly what it would look like:
+> ECMAScript 6 는 Object.prototype에 내장된 getter와 setter를 이용해 `__proto__` 를 지정하거나 이용할 수 있다. 만약 정석대로 구현했다면 대략 아래와 같을 것이다 :
+
 ```js
-Object.defineProperty(Object.prototype, '__proto__', {
+Object.defineProperty(Object.prototype, `__proto__`, {
     get() {
         const _thisObj = Object(this);
         return Object.getPrototypeOf(_thisObj);
@@ -750,76 +758,76 @@ function isObject(value) {
     return Object(value) === value;
 }
 ```
-The getter and the setter for __proto__ in the ES6 spec:
-ES6 스펙의 __proto__ 의 getter와 setter:
+The getter and the setter for `__proto__` in the ES6 spec:
+> ES6 스펙의 `__proto__` 의 getter와 setter:
 ```js
     get Object.prototype.__proto__
     set Object.prototype.__proto__
 ```
 
-#### 14.6.2.2 The property key __proto__ as an operator in an object literal
-#### 14.6.2.2 객체 리터럴에서 연산자로서의 속성 키 __proto__
+#### 14.6.2.2 The property key `__proto__` as an operator in an object literal
+> #### 14.6.2.2 객체 리터럴에서 연산자로서의 속성 키 `__proto__`
 
-If __proto__ appears as an unquoted or quoted property key in an object literal, the prototype of the object created by that literal is set to the property value:
-객체 리터럴에서 __proto__ 에 따옴표를 주거나 혹은 빼도, 객체 리터럴로 생성된 이 프로토 타입에 속성값을 줄 수 있다:
+If `__proto__` appears as an unquoted or quoted property key in an object literal, the prototype of the object created by that literal is set to the property value:
+> 객체 리터럴에서 `__proto__` 에 따옴표를 주거나 혹은 빼도, 객체 리터럴로 생성된 이 프로토 타입에 속성값을 줄 수 있다:
 ```js
 > Object.getPrototypeOf({ __proto__: null })
 null
-> Object.getPrototypeOf({ '__proto__': null })
+> Object.getPrototypeOf({ `__proto__`: null })
 null
 ```
-Using the string value '__proto__' as a computed property key does not change the prototype, it creates an own property:
-문자열 '__proto__' 를 속성 키로 이용하는 것이 프로토타입을 변경하는 것이 아니고, 새로운 고유 속성으로 생성된다.
+Using the string value `__proto__` as a computed property key does not change the prototype, it creates an own property:
+> 문자열 `__proto__` 를 속성 키로 이용하는 것이 프로토타입을 변경하는 것이 아니고, 새로운 고유 속성으로 생성된다.
 ```js
-> const obj = { ['__proto__']: null };
+> const obj = { [`__proto__`]: null };
 > Object.getPrototypeOf(obj) === Object.prototype
 true
 > Object.keys(obj)
-[ '__proto__' ]
+[ `__proto__` ]
 ```
-The special property key '__proto__' in the ES6 spec:
-ES6 스펙에서 특별한 속성 키'__proto__'는:
+The special property key `__proto__` in the ES6 spec:
+> ES6 스펙에서 특별한 속성 키`__proto__`는:
 
-    __proto__ Property Names in Object Initializers
-    __proto__ 객체 이니셜라이저의 속성명이다
+`__proto__` Property Names in Object Initializers
+> `__proto__` 객체 이니셜라이저의 속성명이다
 
-### 14.6.3 Avoiding the magic of __proto__
-### 14.6.3 __proto__ 의 마법을 회피하기
-#### 14.6.3.1 Defining (not assigning) __proto__
-#### 14.6.3.1 __proto__ 정의(할당 아님)
+### 14.6.3 Avoiding the magic of `__proto__`
+> ### 14.6.3 `__proto__` 의 마법을 회피하기
+#### 14.6.3.1 Defining (not assigning) `__proto__`
+> #### 14.6.3.1 `__proto__` 정의(할당 아님)
 
-In ECMAScript 6, if you define the own property __proto__, no special functionality is triggered and the getter/setter Object.prototype.__proto__ is overridden:
-ECMAScript 6에서 고유 속성 __proto__ 을 정의 하면, 아무런 특별한 기능을 발생시키지 않고 Object.prototype.__proto__ 의 getter/setter가 재정의 된다.
+In ECMAScript 6, if you define the own property `__proto__`, no special functionality is triggered and the getter/setter `Object.prototype.__proto__` is overridden:
+> ECMAScript 6에서 고유 속성 `__proto__` 을 정의 하면, 아무런 특별한 기능을 발생시키지 않고 `Object.prototype.__proto__` 의 getter/setter가 재정의 된다.
 ```js
 const obj = {};
-Object.defineProperty(obj, '__proto__', { value: 123 })
+Object.defineProperty(obj, `__proto__`, { value: 123 })
 
-Object.keys(obj); // [ '__proto__' ]
+Object.keys(obj); // [ `__proto__` ]
 console.log(obj.__proto__); // 123
 ```
 
 #### 14.6.3.2 Objects that don’t have Object.prototype as a prototype
-#### 14.6.3.2 Object.prototype를 프로토타입으로 가지고 있지 않은 객체
+> #### 14.6.3.2 Object.prototype를 프로토타입으로 가지고 있지 않은 객체
 
-The __proto__ getter/setter is provided via Object.prototype. Therefore, an object without Object.prototype in its prototype chain doesn’t have the getter/setter, either. In the following code, dict is an example of such an object – it does not have a prototype. As a result, __proto__ now works like any other property:
-__proto__ 의 getter/setter는 Object.prototype에서 나온 것이다. 따라서, 프로토 타입 체인에 Object.prototype가 없는 객체는 getter/setter가 없다. 아래의 코드에서 dict는 그런 객체이다 - 프로토타입이 없는. 결과로 __proto__ 는 다른 속성과 같이 동작한다.
+The `__proto__` getter/setter is provided via Object.prototype. Therefore, an object without Object.prototype in its prototype chain doesn’t have the getter/setter, either. In the following code, dict is an example of such an object – it does not have a prototype. As a result, `__proto__` now works like any other property:
+> `__proto__` 의 getter/setter는 Object.prototype에서 나온 것이다. 따라서, 프로토 타입 체인에 Object.prototype가 없는 객체는 getter/setter가 없다. 아래의 코드에서 dict는 그런 객체이다 - 프로토타입이 없는. 결과로 `__proto__` 는 다른 속성과 같이 동작한다.
 ```js
 > const dict = Object.create(null);
-> '__proto__' in dict
+> `__proto__` in dict
 false
 > dict.__proto__ = 'abc';
 > dict.__proto__
 'abc'
 ```
 
-#### 14.6.3.3 __proto__ and dict objects
-#### 14.6.3.3 __proto__ 와 사전 객체
+#### 14.6.3.3 `__proto__` and dict objects
+> #### 14.6.3.3 `__proto__` 와 사전 객체
 
-If you want to use an object as a dictionary then it is best if it doesn’t have a prototype. That’s why prototype-less objects are also called dict objects. In ES6, you don’t even have to escape the property key '__proto__' for dict objects, because it doesn’t trigger any special functionality.
-객체를 사전으로 이용하려면 객체에 프로토타입이 없어야 한다. 이 때문에 프로토타입이 없는 객체를 사전객체(dict object)로 부르기도 한다. ES6의 사전객체 객체 키 '__proto__'가 아무 기능도 하지 않기 때문에, 이를 회피할 필요도 없다.
+If you want to use an object as a dictionary then it is best if it doesn’t have a prototype. That’s why prototype-less objects are also called dict objects. In ES6, you don’t even have to escape the property key `__proto__` for dict objects, because it doesn’t trigger any special functionality.
+> 객체를 사전으로 이용하려면 객체에 프로토타입이 없어야 한다. 이 때문에 프로토타입이 없는 객체를 사전객체(dict object)로 부르기도 한다. ES6의 사전객체 객체 키 `__proto__`가 아무 기능도 하지 않기 때문에, 이를 회피할 필요도 없다.
 
-__proto__ as an operator in an object literal lets you create dict objects more concisely:
-연산자로서의 __proto__ 는 객체 리터럴에서 사전 객체를 더 간결하게 생성할 수 있게 해준다.
+`__proto__` as an operator in an object literal lets you create dict objects more concisely:
+> 연산자로서의 `__proto__` 는 객체 리터럴에서 사전 객체를 더 간결하게 생성할 수 있게 해준다.
 ```js
 const dictObj = {
     __proto__: null,
@@ -828,51 +836,51 @@ const dictObj = {
 };
 ```
 Note that in ES6, you should normally prefer the built-in data structure Map to dict objects, especially if keys are not fixed.
-ES6에서, 일반적으로 키값이 고정되지 않은 경우, 내장 자료 구조인 맵을 사전객체로 이용하기도 함을 기억하자.
+> ES6에서, 일반적으로 키값이 고정되지 않은 경우, 내장 자료 구조인 맵을 사전객체로 이용하기도 함을 기억하자.
 
-#### 14.6.3.4 __proto__ and JSON
-#### 14.6.3.4 __proto__ 와 JSON
+#### 14.6.3.4 `__proto__` and JSON
+#### 14.6.3.4 `__proto__` 와 JSON
 
 Prior to ES6, the following could happen in a JavaScript engine:
-ES6 이전에는 자바스크립트 엔진에서 아래와 같은 일이 발생할 수 있었다:
+> ES6 이전에는 자바스크립트 엔진에서 아래와 같은 일이 발생할 수 있었다:
 ```js
 > JSON.parse('{"__proto__": []}') instanceof Array
 true
 ```
-With __proto__ being a getter/setter in ES6, JSON.parse() works fine, because it defines properties, it doesn’t assign them (if implemented properly, an older version of V8 did assign).
-ES6에서는 getter/setter인 __proto__ 와 JSON.parse()는 잘 동작하는데 이는 속성을 할당하는게 아니라 정의하기 때문이다.(제대로 구현되었다면 그렇고, 예전 버전의 v8엔진에서는 할당했었다.)
+With `__proto__` being a getter/setter in ES6, JSON.parse() works fine, because it defines properties, it doesn’t assign them (if implemented properly, an older version of V8 did assign).
+> ES6에서는 getter/setter인 `__proto__` 와 JSON.parse()는 잘 동작하는데 이는 속성을 할당하는게 아니라 정의하기 때문이다.(제대로 구현되었다면 그렇고, 예전 버전의 v8엔진에서는 할당했었다.)
 
-JSON.stringify() isn’t affected by __proto__, either, because it only considers own properties. Objects that have an own property whose name is __proto__ work fine:
-JSON.stringify() 도 __proto__ 에 영향을 받지 않는데, 이는 고유의 속성만을 고려하기 때문이다. __proto__ 라는 고유 속성명을 가진 객체는 제대로 동작한다 :
+JSON.stringify() isn’t affected by `__proto__`, either, because it only considers own properties. Objects that have an own property whose name is `__proto__` work fine:
+> JSON.stringify() 도 `__proto__` 에 영향을 받지 않는데, 이는 고유의 속성만을 고려하기 때문이다. `__proto__` 라는 고유 속성명을 가진 객체는 제대로 동작한다 :
 ```js
-> JSON.stringify({['__proto__']: true})
+> JSON.stringify({[`__proto__`]: true})
 '{"__proto__":true}'
 ```
 
-### 14.6.4 Detecting support for ES6-style __proto__
-### 14.6.4 ES6 스타일로 __proto__ 동작하는지 알아보기
+### 14.6.4 Detecting support for ES6-style `__proto__`
+> ### 14.6.4 ES6 스타일로 `__proto__` 동작하는지 알아보기
 
-Support for ES6-style __proto__ varies from engine to engine. Consult kangax’ ECMAScript 6 compatibility table for information on the status quo:
-지원하는 ES6 스타일의 __proto__ 는 엔진별로 다양하다. kangax의 ECMAScript 6 호환성 테이블에 현상태의 정보가 설명되어 있다:
+Support for ES6-style `__proto__` varies from engine to engine. Consult kangax’ ECMAScript 6 compatibility table for information on the status quo:
+> 지원하는 ES6 스타일의 `__proto__` 는 엔진별로 다양하다. kangax의 ECMAScript 6 호환성 테이블에 현상태의 정보가 설명되어 있다:
 
-```js
-    Object.prototype.__proto__
-    __proto__ in object literals
-    객체 리터럴의 __proto__
-```
-The following two sections describe how you can programmatically detect whether an engine supports either of the two kinds of __proto__.
-뒤에 오는 두 섹션에서 프로그램적으로 엔진이 두 종류의 __proto__ 를 지원하는지 여부를 어떻게 알 수 있는지 설명되어 있다.
 
-#### 14.6.4.1 Feature: __proto__ as getter/setter
-#### 14.6.4.1 특징 : getter/setter로써의 __proto__
+- `Object.prototype.__proto__`
+- `__proto__` in object literals
+    > 객체 리터럴의 __proto__
+
+The following two sections describe how you can programmatically detect whether an engine supports either of the two kinds of `__proto__`.
+> 뒤에 오는 두 섹션에서 프로그램적으로 엔진이 두 종류의 `__proto__` 를 지원하는지 여부를 어떻게 알 수 있는지 설명되어 있다.
+
+#### 14.6.4.1 Feature: `__proto__` as getter/setter
+> #### 14.6.4.1 특징 : getter/setter로써의 `__proto__`
 
 A simple check for the getter/setter:
-간단한 getter/setter 체크 방법
+> 간단한 getter/setter 체크 방법
 ```js
 var supported = {}.hasOwnProperty.call(Object.prototype, '__proto__');
 ```
 A more sophisticated check:
-좀더 복잡한 체크 방법:
+> 좀더 복잡한 체크 방법:
 ```js
 var desc = Object.getOwnPropertyDescriptor(Object.prototype, '__proto__');
 var supported = (
@@ -880,91 +888,93 @@ var supported = (
 );
 ```
 
-#### 14.6.4.2 Feature: __proto__ as an operator in an object literal
-#### 14.6.4.2 특징 : 객체 리터럴에서 연산자로서의 __proto__
+#### 14.6.4.2 Feature: `__proto__` as an operator in an object literal
+#### 14.6.4.2 특징 : 객체 리터럴에서 연산자로서의 `__proto__`
 
 You can use the following check:
-아래의 방법으로 체크할 수 있다 :
+> 아래의 방법으로 체크할 수 있다 :
 ```js
 var supported = Object.getPrototypeOf({__proto__: null}) === null;
 ```
 
-### 14.6.5 __proto__ is pronounced “dunder proto”
-### 14.6.5 __proto__ 는 "던더 프로토(dunder proto)"라고 발음한다
+### 14.6.5 `__proto__` is pronounced “dunder proto”
+### 14.6.5 `__proto__` 는 "던더 프로토(dunder proto)"라고 발음한다
 
-Bracketing names with double underscores is a common practice in Python to avoid name clashes between meta-data (such as __proto__) and data (user-defined properties). That practice will never become common in JavaScript, because it now has symbols for this purpose. However, we can look to the Python community for ideas on how to pronounce double underscores.
-두 개의 밑줄로 감싸진 이름은 파이썬에서 메타 데이타(__proto__ 와 같은)나 데이터(사용자 지정 속성)와 변수명의 충돌을 피하기 위해 일반적으로 이용하는 방법이다. 이 방법은 자바스크립트에서는 일반적으로 쓰일 일이 절대 없을텐데, 이는 이제 심볼을 사용하기 때문이다. 하지만 두번 밑줄의 발음에 대한 아이디러를 파이선 커뮤니티에서 찾을 수 있다.
+Bracketing names with double underscores is a common practice in Python to avoid name clashes between meta-data (such as `__proto__`) and data (user-defined properties). That practice will never become common in JavaScript, because it now has symbols for this purpose. However, we can look to the Python community for ideas on how to pronounce double underscores.
+> 두 개의 밑줄로 감싸진 이름은 파이썬에서 메타 데이타(`__proto__` 와 같은)나 데이터(사용자 지정 속성)와 변수명의 충돌을 피하기 위해 일반적으로 이용하는 방법이다. 
+이 방법은 자바스크립트에서는 일반적으로 쓰일 일이 절대 없을텐데, 이는 이제 심볼을 사용하기 때문이다. 하지만 두번 밑줄의 발음에 대한 아이디러를 파이선 커뮤니티에서 찾을 수 있다.
 
 The following pronunciation has been suggested by Ned Batchelder:
-네드 배챌러가 아래의 발음을 제안했다:
+> 네드 배챌러가 아래의 발음을 제안했다:
 
-    An awkward thing about programming in Python: there are lots of double underscores. For example, the standard method names beneath the syntactic sugar have names like __getattr__, constructors are __init__, built-in operators can be overloaded with __add__, and so on. […]
-    파이썬으로 개발할 때 거북한 것은 : 두 개의 밑줄이 너무 많다는 것이다. 예를 들어 표준 메서드 명은 구문 아래 __getattr__, 생성자는 __init__, __add__ 로 내장 연산자가 추가 될 것이고, 또..
+> An awkward thing about programming in Python: there are lots of double underscores. For example, the standard method names beneath the syntactic sugar have names like __getattr__, constructors are __init__, built-in operators can be overloaded with __add__, and so on. […]
+>> 파이썬으로 개발할 때 거북한 것은 : 두 개의 밑줄이 너무 많다는 것이다. 예를 들어 표준 메서드 명은 구문 아래 __getattr__, 생성자는 __init__, __add__ 로 내장 연산자가 추가 될 것이고, 또..
 
-    My problem with the double underscore is that it’s hard to say. How do you pronounce __init__? “underscore underscore init underscore underscore”? “under under init under under”? Just plain “init” seems to leave out something important.
-    이중 밑줄에 대한 나의 문제는 부르기 너무 어렵다는 것이다. __init__ 을 어떻게 발음할 것인가? 밑줄밑줄 이닛 민툴밑줄 ? 밑밑 이닛 밑밑 ? 그냥 이닛이라고 발음하기에는 뭔가 중요한 것을 빼먹은 느낌이 난다.
+> My problem with the double underscore is that it’s hard to say. How do you pronounce __init__? “underscore underscore init underscore underscore”? “under under init under under”? Just plain “init” seems to leave out something important.
+>> 이중 밑줄에 대한 나의 문제는 부르기 너무 어렵다는 것이다. __init__ 을 어떻게 발음할 것인가? 밑줄밑줄 이닛 민툴밑줄 ? 밑밑 이닛 밑밑 ? 그냥 이닛이라고 발음하기에는 뭔가 중요한 것을 빼먹은 느낌이 난다.
 
-    I have a solution: double underscore should be pronounced “dunder”. So __init__ is “dunder init dunder”, or just “dunder init”.
-    나의 해답은 : 이중 밑줄을 "던더"라고 발음하는 것이다. 그러면 __init__ 은 던더 이닛 던더 혹은 던더 이닛이 된다.
+> I have a solution: double underscore should be pronounced “dunder”. So __init__ is “dunder init dunder”, or just “dunder init”.
+>> 나의 해답은 : 이중 밑줄을 "던더"라고 발음하는 것이다. 그러면 __init__ 은 던더 이닛 던더 혹은 던더 이닛이 된다.
 
-Thus, __proto__ is pronounced “dunder proto”. The chances for this pronunciation catching on are good, JavaScript creator Brendan Eich uses it.
-고로, __proto__ 는 던더 프로토 로 발음한다. 이 발음이 괜찮았던지 자바스크립트 창시자인 브랜든 아이크도 그렇게 발음하고 있다.
+Thus, `__proto__` is pronounced “dunder proto”. The chances for this pronunciation catching on are good, JavaScript creator Brendan Eich uses it.
+> 고로, `__proto__` 는 던더 프로토 로 발음한다. 이 발음이 괜찮았던지 자바스크립트 창시자인 브랜든 아이크도 그렇게 발음하고 있다.
 
-### 14.6.6 Recommendations for __proto__
-### 14.6.6 __proto__ 의 권장사항
+### 14.6.6 Recommendations for `__proto__`
+> ### 14.6.6 `__proto__` 의 권장사항
 
-It is nice how well ES6 turns __proto__ from something obscure into something that is easy to understand.
-ES6이 __proto__ 를 애매한 무언가에서 이해하기 쉬운 무언가로 바꾼것은 아주 잘된일이다.
+It is nice how well ES6 turns `__proto__` from something obscure into something that is easy to understand.
+> ES6이 `__proto__` 를 애매한 무언가에서 이해하기 쉬운 무언가로 바꾼것은 아주 잘된일이다.
 
 However, I still recommend not to use it. It is effectively a deprecated feature and not part of the core standard. You can’t rely on it being there for code that must run on all engines.
-하지만 이것을 사용하지 않는 것을 권한다. 이는 실제로 디프리케이트된 특징이고 표준의 주요한 부분도 아니다. 모든 엔진에서 반드시 돌아가야 하는 코드로 존재한다고 기대할 수 없다.
+> 하지만 이것을 사용하지 않는 것을 권한다. 이는 실제로 디프리케이트된 특징이고 표준의 주요한 부분도 아니다. 모든 엔진에서 반드시 돌아가야 하는 코드로 존재한다고 기대할 수 없다.
 
 More recommendations:
-다른 권장사항:
+> 다른 권장사항:
 
-    Use Object.getPrototypeOf() to get the prototype of an object.
-    Prefer Object.create() to create a new object with a given prototype. Avoid Object.setPrototypeOf(), which hampers performance on many engines.
-    I actually like __proto__ as an operator in an object literal. It is useful for demonstrating prototypal inheritance and for creating dict objects. However, the previously mentioned caveats do apply.
-    객체의 프로토타입을 얻기 위해 Object.getPrototypeOf()를 이용한다.
-    주어진 프로토타입으로 새로운 객체를 생성하기 위해 Object.create()를 이용한다. 엔진에 부하가 걸리는 Object.setPrototypeOf()의 이용을 자제한다.
-    저자는 __proto__ 를 객체 리터럴의 연산자로 사용하는 것을 선호한다. 프로토 타입 상속을 설명하는데 유용하고 사전 객체를 생성할때도 유용하다. 하지만, 하지만 앞서 언급한 주의 사항을 적용한다.
+- Use Object.getPrototypeOf() to get the prototype of an object.
+    > 객체의 프로토타입을 얻기 위해 Object.getPrototypeOf()를 이용한다.
+- Prefer Object.create() to create a new object with a given prototype. Avoid Object.setPrototypeOf(), which hampers performance on many engines.
+    > 주어진 프로토타입으로 새로운 객체를 생성하기 위해 Object.create()를 이용한다. 엔진에 부하가 걸리는 Object.setPrototypeOf()의 이용을 자제한다.
+- I actually like `__proto__` as an operator in an object literal. It is useful for demonstrating prototypal inheritance and for creating dict objects. However, the previously mentioned caveats do apply.
+    > 저자는 `__proto__` 를 객체 리터럴의 연산자로 사용하는 것을 선호한다. 프로토 타입 상속을 설명하는데 유용하고 사전 객체를 생성할때도 유용하다. 하지만, 하지만 앞서 언급한 주의 사항을 적용한다.
 
 ## 14.7 Enumerability in ECMAScript 6
-## 14.7 ECMAScript 6에서 열거가능성
+> ## 14.7 ECMAScript 6에서 열거가능성
 
 Enumerability is an attribute of object properties. This section explains how it works in ECMAScript 6. Let’s first explore what attributes are.
-열거가능성은 객체 프로퍼티의 한 속성이다. ECMAScript 6에서 그것이 어떻게 동작하는지 설명할 것이다. 그 첫번째 속성이 무엇인지 알아보자.
+> 열거가능성은 객체 프로퍼티의 한 속성이다. ECMAScript 6에서 그것이 어떻게 동작하는지 설명할 것이다. 그 첫번째 속성이 무엇인지 알아보자.
 
 ### 14.7.1 Property attributes
-### 14.7.1 프로퍼티 속성
+> ### 14.7.1 프로퍼티 속성
 
 Each object has zero or more properties. Each property has a key and three or more attributes, named slots that store the data of the property (in other words, a property is itself much like a JavaScript object or like a record with fields in a database).
-각 객체는 0개 이상의 속성을 가지고 있다. 각 프로퍼티는 키를 가지고 있고 3개 이상의 속성, 그리고 프로퍼티 데이터를 저장하는 네임드 슬롯을 가진다(다시 말해, 속성은 자바스크립트 객체 혹은 디비의 데이터 필드 그 자체이다.).
+> 각 객체는 0개 이상의 속성을 가지고 있다. 각 프로퍼티는 키를 가지고 있고 3개 이상의 속성, 그리고 프로퍼티 데이터를 저장하는 네임드 슬롯을 가진다(다시 말해, 속성은 자바스크립트 객체 혹은 디비의 데이터 필드 그 자체이다.).
 
 ECMAScript 6 supports the following attributes (as does ES5):
 ECMAScript 6은 아래의 속성을 지원한다(ES5처럼):
 
-    All properties have the attributes:
-        enumerable: Setting this attribute to false hides the property from some operations.
-        configurable: Setting this attribute to false prevents several changes to a property (attributes except value can’t be change, property can’t be deleted, etc.).
-    Normal properties (data properties, methods) have the attributes:
-        value: holds the value of the property.
-        writable: controls whether the property’s value can be changed.
-    Accessors (getters/setters) have the attributes:
-        get: holds the getter (a function).
-        set: holds the setter (a function).
-    모든 프로퍼티는 속성을 가진다:
-        열거가능 : 이 속성을 false로 두면 일부 작업의 프로퍼티를 숨길 수 있다.
-        구성 : 이 속성을 false로 두면 몇가지 프로퍼티 변경을 방지할 수 있다.(값을 제외한 속성은 바꿀 수 없고, 프로퍼티는 지워지지 않고 등등.)
-    일반적 프로퍼티는 (데이터 속성, 메서드) 는 속성을 가진다:
-        값 : 프로퍼티의 값을 가진다.
-        쓸 수 있음 : 프로퍼티의 값을 조절하여 바꿀 수 있다.
-    접근자(getter/setter) 도 속성을 가진다:
-        get : getter를 가진다(함수).
-        set : setter를 가진다(함수).
+* All properties have the attributes:
+    > 모든 프로퍼티는 속성을 가진다:
+  - enumerable: Setting this attribute to false hides the property from some operations.
+    > 열거가능 : 이 속성을 false로 두면 일부 작업의 프로퍼티를 숨길 수 있다.
+  - configurable: Setting this attribute to false prevents several changes to a property   
+  (attributes except value can’t be change, property can’t be deleted, etc.).
+    > 구성 : 이 속성을 false로 두면 몇가지 프로퍼티 변경을 방지할 수 있다.(값을 제외한 속성은 바꿀 수 없고, 프로퍼티는 지워지지 않고 등등.)
+* Normal properties (data properties, methods) have the attributes:
+    > 일반적 프로퍼티는 (데이터 속성, 메서드) 는 속성을 가진다:
+  - value: holds the value of the property.
+    > 값 : 프로퍼티의 값을 가진다.
+  - writable: controls whether the property’s value can be changed.
+    > 쓸 수 있음 : 프로퍼티의 값을 조절하여 바꿀 수 있다.
+* Accessors (getters/setters) have the attributes:
+    > 접근자(getter/setter) 도 속성을 가진다:
+  - get: holds the getter (a function).
+    > get : getter를 가진다(함수).
+  - set: holds the setter (a function).
+    > set : setter를 가진다(함수).
 
 You can retrieve the attributes of a property via Object.getOwnPropertyDescriptor(), which returns the attributes as a JavaScript object:
-속성의 속성을 Object.getOwnPropertyDescriptor()로 알 수 있는데, 이는 자바스크립트 객체의 속성을 반환한다.
+> 속성의 속성을 Object.getOwnPropertyDescriptor()로 알 수 있는데, 이는 자바스크립트 객체의 속성을 반환한다.
 ```js
 > const obj = { foo: 123 };
 > Object.getOwnPropertyDescriptor(obj, 'foo')
@@ -974,150 +984,157 @@ You can retrieve the attributes of a property via Object.getOwnPropertyDescripto
   configurable: true }
 ```
 This section explains how the attribute enumerable works in ES6. All other attributes and how to change attributes is explained in Sect. “Property Attributes and Property Descriptors” in “Speaking JavaScript”.
-이 섹션에서는 ES6에서 속성이 어떤식으로 열거가능한 작업을 하는지를 설명한다. 모든 다른 속성과 속성을 어떻게 변경하는지는 "자바스크립트를 말하다"의 "프로퍼티 속성과 프로퍼티 디스크립터" 장에 설명되어 있다.
+> 이 섹션에서는 ES6에서 속성이 어떤식으로 열거가능한 작업을 하는지를 설명한다. 모든 다른 속성과 속성을 어떻게 변경하는지는 "자바스크립트를 말하다"의 "프로퍼티 속성과 프로퍼티 디스크립터" 장에 설명되어 있다.
 
 ### 14.7.2 Constructs affected by enumerability
-### 14.7.2 생성자는 열거가능성에 영향받는다.
+> ### 14.7.2 생성자는 열거가능성에 영향받는다.
 
 ECMAScript 5:
 
-    for-in loop: traverses the string keys of own and inherited enumerable properties.
-    Object.keys(): returns the string keys of enumerable own properties.
-    JSON.stringify(): only stringifies enumerable own properties with string keys.
-    for-in 루프 : 고유한 프로퍼티와 상속받은 프로퍼티의 문자 키값을 나열한다.
-    Object.keys(): 고유 프로퍼티의 문자열 키값을 반환한다.
-    JSON.stringify(): 문자 키를 가진 열거 가능한 고유 프로퍼티를 문자화 한다.
+- for-in loop: traverses the string keys of own and inherited enumerable properties.
+    > for-in 루프 : 고유한 프로퍼티와 상속받은 프로퍼티의 문자 키값을 나열한다.
+- Object.keys(): returns the string keys of enumerable own properties.
+    > Object.keys(): 고유 프로퍼티의 문자열 키값을 반환한다.
+- JSON.stringify(): only stringifies enumerable own properties with string keys.
+    > JSON.stringify(): 문자 키를 가진 열거 가능한 고유 프로퍼티를 문자화 한다.
 
 ECMAScript 6:
 
-    Object.assign(): only copies enumerable own properties (both string keys and symbol keys are considered).
-    Object.assign(): 열거 가능한 고유 프로퍼티만 복사한다.(문자열, 심볼 키 값 모두)
+- Object.assign(): only copies enumerable own properties (both string keys and symbol keys are considered).
+    > Object.assign(): 열거 가능한 고유 프로퍼티만 복사한다.(문자열, 심볼 키 값 모두)
 
 for-in is the only built-in operations where enumerability matters for inherited properties. All other operations only work with own properties.
-상속받은 프로퍼티의 열거가능한 인자에서도 작동하는 for-in 은 유일한 내장 연산자이다. 다른 연산자는 고유 프로퍼티에서만 동작한다.
+> 상속받은 프로퍼티의 열거가능한 인자에서도 작동하는 for-in 은 유일한 내장 연산자이다. 다른 연산자는 고유 프로퍼티에서만 동작한다.
 
 ### 14.7.3 Use cases for enumerability
-### 14.7.3 열거가능성의 사용 예
+> ### 14.7.3 열거가능성의 사용 예
 
 Unfortunately, enumerability is quite an idiosyncratic feature. This section presents several use cases for it and argues that, apart from protecting legacy code from breaking, its usefulness is limited.
-안타깝게도 enumerability는 아주 독특한 특징이다. 이 섹션에서는 몇 가지 사용 예와 레거시 코드 파괴로를 막기 위해 제한된 사용 예쩨를 보여준다.
+> 안타깝게도 enumerability는 아주 독특한 특징이다. 이 섹션에서는 몇 가지 사용 예와 레거시 코드 파괴로를 막기 위해 제한된 사용 예쩨를 보여준다.
 
 #### 14.7.3.1 Use case: Hiding properties from the for-in loop
-#### 14.7.3.1 사용 예 : for-in 루프에서 프로퍼티 숨기기
+> #### 14.7.3.1 사용 예 : for-in 루프에서 프로퍼티 숨기기
 
 The for-in loop traverses all enumerable properties of an object, own and inherited ones. Therefore, the attribute enumerable is used to hide properties that should not be traversed. That was the reason for introducing enumerability in ECMAScript 1.
-for-in 루프는 객체의 모든 열거가능한 고유한 프로퍼티와 상속받은 프로퍼티를 보여준다. 속성 이너머러블이 프로퍼티를 숨기는데 이용되고 이는 결국 보여지지 않는다. ECMAScript 1에서 이너머러빌리티가 소개된 이유이다.
+> for-in 루프는 객체의 모든 열거가능한 고유한 프로퍼티와 상속받은 프로퍼티를 보여준다. 속성 이너머러블이 프로퍼티를 숨기는데 이용되고 이는 결국 보여지지 않는다. ECMAScript 1에서 이너머러빌리티가 소개된 이유이다.
 
 ##### 14.7.3.1.1 Non-enumerability in the language
-##### 14.7.3.1.1 언어의 Non-enumerability
+> ##### 14.7.3.1.1 언어의 Non-enumerability
 
 Non-enumerable properties occur in the following locations in the language:
-언어에서 아래의 경우에 non-enumerable 프로퍼티가 나타난다.
+> 언어에서 아래의 경우에 non-enumerable 프로퍼티가 나타난다.
 
-    All prototype properties of built-in classes are non-enumerable:
-    클래스에 내장된 모든 프로토타입 프로퍼티는 non-enumerable:
-```js
+- All prototype properties of built-in classes are non-enumerable:
+    > 클래스에 내장된 모든 프로토타입 프로퍼티는 non-enumerable:
+    ```js
       > const desc = Object.getOwnPropertyDescriptor.bind(Object);
       > desc(Object.prototype, 'toString').enumerable
       false
-```
-    All prototype properties of classes are non-enumerable:
-    객체의 모든 프로퍼티도 열거 불가능:
-```js
-      > desc(class {foo() {}}.prototype, 'foo').enumerable
-      false
-```
-    In Arrays, length is not enumerable, which means that for-in only traverses indices. (However, that can easily change if you add a property via assignment, which is makes it enumerable.)
-    배열에서 length는 이너머러블이 아닌데 이는, for-in에서 색인으로 이용됨을 의미한다. (하지만, 할당으로 프로퍼티를 추가하면 쉽게 바뀐다).
-```js
-      > desc([], 'length').enumerable
-      false
-      > desc(['a'], '0').enumerable
-      true
-```
+    ```
+- All prototype properties of classes are non-enumerable:
+    > 객체의 모든 프로퍼티도 열거 불가능:
+    ```js
+    > desc(class {foo() {}}.prototype, 'foo').enumerable
+    false
+    ```
+- In Arrays, length is not enumerable, which means that for-in only traverses indices. (However, that can easily change if you add a property via assignment, which is makes it enumerable.)
+    > 배열에서 length는 이너머러블이 아닌데 이는, for-in에서 색인으로 이용됨을 의미한다. (하지만, 할당으로 프로퍼티를 추가하면 쉽게 바뀐다).
+    ```js
+    > desc([], 'length').enumerable
+    false
+    > desc(['a'], '0').enumerable
+    true
+    ```
+
 The main reason for making all of these properties non-enumerable is to hide them (especially the inherited ones) from legacy code that uses the for-in loop or $.extend() (and similar operations that copy both inherited and own properties; see next section). Both operations should be avoided in ES6. Hiding them ensures that the legacy code doesn’t break.
-모든 프로퍼티를 열거불가능하게 만드는 가장 큰 이유는 $.extend()를 이용하는 레거시 코드로 부터 숨기기 위해서이다(특히 상속받은것).(상속받거나 고유의 프로퍼티를 복자하는 동작과 유사).
+> 모든 프로퍼티를 열거불가능하게 만드는 가장 큰 이유는 $.extend()를 이용하는 레거시 코드로 부터 숨기기 위해서이다(특히 상속받은것).(상속받거나 고유의 프로퍼티를 복자하는 동작과 유사).
 이 동작 모두 ES6에서는 지양한다. 숨기는 것이 코드가 파괴되지 않음을 보장한다.
 
 #### 14.7.3.2 Use case: Marking properties as not to be copied
-#### 14.7.2.2 사용 예 : 복사하지 않고 프로퍼티 등록
+> #### 14.7.2.2 사용 예 : 복사하지 않고 프로퍼티 등록
 ##### 14.7.3.2.1 Historical precedents
-##### 14.7.3.2.1 과거의 예시
+> ##### 14.7.3.2.1 과거의 예시
 
 When it comes to copying properties, there are two important historical precedents that take enumerability into consideration:
-프로퍼티를 복사할 때, 열거가능성을 구성에 넣기 위해 두 가지 주요한 선례가 있다.
-```js
-    Prototype’s Object.extend(destination, source)
+> 프로퍼티를 복사할 때, 열거가능성을 구성에 넣기 위해 두 가지 주요한 선례가 있다.
 
+- Prototype’s Object.extend(destination, source)
+    ```js
       const obj1 = Object.create({ foo: 123 });
       Object.extend({}, obj1); // { foo: 123 }
-
+    
       const obj2 = Object.defineProperty({}, 'foo', {
           value: 123,
           enumerable: false
       });
       Object.extend({}, obj2) // {}
+    ```
 
-    jQuery’s $.extend(target, source1, source2, ···) copies all enumerable own and inherited properties of source1 etc. into own properties of target.
-
+- jQuery’s $.extend(target, source1, source2, ···) copies all enumerable own and inherited properties of source1 etc. into own properties of target.
+    ```js
       const obj1 = Object.create({ foo: 123 });
       $.extend({}, obj1); // { foo: 123 }
-
+    
       const obj2 = Object.defineProperty({}, 'foo', {
           value: 123,
           enumerable: false
       });
       $.extend({}, obj2) // {}
-```
+    ```
 Problems with this way of copying properties:
-이 방식으로 프로퍼티 복사하게 되면 문제점 :
+> 이 방식으로 프로퍼티 복사하게 되면 문제점 :
 
-    Turning inherited source properties into own target properties is rarely what you want. That’s why enumerability is used to hide inherited properties.
-    Which properties to copy and which not often depends on the task at hand, it rarely makes sense to have a single flag for everything. A better choice is to provide the copying operation with a predicate (a callback that returns a boolean) that tells it when to consider a property.
-    상속받은 소스 프로퍼티를 타겟 프로퍼티로 전환하는 것을 거의 드물다. 열거가능성이 상속받은 프로퍼티를 숨기는데 이용되는 이유이다.
-    어떤 프로퍼티가 복사되고 어떤것은 아닌것은 작업에 따라 다른데, 전체의 한가지 지표로 드물게 .........?
-    서술부(boolean을 리턴하는 콜백)를 가진 복사 작업을 제공하는 것이 가장 좋은 선택지이다.
+- Turning inherited source properties into own target properties is rarely what you want. That’s why enumerability is used to hide inherited properties.
+    > 상속받은 소스 프로퍼티를 타겟 프로퍼티로 전환하는 것을 거의 드물다. 열거가능성이 상속받은 프로퍼티를 숨기는데 이용되는 이유이다.
+- Which properties to copy and which not often depends on the task at hand, it rarely makes sense to have a single flag for everything. A better choice is to provide the copying operation with a predicate (a callback that returns a boolean) that tells it when to consider a property.
+    > 어떤 프로퍼티가 복사되고 어떤것은 아닌것은 작업에 따라 다른데, 전체의 한가지 지표로 드물게 .........?
+      서술부(boolean을 리턴하는 콜백)를 가진 복사 작업을 제공하는 것이 가장 좋은 선택지이다.
+    
 
 The only instance property that is non-enumerable in the standard library is property length of Arrays. However, that property only needs to be hidden due to it magically updating itself via other properties. You can’t create that kind of magic property for your own objects (short of using a Proxy).
-표준 라이브러리의 non-enumerable한 유일한 인스턴스 프로퍼티는 배열의 length 프로퍼티이다. 하지만 이 프로퍼티는 다른 프로퍼티를 통해 마법적으로 업데이트되기 때문에 숨겨져야만 한다.
+> 표준 라이브러리의 non-enumerable한 유일한 인스턴스 프로퍼티는 배열의 length 프로퍼티이다. 하지만 이 프로퍼티는 다른 프로퍼티를 통해 마법적으로 업데이트되기 때문에 숨겨져야만 한다.
 
 ##### 14.7.3.2.2 ES6: Object.assign()
 
 In ES6, Object.assign(target, source_1, source_2, ···) can be used to merge the sources into the target. All own enumerable properties of the sources are considered (that is, keys can be either strings or symbols). Object.assign() uses a “get” operation to read a value from a source and a “set” operation to write a value to the target.
-ES6에서 Object.assign(target, source_1, source_2, ···)은 소스를 타겟에 병합하는데 이용된다. 소스의 모든 고유 열거가능 프로퍼티가 가능하다.(이는 키는 문자열, 심볼 모두 가능하다는 것)
+> ES6에서 Object.assign(target, source_1, source_2, ···)은 소스를 타겟에 병합하는데 이용된다. 소스의 모든 고유 열거가능 프로퍼티가 가능하다.(이는 키는 문자열, 심볼 모두 가능하다는 것)
 Object.assign() "get"연산을 소스의 값을 읽는데 이용하고 "set"연산을 타겟에 그 값을 쓰는데 이용한다.
 
 With regard to enumerability, Object.assign() continues the tradition of Object.extend() and $.extend(). Quoting Yehuda Katz:
-열거가능성을 염두해두고, Object.assign()은 Object.extend()와 $.extend()의 전동을 이어간다. Yehuda Katz를 인용하면 :
+> 열거가능성을 염두해두고, Object.assign()은 Object.extend()와 $.extend()의 전동을 이어간다. Yehuda Katz를 인용하면 :
 
-    Object.assign would pave the cowpath of all of the extend() APIs already in circulation. We thought the precedent of not copying enumerable methods in those cases was enough reason for Object.assign to have this behavior.
-    Object.assign는 이미 환경에 존재하는 모든 extend() API의 발자취를 따라 길을 닦는다. 그런 경우에서 열거가능 매서드를 복사하지 않는 선례에서 Object.assign 이런 동작을 하는 많은 이유를 생각해 보았다.
+> Object.assign would pave the cowpath of all of the extend() APIs already in circulation. We thought the precedent of not copying enumerable methods in those cases was enough reason for Object.assign to have this behavior.
+>> Object.assign는 이미 환경에 존재하는 모든 extend() API의 발자취를 따라 길을 닦는다. 
+그런 경우에서 열거가능 매서드를 복사하지 않는 선례에서 Object.assign 이런 동작을 하는 많은 이유를 생각해 보았다.
 
 In other words: Object.assign() was created with an upgrade path from $.extend() (and similar) in mind. Its approach is cleaner than $.extend’s, because it ignores inherited properties.
-다시 말해 : Object.assign()은 $.extend() 의 업그레이드 된 길을 염두해 생성되었다. 이런 접근은 $.extend 보다 명확한데 이는 상속받은 프로퍼티를 무시하기 때문이다.
+> 다시 말해 : Object.assign()은 $.extend() 의 업그레이드 된 길을 염두해 생성되었다. 이런 접근은 $.extend 보다 명확한데 이는 상속받은 프로퍼티를 무시하기 때문이다.
 
 ### 14.7.3.3 Marking properties as private
-### 14.7.3.3 프로퍼티를 비공개로 두기
+> ### 14.7.3.3 프로퍼티를 비공개로 두기
 
 If you make a property non-enumerable, it can’t by seen by Object.keys() and the for-in loop, anymore. With regard to those mechanisms, the property is private.
-열거가능하지 않은 프로퍼티를 만든다면, Object.keys()나 for-in 루프에서 더이상 보여서는 안된다. 이런 메카니즘으로 프로퍼티는 비공개이다.
+> 열거가능하지 않은 프로퍼티를 만든다면, Object.keys()나 for-in 루프에서 더이상 보여서는 안된다. 이런 메카니즘으로 프로퍼티는 비공개이다.
 
 However, there are several problems with this approach:
-이러한 접근에는 몇가지 문제가 있다:
+> 이러한 접근에는 몇가지 문제가 있다:
 
-    When copying an object, you normally want to copy private properties. That clashes making properties non-enumerable that shouldn’t be copied (see previous section).
-    The property isn’t really private. Getting, setting and several other mechanisms make no distinction between enumerable and non-enumerable properties.
-    When working with code either as source or interactively, you can’t immediately see whether a property is enumerable or not. A naming convention (such as prefixing property names with an underscore) is easier to discover.
-    You can’t use enumerability to distinguish between public and private methods, because methods in prototypes are non-enumerable by default.
-    보통 객체를 복사할 때 비공개 프로퍼티도 함께 복사하길 원한다. 이 충돌은 열거가능하지 않은 속성을 만들어내, 복사할 수 없게 만든다(앞의 섹션을 봐라).
-    그 프로퍼티는 정말 비공개는 아니다. getting, setting 그리고 몇가지 다른 메커니즘은 열거, 비열거 프로퍼티 사이에 구분을 두지 않는다.
-    코드가 소스 혹은 상호작용으로 동작할 때, 프로퍼티가 열거가능한지 여부를 바로 알 수 없다. ??
+- When copying an object, you normally want to copy private properties. That clashes making properties non-enumerable that shouldn’t be copied (see previous section).
+    > 보통 객체를 복사할 때 비공개 프로퍼티도 함께 복사하길 원한다. 이 충돌은 열거가능하지 않은 속성을 만들어내, 복사할 수 없게 만든다(앞의 섹션을 봐라).
+- The property isn’t really private. Getting, setting and several other mechanisms make no distinction between enumerable and non-enumerable properties.
+    > 그 프로퍼티는 정말 비공개는 아니다. getting, setting 그리고 몇가지 다른 메커니즘은 열거, 비열거 프로퍼티 사이에 구분을 두지 않는다.
+- When working with code either as source or interactively, you can’t immediately see whether a property is enumerable or not. A naming convention (such as prefixing property names with an underscore) is easier to discover.
+    > 코드가 소스 혹은 상호작용으로 동작할 때, 프로퍼티가 열거가능한지 여부를 바로 알 수 없다. ??
+- You can’t use enumerability to distinguish between public and private methods, because methods in prototypes are non-enumerable by default.
+    > 프로토 타입의 메서드는 기본적으로 열거 할 수 없으므로 열거 형을 사용하여 공용 메서드와 개인 메서드를 구별 할 수 없습니다.
+    
+    
 
 ### 14.7.3.4 Hiding own properties from JSON.stringify()
-### 14.7.3.4 고유의 프로퍼티를 JSON.stringify()로부터 숨기기
+>> ### 14.7.3.4 고유의 프로퍼티를 JSON.stringify()로부터 숨기기
 
 JSON.stringify() does not include properties in its output that are non-enumerable. You can therefore use enumerability to determine which own properties should be exported to JSON. This use case is similar to marking properties as private, the previous use case. But it is also different, because this is more about exporting and slightly different considerations apply. For example: Can an object be completely reconstructed from JSON?
-JSON.stringify() 는 출력시에 프로퍼티를 포함하지 않고 열거불가능하다. 이는 또 다른데, 내보내기에 좀더 관련이 있고 적용하는 것과는 조금 거리가 있기 때문이다. ??
+>> JSON.stringify() 는 출력시에 프로퍼티를 포함하지 않고 열거불가능하다. 이는 또 다른데, 내보내기에 좀더 관련이 있고 적용하는 것과는 조금 거리가 있기 때문이다. ??
 예를 들어: 어떤 객체가 JSON에서 완벽히 재건될 수 있을까?
 
 An alternative for specifying how an object should be converted to JSON is to use toJSON():
@@ -1131,65 +1148,69 @@ const obj = {
 JSON.stringify(obj); // '{"bar":456}'
 ```
 I find toJSON() cleaner than enumerability for the current use case. It also gives you more control, because you can export properties that don’t exist on the object.
-현재의 사용 예에는 열거가능성보다 toJSON()이 좀더 확실함을 발견했다. toJSON()은 쉽게 컨트롤 할 수 있는데, 객체에 존재하지 않는 프로퍼티를 내보낼 수 있기 때문이다.
+> 현재의 사용 예에는 열거가능성보다 toJSON()이 좀더 확실함을 발견했다. toJSON()은 쉽게 컨트롤 할 수 있는데, 객체에 존재하지 않는 프로퍼티를 내보낼 수 있기 때문이다.
 
 ### 14.7.4 Naming inconsistencies
-### 14.7.4 명명 불일치
+> ### 14.7.4 명명 불일치
 
 In general, a shorter name means that only enumerable properties are considered:
-일반적으로 짧은 네임은 열거가능 프로퍼티만 고려한다.
+> 일반적으로 짧은 네임은 열거가능 프로퍼티만 고려한다.
 
-    Object.keys() ignores non-enumerable properties
-    Object.getOwnPropertyNames() lists all property names
-    Object.keys() 는 열거불가능한 프로퍼티는 무시한다.
-    Object.getOwnPropertyNames()는 모든 프로퍼티명을 나열한다.
+- Object.keys() ignores non-enumerable properties
+    > Object.keys() 는 열거불가능한 프로퍼티는 무시한다.
+- Object.getOwnPropertyNames() lists all property names
+    > Object.getOwnPropertyNames()는 모든 프로퍼티명을 나열한다.
 
 However, Reflect.ownKeys() deviates from that rule, it ignores enumerability and returns the keys of all properties. Additionally, starting with ES6, the following distinction is made:
-하지만 Reflect.ownKeys()는 규칙으로부터 벗어나있다. Reflect.ownKeys()는 열거가능성을 무시하고 모든 프로퍼티 키를 반환한다. 게다가 ES6가 시작하면서 아래의 구분이 생겼다:
+> 하지만 Reflect.ownKeys()는 규칙으로부터 벗어나있다. Reflect.ownKeys()는 열거가능성을 무시하고 모든 프로퍼티 키를 반환한다. 게다가 ES6가 시작하면서 아래의 구분이 생겼다:
 
-    Property keys are either strings or symbols.
-    Property names are only strings.
-    프로퍼티 키는 문자 혹은 심볼이다.
-    프로퍼티 네임은 오로지 문자열이다.
-
+- Property keys are either strings or symbols.
+    > 프로퍼티 키는 문자 혹은 심볼이다.
+- Property names are only strings.
+    > 프로퍼티 네임은 오로지 문자열이다.
+    
 Therefore, a better name for Object.keys() would now be Object.names().
-따라서, Object.keys()의 더 좋은 명칭은 Object.names() 이다.
+> 따라서, Object.keys()의 더 좋은 명칭은 Object.names() 이다.
 
 ### 14.7.5 Looking ahead
-### 14.7.5 돌아보다
+> ### 14.7.5 돌아보다
 
 It seems to me that enumerability is only suited for hiding properties from the for-in loop and $.extend() (and similar operations). Both are legacy features, you should avoid them in new code. As for the other use cases:
-열거가능성은 for-in 루프와 $.extend()(혹은 비슷한 연산)의 숨김 프로퍼티에 적합하다고 생각한다. 둘다 레거시 특징이지만, 새로운 코드에서는 사용하지 않는것이 좋다. 다른 사용 예에서 보듯:
+> 열거가능성은 for-in 루프와 $.extend()(혹은 비슷한 연산)의 숨김 프로퍼티에 적합하다고 생각한다. 둘다 레거시 특징이지만, 새로운 코드에서는 사용하지 않는것이 좋다. 다른 사용 예에서 보듯:
 
-    I don’t think there is a need for a general flag specifying whether or not to copy a property.
-    Non-enumerability does not work well as a way to keep properties private.
-    The toJSON() method is more powerful and explicit than enumerability when it comes to controlling how to convert an object to JSON.
-    프로퍼티를 복사할지를 지정하는 일반적인 플래그기 팔요하다고 생각하지 않는다.
-    열거불가능성은 프로퍼티를 비공개로 두기 위한 방법으로 그렇게 잘 동작하는건 아니다.
-    객체를 제이슨으로 변환할 때에는 열거가능성에 비해 toJSON()이 보다 강력하고 명확하다.
+- I don’t think there is a need for a general flag specifying whether or not to copy a property.
+    > 프로퍼티를 복사할지를 지정하는 일반적인 플래그기 팔요하다고 생각하지 않는다.
+- Non-enumerability does not work well as a way to keep properties private.
+    > 열거불가능성은 프로퍼티를 비공개로 두기 위한 방법으로 그렇게 잘 동작하는건 아니다.
+- The toJSON() method is more powerful and explicit than enumerability when it comes to controlling how to convert an object to JSON.
+    > 객체를 제이슨으로 변환할 때에는 열거가능성에 비해 toJSON()이 보다 강력하고 명확하다.
 
 I’m not sure what the best strategy is for enumerability going forward. If, with ES6, we had started to pretend that it didn’t exist (except for making prototype properties non-enumerable so that old code doesn’t break), we might eventually have been able to deprecate enumerability. However, Object.assign() considering enumerability runs counter that strategy (but it does so for a valid reason, backward compatibility).
-열거가능성이 어떤 방향으로 나아가는 것이 좋을지는 모르겠다. 만약 ES6에서 존재하지 않는다고 생각하고 시작해왔다면, 최종적으로 열거가능성을 사용하지 않을 수 있을 것이다. 하지만 Object.assign()가 열거가능성을 이 생각과 반대되게 사용하는 것을 고려하고 있다.
+> 열거가능성이 어떤 방향으로 나아가는 것이 좋을지는 모르겠다. 만약 ES6에서 존재하지 않는다고 생각하고 시작해왔다면, 최종적으로 열거가능성을 사용하지 않을 수 있을 것이다. 
+하지만 Object.assign()가 열거가능성을 이 생각과 반대되게 사용하는 것을 고려하고 있다.
 
 In my own ES6 code, I’m not using enumerability, except (implicitly) for classes whose prototype methods are non-enumerable.
-저자의 ES6 코드에서, 프로토타입 메서드가 열거가능하지 않는 클래스를 제외하고는 열거가능성을 사용하지 않는다.
+> 저자의 ES6 코드에서, 프로토타입 메서드가 열거가능하지 않는 클래스를 제외하고는 열거가능성을 사용하지 않는다.
 
 Lastly, when using an interactive command line, I occasionally miss an operation that returns all property keys of an object, not just the own ones (Reflect.ownKeys). Such an operation would provide a nice overview of the contents of an object.
 마지막으로 상호작용하는 커맨드 라인을 이용하는 경우, 때로 객체의 고유키 뿐 아니라, 모든 키를 반환하는 연산을 깜빡한다.
 
 ## 14.8 Customizing basic language operations via well-known symbols
+> ## 14.8 웰노운 심볼을 통한 기본 언어 작업 사용자 정의
 
 This section explains how you can customize basic language operations by using the following well-known symbols as property keys:
-```js
-    Symbol.hasInstance (method)
-    Lets an object C customize the behavior of x instanceof C.
-    Symbol.toPrimitive (method)
-    Lets an object customize how it is converted to a primitive value. This is the first step whenever something is coerced to a primitive type (via operators etc.).
-    Symbol.toStringTag (string)
-    Called by Object.prototype.toString() to compute the default string description of an object obj: ‘[object ‘+obj[Symbol.toStringTag]+’]’.
-    Symbol.unscopables (Object)
-    Lets an object hide some properties from the with statement.
-```
+> 이 섹션에서는 다음과 같은 웰노운 심볼을 속성 키로 사용하여 기본 언어 작업을 커스트마이징 할 수있는 방법을 설명합니다.
+
+- Symbol.hasInstance (method)  
+Lets an object C customize the behavior of x instanceof C.
+- Symbol.toPrimitive (method)  
+Lets an object customize how it is converted to a primitive value. This is the first step whenever something is coerced to a primitive type (via operators etc.).
+- Symbol.toStringTag (string)  
+Called by Object.prototype.toString() to compute the default string description of an object obj: ‘[object ‘+obj[Symbol.toStringTag]+’]’.
+- Symbol.unscopables (Object)  
+Lets an object hide some properties from the with statement.
+
+
 ### 14.8.1 Property key Symbol.hasInstance (method)
 
 An object C can customize the behavior of the instanceof operator via a method with the key Symbol.hasInstance that has the following signature:
@@ -1857,7 +1878,7 @@ You could use it to get or set the prototype of any object:
   console.log(obj.__proto__ === p); // true
 However, it was never an actual property:
   > var obj = {};
-  > '__proto__' in obj
+  > `__proto__` in obj
   false
 14.6.1.3 Subclassing Array via __proto__
 The main reason why __proto__ became popular was because it enabled the only way to create a subclass MyArray of Array in ES5: Array instances were exotic objects that couldn’t be created by ordinary constructors. Therefore, the following trick was used:
@@ -1874,7 +1895,7 @@ Subclassing in ES6 works differently than in ES5 and supports subclassing builti
 14.6.1.4 Why __proto__ is problematic in ES5
 The main problem is that __proto__ mixes two levels: the object level (normal properties, holding data) and the meta level.
 
-If you accidentally use __proto__ as a normal property (object level!), to store data, you get into trouble, because the two levels clash. The situation is compounded by the fact that you have to abuse objects as maps in ES5, because it has no built-in data structure for that purpose. Maps should be able to hold arbitrary keys, but you can’t use the key '__proto__' with objects-as-maps.
+If you accidentally use __proto__ as a normal property (object level!), to store data, you get into trouble, because the two levels clash. The situation is compounded by the fact that you have to abuse objects as maps in ES5, because it has no built-in data structure for that purpose. Maps should be able to hold arbitrary keys, but you can’t use the key `__proto__` with objects-as-maps.
 
 In theory, one could fix the problem by using a symbol instead of the special name __proto__, but keeping meta-operations completely separate (as done via Object.getPrototypeOf()) is the best approach.
 
@@ -1888,11 +1909,11 @@ JavaScript has several undesirable features that are required by a significant a
 In order to explain the magic behind __proto__, two mechanisms were introduced in ES6:
 
 A getter and a setter implemented via Object.prototype.__proto__.
-In an object literal, you can consider the property key '__proto__' a special operator for specifying the prototype of the created objects.
+In an object literal, you can consider the property key `__proto__` a special operator for specifying the prototype of the created objects.
 14.6.2.1 Object.prototype.__proto__
 ECMAScript 6 enables getting and setting the property __proto__ via a getter and a setter stored in Object.prototype. If you were to implement them manually, this is roughly what it would look like:
 
-Object.defineProperty(Object.prototype, '__proto__', {
+Object.defineProperty(Object.prototype, `__proto__`, {
     get() {
         const _thisObj = Object(this);
         return Object.getPrototypeOf(_thisObj);
@@ -1925,16 +1946,16 @@ If __proto__ appears as an unquoted or quoted property key in an object literal,
 
 > Object.getPrototypeOf({ __proto__: null })
 null
-> Object.getPrototypeOf({ '__proto__': null })
+> Object.getPrototypeOf({ `__proto__`: null })
 null
-Using the string value '__proto__' as a computed property key does not change the prototype, it creates an own property:
+Using the string value `__proto__` as a computed property key does not change the prototype, it creates an own property:
 
-> const obj = { ['__proto__']: null };
+> const obj = { [`__proto__`]: null };
 > Object.getPrototypeOf(obj) === Object.prototype
 true
 > Object.keys(obj)
-[ '__proto__' ]
-The special property key '__proto__' in the ES6 spec:
+[ `__proto__` ]
+The special property key `__proto__` in the ES6 spec:
 
 __proto__ Property Names in Object Initializers
 14.6.3 Avoiding the magic of __proto__
@@ -1942,21 +1963,21 @@ __proto__ Property Names in Object Initializers
 In ECMAScript 6, if you define the own property __proto__, no special functionality is triggered and the getter/setter Object.prototype.__proto__ is overridden:
 
 const obj = {};
-Object.defineProperty(obj, '__proto__', { value: 123 })
+Object.defineProperty(obj, `__proto__`, { value: 123 })
 
-Object.keys(obj); // [ '__proto__' ]
+Object.keys(obj); // [ `__proto__` ]
 console.log(obj.__proto__); // 123
 14.6.3.2 Objects that don’t have Object.prototype as a prototype
 The __proto__ getter/setter is provided via Object.prototype. Therefore, an object without Object.prototype in its prototype chain doesn’t have the getter/setter, either. In the following code, dict is an example of such an object – it does not have a prototype. As a result, __proto__ now works like any other property:
 
 > const dict = Object.create(null);
-> '__proto__' in dict
+> `__proto__` in dict
 false
 > dict.__proto__ = 'abc';
 > dict.__proto__
 'abc'
 14.6.3.3 __proto__ and dict objects
-If you want to use an object as a dictionary then it is best if it doesn’t have a prototype. That’s why prototype-less objects are also called dict objects. In ES6, you don’t even have to escape the property key '__proto__' for dict objects, because it doesn’t trigger any special functionality.
+If you want to use an object as a dictionary then it is best if it doesn’t have a prototype. That’s why prototype-less objects are also called dict objects. In ES6, you don’t even have to escape the property key `__proto__` for dict objects, because it doesn’t trigger any special functionality.
 
 __proto__ as an operator in an object literal lets you create dict objects more concisely:
 
@@ -1976,7 +1997,7 @@ With __proto__ being a getter/setter in ES6, JSON.parse() works fine, because it
 
 JSON.stringify() isn’t affected by __proto__, either, because it only considers own properties. Objects that have an own property whose name is __proto__ work fine:
 
-> JSON.stringify({['__proto__']: true})
+> JSON.stringify({[`__proto__`]: true})
 '{"__proto__":true}'
 14.6.4 Detecting support for ES6-style __proto__
 Support for ES6-style __proto__ varies from engine to engine. Consult kangax’ ECMAScript 6 compatibility table for information on the status quo:
@@ -1988,10 +2009,10 @@ The following two sections describe how you can programmatically detect whether 
 14.6.4.1 Feature: __proto__ as getter/setter
 A simple check for the getter/setter:
 
-var supported = {}.hasOwnProperty.call(Object.prototype, '__proto__');
+var supported = {}.hasOwnProperty.call(Object.prototype, `__proto__`);
 A more sophisticated check:
 
-var desc = Object.getOwnPropertyDescriptor(Object.prototype, '__proto__');
+var desc = Object.getOwnPropertyDescriptor(Object.prototype, `__proto__`);
 var supported = (
     typeof desc.get === 'function' && typeof desc.set === 'function'
 );
